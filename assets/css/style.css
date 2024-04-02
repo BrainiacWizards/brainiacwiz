@@ -1,0 +1,28 @@
+:root {
+	--prim-color: rgb(128, 50, 128); /* Primary color */
+	--sec-color: #4caf50; /* Secondary color */
+	--tert-color: #2196f3; /* Tertiary color */
+	--quart-color: #ffc107; /* Quaternary color */
+}
+
+.landing-overlay {
+	display: flex;
+	position: absolute;
+	background: rgba(0, 0, 0, 0.5);
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+	overflow: hidden;
+	max-width: 400px;
+	border-radius: 20px;
+	flex-direction: column;
+	text-align: center;
+	backdrop-filter: blur(10px);
+	padding: 20px;
+}
+
+.landing-overlay img {
+	max-width: 80%;
+	margin: auto;
+}
