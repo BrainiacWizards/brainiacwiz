@@ -3,26 +3,56 @@
 	--sec-color: #4caf50; /* Secondary color */
 	--tert-color: #2196f3; /* Tertiary color */
 	--quart-color: #ffc107; /* Quaternary color */
+	--font-color: rgb(231, 231, 231);
+}
+
+* {
+	padding: 0;
+	margin: 0;
 }
 
 .landing-overlay {
 	display: flex;
 	position: absolute;
-	background: rgba(0, 0, 0, 0.5);
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.527);
+	z-index: 1;
+	backdrop-filter: blur(3px);
+}
+
+.landing-content {
+	display: flex;
+	position: absolute;
+	background: rgba(0, 0, 0, 1);
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	z-index: 1;
+	z-index: 2;
 	overflow: hidden;
 	max-width: 400px;
 	border-radius: 20px;
 	flex-direction: column;
 	text-align: center;
-	backdrop-filter: blur(10px);
 	padding: 20px;
+	color: var(--font-color);
 }
 
-.landing-overlay img {
-	max-width: 80%;
-	margin: auto;
+.landing-content img {
+	max-width: 90%;
+	margin: 10px auto;
+	background-color: var(--font-color);
+	padding: 10px;
+	border-radius: 20px;
+}
+
+.landing-content button {
+	padding: 10px;
+	width: fit-content;
+	margin: 20px auto;
+	background-color: var(--prim-color);
+	border: none;
+	border-radius: 20px;
+	font-size: 30px;
+	color: var(--font-color);
 }
