@@ -8,29 +8,21 @@
 </head>
 <body>
     <div class = "wrapper">
-        <h1>Sign Up</h1>
+        <h1>Log in</h1>
         <form action = "#">
             <label for="UserName" >UserName:</label>
             <input type="text" id="UserName" name="UserName" required>
             
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
-            
-            <label for="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <div class="recover">
+                <a href = "#">Forgot Password?</a>
+            </div>
             
         </form>
-        <div class="terms">
-            <input type="checkbox" id="terms" name="terms" required>
-            <label for="terms">I agree to these  <a href = "#">Terms & Conditions </a>  </label>
-             
-        </div>
-            <button type="submit">Sign Up</button>
+        <button type="submit">Sign Up </button>
         <div class="login">
-            <p>Already have an account? <a href = "login.html">Login</a></p>
+            <p>No account? <a href = "./auth.html">Sign Up</a></p>
         </div>
     </div>
 </body>
