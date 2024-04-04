@@ -13,9 +13,9 @@ function generatePIN() {
 	sessionStorage.setItem('gamePin', pin);
 }
 
-window.onload = function () {
+window.addEventListener('load', function () {
 	let storedPin = sessionStorage.getItem('gamePIN');
 	if (storedPin) {
-		document.getElementById('pinDisplay ').value = storedPin;
+		document.getElementById('pinDisplay').value = storedPin;
 	}
-};
+});
