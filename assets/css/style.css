@@ -1,15 +1,47 @@
 :root {
-	--prim-color: rgb(128, 50, 128); /* Primary color */
-	--sec-color: #4caf50; /* Secondary color */
-	--tert-color: #2196f3; /* Tertiary color */
-	--quart-color: #ffc107; /* Quaternary color */
+	--prim-color: rgb(73, 3, 165); /* Primary color */
+	--sec-color: rgb(36, 1, 82); /* Secondary color - darker shade of primary */
+	--tert-color: rgb(
+		146,
+		72,
+		204
+	); /* Tertiary color - lighter shade of primary */
+	--quart-color: rgb(182, 141, 217); /* Quaternary color - tint of primary */
 	--font-color: rgb(231, 231, 231);
 }
 
+/********************Default styles******************/
 * {
 	padding: 0;
 	margin: 0;
 }
+
+a {
+	text-decoration: none;
+	color: var(--font-color);
+}
+
+li {
+	list-style: none;
+}
+
+button {
+	padding: 10px;
+	width: fit-content;
+	margin: 20px auto;
+	background-color: var(--prim-color);
+	border: none;
+	border-radius: 10px;
+	font-size: 17px;
+	color: var(--font-color);
+	box-shadow: 1px 1px 5px 0 var(--font-color);
+}
+
+button:hover {
+	background-color: var(--sec-color);
+}
+
+/***********************************************/
 
 .landing-overlay {
 	display: flex;
@@ -24,7 +56,7 @@
 .landing-content {
 	display: flex;
 	position: absolute;
-	background: rgba(0, 0, 0, 1);
+	background: var(--sec-color);
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -36,6 +68,16 @@
 	text-align: center;
 	padding: 20px;
 	color: var(--font-color);
+	gap: 10px;
+	justify-content: center;
+}
+
+.landing-content h1 {
+	font-size: 35px;
+	border-bottom: 1px solid var(--prim-color);
+	width: fit-content;
+	margin: auto;
+	color: var(--tert-color);
 }
 
 .landing-content img {
@@ -46,13 +88,9 @@
 	border-radius: 20px;
 }
 
-.landing-content button {
-	padding: 10px;
-	width: fit-content;
-	margin: 20px auto;
-	background-color: var(--prim-color);
-	border: none;
-	border-radius: 20px;
-	font-size: 30px;
-	color: var(--font-color);
+.landing-content .overlay-buttons {
+	display: flex;
+	justify-content: space-evenly;
+	margin: auto;
+	gap: 20px;
 }
