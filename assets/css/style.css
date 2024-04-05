@@ -8,12 +8,19 @@
 	); /* Tertiary color - lighter shade of primary */
 	--quart-color: rgb(182, 141, 217); /* Quaternary color - tint of primary */
 	--font-color: rgb(231, 231, 231);
+	--fady-back-color: rgb(36, 1, 82, 0.2); /* Faded background color */
 }
 
 /********************Default styles******************/
 * {
 	padding: 0;
 	margin: 0;
+}
+
+body {
+	/* font-family: 'Poppins', sans-serif; */
+	background-color: var(--font-color);
+	color: var(--font-color);
 }
 
 a {
@@ -35,12 +42,12 @@ button {
 	font-size: 17px;
 	color: var(--font-color);
 	box-shadow: 1px 1px 5px 0 var(--font-color);
+	text-wrap: nowrap;
 }
 
 button:hover {
 	background-color: var(--sec-color);
 }
-
 /***********************************************/
 
 .landing-overlay {
@@ -84,7 +91,7 @@ button:hover {
 	max-width: 90%;
 	margin: 10px auto;
 	background-color: var(--font-color);
-	padding: 10px;
+	padding: 5px;
 	border-radius: 20px;
 }
 
