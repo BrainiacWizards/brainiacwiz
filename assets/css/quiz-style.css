@@ -81,6 +81,7 @@
 	min-width: 200px;
 	min-height: 70px;
 	text-wrap: wrap !important;
+	font-size: 25px;
 }
 
 .quiz-container .quiz-body .quiz-options button:hover {
