@@ -1,5 +1,9 @@
 import { questions } from './utils/questions.js';
 
+if (!questions || !questions.techAnswers || !questions.techQuestions) {
+	throw new Error('Questions data is not properly imported or is missing.');
+}
+
 const quizOptBtns = document.querySelectorAll('.quiz-opt-btn');
 const quizTimer = document.querySelector('.quiz-timer > #timer');
 const quizQuestion = document.querySelector('.quiz-question #question');
