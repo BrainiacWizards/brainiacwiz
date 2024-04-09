@@ -58,11 +58,7 @@ button:hover {
 .landing-content {
 	display: flex;
 	position: absolute;
-	background: linear-gradient(
-		var(--sec-color),
-		var(--prim-color),
-		var(--tert-color)
-	);
+	background: linear-gradient(var(--prim-color), var(--tert-color));
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -77,8 +73,8 @@ button:hover {
 	gap: 10px;
 	justify-content: center;
 	font-size: 20px;
-	box-shadow: 4px 7px 6px 0 var(--prim-color);
 	border: none;
+	max-width: 250px;
 }
 
 .landing-content h1 {
@@ -95,8 +91,9 @@ button:hover {
 	max-width: 90%;
 	margin: 10px auto;
 	background-color: var(--font-color);
-	padding: 5px;
+	padding: 0;
 	border-radius: 20px;
+	background-color: transparent;
 }
 
 .landing-content .overlay-buttons {
