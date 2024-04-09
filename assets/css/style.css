@@ -1,12 +1,8 @@
 :root {
-	--prim-color: rgb(73, 3, 165); /* Primary color */
-	--sec-color: rgb(36, 1, 82); /* Secondary color - darker shade of primary */
-	--tert-color: rgb(
-		146,
-		72,
-		204
-	); /* Tertiary color - lighter shade of primary */
-	--quart-color: rgb(182, 141, 217); /* Quaternary color - tint of primary */
+	--prim-color: #1b1a55; /* Primary color */
+	--sec-color: #070f2b; /* Secondary color - darker shade of primary */
+	--tert-color: #535c91; /* Tertiary color - lighter shade of primary */
+	--quart-color: #9290c3; /* Quaternary color - tint of primary */
 	--font-color: rgb(231, 231, 231);
 	--fady-back-color: rgb(36, 1, 82, 0.2); /* Faded background color */
 }
@@ -55,15 +51,18 @@ button:hover {
 	position: absolute;
 	height: 100%;
 	width: 100%;
-	background-color: rgba(0, 0, 0, 0.527);
 	z-index: 1;
-	backdrop-filter: blur(3px);
+	backdrop-filter: blur(2px);
 }
 
 .landing-content {
 	display: flex;
 	position: absolute;
-	background: var(--sec-color);
+	background: linear-gradient(
+		var(--sec-color),
+		var(--prim-color),
+		var(--tert-color)
+	);
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -77,14 +76,19 @@ button:hover {
 	color: var(--font-color);
 	gap: 10px;
 	justify-content: center;
+	font-size: 20px;
+	box-shadow: 4px 7px 6px 0 var(--prim-color);
+	border: none;
 }
 
 .landing-content h1 {
 	font-size: 35px;
-	border-bottom: 1px solid var(--prim-color);
+	border-bottom: 1px solid var(--quart-color);
 	width: fit-content;
 	margin: auto;
-	color: var(--tert-color);
+	color: var(--quart-color);
+	font-size: 40px;
+	display: none;
 }
 
 .landing-content img {
@@ -100,4 +104,10 @@ button:hover {
 	justify-content: space-evenly;
 	margin: auto;
 	gap: 20px;
+}
+
+.main-content {
+	display: block !important;
+	z-index: 2;
+	color: black;
 }

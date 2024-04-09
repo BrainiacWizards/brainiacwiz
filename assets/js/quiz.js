@@ -67,4 +67,4 @@ const setQuizTImer = ({ duration = 60, speed = 100 }) => {
 	}, speed);
 };
 
-setQuizTImer({ duration: 60, speed: 100 });
+setQuizTImer({ duration: 120 });
