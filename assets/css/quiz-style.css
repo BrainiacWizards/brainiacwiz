@@ -14,7 +14,7 @@
 
 .quiz-container .quiz-header .quiz-timer {
 	display: flex;
-	background-color: var(--sec-color);
+	background-color: var(--prim-color);
 	color: var(--font-color);
 	padding: 3px 0;
 	border-radius: 10px;

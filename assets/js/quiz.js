@@ -18,6 +18,8 @@ const setQuestions = (question) => {
 	quizOptBtns.forEach((btn, index) => {
 		btn.innerHTML = questions.techAnswers[question][index];
 	});
+
+	setQuizBtns();
 };
 
 const colors = [
@@ -27,7 +29,7 @@ const colors = [
 	'var(--quart-color)',
 ];
 
-const setQuizBtns = () => {
+function setQuizBtns() {
 	const chosen = [];
 	quizOptBtns.forEach((btn, index) => {
 		while (true) {
@@ -49,11 +51,10 @@ const setQuizBtns = () => {
 			btn.style.backgroundColor = prevStyle;
 		});
 	});
-
-	setQuestions(0);
-};
+}
 
 setQuizBtns();
+setQuestions(0);
 
 const setQuizTImer = ({ duration = 60, speed = 100 }) => {
 	quizTimer.style.color = 'white';
@@ -81,4 +82,4 @@ const setQuizTImer = ({ duration = 60, speed = 100 }) => {
 	}, speed);
 };
 
-setQuizTImer({ duration: 120 });
+setQuizTImer({ duration: 60 });
