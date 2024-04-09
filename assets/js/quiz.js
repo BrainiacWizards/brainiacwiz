@@ -20,11 +20,25 @@ const setQuestions = (question) => {
 	});
 };
 
+const colors = [
+	'var(--prim-color)',
+	'var(--sec-color)',
+	'var(--tert-color)',
+	'var(--quart-color)',
+];
+
 const setQuizBtns = () => {
-	quizOptBtns[0].style.backgroundColor = 'rgb(73, 73, 165)';
-	quizOptBtns[1].style.backgroundColor = 'rgb(73, 165, 50)';
-	quizOptBtns[2].style.backgroundColor = 'rgb(165, 73, 165)';
-	quizOptBtns[3].style.backgroundColor = 'rgb(165, 165, 73)';
+	const chosen = [];
+	quizOptBtns.forEach((btn, index) => {
+		while (true) {
+			const ran = Math.floor(Math.random() * colors.length);
+			if (!chosen.includes(ran)) {
+				btn.style.backgroundColor = colors[ran];
+				chosen.push(ran);
+				break;
+			}
+		}
+	});
 
 	quizOptBtns.forEach((btn, index) => {
 		let prevStyle = btn.style.backgroundColor;
