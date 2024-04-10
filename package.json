@@ -1,8 +1,8 @@
 {
-  "name": "devpost-hackathon",
+  "name": "braniacblitz",
   "version": "1.0.0",
   "description": "- Prettier: for code formatting\r - Live Server: for live preview of the code\r - Live Preview: for live preview of the code\r - GitHub Copilot: for code suggestions (i will assist you in signing up for it when we meet)\r - Bracket Pair Colorizer: for colorizing brackets\r - Auto Rename Tag: for renaming tags automatically\r - Path Intellisense: for auto-completing file paths\r - Code Spell Checker: for spell checking\r - Code Runner: for running code snippets\r - Code Snippets: for code snippets",
-  "main": "index.js",
+  "main": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
