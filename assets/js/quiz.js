@@ -36,6 +36,7 @@ function setQuizBtns() {
 			const ran = Math.floor(Math.random() * colors.length);
 			if (!chosen.includes(ran)) {
 				btn.style.backgroundColor = colors[ran];
+				btn.style.boxShadow = `4px 4px 4px 0  ${colors[ran - 1]}`;
 				chosen.push(ran);
 				break;
 			}
