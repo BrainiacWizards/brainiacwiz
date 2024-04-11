@@ -1,87 +1,111 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
 }
-body {
-   
-    background: #dfe9ef;
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: left;
+	margin: 10px auto;
+	width: 100%;
+	text-align: left;
 }
+
 .wrapper {
-    width: 230px;
-    padding: 2rem 1rem;
-    margin: 10px auto;
-    background: #ffffff;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0px 20px 35px rgba(0, 0, 0, 0.1);
+	width: 230px;
+	padding: 22px 16px;
+	margin: 10px auto;
+	background: #ffffff;
+	border-radius: 10px;
+	text-align: center;
+	box-shadow: 0px 20px 35px rgba(0, 0, 0, 0.1);
+	color: var(--sec-color);
+	width: fit-content;
+	max-width: 300px;
 }
-h1 {
-    font-size: 2rem;
-    color: #000000;
-    margin-bottom: 1rem;
+.wrapper h1 {
+	font-size: 2rem;
+	color: var(--sec-color);
+	margin-bottom: 1rem;
 }
-form input {
-    width: 90%;
-    padding: 6px 8px ;
-    margin: 4px 0;
-    border-radius: 10px;
-    background: #ebebeb;
-    border: 1px solid #000000;
-    outline: none;
+.wrapper form label {
+	margin-left: 20px;
 }
-button {
-    font-size: 1rem;
-    width: 50%;
-    padding: 8px;
-    margin: 8px 0;
-    border-radius: 10px;
-    background: #000000;
-    color: #ffffff;
-    border: none;
-    cursor: pointer;
-    outline: none;
+.wrapper form input {
+	width: 90%;
+	padding: 6px 8px;
+	margin: 4px auto;
+	border-radius: 10px;
+	background: #ebebeb;
+	border: 1px solid #979797;
+	outline: none;
+	min-width: 200px;
 }
-button:hover {
-    background: #000000;
-    color: #236cf3;
+.wrapper button {
+	font-size: 1rem;
+	width: 50%;
+	padding: 8px;
+	border-radius: 10px;
+	color: var(--font-color);
+	border: none;
+	cursor: pointer;
+	outline: none;
 }
-input:focus {
-    border: 1px solid #236cf3;
+.wrapper button:hover {
+	color: #236cf3;
 }
-.terms { 
-    margin-top: 0.2rem;
+.wrapper input:focus {
+	border: 1px solid var(--tert-color);
+	box-shadow: 2px 2px 4px var(--tert-color);
 }
-.terms input { 
-    margin-left: 0.5rem;
-    vertical-align: middle;
-    cursor: pointer;
+.wrapper .terms {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+	margin-top: 20px;
+	text-align: left;
+	gap: 10px;
+	width: 90%;
+	margin: 20px auto 10px auto;
 }
-.terms label {
-    font-size: 0.9rem;
+.wrapper .terms input {
+	margin: 0px;
+	transform: scale(1.5);
+	vertical-align: middle;
+	cursor: pointer;
+	width: fit-content !important;
+	min-width: 20px !important;
 }
-.terms a {
-    text-decoration: none;
-    color: #236cf3;
+.wrapper .terms label {
+	font-size: 0.9rem;
+	width: fit-content;
 }
-.login{
-    font-size: 0.8rem;
-    margin-top: 1rem;
-    color:#636363 ;
+.wrapper .terms a {
+	text-decoration: none;
+	color: #236cf3;
 }
-.login a {
-    text-decoration: none;
-    color: #236cf3;
+.wrapper .login {
+	font-size: 0.8rem;
+	margin-top: 1rem;
+	color: #636363;
 }
-.recover {
-    font-size: 0.8rem;
-    margin: 0.5rem;
-    color:#636363 ;
-    text-decoration: none;
+.wrapper .login a {
+	text-decoration: none;
+	color: #236cf3;
 }
-.recover a {
-    text-decoration: none;
-    color: #636363;
+.wrapper .recover {
+	font-size: 0.8rem;
+	margin: 0.5rem;
+	color: #636363;
+	text-decoration: none;
+}
+.wrapper .recover a {
+	text-decoration: none;
+	color: #636363;
 }
