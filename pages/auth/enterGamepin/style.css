@@ -1,0 +1,53 @@
+.gamepin {
+    background-color: rgba(72, 9, 131, 0.459);
+    border: 1px solid #848484;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 120px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    max-width: 600px;
+    box-sizing: border-box;
+}   
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ced4da;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ced4da;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+input[type="submit"]:hover {
+    background-color: rgb(184, 173, 238);
+}
+
+form {
+    margin: 100px auto; 
+    text-align: center; 
+    max-width: 400px; 
+}
+
+label {
+    font-weight: bold;
+}
+
+.logo {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #0e263d;
+    border-radius: 200px;
+    box-sizing: border-box;   
+}
