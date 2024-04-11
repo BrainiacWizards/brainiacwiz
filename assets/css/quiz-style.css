@@ -99,7 +99,7 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	display: none;
+	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
@@ -116,10 +116,14 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	max-width: 250px !important;
-	width: 250px;
+	max-width: 500px !important;
+	width: 500px;
 }
 
+.scoreFont {
+	font-size: 20px;
+	font-style: oblique;
+}
 .score-board .body table {
 	width: 100%;
 	border: 2px solid var(--prim-color);
