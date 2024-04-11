@@ -117,7 +117,7 @@ function login(email, password) {
 //validate email
 function validateEmail(email) {
     var expression = /\S+@\S+\.\S+/;
-    if (expression.test(email) == true) {
+    if (expression.test(email)) {
         //email is valid
         return true;
     }
