@@ -28,11 +28,13 @@ function register() {
     let confirmPassword = confirmPasswordDOM.value;
 
     //validate input fields
-    if (!validateFields(email) || !validateFields(userName) || !validateFields(password) || !validateFields(confirmPassword)) {
-        return;
-    }
+function validateAllFields() {
+    return validateFields(email) && validateFields(userName) && validateFields(password) && validateFields(confirmPassword) && validateEmail(email);
+}
 
-    if (!validateEmail(email)) {
+if (!validateAllFields()) {
+    return;
+}
         return;
     }
 
