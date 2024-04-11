@@ -5,15 +5,20 @@ const confirmPasswordDOM = document.getElementById('confirmPassword')
 const signUpForm = document.getElementById('signup-form')
 const loginForm = document.getElementById('login-form')
 
-signUpForm.addEventListener('submit', (event) => {
-    event.preventDefault()
-    register()
-})
+if (signUpForm) {
+    signUpForm.addEventListener('submit', (event) => {
+        event.preventDefault()
+        register()
+    })
+}
 
-loginForm.addEventListener('submit', (event) => {
-    event.preventDefault()
-    login(userNameDOM.value, passwordDOM.value)
-})
+if (loginForm) {
+    loginForm.addEventListener('submit', (event) => {
+        event.preventDefault()
+        login(emailDOM.value, passwordDOM.value)
+    })
+}
+
 
 function register() {
     //get all input fields
@@ -24,10 +29,18 @@ function register() {
 
     //validate input fields
     if (!validateFields(email) || !validateFields(userName) || !validateFields(password) || !validateFields(confirmPassword)) {
-        alert('Field is required');
         return;
-        //do not continue with authentication
     }
+
+    if (!validateEmail(email)) {
+        return;
+    }
+
+    if (!validatePassword(password, confirmPassword)) {
+        return;
+    }
+
+    alert('All fields are valid');
 }
 
 function firebaseRegister() {
@@ -85,15 +98,17 @@ function firebaseRegister() {
 
 
 //login function
-function login() {
-    //get all input fields
-    let password = passwordDOM.value;
-    let userName = userNameDOM.value;
+function login(email, password) {
 
-    if (!validateFields(password) || !validateFields(userName)) {
-        alert('Field is required');
+    if (!validateFields(password) || !validateFields(email)) {
         return;
     }
+
+    if (!validateEmail(email)) {
+        return;
+    }
+
+    alert('All fields are valid');
 }
 
 
@@ -106,6 +121,7 @@ function validateEmail(email) {
     }
 
     //email is invalid
+    alert('Email is invalid');
     return false;
 }
 
@@ -114,12 +130,11 @@ function validatePassword(password, confirmPassword) {
     if (password.length < 6) {
         //password is too short
         alert('Password is too short');
-        confirmPassword.setCustomValidity('');
         return false;
     }
 
     //password length meets requirements
-    if (password.value != confirmPassword.value) {
+    if (password != confirmPassword) {
         //confirm passwords match
         alert('Passwords do not match');
         return false;
