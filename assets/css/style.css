@@ -1,0 +1,109 @@
+:root {
+	--prim-color: #1b1a55; /* Primary color */
+	--sec-color: #070f2b; /* Secondary color - darker shade of primary */
+	--tert-color: #535c91; /* Tertiary color - lighter shade of primary */
+	--quart-color: #9290c3; /* Quaternary color - tint of primary */
+	--font-color: rgb(231, 231, 231);
+	--fady-back-color: rgb(36, 1, 82, 0.2); /* Faded background color */
+}
+
+/********************Default styles******************/
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	background-color: var(--font-color);
+	color: var(--font-color);
+}
+
+a {
+	text-decoration: none;
+	color: var(--font-color);
+}
+
+li {
+	list-style: none;
+}
+
+button {
+	padding: 10px;
+	width: fit-content;
+	margin: 20px auto;
+	background-color: var(--prim-color);
+	border: none;
+	border-radius: 10px;
+	font-size: 17px;
+	color: var(--font-color);
+	box-shadow: 1px 1px 5px 0 var(--font-color);
+	text-wrap: nowrap;
+}
+
+button:hover {
+	background-color: var(--sec-color);
+}
+/***********************************************/
+
+.landing-overlay {
+	display: flex;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	z-index: 1;
+	backdrop-filter: blur(2px);
+}
+
+.landing-content {
+	display: flex;
+	position: absolute;
+	background: linear-gradient(var(--prim-color), var(--tert-color));
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 2;
+	overflow: hidden;
+	max-width: 400px;
+	border-radius: 20px;
+	flex-direction: column;
+	text-align: center;
+	padding: 20px;
+	color: var(--font-color);
+	gap: 10px;
+	justify-content: center;
+	font-size: 20px;
+	border: none;
+	max-width: 250px;
+}
+
+.landing-content h1 {
+	font-size: 35px;
+	border-bottom: 1px solid var(--quart-color);
+	width: fit-content;
+	margin: auto;
+	color: var(--quart-color);
+	font-size: 40px;
+	display: none;
+}
+
+.landing-content img {
+	max-width: 90%;
+	margin: 10px auto;
+	background-color: var(--font-color);
+	padding: 0;
+	border-radius: 20px;
+	background-color: transparent;
+}
+
+.landing-content .overlay-buttons {
+	display: flex;
+	justify-content: space-evenly;
+	margin: auto;
+	gap: 20px;
+}
+
+.main-content {
+	display: block !important;
+	z-index: 2;
+	color: black;
+}
