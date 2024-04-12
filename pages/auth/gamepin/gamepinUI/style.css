@@ -1,14 +1,13 @@
 .gamepin {
-    background-color: rgba(72, 9, 131, 0.459);
-    border: 1px solid #848484;
-    border-radius: 20px;
-    padding: 20px;
-    margin: 120px auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 50%;
-    max-width: 600px;
-    box-sizing: border-box;
-}   
+    position: absolute;
+    background-color: rgb(190, 137, 190);
+    padding:20px;
+    border: 1px solid purple;
+    border-radius: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
 input[type="text"] {
     width: 100%;
@@ -29,13 +28,14 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: rgb(184, 173, 238);
+    background-color: rgb(156, 156, 156);
 }
 
+
 form {
-    margin: 100px auto; 
+    margin: 10px; 
     text-align: center; 
-    max-width: 400px; 
+    max-width: 300px; 
 }
 
 label {
@@ -43,10 +43,22 @@ label {
 }
 
 .logo {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
+    margin: 8px auto;
     border: 1px solid #0e263d;
-    border-radius: 200px;
-    box-sizing: border-box;   
+    border-radius: 50%;
+}
+
+.img {
+    filter: blur(5px);
+}
+
+.backB {
+    border-radius: 50%;
+    padding: 15px;
+    background-color: rgba(128, 0, 128, 0.377);
+    border-color: purple;
+}
+
+.backB:hover {
+    background-color: rgba(128, 0, 128, 0.055);
 }
