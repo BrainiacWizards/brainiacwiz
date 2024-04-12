@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../../assets/css/style.css">
-    <link rel="stylesheet" href="../../../assets/css/host.css">
+    <link rel="stylesheet" href="../../../assets/css/style.css" />
+    <link rel="stylesheet" href="../../../assets/css/host.css" />
     <title>Host Vew | BrainiacWiz</title>
   </head>
   <body>
@@ -12,8 +12,15 @@
     <main>
       <section class="host-view">
         <div class="header">
-          <h2>Game Code</h2>
-          <p>Game Code: <span>123456</span></p>
+          <div class="quiz-details">
+            <h1 id="title">Title: Tech Evolution</h1>
+            <h3 id="players">Players: <span>3</span></h3>
+            <h4 id="questions">Questions: <span>7</span></h4>
+          </div>
+          <div class="game-code">
+            <h2>Game Code</h2>
+            <p id="code-view"><span>123456</span></p>
+          </div>
         </div>
         <div class="players-block">
           <h2>Players</h2>
@@ -25,8 +32,8 @@
           </ul>
         </div>
         <div class="controls">
-          <h2>Start Game</h2>
-          <button>Start Game</button>
+          <button id="host-start-btn">Start Game</button>
+          <button id="host-cancel-btn">Cance Game</button>
         </div>
       </section>
     </main>
