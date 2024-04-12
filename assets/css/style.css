@@ -5,6 +5,7 @@
 	--quart-color: #9290c3; /* Quaternary color - tint of primary */
 	--font-color: rgb(231, 231, 231);
 	--fady-back-color: rgb(36, 1, 82, 0.2); /* Faded background color */
+	--shadow-color: rgba(7, 15, 43, 0.7);
 }
 
 /********************Default styles******************/
