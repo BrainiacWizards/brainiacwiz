@@ -1,3 +1,7 @@
+body{
+    background-image: url("../../../assets/img/Untitled.png");
+}
+
 .generatePIN {
     position: absolute;
     background-color: rgb(190, 137, 190);
@@ -7,6 +11,8 @@
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 1;
+    
 }
 
 .header {

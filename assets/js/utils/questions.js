@@ -58,4 +58,23 @@ const questions = {
 	},
 };
 
-export { questions };
+const topics = [
+	{
+		id: 1,
+		name: 'Machine Learning',
+	},
+	{
+		id: 2,
+		name: 'Web Development',
+	},
+	{
+		id: 3,
+		name: 'Data Science',
+	},
+	{
+		id: 4,
+		name: 'Mobile App Development',
+	},
+];
+
+export { questions, topics };
