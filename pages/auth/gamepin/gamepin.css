@@ -37,12 +37,29 @@ body{
 }
 
 .text {
-    background-color: rgb(240, 181, 230);
-    border: 1px solid purple;
+    background-color: rgb(252, 234, 249);
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 10px;
 }
 
 .background {
     filter: blur(5px);
     margin: auto;
     position: absolute;
+}
+
+.button1 {
+    position: absolute;
+    background-color: rgba(128, 0, 128, 0.377);
+    border-radius: 50%;
+    padding: 15px;
+
+}
+
+.button2 {
+    position: absolute;
+    right: 20px;
+    background-color: rgba(128, 0, 128, 0.377);
+    border-radius: 50%;
+    padding: 15px;
 }
