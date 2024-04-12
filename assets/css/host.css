@@ -1,61 +1,90 @@
-.host-view{
-    display: flex;
-    flex-direction: column;
+.host-view {
+	display: flex;
+	flex-direction: column;
 }
 
-.host-view .header{
-    background-color: var(--tert-color);
-    color: var(--font-color);
-    display: flex;
-    justify-content: space-between;
-    margin: 0;
-    padding: 10px 40px;
+.host-view .header {
+	background-color: var(--prim-color);
+	color: var(--font-color);
+	display: flex;
+	justify-content: space-between;
+	margin: 0;
+	padding: 10px 40px;
 }
 
-.host-view .header .quiz-details{
-    display: flex;
-    flex-direction: column;
-    background-color: var(--quart-color);
-    border-radius: 20px;
-    padding: 10px;
-    color: var(--prim-color)
+.host-view .header .quiz-details {
+	display: flex;
+	flex-direction: column;
+	background-color: var(--quart-color);
+	border-radius: 20px;
+	padding: 10px;
+	color: var(--prim-color);
 }
 
-.host-view .header .quiz-details #title{
-    font-size: 30px;
-    font-weight: bold;
+.host-view .header .quiz-details #title {
+	font-size: 30px;
+	font-weight: bold;
 }
 
-.host-view .header .game-code{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.host-view .header .game-code {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-.host-view .header .game-code #code-view{
-    color: var(--prim-color);
-    font-weight: bold;
-    font-size: 25px;
-    background-color: var(--quart-color);
-    border-radius: 20px;
-    padding: 5px;
+.host-view .header .game-code #code-view {
+	color: var(--prim-color);
+	font-weight: bold;
+	font-size: 25px;
+	background-color: var(--quart-color);
+	border-radius: 20px;
+	padding: 5px;
 }
 
-.host-view .controls{
-    display: flex;
-    justify-content: center;
-    margin: 0;
-    gap: 0;
-    width: 100%;
-    background-color: var(--tert-color);
+.host-view .controls {
+	display: flex;
+	justify-content: center;
+	margin: 0;
+	gap: 0;
+	width: 100%;
+	background-color: var(--tert-color);
 }
 
-.host-view .players-block{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin: 0;
-    color: var(--prim-color);
-    padding: 20px;
+.host-view .players-block {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	margin: 0;
+	color: var(--prim-color);
+	padding: 20px;
+	font-size: 30px;
+}
+
+.host-view .players-block .players {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 30px;
+	margin: 0;
+	color: var(--prim-color);
+	padding: 20px;
+	max-width: 600px;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.host-view .players-block .players .player {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: var(--prim-color);
+	color: var(--font-color);
+	border-radius: 20px;
+	padding: 10px;
+	font-size: 25px;
+	min-width: 150px;
+	min-height: 50px;
+	justify-content: center;
+	align-items: center;
 }

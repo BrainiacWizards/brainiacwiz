@@ -5,17 +5,29 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="../../../assets/css/style.css" />
 		<link rel="stylesheet" href="../../../assets/css/host.css" />
+		<link
+			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+			rel="stylesheet"
+		/>
 		<title>Host Vew | BrainiacWiz</title>
 	</head>
 	<body>
-		<header></header>
+		<header class="main-header">
+			<div class="logo">
+				<img src="../../../assets/img/brainacwiz-logo.jpeg" alt="Logo" />
+			</div>
+
+			<div class="circular-button">
+				<a href="../../auth/auth.html"><i class="bx bx-user"></i></a>
+			</div>
+		</header>
 		<main>
 			<section class="host-view">
 				<div class="header">
 					<div class="quiz-details">
 						<h1 id="title">Title: Tech Evolution</h1>
-						<h3 id="players">Players: <span>3</span></h3>
-						<h4 id="questions">Questions: <span>7</span></h4>
+						<h3 id="player-count">Players: <span>3</span></h3>
+						<h4 id="questions-count">Questions: <span>7</span></h4>
 					</div>
 					<div class="game-code">
 						<h2>Game Code</h2>
@@ -24,19 +36,33 @@
 				</div>
 				<div class="players-block">
 					<h2>Players</h2>
-					<ul class="players">
-						<li>Player 1</li>
-						<li>Player 2</li>
-						<li>Player 3</li>
-						<li>Player 4</li>
-					</ul>
+					<ul class="players"> </ul>
 				</div>
 				<div class="controls">
 					<button id="host-start-btn">Start Game</button>
-					<button id="host-cancel-btn">Cance Game</button>
+					<button id="host-cancel-btn">Cancel Game</button>
 				</div>
 			</section>
 		</main>
-		<footer></footer>
+		<footer>
+			<nav class="navbar">
+				<ul>
+					<li
+						><a href="#"><i class="bx bx-home"></i> Home</a></li
+					>
+					<li
+						><a href="#"><i class="bx bx-book"></i> My Library</a></li
+					>
+					<li
+						><a href="#"><i class="bx bx-info-circle"></i> About</a></li
+					>
+					<li
+						><a href="#"><i class="bx bx-envelope"></i> Contact</a></li
+					>
+				</ul>
+			</nav>
+		</footer>
+
+		<script type="module" src="../../../assets/js/host.js"></script>
 	</body>
 </html>
