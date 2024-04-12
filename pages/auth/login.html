@@ -7,16 +7,10 @@
 		<link rel="stylesheet" href="styleAuth.css" />
 		<link rel="stylesheet" href="../../assets/css/style.css" />
 	</head>
-
 	<body>
 		<div class="wrapper">
-			<h1>Sign Up</h1>
-			<form action="#" id="signup-form">
-				<div class="form-group">
-					<label for="username">Username:</label>
-					<input type="text" id="username" name="username" required />
-				</div>
-
+			<h1>Log in</h1>
+			<form id="login-form">
 				<div class="form-group">
 					<label for="email">Email:</label>
 					<input type="email" id="email" name="email" required />
@@ -28,31 +22,18 @@
 				</div>
 
 				<div class="form-group">
-					<label for="confirmPassword">Confirm Password:</label>
-					<input
-						type="password"
-						id="confirmPassword"
-						name="confirmPassword"
-						required
-					/>
-				</div>
-
-				<div class="form-group">
-					<div class="terms">
-						<input type="checkbox" id="terms" name="terms" required />
-						<label for="terms"
-							>I agree to these <a href="#">Terms & Conditions </a>
-						</label>
+					<div class="recover">
+						<a href="#">Forgot Password?</a>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<button type="submit">Sign Up</button>
+					<button type="submit">Log in</button>
 				</div>
 			</form>
 
 			<div class="login">
-				<p>Already have an account? <a href="login.html">Login</a></p>
+				<p>No account? <a href="./auth.html">Sign Up</a></p>
 			</div>
 		</div>
 	</body>
