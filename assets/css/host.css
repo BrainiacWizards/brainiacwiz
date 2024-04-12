@@ -1,0 +1,8 @@
+.host-view{
+    display: flex;
+    flex-direction: column;
+}
+
+.host-view .header{
+    background-color: var(--tert-color);
+}
