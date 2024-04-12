@@ -43,11 +43,12 @@ button {
 
 button:hover {
 	background-color: var(--sec-color);
+	box-shadow: 3px 3px 5px 0 var(--shadow-color);
 }
 /***********************************************/
 
 .landing-overlay {
-	display: flex;
+	display: none;
 	position: absolute;
 	height: 100%;
 	width: 100%;
@@ -110,10 +111,12 @@ button:hover {
 }
 
 .main-header {
+	display: block;
 	background-color: var(--tert-color);
-	color: white;
+	color: var(--font-color);
 	text-align: center;
 	padding: 20px 0;
+	min-height: 35px;
 }
 
 .main-content {
@@ -139,7 +142,7 @@ button:hover {
 }
 
 .circular-button i {
-	color: white;
+	color: var(--font-color);
 	font-size: 24px;
 }
 
@@ -245,10 +248,57 @@ footer {
 }
 
 .navbar ul li a {
-	color: white;
+	color: var(--font-color);
 	text-decoration: none;
 }
 
 .navbar ul li a:hover {
 	color: #ccc;
+}
+
+.quiz-options {
+	display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	background-color: var(--prim-color);
+	padding: 20px;
+	border-radius: 20px;
+	box-shadow: 2px 2px 5px 0 var(--shadow-color);
+}
+
+.quiz-options .head {
+	margin-top: 15px;
+	color: var(--font-color);
+}
+
+.quiz-options #close-btn {
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	color: var(--quart-color);
+	border: none;
+	border-radius: 20%;
+	padding: 5px;
+	font-size: 20px;
+}
+
+.quiz-options #close-btn:hover {
+	background-color: var(--tert-color);
+}
+
+.quiz-options .body {
+	margin-top: 15px;
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+}
+
+.quiz-options .body button {
+	background-color: var(--sec-color);
+	color: var(--font-color);
 }
