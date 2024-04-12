@@ -80,7 +80,7 @@
 	align-items: center;
 	background-color: var(--prim-color);
 	color: var(--font-color);
-	border-radius: 20px;
+	border-radius: 20px 40px;
 	padding: 10px;
 	font-size: 25px;
 	min-width: 150px;
