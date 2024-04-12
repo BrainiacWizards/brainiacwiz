@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generate a gamePIN</title>
-    <script src="./gamepin.js" defer></script>
-    <link rel="stylesheet" href="gamepin.css">
-</head>
-<body>
-    <div class="generatePIN">
-        <button id="backB" class="button1">BACK</button>
-        <button id="nextB" class="button2">NEXT</button>
-        <img class="logo" src="gamepinUI/logo.jpeg">
-        <h1 class="">Generate a gamepin:</h1>
-        <form id="pinForm">
-            <label for="pinDisplay">Generated PIN: </label>
-            <input type="text" id="pinDisplay" class="text" readonly>
-            <button type="button" onclick="generatePIN()" class="button">Generate PIN</button>
-        </form>
-    </div>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Generate a gamePIN</title>
+		<script src="./gamepin.js" defer></script>
+		<link rel="stylesheet" href="gamepin.css" />
+		<link rel="stylesheet" href="../../../assets/css/style.css" />
+	</head>
+	<body>
+		<div class="generatePIN">
+			<button id="backB" class="button1">BACK</button>
+			<button id="nextB" class="button2">NEXT</button>
+			<img class="logo-image" src="gamepinUI/logo.jpeg" />
+			<h1 class="">Generate a gamepin:</h1>
+			<form id="pinForm">
+				<input type="text" id="pinDisplay" class="text" readonly />
+				<button type="button" onclick="generatePIN()" class="button"
+					>Generate PIN</button
+				>
+			</form>
+		</div>
+	</body>
 </html>
