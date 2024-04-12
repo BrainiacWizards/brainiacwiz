@@ -1,0 +1,140 @@
+.main-header {
+	background-color: #535c91;
+	color: white;
+	text-align: center;
+	padding: 20px 0;
+}
+
+.main-content {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	background-color: #535c91;
+}
+.circular-button {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: #070f2b;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	z-index: 1;
+	margin-right: 50px;
+}
+
+.circular-button i {
+	color: white;
+	font-size: 24px;
+}
+
+.logo {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	overflow: hidden;
+	margin-left: 50px;
+}
+
+.logo img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.text {
+	position: absolute;
+	top: 110px;
+	left: 70px;
+	color: white;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.container {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 10px;
+	align-items: flex-start;
+	justify-content: center;
+	margin-left: 47px;
+	margin-top: 170px;
+	border-radius: 20px;
+}
+
+.card {
+	width: 80%;
+	height: 200px;
+	text-align: center;
+	transition: all 300ms;
+	border-radius: 20px;
+	background-color: #070f2b;
+	box-shadow: 15px 9px 10px 1px rgba(7, 15, 43, 0.7);
+}
+
+.btn {
+	height: 40px;
+	width: 70px;
+	border-radius: 15px;
+	margin-top: 70px;
+	background-color: #070f2b;
+	color: floralwhite;
+}
+
+.card:hover {
+	width: 225px;
+}
+
+.card:nth-child(2),
+.card:nth-child(4) {
+	margin-top: 20px;
+}
+
+footer {
+	position: relative;
+	background-color: #535c91;
+	padding: 0;
+	bottom: 0px;
+	height: 100%;
+	margin-top: 20px;
+	margin-bottom: 0;
+	overflow: hidden;
+}
+
+.navbar {
+	text-align: center;
+	border-radius: 50px 10px; /* Add border radius */
+	background-color: #9290c3; /* Add background color */
+	padding: 10px;
+	margin: 0;
+}
+
+.navbar ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+.navbar ul li {
+	display: inline;
+	margin-right: 20px;
+}
+
+.navbar ul li:last-child {
+	margin-right: 0;
+}
+
+.navbar ul li a {
+	color: white;
+	text-decoration: none;
+}
+
+.navbar ul li a:hover {
+	color: #ccc;
+}
