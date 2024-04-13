@@ -76,6 +76,7 @@ button:hover {
 	font-size: 20px;
 	border: none;
 	max-width: 250px;
+	min-width: 220px;
 }
 
 .landing-content h1 {
@@ -276,6 +277,7 @@ footer {
 .quiz-options .head {
 	margin-top: 15px;
 	color: var(--font-color);
+	text-align: center;
 }
 
 .quiz-options #close-btn {
