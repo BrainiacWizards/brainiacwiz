@@ -2,18 +2,18 @@
 	position: absolute;
 	background-color: var(--quart-color);
 	padding: 0 20px;
-	border: 1px solid var(--prim-color);
 	border-radius: 30px;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	box-shadow: 2px 2px 5px var(--shadow-color);
 }
 
 input[type='text'] {
 	width: 100%;
 	padding: 10px;
 	margin: 8px 0;
-	border: 1px solid #ced4da;
+	border: 1px solid var(--font-color);
 	border-radius: 20px;
 	box-sizing: border-box;
 	outline: none;
@@ -23,7 +23,7 @@ input[type='submit'] {
 	width: 100%;
 	padding: 10px;
 	margin: 8px 0;
-	border: 1px solid #ced4da;
+	border: 1px solid var(--font-color);
 	border-radius: 20px;
 	box-sizing: border-box;
 }
@@ -48,7 +48,7 @@ label {
 
 .logo-image {
 	margin: 8px auto;
-	border: 1px solid #0e263d;
+	border: 1px solid var(--sec-color);
 	border-radius: 50%;
 	max-width: 200px;
 }
@@ -67,4 +67,8 @@ label {
 
 .backB:hover {
 	background-color: rgba(128, 0, 128, 0.055);
+}
+
+#error-message {
+	color: red;
 }

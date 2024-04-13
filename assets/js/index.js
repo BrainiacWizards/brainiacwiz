@@ -16,7 +16,7 @@ const card = ({ id, name }) => {
 	return `
 	<div class="quiz-card" id="${id}">
 		<h1 class="heading">${name}</h1>
-		<button class="quiz-btn" id=${id}">Tap To Play!</button>
+		<button class="quiz-btn" id="${id}">Tap To Play!</button>
 	</div>
 `;
 };

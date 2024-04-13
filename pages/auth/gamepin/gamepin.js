@@ -25,12 +25,43 @@ window.addEventListener('load', function () {
 const backB = document.getElementById('backB');
 const nextB = document.getElementById('nextB');
 
-backB.addEventListener('click', () => {
-	window.history.back();
-});
+if (backB) {
+	backB.addEventListener('click', () => {
+		window.history.back();
+	});
+}
 
 const topic = new URLSearchParams(window.location.search).get('topic');
 
-nextB.addEventListener('click', () => {
-	window.location.href = `../../play/host/host.html?gamePin=${pin}&topic=${topic}`;
+if (nextB) {
+	nextB.addEventListener('click', () => {
+		window.location.href = `../../play/host/host.html?gamePin=${pin}&topic=${topic}`;
+	});
+}
+
+// input game pin form handling
+const inputGamePin = document.getElementById('input-gamepin-form');
+const gamePin = document.getElementById('gamepin');
+const error = document.getElementById('error-message');
+
+inputGamePin.addEventListener('submit', (e) => {
+	e.preventDefault();
+	if (!validateInputs(gamePin)) {
+		return;
+	}
+
+	// redirect to quiz play page
+	window.location.href = `../../../play/quiz.html?gamePin=${gamePin.value}&topic=${topic}`;
 });
+
+function validateInputs(gamePin) {
+	gamePin = gamePin.value;
+	if (gamePin.length !== 7) {
+		error.innerHTML = 'Invalid Game PIN';
+		error.style.display = 'block';
+		return false;
+	}
+
+	error.style.display = 'none';
+	return true;
+}

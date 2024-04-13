@@ -167,3 +167,16 @@
 .score-board .bottom button {
 	width: fit-content;
 }
+
+@media (max-width: 400px) {
+	.quiz-container .quiz-body .quiz-options-block {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+
+	.quiz-container .quiz-body .quiz-options-block button {
+		width: fit-content !important;
+		margin: 10px auto;
+	}
+}

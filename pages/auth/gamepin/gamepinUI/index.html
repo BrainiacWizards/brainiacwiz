@@ -12,13 +12,14 @@
 			<div class="gamepin">
 				<br />
 				<button id="backB" class="backB">BACK</button>
-				<form>
+				<form id="input-gamepin-form">
 					<img
 						src="../../../../assets/img/brainacwiz-logo.jpeg"
 						class="logo-image"
 					/>
 					<br />
 					<label for="gamepin">Enter game pin</label>
+					<p id="error-message"></p>
 					<input type="text" id="gamepin" name="gamepin" required />
 
 					<label for="name">Your username</label>
@@ -28,5 +29,7 @@
 				</form>
 			</div>
 		</main>
+
+		<script type="module" src="../gamepin.js"></script>
 	</body>
 </html>
