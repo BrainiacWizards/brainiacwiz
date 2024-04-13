@@ -8,8 +8,10 @@
 	color: var(--font-color);
 	display: flex;
 	justify-content: space-between;
+	flex-wrap: wrap;
 	margin: 0;
 	padding: 10px 40px;
+	gap: 20px;
 }
 
 .host-view .header .quiz-details {
@@ -19,6 +21,7 @@
 	border-radius: 20px;
 	padding: 10px;
 	color: var(--prim-color);
+	text-align: center;
 }
 
 .host-view .header .quiz-details #title {
@@ -30,6 +33,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	margin: auto;
 }
 
 .host-view .header .game-code #code-view {

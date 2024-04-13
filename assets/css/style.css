@@ -176,26 +176,28 @@ button:hover {
 
 .container {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: repeat(2, minmax(200px, 500px));
 	grid-gap: 10px;
 	align-items: grid-start;
 	justify-content: center;
-	margin-left: 47px;
 	margin-top: 170px;
 	margin-bottom: 50px;
 	border-radius: 20px;
+	width: fit-content;
+	margin-inline: auto;
+	padding: 0 20px;
 }
 
 .quiz-card {
 	width: 80%;
-	height: 200px;
+	height: fit-content;
 	text-align: center;
 	transition: all 300ms;
 	border-radius: 20px;
 	background-color: var(--quart-color);
 	box-shadow: 15px 9px 10px 0px var(--shadow-color);
 	color: var(--sec-color);
-	padding: 20px 0;
+	padding: 20px 20px 0px 20px;
 }
 
 .btn {
@@ -207,8 +209,14 @@ button:hover {
 	color: floralwhite;
 }
 
+.quiz-img {
+	width: 90%;
+	border-radius: 10%;
+	margin: 20px 0 0 0;
+}
+
 .quiz-card:hover {
-	width: 225px;
+	width: 50%;
 }
 
 .quiz-card:nth-child(2),

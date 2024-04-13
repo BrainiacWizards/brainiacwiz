@@ -166,18 +166,22 @@ const topics = [
 	{
 		id: 0,
 		name: 'Tech Trends',
+		image: 'tech-trends.jpeg',
 	},
 	{
 		id: 1,
 		name: 'General Knowledge',
+		image: 'general-knowledge.jpg',
 	},
 	{
 		id: 2,
 		name: 'Programming and coding',
+		image: 'programming.webp',
 	},
 	{
 		id: 3,
 		name: 'Mathematics',
+		image: 'mathematics.webp',
 	},
 ];
 

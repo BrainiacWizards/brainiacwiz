@@ -12,10 +12,11 @@ exploreBtn.addEventListener('click', () => {
 	landingOverlay.style.display = 'none';
 });
 
-const card = ({ id, name }) => {
+const card = ({ id, name, image }) => {
 	return `
 	<div class="quiz-card" id="${id}">
 		<h1 class="heading">${name}</h1>
+		<img src="assets/img/${image}" alt="${name}" class="quiz-img" />
 		<button class="quiz-btn" id="${id}">Tap To Play!</button>
 	</div>
 `;
