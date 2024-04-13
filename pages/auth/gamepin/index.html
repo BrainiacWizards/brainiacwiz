@@ -7,19 +7,58 @@
 		<script src="./gamepin.js" defer></script>
 		<link rel="stylesheet" href="gamepin.css" />
 		<link rel="stylesheet" href="../../../assets/css/style.css" />
+		<link
+			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+			rel="stylesheet"
+		/>
 	</head>
 	<body>
-		<div class="generatePIN">
-			<button id="backB" class="button1">BACK</button>
-			<button id="nextB" class="button2">NEXT</button>
-			<img class="logo-image" src="gamepinUI/logo.jpeg" />
-			<h1 class="">Generate a gamepin:</h1>
-			<form id="pinForm">
-				<input type="text" id="pinDisplay" class="text" readonly />
-				<button type="button" onclick="generatePIN()" class="button"
-					>Generate PIN</button
-				>
-			</form>
-		</div>
+		<!-- header  -->
+		<header class="main-header">
+			<div class="logo">
+				<img src="../../../assets/img/brainacwiz-logo.jpeg" alt="Logo" />
+			</div>
+
+			<div class="circular-button">
+				<i class="bx bx-user"></i>
+			</div>
+		</header>
+		<main class="body-content">
+			<div class="generatePIN">
+				<button id="nextB" class="button2"
+					><i class="fa-regular fa-circle-right"></i
+				></button>
+				<img class="logo-image" src="gamepinUI/logo.jpeg" />
+				<h1 class="gamepin-heading">Generate a gamepin:</h1>
+				<form id="pinForm">
+					<input type="text" id="pinDisplay" class="text" readonly />
+					<button type="button" onclick="generatePIN()" class="button"
+						>Generate PIN</button
+					>
+				</form>
+			</div>
+		</main>
+		<footer>
+			<nav class="navbar">
+				<ul>
+					<li>
+						<a href="../../index.html"><i class="bx bx-home"></i><p>Home</p></a>
+					</li>
+					<li>
+						<a href="#"><i class="bx bx-book"></i><p>My Library</p></a>
+					</li>
+					<li>
+						<a href="#"><i class="bx bx-info-circle"></i><p>About</p></a>
+					</li>
+					<li>
+						<a href="#"><i class="bx bx-envelope"></i><p>Contact</p></a>
+					</li>
+				</ul>
+			</nav>
+		</footer>
+		<script
+			src="https://kit.fontawesome.com/cda065bf16.js"
+			crossorigin="anonymous"
+		></script>
 	</body>
 </html>

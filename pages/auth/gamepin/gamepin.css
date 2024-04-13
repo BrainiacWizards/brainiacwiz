@@ -7,7 +7,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	position: absolute;
-	background-color: var(--tert-color);
+	background-color: var(--quart-color);
 	padding: 20px;
 	border: 1px solid var(--quart-color);
 	border-radius: 30px;
@@ -24,16 +24,21 @@ body {
 	padding-left: 50px;
 }
 
+.gamepin-heading {
+	text-align: center;
+	font-size: 25px;
+}
+
 .button {
-	background-color: var(--tert-color);
-	border: 1px solid var(--quart-color);
+	background-color: var(--prim-color);
 	border-radius: 10px;
 	font-size: 15px;
 }
 
 .button:hover {
-	background-color: var(--quart-color);
-	color: var(--tert-color);
+	background-color: var(--tert-color);
+	color: var(--font-color);
+	font-weight: bold;
 }
 .logo-image {
 	border-radius: 50%;
@@ -46,21 +51,24 @@ body {
 	border-radius: 10px;
 }
 
-.button1 {
-	position: absolute;
-	border-radius: 50%;
-	padding: 15px;
-	top: 10px;
-	left: 20px;
-}
-
 .button2 {
 	position: absolute;
 	right: 20px;
-	border-radius: 50%;
-	padding: 15px;
-	top: 10px;
-	right: 20px;
+	border-radius: 0 50% 50% 0;
+	padding: 5px 10px;
+	top: 0px;
+	right: 10px;
+	background-color: transparent;
+	box-shadow: none;
+	color: var(--prim-color);
+	font-size: 30px;
+	cursor: pointer;
+}
+
+.button2:hover {
+	background-color: transparent;
+	box-shadow: none;
+	color: var(--tert-color);
 }
 
 #pinForm {
