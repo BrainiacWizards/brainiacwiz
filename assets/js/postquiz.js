@@ -6,6 +6,7 @@ const gamePin =
 	new URLSearchParams(window.location.search).get('gamePin') || undefined;
 const title = document.getElementById('title');
 const questionCount = document.getElementById('questions-count');
+const playBtn = document.getElementById('play-again');
 
 const setQuizDetails = () => {
 	if (topicID >= topics.length || topicID === undefined || topicID < 0) {
@@ -22,3 +23,7 @@ const setQuizDetails = () => {
 };
 
 setQuizDetails();
+
+playBtn.addEventListener('click', () => {
+	window.location.href = `../auth/gamepin/gamepinUI/index.html?topic=${topicID}`;
+});
