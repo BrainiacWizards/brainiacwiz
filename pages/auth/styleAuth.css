@@ -15,6 +15,13 @@
 	width: 100%;
 	text-align: left;
 }
+#login-form {
+	min-width: 240px;
+}
+
+#login-form .form-group label {
+	margin-left: 15px;
+}
 
 .wrapper {
 	width: 230px;
@@ -101,7 +108,7 @@
 }
 .wrapper .recover {
 	font-size: 0.8rem;
-	margin: 0.5rem;
+	margin: 0;
 	color: #636363;
 	text-decoration: none;
 }

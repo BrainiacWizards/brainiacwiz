@@ -181,6 +181,7 @@ button:hover {
 	justify-content: center;
 	margin-left: 47px;
 	margin-top: 170px;
+	margin-bottom: 50px;
 	border-radius: 20px;
 }
 
@@ -234,12 +235,14 @@ footer {
 }
 
 .navbar ul {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 	list-style-type: none;
 	padding: 0;
 }
 
 .navbar ul li {
-	display: inline;
 	margin-right: 20px;
 }
 
@@ -248,12 +251,11 @@ footer {
 }
 
 .navbar ul li a {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
 	color: var(--font-color);
 	text-decoration: none;
-}
-
-.navbar ul li a:hover {
-	color: #ccc;
 }
 
 .quiz-options {
@@ -307,5 +309,24 @@ footer {
 	background-color: var(--tert-color);
 	margin: 0;
 	padding: 50px 0;
-	min-height: 90vh;
+	min-height: 88vh;
+}
+
+.no-background {
+	background-color: transparent !important;
+	padding: 0 !important;
+}
+
+footer .navbar ul li a:hover {
+	color: var(--prim-color) !important;
+}
+
+/* responsive css */
+@media (max-width: 400px) {
+	footer .navbar ul li i {
+		font-size: 25px;
+	}
+	footer .navbar ul li p {
+		display: none;
+	}
 }
