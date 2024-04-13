@@ -1,24 +1,42 @@
 import { questions, topics } from './utils/questions.js';
 
-if (!questions || !questions.techAnswers || !questions.techQuestions) {
-	throw new Error('Questions data is not properly imported or is missing.');
-}
-
 const quizOptBtns = document.querySelectorAll('.quiz-opt-btn');
 const quizTimer = document.querySelector('.quiz-timer > #timer');
 const quizQuestion = document.querySelector('.quiz-question #question');
+const quizTitle = document.querySelector('#quiz-title');
 const gamePin = new URLSearchParams(window.location.search).get('gamePin');
-const topic = new URLSearchParams(window.location.search).get('topic');
+const topicID = new URLSearchParams(window.location.search).get('topic');
+
+//topic questions and correct answer
+let T, Q, A, CA;
+
+const setQuizDetails = () => {
+	if (!topicID) {
+		alert('Please select a topic to continue');
+		window.location.href = '../../index.html';
+	} else if (topicID >= topics.length) {
+		alert('Invalid topic selected');
+		window.location.href = '../../index.html';
+	}
+
+	const topic = topics.find((topic) => topic.id === parseInt(topicID));
+	quizTitle.innerHTML = 'Title: ' + topic.name;
+
+	T = topicID;
+	Q = `Q${T}`;
+	A = `A${T}`;
+	CA = `CA${T}`;
+};
 
 const setQuestions = (question) => {
-	questions.techAnswers[question] = questions.techAnswers[question].sort(
+	questions[A][question] = questions[A][question].sort(
 		() => Math.random() - 0.5,
 	);
 
-	quizQuestion.innerHTML = questions.techQuestions[question];
+	quizQuestion.innerHTML = questions[Q][question];
 
 	quizOptBtns.forEach((btn, index) => {
-		btn.innerHTML = questions.techAnswers[question][index];
+		btn.innerHTML = questions[A][question][index];
 	});
 
 	setQuizBtns();
@@ -56,6 +74,7 @@ function setQuizBtns() {
 	});
 }
 
+setQuizDetails();
 setQuizBtns();
 setQuestions(0);
 
@@ -66,7 +85,7 @@ const setQuizTImer = ({ duration = 30, speed = 200 }) => {
 
 	let intervalId = setInterval(() => {
 		if (time <= 0) {
-			if (question >= questions.techQuestions.length - 1) {
+			if (question >= questions[Q].length - 1) {
 				moveToPostQuiz(intervalId);
 			}
 
@@ -89,5 +108,5 @@ setQuizTImer({ duration: 30, speed: 200 });
 
 function moveToPostQuiz(intervalId) {
 	clearInterval(intervalId); // stop the interval
-	window.location.href = `./post-quiz.html?gamePin=${gamePin}&topic=${topic}`;
+	window.location.href = `./post-quiz.html?gamePin=${gamePin}&topic=${topicID}`;
 }

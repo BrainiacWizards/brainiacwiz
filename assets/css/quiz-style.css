@@ -41,6 +41,10 @@
 	background-color: var(--font-color);
 }
 
+#quiz-title {
+	text-align: center;
+}
+
 .quiz-container .quiz-body {
 	display: flex;
 	position: relative;
