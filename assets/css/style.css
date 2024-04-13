@@ -49,16 +49,16 @@ button:hover {
 
 .landing-overlay {
 	display: flex;
-	position: absolute;
+	position: fixed;
 	height: 100%;
 	width: 100%;
 	z-index: 1;
-	backdrop-filter: blur(2px);
+	backdrop-filter: blur(4px);
 }
 
 .landing-content {
 	display: flex;
-	position: absolute;
+	position: fixed;
 	background: linear-gradient(var(--prim-color), var(--tert-color));
 	top: 50%;
 	left: 50%;
@@ -138,7 +138,7 @@ button:hover {
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
-	z-index: 1;
+	z-index: 0;
 	margin-right: 50px;
 }
 
@@ -335,6 +335,10 @@ footer .navbar ul li a:hover {
 @media (max-width: 500px) {
 	.container {
 		grid-template-columns: repeat(1, 1fr);
+	}
+
+	.quiz-card {
+		margin: 10px auto;
 	}
 }
 @media (max-width: 400px) {
