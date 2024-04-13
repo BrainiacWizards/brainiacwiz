@@ -62,10 +62,12 @@
 	text-align: center;
 	justify-content: center;
 	font-size: 30px;
+	z-index: 0;
 }
 
-.quiz-container .quiz-body .quiz-options {
+.quiz-container .quiz-body .quiz-options-block {
 	display: grid;
+	position: relative;
 	grid-template-columns: repeat(2, minmax(100px, 400px));
 	grid-gap: 30px;
 	row-gap: 10px;
@@ -74,9 +76,11 @@
 	max-width: 700px;
 	overflow: hidden;
 	margin-top: 20px;
+	z-index: 0;
+	top: 0;
 }
 
-.quiz-container .quiz-body .quiz-options button {
+.quiz-container .quiz-body .quiz-options-block button {
 	font-size: 20px;
 	min-width: 100px;
 	width: 100%;
