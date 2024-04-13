@@ -1,37 +1,39 @@
 body {
-	background-image: url('../../../assets/img/Untitled.png');
+	/* background-image: url('../../../assets/img/Untitled.png'); */
+	background-color: var(--quart-color) !important;
 }
 
 .generatePIN {
 	display: flex;
 	flex-direction: column;
 	position: absolute;
-	background-color: rgb(190, 137, 190);
-	padding: 40px;
-	border: 1px solid purple;
+	background-color: var(--tert-color);
+	padding: 20px;
+	border: 1px solid var(--quart-color);
 	border-radius: 30px;
 	top: 45%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 1;
 	height: fit-content;
+	max-width: 90%;
 }
 
 .header {
 	font-size: 10px;
 	padding-left: 50px;
-	color: rgb(66, 0, 66);
 }
 
 .button {
-	background-color: rgb(190, 137, 190);
-	border: 1px solid purple;
+	background-color: var(--tert-color);
+	border: 1px solid var(--quart-color);
 	border-radius: 10px;
 	font-size: 15px;
 }
 
 .button:hover {
-	background-color: rgba(128, 0, 128, 0.342);
+	background-color: var(--quart-color);
+	color: var(--tert-color);
 }
 .logo-image {
 	border-radius: 50%;
@@ -39,14 +41,13 @@ body {
 }
 
 .text {
-	background-color: rgb(252, 234, 249);
-	border: 1px solid rgb(255, 255, 255);
+	background-color: var(--prim-color);
+	border: 1px solid var(--quart-color);
 	border-radius: 10px;
 }
 
 .button1 {
 	position: absolute;
-	background-color: rgba(128, 0, 128, 0.377);
 	border-radius: 50%;
 	padding: 15px;
 	top: 10px;
@@ -56,7 +57,6 @@ body {
 .button2 {
 	position: absolute;
 	right: 20px;
-	background-color: rgba(128, 0, 128, 0.377);
 	border-radius: 50%;
 	padding: 15px;
 	top: 10px;
@@ -79,4 +79,5 @@ body {
 	padding: 5px;
 	font-size: 20px;
 	text-align: center;
+	outline: none;
 }
