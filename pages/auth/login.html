@@ -6,36 +6,70 @@
 		<title>DevPost-Quiz | Authentication</title>
 		<link rel="stylesheet" href="styleAuth.css" />
 		<link rel="stylesheet" href="../../assets/css/style.css" />
+		<link
+			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+			rel="stylesheet"
+		/>
 	</head>
 	<body>
-		<div class="wrapper">
-			<h1>Log in</h1>
-			<form id="login-form">
-				<div class="form-group">
-					<label for="email">Email:</label>
-					<input type="email" id="email" name="email" required />
-				</div>
-
-				<div class="form-group">
-					<label for="password">Password:</label>
-					<input type="password" id="password" name="password" required />
-				</div>
-
-				<div class="form-group">
-					<div class="recover">
-						<a href="#">Forgot Password?</a>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<button type="submit">Log in</button>
-				</div>
-			</form>
-
-			<div class="login">
-				<p>No account? <a href="./auth.html">Sign Up</a></p>
+		<!-- header  -->
+		<header class="main-header">
+			<div class="logo">
+				<img src="../../assets/img/brainacwiz-logo.jpeg" alt="Logo" />
 			</div>
-		</div>
+
+			<div class="circular-button">
+				<i class="bx bx-user"></i>
+			</div>
+		</header>
+		<main class="body-content">
+			<div class="wrapper">
+				<h1>Log in</h1>
+				<form id="login-form">
+					<div class="form-group">
+						<label for="email">Email:</label>
+						<input type="email" id="email" name="email" required />
+					</div>
+
+					<div class="form-group">
+						<label for="password">Password:</label>
+						<input type="password" id="password" name="password" required />
+					</div>
+
+					<div class="form-group">
+						<div class="recover">
+							<a href="#">Forgot Password?</a>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<button type="submit">Log in</button>
+					</div>
+				</form>
+
+				<div class="login">
+					<p>No account? <a href="./auth.html">Sign Up</a></p>
+				</div>
+			</div>
+		</main>
+		<footer class="short-footer">
+			<nav class="navbar">
+				<ul>
+					<li
+						><a href="../../index.html"><i class="bx bx-home"></i> Home</a></li
+					>
+					<li
+						><a href="#"><i class="bx bx-book"></i> My Library</a></li
+					>
+					<li
+						><a href="#"><i class="bx bx-info-circle"></i> About</a></li
+					>
+					<li
+						><a href="#"><i class="bx bx-envelope"></i> Contact</a></li
+					>
+				</ul>
+			</nav>
+		</footer>
 	</body>
 	<script type="module" src="./auth.js"></script>
 </html>

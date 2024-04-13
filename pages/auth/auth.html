@@ -6,55 +6,89 @@
 		<title>DevPost-Quiz | Authentication</title>
 		<link rel="stylesheet" href="styleAuth.css" />
 		<link rel="stylesheet" href="../../assets/css/style.css" />
+		<link
+			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+			rel="stylesheet"
+		/>
 	</head>
 
 	<body>
-		<div class="wrapper">
-			<h1>Sign Up</h1>
-			<form action="#" id="signup-form">
-				<div class="form-group">
-					<label for="username">Username:</label>
-					<input type="text" id="username" name="username" required />
-				</div>
-
-				<div class="form-group">
-					<label for="email">Email:</label>
-					<input type="email" id="email" name="email" required />
-				</div>
-
-				<div class="form-group">
-					<label for="password">Password:</label>
-					<input type="password" id="password" name="password" required />
-				</div>
-
-				<div class="form-group">
-					<label for="confirmPassword">Confirm Password:</label>
-					<input
-						type="password"
-						id="confirmPassword"
-						name="confirmPassword"
-						required
-					/>
-				</div>
-
-				<div class="form-group">
-					<div class="terms">
-						<input type="checkbox" id="terms" name="terms" required />
-						<label for="terms"
-							>I agree to these <a href="#">Terms & Conditions </a>
-						</label>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<button type="submit">Sign Up</button>
-				</div>
-			</form>
-
-			<div class="login">
-				<p>Already have an account? <a href="login.html">Login</a></p>
+		<!-- header  -->
+		<header class="main-header">
+			<div class="logo">
+				<img src="../../assets/img/brainacwiz-logo.jpeg" alt="Logo" />
 			</div>
-		</div>
+
+			<div class="circular-button">
+				<i class="bx bx-user"></i>
+			</div>
+		</header>
+		<main class="body-content">
+			<div class="wrapper">
+				<h1>Sign Up</h1>
+				<form action="#" id="signup-form">
+					<div class="form-group">
+						<label for="username">Username:</label>
+						<input type="text" id="username" name="username" required />
+					</div>
+
+					<div class="form-group">
+						<label for="email">Email:</label>
+						<input type="email" id="email" name="email" required />
+					</div>
+
+					<div class="form-group">
+						<label for="password">Password:</label>
+						<input type="password" id="password" name="password" required />
+					</div>
+
+					<div class="form-group">
+						<label for="confirmPassword">Confirm Password:</label>
+						<input
+							type="password"
+							id="confirmPassword"
+							name="confirmPassword"
+							required
+						/>
+					</div>
+
+					<div class="form-group">
+						<div class="terms">
+							<input type="checkbox" id="terms" name="terms" required />
+							<label for="terms"
+								>I agree to these <a href="#">Terms & Conditions </a>
+							</label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<button type="submit">Sign Up</button>
+					</div>
+				</form>
+
+				<div class="login">
+					<p>Already have an account? <a href="login.html">Login</a></p>
+				</div>
+			</div>
+		</main>
+		<footer>
+			<nav class="navbar">
+				<ul>
+					<li
+						><a href="../../index.html"><i class="bx bx-home"></i> Home</a></li
+					>
+					<li
+						><a href="#"><i class="bx bx-book"></i> My Library</a></li
+					>
+					<li
+						><a href="#"><i class="bx bx-info-circle"></i> About</a></li
+					>
+					<li
+						><a href="#"><i class="bx bx-envelope"></i> Contact</a></li
+					>
+				</ul>
+			</nav>
+		</footer>
 	</body>
 	<script type="module" src="./auth.js"></script>
 </html>
