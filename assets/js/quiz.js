@@ -1,4 +1,4 @@
-import { questions } from './utils/questions.js';
+import { questions, topics } from './utils/questions.js';
 
 if (!questions || !questions.techAnswers || !questions.techQuestions) {
 	throw new Error('Questions data is not properly imported or is missing.');
@@ -59,23 +59,22 @@ function setQuizBtns() {
 setQuizBtns();
 setQuestions(0);
 
-const setQuizTImer = ({ duration = 60, speed = 100 }) => {
+const setQuizTImer = ({ duration = 30, speed = 200 }) => {
 	quizTimer.style.color = 'white';
 	let time = duration;
 	let question = 0;
 
-	setInterval(() => {
+	let intervalId = setInterval(() => {
 		if (time <= 0) {
 			if (question >= questions.techQuestions.length - 1) {
-				clearInterval();
-				// redirect to post quiz page
-				window.location.href = `./post-quiz.html?gamePin=${gamePin}&topic=${topic}`;
-				return;
+				moveToPostQuiz(intervalId);
 			}
+
 			question++;
 			setQuestions(question);
 			time = duration;
 		}
+
 		time--;
 		let min = Math.floor(time / 60);
 		let sec = time % 60;
@@ -86,4 +85,9 @@ const setQuizTImer = ({ duration = 60, speed = 100 }) => {
 	}, speed);
 };
 
-setQuizTImer({ duration: 60 });
+setQuizTImer({ duration: 30, speed: 200 });
+
+function moveToPostQuiz(intervalId) {
+	clearInterval(intervalId); // stop the interval
+	window.location.href = `./post-quiz.html?gamePin=${gamePin}&topic=${topic}`;
+}
