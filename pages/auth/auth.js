@@ -47,7 +47,7 @@ function register() {
 		return;
 	}
 
-	alert('All fields are valid');
+	console.log('All fields are valid');
 	fbSignUp(email, password, userName, confirmPassword);
 }
 
@@ -61,7 +61,7 @@ function login(email, password) {
 		return;
 	}
 
-	alert('All fields are valid');
+	console.log('All fields are valid');
 	fbLogin(email, password);
 }
 

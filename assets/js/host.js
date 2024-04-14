@@ -1,5 +1,6 @@
+import { checkLoginStatus } from './main.js';
 import { topics, questions } from './utils/questions.js';
-
+checkLoginStatus({ path: '../../auth/' });
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');
 const playerCount = document.getElementById('player-count');
