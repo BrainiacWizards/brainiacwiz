@@ -64,7 +64,7 @@ const fbLogin = async (email, password) => {
 			email,
 			password,
 		);
-		const user = userCredential.user;
+		const {user} = userCredential;
 
 		const userData = {
 			lastLogin: Date.now(),
