@@ -36,7 +36,7 @@ const fbSignUp = async (email, password, userName) => {
 			email,
 			password,
 		);
-		const user = userCredential.user;
+		const {user} = userCredential;
 		const userRef = ref(database, `users/${user.uid}`);
 		const userData = {
 			email: email,
