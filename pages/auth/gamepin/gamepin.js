@@ -1,3 +1,11 @@
+import { checkLoginStatus } from '../../../assets/js/main.js';
+
+if (window.location.pathname.includes('gamepinUI')) {
+	checkLoginStatus({ path: '../../' });
+} else {
+	checkLoginStatus({ path: '../' });
+}
+
 let pin = '';
 
 function generatePIN() {
