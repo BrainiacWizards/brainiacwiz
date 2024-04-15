@@ -31,7 +31,7 @@ function generatePIN() {
 		document.getElementById('pinDisplay').value = pin;
 		sessionStorage.setItem('gamePin', pin);
 
-		createGamePinTable(pin);
+		createGamePinTable({ gamePin: pin, topicID: topic });
 		generated = true;
 	} else {
 		alert('You have already generated a PIN, use that one');

@@ -15,7 +15,8 @@ const topicID = urlParams.get('topic');
 let playerNames = [];
 
 async function setPlayerNames() {
-	playerNames = (await getPlayerNames(gamePin)) || [];
+	playerNames =
+		(await getPlayerNames({ gamePin: gamePin, topicID: topicID })) || [];
 	players.innerHTML = '';
 
 	playerNames.forEach((playerName) => {

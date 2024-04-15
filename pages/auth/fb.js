@@ -97,23 +97,23 @@ const fbLogin = async (email, password) => {
 	}
 };
 
-async function createGamePinTable(gamePin) {
+async function createGamePinTable({ gamePin, topicID }) {
 	try {
-		const gamePinRef = ref(database, `gamepin/${gamePin}`);
+		const gamePinRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 		await set(gamePinRef, {});
 		const dummyObject = [{ username: 'dummy', score: 0 }];
 
 		await set(gamePinRef, dummyObject);
 
-		alert('Game pin created successfully');
+		alert('Game created! share your pin with others');
 	} catch (error) {
 		throw new Error('could not create gamepin table', error);
 	}
 }
 
 // set scoreboard in database in table named gamepin
-async function createScoreBoard({ gamePin, username, score }) {
-	const scoreRef = ref(database, `gamepin/${gamePin}`);
+async function createScoreBoard({ gamePin, username, score, topicID }) {
+	const scoreRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 
 	// get the values from the table and assign it to an object
 	// get the values from the table and assign it to an object
@@ -140,8 +140,8 @@ async function createScoreBoard({ gamePin, username, score }) {
 	}
 }
 
-function queryGamePin(gamePin) {
-	const gamePinRef = ref(database, `gamepin/${gamePin}`);
+function queryGamePin({ gamePin, topicID }) {
+	const gamePinRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 	let check = false;
 
 	// check if the gamepin exists on the database
@@ -164,10 +164,11 @@ function queryGamePin(gamePin) {
 }
 
 //get player names using game pin
-async function getPlayerNames(gamePin) {
-	const playerNamesRef = ref(database, `gamepin/${gamePin}`);
+async function getPlayerNames({ gamePin, topicID }) {
+	const playerNamesRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 	const playerNamesSnapshot = await get(playerNamesRef);
 	const playerNames = playerNamesSnapshot.val();
+	console.log(playerNamesRef);
 	return playerNames;
 }
 

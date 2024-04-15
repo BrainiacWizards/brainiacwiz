@@ -46,6 +46,7 @@ async function setScoreBoard() {
 		gamePin: myPin,
 		username: username,
 		score: sessionUser.score,
+		topicID: topicID,
 	});
 
 	const scoreboardTable = document.querySelector('.score-board-table');
@@ -68,15 +69,19 @@ async function setScoreBoard() {
 	}
 
 	// fund the account of the top 2 players
+	console.log(scoreData);
 	if (scoreData[0].username === username) {
 		metaConnection(null, 2);
 		alert(
 			'Congratulations! You are the winner, check your wallet for your reward',
 		);
+
+		return;
 	}
 
 	console.clear();
 	console.log(scoreData);
+	window.requestAnimationFrame(setScoreBoard);
 }
 
 setScoreBoard();

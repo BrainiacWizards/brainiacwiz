@@ -47,6 +47,8 @@
 
 .host-view .controls {
 	display: flex;
+	position: absolute;
+	bottom: 10px;
 	justify-content: center;
 	margin: 0;
 	gap: 0;

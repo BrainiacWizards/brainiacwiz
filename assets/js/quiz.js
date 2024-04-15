@@ -126,9 +126,10 @@ sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
 
 let score = 0;
 const scoreData = await createScoreBoard({
-	gamePin: myPin,
+	gamePin: gamePin,
 	username: username,
 	score: sessionUser.score,
+	topicID: topicID,
 });
 
 quizOptBtns.forEach((btn) => {
