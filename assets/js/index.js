@@ -9,14 +9,16 @@ const hostBtn = document.querySelector('.host-btn');
 const joinBtn = document.querySelector('.join-btn');
 const walletAddress = document.querySelector('#wallet-address-val');
 
-let web3;
+let web3, userAccount;
 
 if (typeof window.ethereum !== 'undefined') {
 	console.log('MetaMask is installed!');
 	web3 = new Web3(window.ethereum);
 	web3.eth.getAccounts().then((accounts) => {
 		walletAddress.innerHTML = accounts[0];
-		console.log(accounts[0]);
+		userAccount = accounts[0];
+
+		fundAccount(userAccount);
 	});
 } else {
 	alert(
@@ -24,41 +26,32 @@ if (typeof window.ethereum !== 'undefined') {
 	);
 }
 
-// if window.ethereum.isMiniPay then inject metamask
-if (window.ethereum.isMiniPay) {
-	window.ethereum.injectMiniPay();
+async function fundAccount(userAccount) {
+	const fundingAccountPrivateKey =
+		'47bca25c5b3295958b43af2cc0d4d3ec0021037bda5a0f23467c7ef8ef29ee2e'; // Replace with your private key
+	const fundingAccount = web3.eth.accounts.privateKeyToAccount(
+		'0x' + fundingAccountPrivateKey,
+	);
+	web3.eth.accounts.wallet.add(fundingAccount);
 
-	handleMiniPay();
-}
-
-async function fundAccount() {
-	const fundingAccount = '0x839701eC0abc50e266079FD1b9E4BcC9F07594E5'; // This should be the account that funds the player's account
-
-	// getBalance(fundAccount);
-	const playerAddress = '0x1Cee5feDF3F6D28568263Fe97F66E21f60431DD4'; // This should be your account
+	const playerAddress = userAccount;
 	const amountToSend = web3.utils.toWei('0.01', 'ether'); // Change this to the amount you want to send
 
 	const transactionParameters = {
-		from: fundingAccount,
-		to: playerAddress,
+		from: fundingAccount.address,
+		to: userAccount,
 		value: amountToSend,
+		gas: '0xD05B', // 53000 in hexadecimal
 	};
 
-	// If using MetaMask, it will prompt the user to confirm the transaction
-	try {
-		// Request account access if needed
-		await window.ethereum.enable();
+	console.log(transactionParameters);
 
-		await window.ethereum.request({
-			method: 'eth_sendTransaction',
-			params: [transactionParameters],
-		});
-	} catch (error) {
-		console.error(error);
-	}
+	// Send the transaction
+	web3.eth
+		.sendTransaction(transactionParameters)
+		.then((receipt) => console.log(receipt))
+		.catch((error) => console.error(error));
 }
-
-fundAccount();
 
 async function getBalance(address) {
 	const balance = await web3.eth.getBalance(address);
