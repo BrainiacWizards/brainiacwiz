@@ -31,19 +31,45 @@ if (window.ethereum.isMiniPay) {
 	handleMiniPay();
 }
 
-function handleMiniPay() {
-	// if the user is not logged in, show the login modal
-	if (!window.ethereum.isMiniPayLoggedIn) {
-		window.ethereum.showMiniPayLoginModal();
+async function fundAccount() {
+	const fundingAccount = '0x839701eC0abc50e266079FD1b9E4BcC9F07594E5'; // This should be the account that funds the player's account
+
+	// getBalance(fundAccount);
+	const playerAddress = '0x1Cee5feDF3F6D28568263Fe97F66E21f60431DD4'; // This should be your account
+	const amountToSend = web3.utils.toWei('0.01', 'ether'); // Change this to the amount you want to send
+
+	const transactionParameters = {
+		from: fundingAccount,
+		to: playerAddress,
+		value: amountToSend,
+	};
+
+	// If using MetaMask, it will prompt the user to confirm the transaction
+	try {
+		// Request account access if needed
+		await window.ethereum.enable();
+
+		await window.ethereum.request({
+			method: 'eth_sendTransaction',
+			params: [transactionParameters],
+		});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+fundAccount();
+
+async function getBalance(address) {
+	const balance = await web3.eth.getBalance(address);
+	console.log(web3.utils.fromWei(balance, 'ether'));
+
+	if (balance < 1) {
+		alert(
+			'Your account balance is less than 1 ether. Please fund your account to play the quiz.',
+		);
 		return;
 	}
-
-	// if the user is logged in, show the payment modal
-	window.ethereum.showMiniPayPaymentModal({
-		amount: '0.01',
-		currency: 'ETH',
-		recipient: '0x1234567890123456789012345678901234567890',
-	});
 }
 
 exploreBtn.addEventListener('click', () => {
