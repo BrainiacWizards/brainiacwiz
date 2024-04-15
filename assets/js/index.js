@@ -10,7 +10,7 @@ const hostBtn = document.querySelector('.host-btn');
 const joinBtn = document.querySelector('.join-btn');
 const walletAddress = document.querySelector('#wallet-address-val');
 
-metaConnection(walletAddress);
+metaConnection(walletAddress, 0);
 
 exploreBtn.addEventListener('click', () => {
 	landingOverlay.style.display = 'none';

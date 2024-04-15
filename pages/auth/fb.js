@@ -97,13 +97,15 @@ const fbLogin = async (email, password) => {
 	}
 };
 
-// create game pin table
 async function createGamePinTable(gamePin) {
 	try {
 		const gamePinRef = ref(database, `gamepin/${gamePin}`);
 		await set(gamePinRef, {});
+		const dummyObject = [{ username: 'dummy', score: 0 }];
 
-		console.log('Gamepin table created successfully');
+		await set(gamePinRef, dummyObject);
+
+		alert('Game pin created successfully');
 	} catch (error) {
 		throw new Error('could not create gamepin table', error);
 	}
@@ -123,9 +125,10 @@ async function createScoreBoard({ gamePin, username, score }) {
 		if (!scoreData) {
 			scoreData = [{ username: username, score: score }];
 		}
-
-		// add the new score to the existing data
-		scoreData.push({ username: username, score: score });
+		// add the new score to the existing data if the username doesn't already exist
+		if (!scoreData.some((obj) => obj.username === username)) {
+			scoreData.push({ username: username, score: score });
+		}
 
 		await set(scoreRef, scoreData);
 
@@ -136,4 +139,43 @@ async function createScoreBoard({ gamePin, username, score }) {
 		throw new Error(`could not update the scoreboard\n\n ${error}`);
 	}
 }
-export { fbSignUp, fbLogin, createGamePinTable, createScoreBoard };
+
+function queryGamePin(gamePin) {
+	const gamePinRef = ref(database, `gamepin/${gamePin}`);
+	let check = false;
+
+	// check if the gamepin exists on the database
+	get(gamePinRef)
+		.then((snapshot) => {
+			if (snapshot.exists()) {
+				console.log('Game pin exists');
+				check;
+			} else {
+				console.log('Game pin does not exist');
+				check = false;
+			}
+		})
+		.catch((error) => {
+			check = false;
+			throw new Error('Error getting document:', error);
+		});
+
+	return check;
+}
+
+//get player names using game pin
+async function getPlayerNames(gamePin) {
+	const playerNamesRef = ref(database, `gamepin/${gamePin}`);
+	const playerNamesSnapshot = await get(playerNamesRef);
+	const playerNames = playerNamesSnapshot.val();
+	return playerNames;
+}
+
+export {
+	fbSignUp,
+	fbLogin,
+	createGamePinTable,
+	createScoreBoard,
+	queryGamePin,
+	getPlayerNames,
+};

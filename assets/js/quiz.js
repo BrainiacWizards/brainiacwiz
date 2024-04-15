@@ -124,8 +124,14 @@ const sessionUser = {
 sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
 
 let score = 0;
+const scoreData = await createScoreBoard({
+	gamePin: myPin,
+	username: username,
+	score: sessionUser.score,
+});
+
 quizOptBtns.forEach((btn, index) => {
-	btn.addEventListener('click', () => {
+	btn.addEventListener('click', async () => {
 		console.log('clicked');
 		const correctAnswer = questions[CA][question];
 		if (btn.innerHTML === correctAnswer) {
@@ -136,5 +142,8 @@ quizOptBtns.forEach((btn, index) => {
 		sessionUser.score = score;
 		sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
 		console.log(sessionUser.score);
+
+		sessionUser = JSON.parse(sessionStorage.getItem('sessionUser'));
+		console.log(sessionUser);
 	});
 });
