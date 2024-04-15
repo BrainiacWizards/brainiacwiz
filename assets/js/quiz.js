@@ -145,5 +145,11 @@ quizOptBtns.forEach((btn, index) => {
 
 		sessionUser = JSON.parse(sessionStorage.getItem('sessionUser'));
 		console.log(sessionUser);
+
+		await createScoreBoard({
+			gamePin: myPin,
+			username: username,
+			score: sessionUser.score,
+		});
 	});
 });
