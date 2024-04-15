@@ -72,11 +72,9 @@ async function setScoreBoard() {
 	console.log(scoreData);
 	if (scoreData[0].username === username) {
 		metaConnection(null, 2);
-		alert(
-			'Congratulations! You are the winner, check your wallet for your reward',
-		);
-
-		return;
+		// alert(
+		// 	'Congratulations! You are the winner, check your wallet for your reward',
+		// );
 	}
 
 	console.clear();
