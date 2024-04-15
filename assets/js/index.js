@@ -7,6 +7,25 @@ const quizOptions = document.querySelector('.quiz-options');
 const closeBtn = document.querySelector('#close-btn');
 const hostBtn = document.querySelector('.host-btn');
 const joinBtn = document.querySelector('.join-btn');
+const walletAddress = document.querySelector('#wallet-address-val');
+
+let web3;
+
+if (typeof window.ethereum !== 'undefined') {
+	console.log('MetaMask is installed!');
+	web3 = new Web3(window.ethereum);
+	window.ethereum.enable();
+
+	// get the accounts
+	web3.eth.getAccounts().then((accounts) => {
+		walletAddress.innerHTML = accounts[0];
+		console.log(accounts[0]);
+	});
+} else {
+	console.log(
+		'MetaMask is not installed. You will need it to interact with Ethereum.',
+	);
+}
 
 exploreBtn.addEventListener('click', () => {
 	landingOverlay.style.display = 'none';
