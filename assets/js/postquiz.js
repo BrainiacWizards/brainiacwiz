@@ -37,10 +37,13 @@ async function setScoreBoard() {
 	const username = login.username;
 	const myPin = gamePin;
 
+	// get score object from session storage
+	const score = JSON.parse(sessionStorage.getItem('score'));
+
 	const scoreData = await createScoreBoard({
 		gamePin: myPin,
 		username: username,
-		score: 10,
+		score: score.score,
 	});
 
 	const scoreboardTable = document.querySelector('.score-board-table');
