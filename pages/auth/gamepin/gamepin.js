@@ -1,4 +1,11 @@
 import { checkLoginStatus } from '../../../assets/js/main.js';
+import { createGamePinTable } from '../fb.js';
+
+const generateBtn = document.getElementById('generateBtn');
+
+if (generateBtn) {
+	generateBtn.addEventListener('click', generatePIN);
+}
 
 if (window.location.pathname.includes('gamepinUI')) {
 	checkLoginStatus({ path: '../../' });
@@ -21,6 +28,8 @@ function generatePIN() {
 
 	document.getElementById('pinDisplay').value = pin;
 	sessionStorage.setItem('gamePin', pin);
+
+	createGamePinTable(pin);
 }
 
 window.addEventListener('load', function () {

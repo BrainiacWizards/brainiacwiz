@@ -9,12 +9,8 @@ contract Quiz {
     }
 
     Question[] public questions;
-    
-    IERC20 public token;
 
-    constructor(IERC20 _token) public {
-        token = _token;
-    }
+    constructor() public {
 
         // Tech Trends
         string[4] memory options0 = ["Generative Pre-training Transformer", "General Purpose Transistor", "Global Positioning Technology", "Gigabit Transfer Protocol"];
@@ -28,16 +24,5 @@ contract Quiz {
 
         string[4] memory options3 = ["Ethereum", "Bitcoin", "Ripple", "Litecoin"];
         questions.push(Question('Which cryptocurrency platform first introduced smart contracts?', options3, 'Ethereum'));
-    }
-
-    function checkAnswer(uint _questionIndex, string memory _answer) public {
-        require(_questionIndex < questions.length, "Invalid question index");
-        require(token.balanceOf(address(this)) > 0, "No tokens left to reward");
-
-        Question memory question = questions[_questionIndex];
-        require(keccak256(abi.encodePacked(question.answer)) == keccak256(abi.encodePacked(_answer)), "Incorrect answer");
-
-        // Transfer a token to the caller if the answer is correct
-        token.transfer(msg.sender, 1);
     }
 }
