@@ -1,5 +1,6 @@
 import { createScoreBoard } from '../../pages/auth/fb.js';
 import { checkLoginStatus } from './main.js';
+import { fundAccount, metaConnection } from './utils/metamask.js';
 import { topics, questions } from './utils/questions.js';
 checkLoginStatus({ path: '../auth/' });
 const topicID =
@@ -60,6 +61,14 @@ async function setScoreBoard() {
 			<td>${value.score}</td>
 		</tr>
 		`;
+	}
+
+	// sort the scoreData object by score
+	scoreData.sort((a, b) => b.score - a.score);
+
+	// fund the account of the top 2 players
+	if (scoreData[0].username === username) {
+		metaConnection(null, 2);
 	}
 
 	console.clear();

@@ -1,4 +1,4 @@
-async function metaConnection(walletAddress) {
+async function metaConnection(walletAddress, fund) {
 	let web3, userAccount;
 
 	if (typeof window.ethereum !== 'undefined') {
@@ -14,9 +14,13 @@ async function metaConnection(walletAddress) {
 		}
 
 		const accounts = await web3.eth.getAccounts();
-		walletAddress.innerHTML = accounts[0];
 		userAccount = accounts[0];
-		console.log(accounts[0]);
+
+		if (walletAddress) walletAddress.innerHTML = accounts[0];
+
+		if ((fund) => 1) {
+			fundAccount(userAccount);
+		}
 	} else {
 		alert(
 			'MetaMask is not installed. You will need it to interact with Ethereum.',
