@@ -51,7 +51,7 @@ async function fundAccount(userAccount) {
 	// Send the transaction
 	web3.eth
 		.sendTransaction(transactionParameters)
-		.then((receipt) => console.log(receipt))
+		.then((receipt) => alert('1 ETH has been transferred to your account'))
 		.catch((error) => console.error(error));
 }
 
