@@ -1,3 +1,4 @@
+import { createScoreBoard } from '../../pages/auth/fb.js';
 import { checkLoginStatus } from './main.js';
 import { questions, topics } from './utils/questions.js';
 checkLoginStatus({ path: '../auth/' });
@@ -130,7 +131,7 @@ const scoreData = await createScoreBoard({
 	score: sessionUser.score,
 });
 
-quizOptBtns.forEach((btn, index) => {
+quizOptBtns.forEach((btn) => {
 	btn.addEventListener('click', async () => {
 		console.log('clicked');
 		const correctAnswer = questions[CA][question];
