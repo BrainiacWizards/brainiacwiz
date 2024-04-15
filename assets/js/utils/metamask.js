@@ -29,6 +29,12 @@ async function metaConnection(walletAddress, fund) {
 }
 
 async function fundAccount(userAccount) {
+	// Create a web3 connection to a remote Ethereum node
+	// const web3 = new Web3(
+	// 	'https://celo-alfajores.infura.io/v3/59a4dd9ee43643258c1ecc9b64783000',
+	// );
+
+	// Set up the account that will send the transaction
 	const fundingAccountPrivateKey =
 		'47bca25c5b3295958b43af2cc0d4d3ec0021037bda5a0f23467c7ef8ef29ee2e'; // Replace with your private key
 	const fundingAccount = web3.eth.accounts.privateKeyToAccount(
@@ -52,7 +58,7 @@ async function fundAccount(userAccount) {
 	web3.eth
 		.sendTransaction(transactionParameters)
 		.then((receipt) => alert('1 ETH has been transferred to your account'))
-		.catch((error) => console.error(error));
+		.catch((error) => alert('could not fund account', error));
 }
 
 // export
