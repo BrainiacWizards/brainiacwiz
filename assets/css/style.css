@@ -46,7 +46,33 @@ button:hover {
 	box-shadow: 3px 3px 5px 0 var(--shadow-color);
 }
 /***********************************************/
+.wallet-address {
+	display: flex;
+	flex-direction: column;
+	margin: 0 auto;
+	max-width: 120px;
+	overflow-x: auto;
+	overflow-y: hidden;
+	text-align: center;
 
+	/* Add scrollbar styles */
+	&::-webkit-scrollbar {
+		width: 20px;
+		height: 3px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: var(--prim-color);
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background: #555;
+	}
+}
 .landing-overlay {
 	display: flex;
 	position: fixed;

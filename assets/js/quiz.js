@@ -11,6 +11,7 @@ const topicID = new URLSearchParams(window.location.search).get('topic');
 
 //topic questions and correct answer
 let T, Q, A, CA;
+let question = 0;
 
 const setQuizDetails = () => {
 	if (!topicID) {
@@ -83,7 +84,6 @@ setQuestions(0);
 const setQuizTImer = ({ duration = 30, speed = 200 }) => {
 	quizTimer.style.color = 'white';
 	let time = duration;
-	let question = 0;
 
 	let intervalId = setInterval(() => {
 		if (time <= 0) {
@@ -112,3 +112,29 @@ function moveToPostQuiz(intervalId) {
 	clearInterval(intervalId); // stop the interval
 	window.location.href = `./post-quiz.html?gamePin=${gamePin}&topic=${topicID}`;
 }
+
+// check answers and set score
+let score = 0;
+quizOptBtns.forEach((btn, index) => {
+	btn.addEventListener('click', () => {
+		const correctAnswer = questions[CA][question];
+		if (btn.innerHTML === correctAnswer) {
+			score++;
+
+			// get login object and get username from it
+			const loginObj = sessionStorage.getItem('login');
+			if (loginObj) {
+				const loginObject = JSON.parse(loginObj);
+				const userObject = {
+					username: loginObject.username,
+					score: score,
+				};
+
+				// store the score with username in it
+				sessionStorage.setItem('score', JSON.stringify(userObject));
+			} else {
+				alert('User not logged in');
+			}
+		}
+	});
+});

@@ -1,4 +1,5 @@
 import { topics } from './utils/questions.js';
+import { metaConnection, fundAccount } from './utils/metamask.js';
 
 const exploreBtn = document.getElementById('explore-btn');
 const landingOverlay = document.querySelector('.landing-overlay');
@@ -7,6 +8,9 @@ const quizOptions = document.querySelector('.quiz-options');
 const closeBtn = document.querySelector('#close-btn');
 const hostBtn = document.querySelector('.host-btn');
 const joinBtn = document.querySelector('.join-btn');
+const walletAddress = document.querySelector('#wallet-address-val');
+
+metaConnection(walletAddress);
 
 exploreBtn.addEventListener('click', () => {
 	landingOverlay.style.display = 'none';
