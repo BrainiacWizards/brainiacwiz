@@ -14,17 +14,36 @@ let web3;
 if (typeof window.ethereum !== 'undefined') {
 	console.log('MetaMask is installed!');
 	web3 = new Web3(window.ethereum);
-	window.ethereum.enable();
-
-	// get the accounts
 	web3.eth.getAccounts().then((accounts) => {
 		walletAddress.innerHTML = accounts[0];
 		console.log(accounts[0]);
 	});
 } else {
-	console.log(
+	alert(
 		'MetaMask is not installed. You will need it to interact with Ethereum.',
 	);
+}
+
+// if window.ethereum.isMiniPay then inject metamask
+if (window.ethereum.isMiniPay) {
+	window.ethereum.injectMiniPay();
+
+	handleMiniPay();
+}
+
+function handleMiniPay() {
+	// if the user is not logged in, show the login modal
+	if (!window.ethereum.isMiniPayLoggedIn) {
+		window.ethereum.showMiniPayLoginModal();
+		return;
+	}
+
+	// if the user is logged in, show the payment modal
+	window.ethereum.showMiniPayPaymentModal({
+		amount: '0.01',
+		currency: 'ETH',
+		recipient: '0x1234567890123456789012345678901234567890',
+	});
 }
 
 exploreBtn.addEventListener('click', () => {
