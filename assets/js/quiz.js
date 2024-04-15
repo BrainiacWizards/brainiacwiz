@@ -114,27 +114,27 @@ function moveToPostQuiz(intervalId) {
 }
 
 // check answers and set score
+const loginObj = JSON.parse(sessionStorage.getItem('login'));
+const username = loginObj.username;
+const userScore = 0;
+const sessionUser = {
+	username: username,
+	score: userScore,
+};
+sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
+
 let score = 0;
 quizOptBtns.forEach((btn, index) => {
 	btn.addEventListener('click', () => {
+		console.log('clicked');
 		const correctAnswer = questions[CA][question];
 		if (btn.innerHTML === correctAnswer) {
 			score++;
-
-			// get login object and get username from it
-			const loginObj = sessionStorage.getItem('login');
-			if (loginObj) {
-				const loginObject = JSON.parse(loginObj);
-				const userObject = {
-					username: loginObject.username,
-					score: score,
-				};
-
-				// store the score with username in it
-				sessionStorage.setItem('score', JSON.stringify(userObject));
-			} else {
-				alert('User not logged in');
-			}
 		}
+
+		// set a object with score and username
+		sessionUser.score = score;
+		sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
+		console.log(sessionUser.score);
 	});
 });

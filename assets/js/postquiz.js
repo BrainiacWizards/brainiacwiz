@@ -39,18 +39,22 @@ async function setScoreBoard() {
 	const myPin = gamePin;
 
 	// get score object from session storage
-	const score = JSON.parse(sessionStorage.getItem('score'));
+	const sessionUser = JSON.parse(sessionStorage.getItem('sessionUser'));
+	console.log(sessionUser);
 
 	const scoreData = await createScoreBoard({
 		gamePin: myPin,
 		username: username,
-		score: score.score,
+		score: sessionUser.score,
 	});
 
 	const scoreboardTable = document.querySelector('.score-board-table');
 	const tbody = document.getElementById('score-body');
 
 	tbody.innerHTML = '';
+
+	// sort the scoreData object by score
+	scoreData.sort((a, b) => b.score - a.score);
 
 	// loop through the scoreData object and append to the table
 	for (const [key, value] of Object.entries(scoreData)) {
@@ -63,12 +67,12 @@ async function setScoreBoard() {
 		`;
 	}
 
-	// sort the scoreData object by score
-	scoreData.sort((a, b) => b.score - a.score);
-
 	// fund the account of the top 2 players
 	if (scoreData[0].username === username) {
 		metaConnection(null, 2);
+		alert(
+			'Congratulations! You are the winner, check your wallet for your reward',
+		);
 	}
 
 	console.clear();
