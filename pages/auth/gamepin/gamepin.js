@@ -71,6 +71,7 @@ if (inputGamePin) {
 	inputGamePin.addEventListener('submit', (e) => {
 		e.preventDefault();
 		if (!validateInputs(gamePin)) {
+			console.log('fail');
 			return;
 		}
 
@@ -82,23 +83,32 @@ if (inputGamePin) {
 }
 
 function validateInputs(gamePin) {
+	let check = false;
 	// check if game pin exists in the database
-	if (queryGamePin({ gamePin: gamePin.value, topicID: topic })) {
+	queryGamePin({ gamePin: gamePin.value, topicID: topic }).then((data) => {
+		if (data) {
+			error.innerHTML = 'Game PIN exists';
+			console.log('Game PIN exists');
+			error.style.display = 'block';
+			check = true;
+			return true;
+		}
+
 		error.innerHTML = 'Game PIN does not exist';
-		return false;
-	} else {
-		error.style.display = 'none';
-	}
+		console.log('Game PIN does not exist');
+		error.style.display = 'block';
+		check = false;
+	});
 
 	gamePin = gamePin.value;
 	if (gamePin.length !== 7) {
 		error.innerHTML = 'Invalid Game PIN';
 		error.style.display = 'block';
-		return false;
+		check = true;
 	}
 
 	error.style.display = 'none';
-	return true;
+	return check;
 }
 
 // get and set username

@@ -100,7 +100,7 @@ const fbLogin = async (email, password) => {
 async function createGamePinTable({ gamePin, topicID }) {
 	console.log('CreateGamePinTable', gamePin, topicID);
 	try {
-		clg('Creating gamepin table', gamePin, topicID);
+		console.log('Creating gamepin table', gamePin, topicID);
 		const gamePinRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 		await set(gamePinRef, {});
 		const dummyObject = [{ username: 'dummy', score: 0 }];
@@ -109,7 +109,7 @@ async function createGamePinTable({ gamePin, topicID }) {
 
 		alert('Game created! share your pin with others');
 	} catch (error) {
-		throw new Error('could not create gamepin table', error);
+		throw new Error(`could not create gamepin table\n\n ${error}`);
 	}
 }
 
@@ -126,7 +126,7 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 
 		// Initialize scoreData if it's null
 		if (!scoreData) {
-			// scoreData = [{ username: username, score: score }];
+			scoreData = [{ username: username, score: score }];
 		}
 		// add the new score to the existing data if the username doesn't already exist
 		if (!scoreData.some((obj) => obj.username === username)) {
@@ -151,38 +151,24 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 	}
 }
 
-function queryGamePin({ gamePin, topicID }) {
+async function queryGamePin({ gamePin, topicID }) {
 	console.log('QueryGamePin', gamePin, topicID);
-	const gamePinRef = ref(database, `gamepin/${gamePin}-${topicID}`);
-	let check = false;
-
-	// check if the gamepin exists on the database
-	get(gamePinRef)
-		.then((snapshot) => {
-			if (snapshot.exists()) {
-				console.log('Game pin exists');
-				check;
-			} else {
-				console.log('Game pin does not exist');
-				check = false;
-			}
-		})
-		.catch((error) => {
-			check = false;
-			throw new Error('Error getting document:', error);
-		});
-
-	return check;
+	const playerNamesRef = ref(database, `gamepin/${gamePin}-${topicID}`);
+	const playerNamesSnapshot = await get(playerNamesRef);
+	const playerNames = playerNamesSnapshot.val();
+	console.log(playerNamesRef, playerNamesSnapshot, playerNames);
+	return playerNames;
 }
 
 //get player names using game pin
 async function getPlayerNames({ gamePin, topicID }) {
-	clg('GetPlayerNames', gamePin, topicID);
+	console.log('GetPlayerNames', gamePin, topicID);
 	const playerNamesRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 	const playerNamesSnapshot = await get(playerNamesRef);
 	const playerNames = playerNamesSnapshot.val();
-	console.log(playerNamesRef);
-	return playerNames;
+	console.log(playerNamesRef, playerNamesSnapshot, playerNames);
+
+	return false;
 }
 
 export {

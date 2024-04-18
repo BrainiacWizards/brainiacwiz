@@ -1,4 +1,4 @@
-import { getPlayerNames } from '../../pages/auth/fb.js';
+import { createGamePinTable, getPlayerNames } from '../../pages/auth/fb.js';
 import { checkLoginStatus } from './main.js';
 import { topics, questions } from './utils/questions.js';
 // checkLoginStatus({ path: '../../auth/' });
@@ -13,6 +13,8 @@ const urlParams = new URLSearchParams(window.location.search);
 const gamePin = urlParams.get('gamePin');
 const topicID = urlParams.get('topic');
 let playerNames = [];
+
+await createGamePinTable({ gamePin: gamePin, topicID: topicID });
 
 async function setPlayerNames() {
 	playerNames =
