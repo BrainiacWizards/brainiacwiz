@@ -156,7 +156,7 @@ async function queryGamePin({ gamePin, topicID }) {
 	const playerNamesRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 	const playerNamesSnapshot = await get(playerNamesRef);
 	const playerNames = playerNamesSnapshot.val();
-	console.log(playerNamesRef, playerNamesSnapshot, playerNames);
+	console.log(playerNamesSnapshot, playerNames);
 	return playerNames;
 }
 

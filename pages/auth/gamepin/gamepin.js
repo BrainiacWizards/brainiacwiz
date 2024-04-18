@@ -2,6 +2,12 @@ import { checkLoginStatus } from '../../../assets/js/main.js';
 import { createGamePinTable, queryGamePin } from '../fb.js';
 
 const generateBtn = document.getElementById('generateBtn');
+const topic = new URLSearchParams(window.location.search).get('topic');
+const backB = document.getElementById('backB');
+const nextB = document.getElementById('nextB');
+const inputGamePin = document.getElementById('input-gamepin-form');
+const gamePin = document.getElementById('gamepin');
+const error = document.getElementById('error-message');
 
 if (generateBtn) {
 	generateBtn.addEventListener('click', generatePIN);
@@ -45,16 +51,12 @@ window.addEventListener('load', function () {
 	}
 });
 
-const backB = document.getElementById('backB');
-const nextB = document.getElementById('nextB');
-
+// LISTEN FOR BACK AND FORWARD CLICKS
 if (backB) {
 	backB.addEventListener('click', () => {
 		window.history.back();
 	});
 }
-
-const topic = new URLSearchParams(window.location.search).get('topic');
 
 if (nextB) {
 	nextB.addEventListener('click', () => {
@@ -62,57 +64,61 @@ if (nextB) {
 	});
 }
 
-// input game pin form handling
-const inputGamePin = document.getElementById('input-gamepin-form');
-const gamePin = document.getElementById('gamepin');
-const error = document.getElementById('error-message');
+async function gamePinFormHandling() {
+	if (inputGamePin) {
+		inputGamePin.addEventListener('submit', async (e) => {
+			e.preventDefault();
 
-if (inputGamePin) {
-	inputGamePin.addEventListener('submit', (e) => {
-		e.preventDefault();
-		if (!validateInputs(gamePin)) {
-			console.log('fail');
-			return;
-		}
+			const check = await validateInputs(gamePin);
 
-		setLogin();
+			if (!check) {
+				console.log('check failed');
+				return;
+			}
 
-		// redirect to quiz play page
-		window.location.href = `../../../play/quiz.html?gamePin=${gamePin.value}&topic=${topic}`;
-	});
+			setLogin();
+
+			// redirect to quiz play page
+			window.location.href = `../../../play/quiz.html?gamePin=${gamePin.value}&topic=${topic}`;
+		});
+	}
 }
 
-function validateInputs(gamePin) {
+gamePinFormHandling();
+
+async function validateInputs(gamePin) {
 	let check = false;
 	// check if game pin exists in the database
-	queryGamePin({ gamePin: gamePin.value, topicID: topic }).then((data) => {
-		if (data) {
-			error.innerHTML = 'Game PIN exists';
-			console.log('Game PIN exists');
-			error.style.display = 'block';
-			check = true;
-			return true;
-		}
+	const data = await queryGamePin({ gamePin: gamePin.value, topicID: topic });
 
-		error.innerHTML = 'Game PIN does not exist';
-		console.log('Game PIN does not exist');
+	if (data) {
 		error.style.display = 'block';
+		error.innerHTML = 'Game PIN exists';
+		console.log('Game PIN exists');
+		check = true;
+		console.log('setting check to true: data-in:', data);
+	} else {
+		error.style.display = 'block';
+		error.innerHTML = 'Game PIN does not exist';
+		console.log(error.innerHTML);
+		console.log('Game PIN does not exist');
 		check = false;
-	});
+		console.log('setting check to false data-out:', data);
+	}
 
 	gamePin = gamePin.value;
 	if (gamePin.length !== 7) {
 		error.innerHTML = 'Invalid Game PIN';
 		error.style.display = 'block';
-		check = true;
+		check = false;
+		console.log('setting check to false length:', gamePin.length);
 	}
 
-	error.style.display = 'none';
+	console.log('check:', check);
 	return check;
 }
 
 // get and set username
-
 function setLogin() {
 	const usernameValue = document.getElementById('log-user');
 	if (usernameValue) {
