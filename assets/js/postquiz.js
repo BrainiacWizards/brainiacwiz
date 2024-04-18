@@ -42,16 +42,16 @@ async function setScoreBoard() {
 	const sessionUser = JSON.parse(sessionStorage.getItem('sessionUser'));
 	// console.log(sessionUser);
 
-	const scoreData = await createScoreBoard({
+	let scoreData = await createScoreBoard({
 		gamePin: myPin,
 		username: username,
 		score: sessionUser.score,
 		topicID: topicID,
 	});
 
+	scoreData = scoreData.filter((player) => player.username !== 'dummy');
 	console.log(scoreData);
 
-	const scoreboardTable = document.querySelector('.score-board-table');
 	const tbody = document.getElementById('score-body');
 
 	tbody.innerHTML = '';

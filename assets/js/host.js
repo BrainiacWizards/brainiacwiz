@@ -14,24 +14,22 @@ const gamePin = urlParams.get('gamePin');
 const topicID = urlParams.get('topic');
 let playerNames = [];
 
-await createGamePinTable({ gamePin: gamePin, topicID: topicID });
+// await createGamePinTable({ gamePin: gamePin, topicID: topicID });
 
 async function setPlayerNames() {
-	players.innerHTML = '';
-
 	playerNames = await getPlayerNames({
 		gamePin: gamePin,
 		topicID: topicID,
 	});
 
+	playerNames = playerNames.filter((player) => player.username != 'dummy');
+	players.innerHTML = '';
 	playerNames.forEach((playerName) => {
-		const player = `<li class="player">${playerName.username}</li>`;
+		const player = `<li class="player">${playerName.username || 'error'}</li>`;
 		players.innerHTML += player;
 	});
 
-	console.log(players);
-
-	// window.requestAnimationFrame(setPlayerNames);
+	window.requestAnimationFrame(setPlayerNames);
 }
 
 // set topic
