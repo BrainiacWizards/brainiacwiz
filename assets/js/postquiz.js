@@ -59,10 +59,10 @@ async function setScoreBoard() {
 
 	// loop through the scoreData object and append to the table
 	for (const [key, value] of Object.entries(scoreData)) {
-		console.log(value.username, value.score);
+		const position = Number(key) + 1;
 		tbody.innerHTML += `
 		<tr>
-			<td>${key}</td>
+			<td>${position}</td>
 			<td>${value.username}</td>
 			<td>${value.score}</td>
 		</tr>
