@@ -98,7 +98,9 @@ const fbLogin = async (email, password) => {
 };
 
 async function createGamePinTable({ gamePin, topicID }) {
+	console.log('CreateGamePinTable', gamePin, topicID);
 	try {
+		clg('Creating gamepin table', gamePin, topicID);
 		const gamePinRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 		await set(gamePinRef, {});
 		const dummyObject = [{ username: 'dummy', score: 0 }];
@@ -113,6 +115,7 @@ async function createGamePinTable({ gamePin, topicID }) {
 
 // set scoreboard in database in table named gamepin
 async function createScoreBoard({ gamePin, username, score, topicID }) {
+	console.log('Creating gamepin table', gamePin, topicID);
 	const scoreRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 
 	// get the values from the table and assign it to an object
@@ -123,12 +126,22 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 
 		// Initialize scoreData if it's null
 		if (!scoreData) {
-			scoreData = [{ username: username, score: score }];
+			// scoreData = [{ username: username, score: score }];
 		}
 		// add the new score to the existing data if the username doesn't already exist
 		if (!scoreData.some((obj) => obj.username === username)) {
 			scoreData.push({ username: username, score: score });
+		} else {
+			// update the score if the username already exists
+			scoreData = scoreData.map((obj) => {
+				if (obj.username === username) {
+					obj.score = score;
+				}
+				return obj;
+			});
 		}
+
+		console.log(scoreData);
 
 		await set(scoreRef, scoreData);
 
@@ -141,6 +154,7 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 }
 
 function queryGamePin({ gamePin, topicID }) {
+	console.log('QueryGamePin', gamePin, topicID);
 	const gamePinRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 	let check = false;
 
@@ -165,6 +179,7 @@ function queryGamePin({ gamePin, topicID }) {
 
 //get player names using game pin
 async function getPlayerNames({ gamePin, topicID }) {
+	clg('GetPlayerNames', gamePin, topicID);
 	const playerNamesRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 	const playerNamesSnapshot = await get(playerNamesRef);
 	const playerNames = playerNamesSnapshot.val();

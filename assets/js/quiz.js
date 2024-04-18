@@ -33,6 +33,10 @@ const setQuizDetails = () => {
 };
 
 const setQuestions = (question) => {
+	if (question >= questions[Q].length) {
+		moveToPostQuiz();
+		return;
+	}
 	questions[A][question] = questions[A][question].sort(
 		() => Math.random() - 0.5,
 	);
@@ -107,7 +111,7 @@ const setQuizTImer = ({ duration = 30, speed = 200 }) => {
 	}, speed);
 };
 
-setQuizTImer({ duration: 30, speed: 200 });
+setQuizTImer({ duration: 15, speed: 200 });
 
 function moveToPostQuiz(intervalId) {
 	clearInterval(intervalId); // stop the interval
@@ -152,6 +156,7 @@ quizOptBtns.forEach((btn) => {
 			gamePin: gamePin,
 			username: username,
 			score: sessionUser.score,
+			topicID: topicID,
 		});
 	});
 });

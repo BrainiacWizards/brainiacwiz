@@ -83,7 +83,7 @@ if (inputGamePin) {
 
 function validateInputs(gamePin) {
 	// check if game pin exists in the database
-	if (queryGamePin(gamePin.value)) {
+	if (queryGamePin({ gamePin: gamePin.value, topicID: topic })) {
 		error.innerHTML = 'Game PIN does not exist';
 		return false;
 	} else {
