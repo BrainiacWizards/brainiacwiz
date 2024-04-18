@@ -80,8 +80,8 @@ async function setScoreBoard() {
 		// );
 	}
 
-	// console.clear();
-	// window.requestAnimationFrame(setScoreBoard);
+	console.clear();
+	window.requestAnimationFrame(setScoreBoard);
 }
 
 setScoreBoard();

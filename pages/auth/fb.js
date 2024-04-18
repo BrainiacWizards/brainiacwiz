@@ -141,8 +141,6 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 			});
 		}
 
-		console.log(scoreData);
-
 		await set(scoreRef, scoreData);
 
 		console.log('Scoreboard updated successfully');
