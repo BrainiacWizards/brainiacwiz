@@ -10,8 +10,10 @@ const gamePin =
 const title = document.getElementById('title');
 const questionCount = document.getElementById('questions-count');
 const playBtn = document.getElementById('play-again');
+const tbody = document.getElementById('score-body');
+const playerCount = document.getElementById('player-count');
 
-const setQuizDetails = () => {
+const setQuizDetails = (playerNames) => {
 	if (topicID >= topics.length || topicID === undefined || topicID < 0) {
 		alert('Invalid topic selected');
 		window.location.href = '../../index.html';
@@ -23,9 +25,8 @@ const setQuizDetails = () => {
 	title.innerHTML = 'Title: ' + topic.name;
 	questionCount.innerHTML = 'Questions: ';
 	questionCount.innerHTML += question.length;
+	playerCount.innerHTML = `Players: ${playerNames.length}`;
 };
-
-setQuizDetails();
 
 playBtn.addEventListener('click', () => {
 	window.location.href = `../auth/gamepin/gamepinUI/index.html?topic=${topicID}`;
@@ -50,10 +51,7 @@ async function setScoreBoard() {
 	});
 
 	scoreData = scoreData.filter((player) => player.username !== 'dummy');
-	console.log(scoreData);
-
-	const tbody = document.getElementById('score-body');
-
+	setQuizDetails(scoreData);
 	tbody.innerHTML = '';
 
 	// sort the scoreData object by score

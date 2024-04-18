@@ -29,11 +29,13 @@ async function setPlayerNames() {
 		players.innerHTML += player;
 	});
 
+	setQuizDetails(playerNames);
+
 	window.requestAnimationFrame(setPlayerNames);
 }
 
 // set topic
-function setQuizDetails() {
+function setQuizDetails(playerNames) {
 	if (gamePin) {
 		codeView.innerHTML = gamePin;
 	} else {
