@@ -17,16 +17,21 @@ let playerNames = [];
 await createGamePinTable({ gamePin: gamePin, topicID: topicID });
 
 async function setPlayerNames() {
-	playerNames =
-		(await getPlayerNames({ gamePin: gamePin, topicID: topicID })) || [];
 	players.innerHTML = '';
+
+	playerNames = await getPlayerNames({
+		gamePin: gamePin,
+		topicID: topicID,
+	});
 
 	playerNames.forEach((playerName) => {
 		const player = `<li class="player">${playerName.username}</li>`;
 		players.innerHTML += player;
 	});
 
-	window.requestAnimationFrame(setPlayerNames);
+	console.log(players);
+
+	// window.requestAnimationFrame(setPlayerNames);
 }
 
 // set topic
