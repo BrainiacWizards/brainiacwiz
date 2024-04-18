@@ -74,6 +74,8 @@ if (inputGamePin) {
 			return;
 		}
 
+		setLogin();
+
 		// redirect to quiz play page
 		window.location.href = `../../../play/quiz.html?gamePin=${gamePin.value}&topic=${topic}`;
 	});
@@ -100,12 +102,19 @@ function validateInputs(gamePin) {
 }
 
 // get and set username
-const usernameValue = document.getElementById('log-user');
-if (usernameValue) {
-	const login = sessionStorage.getItem('login');
-	const loginObject = JSON.parse(login);
-	usernameValue.value = loginObject.username;
 
-	// set usernameValue input field to readonly
-	usernameValue.setAttribute('readonly', true);
+function setLogin() {
+	const usernameValue = document.getElementById('log-user');
+	if (usernameValue) {
+		const loginObject = {
+			username: usernameValue.value,
+			lastLogin: new Date().toLocaleString(),
+			gamePin: gamePin.value,
+		};
+
+		sessionStorage.setItem('login', JSON.stringify(loginObject));
+
+		// set usernameValue input field to readonly
+		usernameValue.setAttribute('readonly', true);
+	}
 }

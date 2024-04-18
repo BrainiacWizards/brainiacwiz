@@ -118,7 +118,7 @@ function moveToPostQuiz(intervalId) {
 const loginObj = JSON.parse(sessionStorage.getItem('login'));
 const username = loginObj.username;
 const userScore = 0;
-const sessionUser = {
+let sessionUser = {
 	username: username,
 	score: userScore,
 };
@@ -149,7 +149,7 @@ quizOptBtns.forEach((btn) => {
 		console.log(sessionUser);
 
 		await createScoreBoard({
-			gamePin: myPin,
+			gamePin: gamePin,
 			username: username,
 			score: sessionUser.score,
 		});
