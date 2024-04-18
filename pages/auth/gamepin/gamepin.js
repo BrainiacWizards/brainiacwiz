@@ -8,9 +8,9 @@ if (generateBtn) {
 }
 
 if (window.location.pathname.includes('gamepinUI')) {
-	checkLoginStatus({ path: '../../' });
+	// checkLoginStatus({ path: '../../' });
 } else {
-	checkLoginStatus({ path: '../' });
+	// checkLoginStatus({ path: '../' });
 }
 
 let pin = '',

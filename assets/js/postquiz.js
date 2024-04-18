@@ -2,7 +2,7 @@ import { createScoreBoard } from '../../pages/auth/fb.js';
 import { checkLoginStatus } from './main.js';
 import { fundAccount, metaConnection } from './utils/metamask.js';
 import { topics, questions } from './utils/questions.js';
-checkLoginStatus({ path: '../auth/' });
+// checkLoginStatus({ path: '../auth/' });
 const topicID =
 	new URLSearchParams(window.location.search).get('topic') || undefined;
 const gamePin =

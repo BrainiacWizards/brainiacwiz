@@ -1,7 +1,7 @@
 import { createScoreBoard } from '../../pages/auth/fb.js';
 import { checkLoginStatus } from './main.js';
 import { questions, topics } from './utils/questions.js';
-checkLoginStatus({ path: '../auth/' });
+// checkLoginStatus({ path: '../auth/' });
 
 const quizOptBtns = document.querySelectorAll('.quiz-opt-btn');
 const quizTimer = document.querySelector('.quiz-timer > #timer');
