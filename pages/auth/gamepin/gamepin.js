@@ -2,15 +2,21 @@ import { checkLoginStatus } from '../../../assets/js/main.js';
 import { createGamePinTable, queryGamePin } from '../fb.js';
 
 const generateBtn = document.getElementById('generateBtn');
+const topic = new URLSearchParams(window.location.search).get('topic');
+const backB = document.getElementById('backB');
+const nextB = document.getElementById('nextB');
+const inputGamePin = document.getElementById('input-gamepin-form');
+const gamePin = document.getElementById('gamepin');
+const error = document.getElementById('error-message');
 
 if (generateBtn) {
 	generateBtn.addEventListener('click', generatePIN);
 }
 
 if (window.location.pathname.includes('gamepinUI')) {
-	checkLoginStatus({ path: '../../' });
+	// checkLoginStatus({ path: '../../' });
 } else {
-	checkLoginStatus({ path: '../' });
+	// checkLoginStatus({ path: '../' });
 }
 
 let pin = '',
@@ -45,16 +51,12 @@ window.addEventListener('load', function () {
 	}
 });
 
-const backB = document.getElementById('backB');
-const nextB = document.getElementById('nextB');
-
+// LISTEN FOR BACK AND FORWARD CLICKS
 if (backB) {
 	backB.addEventListener('click', () => {
 		window.history.back();
 	});
 }
-
-const topic = new URLSearchParams(window.location.search).get('topic');
 
 if (nextB) {
 	nextB.addEventListener('click', () => {
@@ -62,50 +64,73 @@ if (nextB) {
 	});
 }
 
-// input game pin form handling
-const inputGamePin = document.getElementById('input-gamepin-form');
-const gamePin = document.getElementById('gamepin');
-const error = document.getElementById('error-message');
+async function gamePinFormHandling() {
+	if (inputGamePin) {
+		inputGamePin.addEventListener('submit', async (e) => {
+			e.preventDefault();
 
-if (inputGamePin) {
-	inputGamePin.addEventListener('submit', (e) => {
-		e.preventDefault();
-		if (!validateInputs(gamePin)) {
-			return;
-		}
+			const check = await validateInputs(gamePin);
 
-		// redirect to quiz play page
-		window.location.href = `../../../play/quiz.html?gamePin=${gamePin.value}&topic=${topic}`;
-	});
+			if (!check) {
+				console.log('check failed');
+				return;
+			}
+
+			setLogin();
+
+			// redirect to quiz play page
+			window.location.href = `../../../play/quiz.html?gamePin=${gamePin.value}&topic=${topic}`;
+		});
+	}
 }
 
-function validateInputs(gamePin) {
+gamePinFormHandling();
+
+async function validateInputs(gamePin) {
+	let check = false;
 	// check if game pin exists in the database
-	if (queryGamePin(gamePin.value)) {
-		error.innerHTML = 'Game PIN does not exist';
-		return false;
+	const data = await queryGamePin({ gamePin: gamePin.value, topicID: topic });
+
+	if (data) {
+		error.style.display = 'block';
+		error.innerHTML = 'Game PIN exists';
+		console.log('Game PIN exists');
+		check = true;
+		console.log('setting check to true: data-in:', data);
 	} else {
-		error.style.display = 'none';
+		error.style.display = 'block';
+		error.innerHTML = 'Game PIN does not exist';
+		console.log(error.innerHTML);
+		console.log('Game PIN does not exist');
+		check = false;
+		console.log('setting check to false data-out:', data);
 	}
 
 	gamePin = gamePin.value;
 	if (gamePin.length !== 7) {
 		error.innerHTML = 'Invalid Game PIN';
 		error.style.display = 'block';
-		return false;
+		check = false;
+		console.log('setting check to false length:', gamePin.length);
 	}
 
-	error.style.display = 'none';
-	return true;
+	console.log('check:', check);
+	return check;
 }
 
 // get and set username
-const usernameValue = document.getElementById('log-user');
-if (usernameValue) {
-	const login = sessionStorage.getItem('login');
-	const loginObject = JSON.parse(login);
-	usernameValue.value = loginObject.username;
+function setLogin() {
+	const usernameValue = document.getElementById('log-user');
+	if (usernameValue) {
+		const loginObject = {
+			username: usernameValue.value,
+			lastLogin: new Date().toLocaleString(),
+			gamePin: gamePin.value,
+		};
 
-	// set usernameValue input field to readonly
-	usernameValue.setAttribute('readonly', true);
+		sessionStorage.setItem('login', JSON.stringify(loginObject));
+
+		// set usernameValue input field to readonly
+		usernameValue.setAttribute('readonly', true);
+	}
 }

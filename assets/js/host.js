@@ -1,7 +1,7 @@
-import { getPlayerNames } from '../../pages/auth/fb.js';
+import { createGamePinTable, getPlayerNames } from '../../pages/auth/fb.js';
 import { checkLoginStatus } from './main.js';
 import { topics, questions } from './utils/questions.js';
-checkLoginStatus({ path: '../../auth/' });
+// checkLoginStatus({ path: '../../auth/' });
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');
 const playerCount = document.getElementById('player-count');
@@ -14,21 +14,28 @@ const gamePin = urlParams.get('gamePin');
 const topicID = urlParams.get('topic');
 let playerNames = [];
 
-async function setPlayerNames() {
-	playerNames =
-		(await getPlayerNames({ gamePin: gamePin, topicID: topicID })) || [];
-	players.innerHTML = '';
+// await createGamePinTable({ gamePin: gamePin, topicID: topicID });
 
+async function setPlayerNames() {
+	playerNames = await getPlayerNames({
+		gamePin: gamePin,
+		topicID: topicID,
+	});
+
+	playerNames = playerNames.filter((player) => player.username != 'dummy');
+	players.innerHTML = '';
 	playerNames.forEach((playerName) => {
-		const player = `<li class="player">${playerName.username}</li>`;
+		const player = `<li class="player">${playerName.username || 'error'}</li>`;
 		players.innerHTML += player;
 	});
+
+	setQuizDetails(playerNames);
 
 	window.requestAnimationFrame(setPlayerNames);
 }
 
 // set topic
-function setQuizDetails() {
+function setQuizDetails(playerNames) {
 	if (gamePin) {
 		codeView.innerHTML = gamePin;
 	} else {

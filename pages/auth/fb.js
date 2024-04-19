@@ -98,7 +98,9 @@ const fbLogin = async (email, password) => {
 };
 
 async function createGamePinTable({ gamePin, topicID }) {
+	console.log('CreateGamePinTable', gamePin, topicID);
 	try {
+		console.log('Creating gamepin table', gamePin, topicID);
 		const gamePinRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 		await set(gamePinRef, {});
 		const dummyObject = [{ username: 'dummy', score: 0 }];
@@ -107,12 +109,13 @@ async function createGamePinTable({ gamePin, topicID }) {
 
 		alert('Game created! share your pin with others');
 	} catch (error) {
-		throw new Error('could not create gamepin table', error);
+		throw new Error(`could not create gamepin table\n\n ${error}`);
 	}
 }
 
 // set scoreboard in database in table named gamepin
 async function createScoreBoard({ gamePin, username, score, topicID }) {
+	console.log('Creating gamepin table', gamePin, topicID);
 	const scoreRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 
 	// get the values from the table and assign it to an object
@@ -128,6 +131,14 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 		// add the new score to the existing data if the username doesn't already exist
 		if (!scoreData.some((obj) => obj.username === username)) {
 			scoreData.push({ username: username, score: score });
+		} else {
+			// update the score if the username already exists
+			scoreData = scoreData.map((obj) => {
+				if (obj.username === username) {
+					obj.score = score;
+				}
+				return obj;
+			});
 		}
 
 		await set(scoreRef, scoreData);
@@ -140,36 +151,24 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 	}
 }
 
-function queryGamePin({ gamePin, topicID }) {
-	const gamePinRef = ref(database, `gamepin/${gamePin}-${topicID}`);
-	let check = false;
-
-	// check if the gamepin exists on the database
-	get(gamePinRef)
-		.then((snapshot) => {
-			if (snapshot.exists()) {
-				console.log('Game pin exists');
-				check;
-			} else {
-				console.log('Game pin does not exist');
-				check = false;
-			}
-		})
-		.catch((error) => {
-			check = false;
-			throw new Error('Error getting document:', error);
-		});
-
-	return check;
+async function queryGamePin({ gamePin, topicID }) {
+	console.log('QueryGamePin', gamePin, topicID);
+	const playerNamesRef = ref(database, `gamepin/${gamePin}-${topicID}`);
+	const playerNamesSnapshot = await get(playerNamesRef);
+	const playerNames = playerNamesSnapshot.val();
+	console.log(playerNamesSnapshot, playerNames);
+	return playerNames;
 }
 
 //get player names using game pin
 async function getPlayerNames({ gamePin, topicID }) {
+	console.log('GetPlayerNames', gamePin, topicID);
 	const playerNamesRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 	const playerNamesSnapshot = await get(playerNamesRef);
 	const playerNames = playerNamesSnapshot.val();
-	console.log(playerNamesRef);
-	return playerNames;
+	console.log(playerNames);
+
+	return playerNames || [{ username: 'No players yet' }];
 }
 
 export {

@@ -1,7 +1,7 @@
 import { createScoreBoard } from '../../pages/auth/fb.js';
 import { checkLoginStatus } from './main.js';
 import { questions, topics } from './utils/questions.js';
-checkLoginStatus({ path: '../auth/' });
+// checkLoginStatus({ path: '../auth/' });
 
 const quizOptBtns = document.querySelectorAll('.quiz-opt-btn');
 const quizTimer = document.querySelector('.quiz-timer > #timer');
@@ -33,6 +33,10 @@ const setQuizDetails = () => {
 };
 
 const setQuestions = (question) => {
+	if (question >= questions[Q].length) {
+		moveToPostQuiz();
+		return;
+	}
 	questions[A][question] = questions[A][question].sort(
 		() => Math.random() - 0.5,
 	);
@@ -107,7 +111,7 @@ const setQuizTImer = ({ duration = 30, speed = 200 }) => {
 	}, speed);
 };
 
-setQuizTImer({ duration: 30, speed: 200 });
+setQuizTImer({ duration: 15, speed: 200 });
 
 function moveToPostQuiz(intervalId) {
 	clearInterval(intervalId); // stop the interval
@@ -118,7 +122,7 @@ function moveToPostQuiz(intervalId) {
 const loginObj = JSON.parse(sessionStorage.getItem('login'));
 const username = loginObj.username;
 const userScore = 0;
-const sessionUser = {
+let sessionUser = {
 	username: username,
 	score: userScore,
 };
@@ -149,9 +153,10 @@ quizOptBtns.forEach((btn) => {
 		console.log(sessionUser);
 
 		await createScoreBoard({
-			gamePin: myPin,
+			gamePin: gamePin,
 			username: username,
 			score: sessionUser.score,
+			topicID: topicID,
 		});
 	});
 });
