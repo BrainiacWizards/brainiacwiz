@@ -49,6 +49,12 @@ class Navbar {
 		this.walletContainer.style.display = 'flex';
 		const state = getState();
 		const tokenURI = state.tokenURI;
+
+		if (tokenURI.length === 0) {
+			this.walletNfts.innerHTML = `<h1>No NFTs collected yet</h1>`;
+			return this.walletNfts;
+		}
+
 		this.walletNfts.innerHTML = '';
 
 		tokenURI.forEach((uri) => {
