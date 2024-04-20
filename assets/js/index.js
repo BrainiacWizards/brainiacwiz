@@ -1,6 +1,4 @@
 import { topics } from './utils/questions.js';
-import { metaConnection, getState } from './utils/metamask.js';
-import setNavbar from './utils/setnavbar.js';
 
 const exploreBtn = document.getElementById('explore-btn');
 const landingOverlay = document.querySelector('.landing-overlay');
@@ -10,11 +8,11 @@ const closeBtn = document.querySelector('#close-btn');
 const hostBtn = document.querySelector('.host-btn');
 const joinBtn = document.querySelector('.join-btn');
 
-const navbar = new setNavbar();
-
-exploreBtn.addEventListener('click', () => {
-	landingOverlay.style.display = 'none';
-});
+if (exploreBtn) {
+	exploreBtn.addEventListener('click', () => {
+		landingOverlay.style.display = 'none';
+	});
+}
 
 const card = ({ id, name, image }) => {
 	return `
@@ -36,19 +34,26 @@ renderCards(topics);
 
 const quizBtns = document.querySelectorAll('.quiz-btn');
 
-closeBtn.addEventListener('click', () => {
-	quizOptions.style.display = 'none';
-});
-
-quizBtns.forEach((btn) => {
-	btn.addEventListener('click', () => {
-		// get href attribute for host and join buttons
-		const hostHref = `pages/auth/gamepin/index.html?topic=${btn.id}&type=host`;
-		const joinHref = `pages/auth/gamepin/gamepinUI/index.html?topic=${btn.id}&type=join`;
-
-		hostBtn.href = hostHref;
-		joinBtn.href = joinHref;
-
-		quizOptions.style.display = 'flex';
+if (closeBtn) {
+	closeBtn.addEventListener('click', () => {
+		quizOptions.style.display = 'none';
 	});
-});
+}
+
+// add event listener to quiz buttons
+const manageTopicClicks = () => {
+	quizBtns.forEach((btn) => {
+		btn.addEventListener('click', () => {
+			// get href attribute for host and join buttons
+			const hostHref = `pages/auth/gamepin/index.html?topic=${btn.id}&type=host`;
+			const joinHref = `pages/auth/gamepin/gamepinUI/index.html?topic=${btn.id}&type=join`;
+
+			hostBtn.href = hostHref;
+			joinBtn.href = joinHref;
+
+			quizOptions.style.display = 'flex';
+		});
+	});
+};
+
+manageTopicClicks();

@@ -242,7 +242,7 @@ button:hover {
 }
 
 .quiz-card:hover {
-	width: 50%;
+	width: 70%;
 }
 
 .quiz-card:nth-child(2),
@@ -397,20 +397,23 @@ footer .navbar ul li a:hover {
 
 /* style the scroll bar  */
 .wallet-container::-webkit-scrollbar {
-	width: 3px;
-	/* height: 3px; */
+	width: 5px;
+	height: 3px;
+	border-radius: 30px;
 }
 
 .wallet-container::-webkit-scrollbar-track {
 	background: transparent;
+	border-radius: 30px;
 }
 
 .wallet-container::-webkit-scrollbar-thumb {
-	background: var(--quart-color);
+	background: transparent;
+	border-radius: 0 30px 30px 0;
 }
 
 .wallet-container::-webkit-scrollbar-thumb:hover {
-	background: #555;
+	background: var(--tert-color);
 }
 
 .wallet-container .wallet-content .wallet-header {
