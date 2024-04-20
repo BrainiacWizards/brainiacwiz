@@ -1,5 +1,5 @@
 import { topics } from './utils/questions.js';
-import { metaConnection, fundAccount, getState } from './utils/metamask.js';
+import { metaConnection, getState } from './utils/metamask.js';
 
 const exploreBtn = document.getElementById('explore-btn');
 const landingOverlay = document.querySelector('.landing-overlay');
@@ -12,6 +12,7 @@ const walletAddress = document.querySelector('#wallet-address-val');
 const walletBtn = document.querySelector('.wallet-btn');
 const walletNfts = document.querySelector('.wallet-nfts');
 const walletContainer = document.querySelector('.wallet-container');
+const closeWalletBtn = document.querySelector('#close-wallet');
 
 metaConnection(walletAddress, 0);
 
@@ -60,14 +61,17 @@ if (walletBtn) {
 	walletBtn.addEventListener('click', () => showCollectedTokens());
 }
 
+if (closeWalletBtn) {
+	closeWalletBtn.addEventListener('click', () => {
+		walletContainer.style.display = 'none';
+	});
+}
+
 function showCollectedTokens() {
 	// display wallet container
 	walletContainer.style.display = 'flex';
 	const state = getState();
 	const tokenURI = state.tokenURI;
-
-	console.log(tokenURI);
-
 	walletNfts.innerHTML = '';
 
 	tokenURI.forEach((uri) => {

@@ -159,7 +159,7 @@ button:hover {
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
-	background-color: var(--prim-color);
+	background-color: transparent;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -358,6 +358,22 @@ footer .navbar ul li a:hover {
 }
 
 /* wallet token container styles */
+#close-wallet {
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	color: var(--font-color);
+	border: none;
+	border-radius: 50%;
+	padding: 5px 10px;
+	font-size: 20px;
+}
+
+#close-wallet:hover {
+	background-color: var(--tert-color);
+	color: var(--font-color);
+}
+
 .wallet-container {
 	display: none;
 	flex-direction: column;
