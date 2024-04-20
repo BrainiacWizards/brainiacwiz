@@ -11,8 +11,8 @@ const state = {
 
 async function loadContract(web3) {
 	// get the contract data
-	const orignURL = window.location.origin;
-	const response = await fetch(`${orignURL}/abis/MemoryToken.json`);
+	const originURL = window.location.origin;
+	const response = await fetch(`${originURL}/abis/MemoryToken.json`);
 	const data = await response.json();
 	const networkId = await web3.eth.net.getId();
 	const network = data.networks[networkId];
@@ -58,7 +58,7 @@ async function metaConnection(walletAddress, fund) {
 		console.log('MetaMask is installed!');
 		web3 = new Web3(window.ethereum);
 
-		// promt user to connect to metamask
+		// prompt user to connect to metamask
 		try {
 			await window.ethereum.enable();
 			console.log('metamask connected');
@@ -73,10 +73,6 @@ async function metaConnection(walletAddress, fund) {
 		await loadContract(web3);
 
 		if (walletAddress) walletAddress.innerHTML = state.account;
-
-		if ((fund) => 1) {
-			// fundAccount();
-		}
 	} else {
 		alert(
 			'MetaMask is not installed. You will need it to interact with Ethereum.',
@@ -85,7 +81,9 @@ async function metaConnection(walletAddress, fund) {
 }
 
 async function fundAccount() {
-	state.token.methods
+	let transferStatus = false;
+
+	await state.token.methods
 		.mint(state.account, 'http://127.0.0.1:5500/assets/nft/fries.png')
 		.send({ from: state.account })
 		.on('transactionHash', (hash) => {
@@ -94,16 +92,22 @@ async function fundAccount() {
 				...state.tokenURI,
 				'http://127.0.0.1:5500/assets/nft/fries.png',
 			];
+			transferStatus = true;
 		})
 		.on('confirmation', (confirmationNumber, receipt) => {
 			console.log('confirmation', confirmationNumber, receipt);
+			transferStatus = true;
 		})
 		.on('receipt', (receipt) => {
 			console.log('receipt', receipt);
+			transferStatus = true;
 		})
 		.on('error', (error, receipt) => {
-			console.log('error', error, receipt);
+			console.error('error', error, receipt);
+			transferStatus = false;
 		});
+
+	return transferStatus;
 }
 
 // export state

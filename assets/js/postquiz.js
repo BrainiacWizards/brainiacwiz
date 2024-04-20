@@ -1,6 +1,5 @@
 import { createScoreBoard } from '../../pages/auth/fb.js';
-import { checkLoginStatus } from './main.js';
-import { fundAccount, metaConnection } from './utils/metamask.js';
+import { fundAccount } from './utils/metamask.js';
 import { topics, questions } from './utils/questions.js';
 // checkLoginStatus({ path: '../auth/' });
 const topicID =
@@ -33,6 +32,9 @@ playBtn.addEventListener('click', () => {
 });
 
 // set scoreboard
+let tokenTransferred = false;
+let reload = true;
+
 async function setScoreBoard() {
 	// get username from login
 	const login = JSON.parse(sessionStorage.getItem('login'));
@@ -71,15 +73,33 @@ async function setScoreBoard() {
 
 	// fund the account of the top 2 players
 	console.log(scoreData);
-	if (scoreData[0].username === username) {
-		// metaConnection(null, 2);
-		// alert(
-		// 	'Congratulations! You are the winner, check your wallet for your reward',
-		// );
+	if (scoreData[0].username === username && !tokenTransferred) {
+		tokenTransferred = true;
+
+		setTimeout(async () => {
+			alert(
+				'Congratulations! You are the winner, transferring token to your account...',
+			);
+
+			try {
+				const transferStatus = await fundAccount();
+			} catch (error) {
+				reload = false;
+				if (error.code === 4001) {
+					alert('Transaction cancelled');
+					throw error;
+				} else {
+					alert('Error funding account');
+					throw error;
+				}
+			}
+		}, 7000);
 	}
 
-	console.clear();
-	window.requestAnimationFrame(setScoreBoard);
+	if (reload) {
+		console.clear();
+		window.requestAnimationFrame(setScoreBoard);
+	}
 }
 
 setScoreBoard();
