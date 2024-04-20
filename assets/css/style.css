@@ -380,7 +380,7 @@ footer .navbar ul li a:hover {
 	align-items: center;
 	margin: 0 auto;
 	background-color: var(--prim-color);
-	min-height: 200px;
+	min-width: 250px;
 	width: 50%;
 	border-radius: 20px;
 	box-shadow: 2px 2px 5px 0 var(--shadow-color);
@@ -392,12 +392,13 @@ footer .navbar ul li a:hover {
 	max-height: 80vh;
 	overflow-y: auto;
 	overflow-x: hidden;
+	z-index: 2;
 }
 
 /* style the scroll bar  */
 .wallet-container::-webkit-scrollbar {
 	width: 3px;
-	height: 3px;
+	/* height: 3px; */
 }
 
 .wallet-container::-webkit-scrollbar-track {

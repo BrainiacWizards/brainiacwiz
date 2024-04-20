@@ -11,7 +11,8 @@ const state = {
 
 async function loadContract(web3) {
 	// get the contract data
-	const response = await fetch('../../../abis/MemoryToken.json');
+	const orignURL = window.location.origin;
+	const response = await fetch(`${orignURL}/abis/MemoryToken.json`);
 	const data = await response.json();
 	const networkId = await web3.eth.net.getId();
 	const network = data.networks[networkId];

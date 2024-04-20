@@ -17,8 +17,14 @@
 				<img src="../../../assets/img/brainacwiz-logo.jpeg" alt="Logo" />
 			</div>
 
-			<div class="circular-button">
-				<a href="../../auth/auth.html"><i class="bx bx-user"></i></a>
+			<div class="wallet-details">
+				<div class="wallet-address">
+					<p id="wallet-address-val"></p>
+				</div>
+
+				<div class="circular-button">
+					<button class="wallet-btn"><i class="bx bx-wallet"></i></button>
+				</div>
 			</div>
 		</header>
 		<main class="body-content no-background">
@@ -63,6 +69,8 @@
 			</nav>
 		</footer>
 
+		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+		<script type="module" src="../../../assets/js/utils/setnavbar.js"></script>
 		<script type="module" src="../../../assets/js/host.js"></script>
 	</body>
 </html>

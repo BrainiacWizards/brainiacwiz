@@ -1,5 +1,6 @@
 import { topics } from './utils/questions.js';
 import { metaConnection, getState } from './utils/metamask.js';
+import setNavbar from './utils/setnavbar.js';
 
 const exploreBtn = document.getElementById('explore-btn');
 const landingOverlay = document.querySelector('.landing-overlay');
@@ -8,13 +9,8 @@ const quizOptions = document.querySelector('.quiz-options');
 const closeBtn = document.querySelector('#close-btn');
 const hostBtn = document.querySelector('.host-btn');
 const joinBtn = document.querySelector('.join-btn');
-const walletAddress = document.querySelector('#wallet-address-val');
-const walletBtn = document.querySelector('.wallet-btn');
-const walletNfts = document.querySelector('.wallet-nfts');
-const walletContainer = document.querySelector('.wallet-container');
-const closeWalletBtn = document.querySelector('#close-wallet');
 
-metaConnection(walletAddress, 0);
+const navbar = new setNavbar();
 
 exploreBtn.addEventListener('click', () => {
 	landingOverlay.style.display = 'none';
@@ -38,11 +34,11 @@ const renderCards = (data) => {
 
 renderCards(topics);
 
+const quizBtns = document.querySelectorAll('.quiz-btn');
+
 closeBtn.addEventListener('click', () => {
 	quizOptions.style.display = 'none';
 });
-
-const quizBtns = document.querySelectorAll('.quiz-btn');
 
 quizBtns.forEach((btn) => {
 	btn.addEventListener('click', () => {
@@ -56,29 +52,3 @@ quizBtns.forEach((btn) => {
 		quizOptions.style.display = 'flex';
 	});
 });
-
-if (walletBtn) {
-	walletBtn.addEventListener('click', () => showCollectedTokens());
-}
-
-if (closeWalletBtn) {
-	closeWalletBtn.addEventListener('click', () => {
-		walletContainer.style.display = 'none';
-	});
-}
-
-function showCollectedTokens() {
-	// display wallet container
-	walletContainer.style.display = 'flex';
-	const state = getState();
-	const tokenURI = state.tokenURI;
-	walletNfts.innerHTML = '';
-
-	tokenURI.forEach((uri) => {
-		walletNfts.innerHTML += `
-		<div class="nft-card">
-			<img src="${uri}" alt="NFT" />
-		</div>
-		`;
-	});
-}

@@ -14,15 +14,23 @@
 	</head>
 	<body>
 		<!-- header  -->
-		<header class="main-header">
+		<div class="main-header">
 			<div class="logo">
-				<img src="../../../assets/img/brainacwiz-logo.jpeg" alt="Logo" />
+				<img src="./assets/img/brainacwiz-logo.jpeg" alt="Logo" />
 			</div>
 
-			<div class="circular-button">
-				<i class="bx bx-user"></i>
+			<div class="wallet-details">
+				<div class="wallet-address">
+					<p id="wallet-address-val"></p>
+				</div>
+
+				<div class="main-heading"> <h1> CATEGORIES </h1> </div>
+
+				<div class="circular-button">
+					<button class="wallet-btn"><i class="bx bx-wallet"></i></button>
+				</div>
 			</div>
-		</header>
+		</div>
 		<main class="body-content">
 			<div class="generatePIN">
 				<button id="nextB" class="button2"
@@ -58,5 +66,7 @@
 			src="https://kit.fontawesome.com/cda065bf16.js"
 			crossorigin="anonymous"
 		></script>
+		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+		<script type="module" src="../../../assets/js/utils/setnavbar.js"></script>
 	</body>
 </html>
