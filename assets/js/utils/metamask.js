@@ -8,6 +8,8 @@ const state = {
 	totalSupply: null,
 	nftWon: [],
 };
+// set the nft token images
+const nfts = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg'];
 
 async function loadContract(web3) {
 	// get the contract data
@@ -71,7 +73,6 @@ async function metaConnection(walletAddress, fund) {
 
 		// load contract
 		await loadContract(web3);
-		await fundAccount();
 
 		if (walletAddress) walletAddress.innerHTML = state.account;
 	} else {
@@ -83,8 +84,6 @@ async function metaConnection(walletAddress, fund) {
 
 async function fundAccount() {
 	let transferStatus = false;
-	// set the nft token
-	const nfts = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg'];
 
 	// randomly select an nft
 	const randomIndex = Math.floor(Math.random() * nfts.length);

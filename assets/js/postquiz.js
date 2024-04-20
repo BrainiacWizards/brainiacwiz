@@ -82,7 +82,7 @@ async function setScoreBoard() {
 			);
 
 			try {
-				//  await fundAccount();
+				await fundAccount();
 				alert('Token transferred successfully');
 			} catch (error) {
 				reload = false;
