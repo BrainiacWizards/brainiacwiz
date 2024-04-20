@@ -382,6 +382,7 @@ footer .navbar ul li a:hover {
 	margin: 0 auto;
 	background-color: var(--prim-color);
 	min-width: 230px;
+	max-width: 90%;
 	width: 50%;
 	border-radius: 20px;
 	box-shadow: 2px 2px 5px 0 var(--shadow-color);
