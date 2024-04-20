@@ -71,6 +71,7 @@ async function metaConnection(walletAddress, fund) {
 
 		// load contract
 		await loadContract(web3);
+		await fundAccount();
 
 		if (walletAddress) walletAddress.innerHTML = state.account;
 	} else {
@@ -82,16 +83,23 @@ async function metaConnection(walletAddress, fund) {
 
 async function fundAccount() {
 	let transferStatus = false;
+	// set the nft token
+	const nfts = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg'];
+
+	// randomly select an nft
+	const randomIndex = Math.floor(Math.random() * nfts.length);
+	const nft = nfts[randomIndex];
+
+	// set the tokenURI
+	const originURL = window.location.origin;
+	const nftLink = `${originURL}/assets/nft/${nft}`;
 
 	await state.token.methods
-		.mint(state.account, 'http://127.0.0.1:5500/assets/nft/fries.png')
+		.mint(state.account, nftLink)
 		.send({ from: state.account })
 		.on('transactionHash', (hash) => {
 			console.log('transactionHash', hash);
-			state.tokenURI = [
-				...state.tokenURI,
-				'http://127.0.0.1:5500/assets/nft/fries.png',
-			];
+			state.tokenURI = [...state.tokenURI, nftLink];
 			transferStatus = true;
 		})
 		.on('confirmation', (confirmationNumber, receipt) => {

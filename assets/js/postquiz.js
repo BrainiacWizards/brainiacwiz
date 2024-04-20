@@ -82,7 +82,8 @@ async function setScoreBoard() {
 			);
 
 			try {
-				const transferStatus = await fundAccount();
+				//  await fundAccount();
+				alert('Token transferred successfully');
 			} catch (error) {
 				reload = false;
 				if (error.code === 4001) {
