@@ -1,5 +1,5 @@
 import { topics } from './utils/questions.js';
-import { metaConnection, fundAccount } from './utils/metamask.js';
+import { metaConnection, fundAccount, getState } from './utils/metamask.js';
 
 const exploreBtn = document.getElementById('explore-btn');
 const landingOverlay = document.querySelector('.landing-overlay');
@@ -9,6 +9,9 @@ const closeBtn = document.querySelector('#close-btn');
 const hostBtn = document.querySelector('.host-btn');
 const joinBtn = document.querySelector('.join-btn');
 const walletAddress = document.querySelector('#wallet-address-val');
+const walletBtn = document.querySelector('.wallet-btn');
+const walletNfts = document.querySelector('.wallet-nfts');
+const walletContainer = document.querySelector('.wallet-container');
 
 metaConnection(walletAddress, 0);
 
@@ -52,3 +55,26 @@ quizBtns.forEach((btn) => {
 		quizOptions.style.display = 'flex';
 	});
 });
+
+if (walletBtn) {
+	walletBtn.addEventListener('click', () => showCollectedTokens());
+}
+
+function showCollectedTokens() {
+	// display wallet container
+	walletContainer.style.display = 'flex';
+	const state = getState();
+	const tokenURI = state.tokenURI;
+
+	console.log(tokenURI);
+
+	walletNfts.innerHTML = '';
+
+	tokenURI.forEach((uri) => {
+		walletNfts.innerHTML += `
+		<div class="nft-card">
+			<img src="${uri}" alt="NFT" />
+		</div>
+		`;
+	});
+}

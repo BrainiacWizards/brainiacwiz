@@ -20,13 +20,12 @@
 					<h3>Ready to Win?</h3>
 					<p>Play now, play with your friends</p>
 					<div class="overlay-buttons">
-						<a href="./pages/auth/auth.html"><button>Sign up</button></a>
 						<button id="explore-btn">Explore</button>
 					</div>
 				</div>
 			</div>
 			<div class="quiz-options">
-				<span id="close-btn"><i class="fa fas-cross">X</i></span>
+				<span id="close-btn"><i class="fa fas-cross"></i></span>
 				<div class="head">
 					<h1>Pick and Option</h1>
 				</div>
@@ -35,8 +34,9 @@
 					<a class="join-btn" href=""><button id="">Join Quiz</button></a>
 				</div>
 			</div>
+
 			<section class="main-content">
-				<header class="main-header">
+				<div class="main-header">
 					<div class="logo">
 						<img src="./assets/img/brainacwiz-logo.jpeg" alt="Logo" />
 					</div>
@@ -44,16 +44,32 @@
 					<div class="wallet-details">
 						<div class="wallet-address">
 							<p id="wallet-address-val"></p>
+						</div>
+
+						<div class="main-heading"> <h1> CATEGORIES </h1> </div>
+
+						<div class="circular-button">
+							<button class="wallet-btn"><i class="bx bx-wallet"></i></button>
+						</div>
 					</div>
+				</div>
 
-					<div class="main-heading"> <h1> CATEGORIES </h1> </div>
-
-					<div class="circular-button">
-						<a href="./pages/auth/auth.html"><i class="bx bx-user"></i></a>
-					</div>
-				</header>
-
+				<!-- quiz topic container -->
 				<div class="container"> </div>
+
+				<!-- wallet-container -->
+				<div class="wallet-container">
+					<!-- show a list of collected nfts -->
+					<div class="wallet-content">
+						<div class="wallet-header">
+							<h1>Wallet/Collections</h1>
+							<span id="close-wallet"><i class="fa fas-cross"></i></span>
+						</div>
+						<div class="wallet-body">
+							<div class="wallet-nfts"> </div>
+						</div>
+					</div>
+				</div>
 
 				<footer class="no-background">
 					<nav class="navbar">
@@ -78,5 +94,9 @@
 
 		<script type="module" defer src="./assets/js/index.js"></script>
 		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+		<script
+			src="https://kit.fontawesome.com/cda065bf16.js"
+			crossorigin="anonymous"
+		></script>
 	</body>
 </html>

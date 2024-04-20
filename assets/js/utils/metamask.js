@@ -34,17 +34,17 @@ async function loadContract(web3) {
 	state.networkId = networkId;
 	state.totalSupply = totalSupply;
 
-	const balanceOf = await token.methods.balanceOf(address).call();
+	const balanceOf = await token.methods.balanceOf(state.account).call();
 	for (let i = 0; i < balanceOf; i++) {
-		const id = await token.methods.tokenOfOwnerByIndex(address, i).call();
+		const id = await token.methods.tokenOfOwnerByIndex(state.account, i).call();
 		let tokenURI = await token.methods.tokenURI(id).call();
 		state.tokenURI = [...state.tokenURI, tokenURI];
 	}
 
-	console.log(token);
-	console.log('address', address);
-	console.log('networkId', networkId);
-	console.log('totalSupply', totalSupply);
+	console.log(state.token);
+	console.log('address', state.address);
+	console.log('networkId', state.networkId);
+	console.log('totalSupply', state.totalSupply);
 	console.log('tokenURI', state.tokenURI);
 
 	return token;
@@ -74,7 +74,7 @@ async function metaConnection(walletAddress, fund) {
 		if (walletAddress) walletAddress.innerHTML = state.account;
 
 		if ((fund) => 1) {
-			fundAccount();
+			// fundAccount();
 		}
 	} else {
 		alert(
@@ -105,5 +105,10 @@ async function fundAccount() {
 		});
 }
 
+// export state
+function getState() {
+	return state;
+}
+
 // export
-export { metaConnection, fundAccount };
+export { metaConnection, fundAccount, getState };
