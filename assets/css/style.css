@@ -193,12 +193,35 @@ button:hover {
 
 .main-heading {
 	display: block;
-	position: absolute;
-	top: 18%;
-	left: 4%;
+	position: relative;
 	color: var(--font-color);
 	font-size: 28px;
 	font-weight: bold;
+	margin-top: 80px;
+	text-align: center;
+	width: 100%;
+	background: linear-gradient(
+		transparent,
+		transparent,
+		var(--quart-color),
+		transparent,
+		transparent
+	);
+	padding: 0;
+}
+
+.main-heading h1 {
+	background-color: var(--tert-color);
+	width: fit-content;
+	margin: auto;
+	padding: 3px 10px;
+	border-radius: 40px;
+	box-shadow: 2px 2px 3px 0 var(--shadow-color);
+}
+
+.main-heading h1:hover {
+	background-color: var(--sec-color);
+	color: var(--font-color);
 }
 
 .container {
@@ -207,7 +230,7 @@ button:hover {
 	grid-gap: 10px;
 	align-items: grid-start;
 	justify-content: center;
-	margin-top: 160px;
+	margin-top: 80px;
 	margin-bottom: 50px;
 	border-radius: 20px;
 	width: fit-content;
@@ -265,9 +288,11 @@ footer {
 .navbar {
 	text-align: center;
 	border-radius: 50px 10px; /* Add border radius */
-	background-color: #9290c3; /* Add background color */
+	background-color: var(--quart-color); /* Add background color */
 	padding: 10px;
 	margin: 0;
+	font-size: 17px;
+	font-family: inherit;
 }
 
 .navbar ul {
@@ -356,6 +381,7 @@ footer {
 
 footer .navbar ul li a:hover {
 	color: var(--prim-color) !important;
+	/* font-weight: bold; */
 }
 
 /* wallet token container styles */
@@ -363,16 +389,16 @@ footer .navbar ul li a:hover {
 	position: absolute;
 	top: 5px;
 	right: 10px;
-	color: var(--font-color);
+	color: var(--quart-color);
 	border: none;
 	border-radius: 50%;
-	padding: 5px 10px;
+	padding: 5px;
 	font-size: 20px;
 }
 
 #close-wallet:hover {
-	background-color: var(--tert-color);
 	color: var(--font-color);
+	scale: 1.1;
 }
 
 .wallet-container {

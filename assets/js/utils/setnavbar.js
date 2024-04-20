@@ -17,8 +17,8 @@ class Navbar {
 				<!-- show a list of collected nfts -->
 				<div class="wallet-content">
 					<div class="wallet-header">
-						<h1>Wallet/Collections</h1>
-						<span id="close-wallet">X</span>
+						<h1>My NFT Collection</h1>
+						<span id="close-wallet"><i class="fa-regular fa-circle-xmark"></i></span>
 					</div>
 					<div class="wallet-body">
 						<div class="wallet-nfts"> </div>

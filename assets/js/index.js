@@ -7,6 +7,17 @@ const quizOptions = document.querySelector('.quiz-options');
 const closeBtn = document.querySelector('#close-btn');
 const hostBtn = document.querySelector('.host-btn');
 const joinBtn = document.querySelector('.join-btn');
+const mainHeading = document.querySelector('.main-heading');
+
+const setCategoryPosition = () => {
+	if (mainHeading) {
+		// get the distance of the 1st quiz card from the left of the screen
+		const cardMargin = document.querySelector('.quiz-card').offsetLeft;
+
+		// set the position of the category container to the same as the 1st quiz card
+		// mainHeading.style.left = `${cardMargin}px`;
+	}
+};
 
 if (exploreBtn) {
 	exploreBtn.addEventListener('click', () => {
@@ -31,6 +42,9 @@ const renderCards = (data) => {
 };
 
 renderCards(topics);
+setCategoryPosition();
+
+window.addEventListener('resize', () => setCategoryPosition());
 
 const quizBtns = document.querySelectorAll('.quiz-btn');
 
