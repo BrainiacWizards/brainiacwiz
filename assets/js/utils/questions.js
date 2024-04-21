@@ -185,4 +185,31 @@ const topics = [
 	},
 ];
 
-export { questions, topics };
+const nfts = [
+	{
+		name: 'fries',
+		image: './nft/fries.png',
+	},
+	{
+		name: 'cheeseburger',
+		image: './nft/cheeseburger.png',
+	},
+	{
+		name: 'hotdog',
+		image: './nft/hotdog.png',
+	},
+	{
+		name: 'ice-cream',
+		image: './nft/ice-cream.png',
+	},
+	{
+		name: 'milkshake',
+		image: './nft/milkshake.png',
+	},
+	{
+		name: 'pizza',
+		image: './nft/pizza.png',
+	},
+];
+
+export { questions, topics, nfts };

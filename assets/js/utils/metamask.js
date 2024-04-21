@@ -1,26 +1,80 @@
+let token;
+const state = {
+	account: '0x0',
+	token: null,
+	tokenURI: [],
+	address: null,
+	networkId: null,
+	totalSupply: null,
+	nftWon: [],
+};
+// set the nft token images
+const nfts = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg'];
+
+async function loadContract(web3) {
+	// get the contract data
+	const originURL = window.location.origin;
+	const response = await fetch(`${originURL}/abis/MemoryToken.json`);
+	const data = await response.json();
+	const networkId = await web3.eth.net.getId();
+	const network = data.networks[networkId];
+
+	if (!network) {
+		alert(
+			'Contract not deployed to the current network. Please select another network with Metamask.',
+		);
+		return;
+	}
+
+	const abi = data.abi;
+	const address = network.address;
+	const token = new web3.eth.Contract(abi, address);
+	const totalSupply = await token.methods.totalSupply().call();
+
+	// set state object
+	state.token = token;
+	state.address = address;
+	state.networkId = networkId;
+	state.totalSupply = totalSupply;
+
+	const balanceOf = await token.methods.balanceOf(state.account).call();
+	for (let i = 0; i < balanceOf; i++) {
+		const id = await token.methods.tokenOfOwnerByIndex(state.account, i).call();
+		let tokenURI = await token.methods.tokenURI(id).call();
+		state.tokenURI = [...state.tokenURI, tokenURI];
+	}
+
+	console.log(state.token);
+	console.log('address', state.address);
+	console.log('networkId', state.networkId);
+	console.log('totalSupply', state.totalSupply);
+	console.log('tokenURI', state.tokenURI);
+
+	return token;
+}
+
 async function metaConnection(walletAddress, fund) {
-	let web3, userAccount;
+	let web3;
 
 	if (typeof window.ethereum !== 'undefined') {
 		console.log('MetaMask is installed!');
 		web3 = new Web3(window.ethereum);
 
-		// promt user to connect to metamask
+		// prompt user to connect to metamask
 		try {
 			await window.ethereum.enable();
 			console.log('metamask connected');
 		} catch (error) {
-			console.log(error);
+			alert('You need to connect to MetaMask for this dApp to work!');
 		}
 
 		const accounts = await web3.eth.getAccounts();
-		userAccount = accounts[0];
+		state.account = accounts[0];
 
-		if (walletAddress) walletAddress.innerHTML = accounts[0];
+		// load contract
+		await loadContract(web3);
 
-		if ((fund) => 1) {
-			fundAccount(userAccount);
-		}
+		if (walletAddress) walletAddress.innerHTML = state.account;
 	} else {
 		alert(
 			'MetaMask is not installed. You will need it to interact with Ethereum.',
@@ -28,42 +82,45 @@ async function metaConnection(walletAddress, fund) {
 	}
 }
 
-async function fundAccount(userAccount) {
-	// Create a web3 connection to a remote Ethereum node
-	const web3 = new Web3('http://127.0.0.1:7545');
+async function fundAccount() {
+	let transferStatus = false;
 
-	// Set up the account that will send the transaction
-	const fundingAccountPrivateKey =
-		'47bca25c5b3295958b43af2cc0d4d3ec0021037bda5a0f23467c7ef8ef29ee2e'; // Replace with your private key
-	const fundingAccount = web3.eth.accounts.privateKeyToAccount(
-		'0x' + fundingAccountPrivateKey,
-	);
-	web3.eth.accounts.wallet.add(fundingAccount);
+	// randomly select an nft
+	const randomIndex = Math.floor(Math.random() * nfts.length);
+	const nft = nfts[randomIndex];
 
-	const playerAddress = userAccount;
-	const amountToSend = web3.utils.toWei('0.01', 'ether'); // Change this to the amount you want to send
+	// set the tokenURI
+	const originURL = window.location.origin;
+	const nftLink = `${originURL}/assets/nft/${nft}`;
 
-	const transactionParameters = {
-		from: fundingAccount.address,
-		to: userAccount,
-		value: amountToSend,
-		gas: '0xD05B', // 53000 in hexadecimal
-	};
+	await state.token.methods
+		.mint(state.account, nftLink)
+		.send({ from: state.account })
+		.on('transactionHash', (hash) => {
+			console.log('transactionHash', hash);
+			state.tokenURI = [...state.tokenURI, nftLink];
+			transferStatus = true;
+		})
+		.on('confirmation', (confirmationNumber, receipt) => {
+			console.log('confirmation', confirmationNumber, receipt);
+			transferStatus = true;
+		})
+		.on('receipt', (receipt) => {
+			console.log('receipt', receipt);
+			transferStatus = true;
+		})
+		.on('error', (error, receipt) => {
+			console.error('error', error, receipt);
+			transferStatus = false;
+		});
 
-	// Sign the transaction
-	const signedTransaction = await web3.eth.accounts.signTransaction(
-		transactionParameters,
-		fundingAccount.privateKey,
-	);
+	return transferStatus;
+}
 
-	// Send the transaction
-	const receipt = await web3.eth.sendSignedTransaction(
-		signedTransaction.rawTransaction,
-	);
-
-	alert('You just received 1 Eth, check your wallet!');
-	console.log('Transaction receipt:', receipt);
+// export state
+function getState() {
+	return state;
 }
 
 // export
-export { metaConnection, fundAccount };
+export { metaConnection, fundAccount, getState };

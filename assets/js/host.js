@@ -14,7 +14,11 @@ const gamePin = urlParams.get('gamePin');
 const topicID = urlParams.get('topic');
 let playerNames = [];
 
-// await createGamePinTable({ gamePin: gamePin, topicID: topicID });
+if (!gamePin || !topicID) {
+	alert('Invalid game pin or topic');
+	window.location.href = window.location.origin;
+	throw new Error('Invalid game pin or topic');
+}
 
 async function setPlayerNames() {
 	playerNames = await getPlayerNames({
@@ -24,6 +28,11 @@ async function setPlayerNames() {
 
 	playerNames = playerNames.filter((player) => player.username != 'dummy');
 	players.innerHTML = '';
+
+	if (playerNames.length === 0) {
+		players.innerHTML = 'No players yet!';
+	}
+
 	playerNames.forEach((playerName) => {
 		const player = `<li class="player">${playerName.username || 'error'}</li>`;
 		players.innerHTML += player;
