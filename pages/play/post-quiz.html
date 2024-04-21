@@ -31,13 +31,18 @@
 		</header>
 
 		<main class="body-content no-background">
+			<!-- count down timer for checking winner -->
+			<div class="countdown-container">
+				<span class="spinner-animator"><i class="fa fa-spinner fa-spin"></i></span>
+				<span class="countdown">10</span>
+			</div>
 			<!-- quiz details -->
 			<section class="host-view">
 				<div class="header">
 					<div class="quiz-details">
 						<h1 id="title"></h1>
-						<h3 id="player-count">Players: 0</h3>
-						<h4 id="questions-count">Questions: 0</h4>
+						<h3 id="player-count"></h3>
+						<h4 id="questions-count"></h4>
 					</div>
 				</div>
 			</section>
@@ -83,9 +88,12 @@
 				</ul>
 			</nav>
 		</footer>
+		<script
+			src="https://kit.fontawesome.com/cda065bf16.js"
+			crossorigin="anonymous"
+		></script>
 		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
 		<script type="module" src="../../assets/js/utils/setnavbar.js"></script>
 		<script type="module" src="../../assets/js/postquiz.js"></script>
-		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
 	</body>
 </html>

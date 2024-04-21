@@ -11,6 +11,8 @@ const questionCount = document.getElementById('questions-count');
 const playBtn = document.getElementById('play-again');
 const tbody = document.getElementById('score-body');
 const playerCount = document.getElementById('player-count');
+const countdown = document.querySelector('.countdown');
+const countdownContainer = document.querySelector('.countdown-container');
 
 const setQuizDetails = (playerNames) => {
 	if (topicID >= topics.length || topicID === undefined || topicID < 0) {
@@ -34,6 +36,7 @@ playBtn.addEventListener('click', () => {
 // set scoreboard
 let tokenTransferred = false;
 let reload = true;
+let time = 10;
 
 async function setScoreBoard() {
 	// get username from login
@@ -73,28 +76,20 @@ async function setScoreBoard() {
 
 	// fund the account of the top 2 players
 	console.log(scoreData);
-	if (scoreData[0].username === username && !tokenTransferred) {
-		tokenTransferred = true;
+	countdownContainer.style.display = 'flex';
+	countdown.innerHTML = time;
 
-		setTimeout(async () => {
-			alert(
-				'Congratulations! You are the winner, transferring token to your account...',
-			);
+	// delay for 1 second
+	await new Promise((resolve) => setTimeout(resolve, 500));
+	// decrement time
+	time--;
 
-			try {
-				await fundAccount();
-				alert('Token transferred successfully');
-			} catch (error) {
-				reload = false;
-				if (error.code === 4001) {
-					alert('Transaction cancelled');
-					throw error;
-				} else {
-					alert('Error funding account');
-					throw error;
-				}
-			}
-		}, 7000);
+	if (time <= 0) {
+		countdown.innerHTML = 0;
+		await checkWin(scoreData, username);
+		countdownContainer.style.display = 'none';
+		reload = false;
+		return;
 	}
 
 	if (reload) {
@@ -104,3 +99,29 @@ async function setScoreBoard() {
 }
 
 setScoreBoard();
+
+// check win and transfer token
+async function checkWin(scoreData, username) {
+	if (scoreData[0].username === username && !tokenTransferred) {
+		alert(
+			'Congratulations! You are the winner, transferring token to your account...',
+		);
+
+		try {
+			await fundAccount();
+			reload = false;
+			tokenTransferred = true;
+			alert('Token transferred successfully');
+			return 'status: success';
+		} catch (error) {
+			reload = false;
+			if (error.code === 4001) {
+				alert('Transaction cancelled');
+				throw error;
+			} else {
+				alert('Error funding account');
+				throw error;
+			}
+		}
+	}
+}
