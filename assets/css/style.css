@@ -15,7 +15,7 @@
 }
 
 body {
-	background-color: var(--font-color);
+	background-color: var(--tert-color);
 	color: var(--font-color);
 }
 
@@ -260,8 +260,8 @@ button:hover {
 }
 
 .quiz-img {
-	width: 90%;
-	border-radius: 10%;
+	width: 100%;
+	border-radius: 20px;
 	margin: 20px 0 0 0;
 }
 
@@ -287,7 +287,7 @@ footer {
 
 .navbar {
 	text-align: center;
-	border-radius: 50px 10px; /* Add border radius */
+	border-radius: 50px 5px; /* Add border radius */
 	background-color: var(--quart-color); /* Add background color */
 	padding: 10px;
 	margin: 0;
@@ -574,8 +574,13 @@ footer .navbar ul li a:hover {
 		margin: 0 auto;
 		padding: 5px;
 		background-color: var(--tert-color);
+		color: var(--font-color);
 		border-radius: 20px;
 		flex-wrap: nowrap;
+		font-size: 18px;
+		border: 8px solid var(--tert-color);
+		border-bottom: none;
+		border-top: none;
 	}
 
 	.wallet-address::-webkit-scrollbar-track {
@@ -591,6 +596,14 @@ footer .navbar ul li a:hover {
 
 	.main-heading {
 		font-size: 25px;
+	}
+
+	.wallet-container {
+		min-width: 80% !important;
+	}
+
+	.wallet-container .wallet-content .wallet-header {
+		font-size: 13px;
 	}
 }
 @media (max-width: 400px) {

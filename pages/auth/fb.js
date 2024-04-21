@@ -152,21 +152,17 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 }
 
 async function queryGamePin({ gamePin, topicID }) {
-	console.log('QueryGamePin', gamePin, topicID);
 	const playerNamesRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 	const playerNamesSnapshot = await get(playerNamesRef);
 	const playerNames = playerNamesSnapshot.val();
-	console.log(playerNamesSnapshot, playerNames);
 	return playerNames;
 }
 
 //get player names using game pin
 async function getPlayerNames({ gamePin, topicID }) {
-	console.log('GetPlayerNames', gamePin, topicID);
 	const playerNamesRef = ref(database, `gamepin/${gamePin}-${topicID}`);
 	const playerNamesSnapshot = await get(playerNamesRef);
 	const playerNames = playerNamesSnapshot.val();
-	console.log(playerNames);
 
 	return playerNames || [{ username: 'No players yet' }];
 }

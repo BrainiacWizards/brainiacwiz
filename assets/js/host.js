@@ -21,12 +21,14 @@ if (!gamePin || !topicID) {
 }
 
 async function setPlayerNames() {
+	playerNames = [];
 	playerNames = await getPlayerNames({
 		gamePin: gamePin,
 		topicID: topicID,
 	});
 
 	playerNames = playerNames.filter((player) => player.username != 'dummy');
+	setQuizDetails(playerNames);
 	players.innerHTML = '';
 
 	if (playerNames.length === 0) {
@@ -38,13 +40,11 @@ async function setPlayerNames() {
 		players.innerHTML += player;
 	});
 
-	setQuizDetails(playerNames);
-
 	window.requestAnimationFrame(setPlayerNames);
 }
 
 // set topic
-function setQuizDetails(playerNames) {
+function setQuizDetails(playerNames = []) {
 	if (gamePin) {
 		codeView.innerHTML = gamePin;
 	} else {
