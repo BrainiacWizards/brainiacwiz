@@ -460,6 +460,7 @@ footer .navbar ul li a:hover {
 	border-bottom: 1px solid var(--quart-color);
 	width: 100%;
 	gap: 10px;
+	margin-top: 20px;
 }
 
 .wallet-container .wallet-options button {
@@ -490,6 +491,7 @@ footer .navbar ul li a:hover {
 	color: var(--font-color);
 	border-bottom: 1px solid var(--quart-color);
 	margin-bottom: 30px;
+	font-size: 13px;
 	width: 100%;
 }
 
@@ -550,6 +552,7 @@ footer .navbar ul li a:hover {
 	border-bottom: 2px solid var(--quart-color);
 	margin-bottom: 30px;
 	width: 100%;
+	font-size: 13px;
 }
 
 .wallet-container .tx-content .tx-body {
