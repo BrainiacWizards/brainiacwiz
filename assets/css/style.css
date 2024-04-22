@@ -86,7 +86,7 @@ button:active {
 	}
 }
 .landing-overlay {
-	display: none;
+	display: flex;
 	position: fixed;
 	height: 100%;
 	width: 100%;
@@ -411,7 +411,7 @@ footer .navbar ul li a:hover {
 }
 
 .wallet-container {
-	display: flex;
+	display: none;
 	flex-direction: column;
 	align-items: center;
 	margin: 0 auto;
@@ -479,6 +479,7 @@ footer .navbar ul li a:hover {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
 }
 
 .wallet-container .wallet-content .wallet-header {
@@ -487,8 +488,9 @@ footer .navbar ul li a:hover {
 	justify-content: center;
 	align-items: center;
 	color: var(--font-color);
-	border-bottom: 2px solid var(--quart-color);
+	border-bottom: 1px solid var(--quart-color);
 	margin-bottom: 30px;
+	width: 100%;
 }
 
 .wallet-container .wallet-content .wallet-body {

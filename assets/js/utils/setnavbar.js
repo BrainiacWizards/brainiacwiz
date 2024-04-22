@@ -62,6 +62,8 @@ class Navbar {
 		if (this.walletBtn) {
 			this.walletBtn.addEventListener('click', async () => {
 				this.walletContainer.style.display = 'flex';
+				this.showCollectedTokens();
+				await this.showTransfers();
 			});
 		}
 
@@ -75,7 +77,8 @@ class Navbar {
 			this.collectionBtn.addEventListener('click', () => {
 				this.walletContent.style.display = 'flex';
 				this.txContent.style.display = 'none';
-				this.showCollectedTokens();
+				this.collectionBtn.classList.add('btn-active');
+				this.transactionBtn.classList.remove('btn-active');
 			});
 		}
 
@@ -83,7 +86,8 @@ class Navbar {
 			this.transactionBtn.addEventListener('click', () => {
 				this.walletContent.style.display = 'none';
 				this.txContent.style.display = 'flex';
-				this.showTransfers();
+				this.transactionBtn.classList.add('btn-active');
+				this.collectionBtn.classList.remove('btn-active');
 			});
 		}
 	}
@@ -115,8 +119,6 @@ class Navbar {
 	}
 
 	async showTransfers() {
-		this.transactionBtn.classList.add('btn-active');
-		this.collectionBtn.classList.remove('btn-active');
 		const state = getState();
 		let transfers = await getTransfers({ state, url: this.url });
 		this.txItems.innerHTML = '';
