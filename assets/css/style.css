@@ -45,6 +45,15 @@ button:hover {
 	background-color: var(--sec-color);
 	box-shadow: 3px 3px 5px 0 var(--shadow-color);
 }
+
+button:active {
+	box-shadow: 2px 2px 5px 0 var(--shadow-color) !important;
+}
+
+.btn-active {
+	background-color: var(--sec-color) !important;
+	box-shadow: 3px 3px 5px 0 var(--shadow-color) !important;
+}
 /***********************************************/
 .wallet-address {
 	display: flex;
@@ -385,7 +394,7 @@ footer .navbar ul li a:hover {
 }
 
 /* wallet token container styles */
-#close-wallet {
+.close-on-wallet {
 	position: absolute;
 	top: 5px;
 	right: 10px;
@@ -409,10 +418,10 @@ footer .navbar ul li a:hover {
 	background-color: var(--prim-color);
 	min-width: 230px;
 	max-width: 90%;
-	width: 50%;
+	width: 30%;
 	border-radius: 20px;
 	box-shadow: 2px 2px 5px 0 var(--shadow-color);
-	padding: 20px;
+	padding: 0 20px 20px 20px;
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -431,7 +440,6 @@ footer .navbar ul li a:hover {
 }
 
 .wallet-container::-webkit-scrollbar-track {
-	background: transparent;
 	border-radius: 30px;
 }
 
@@ -444,14 +452,45 @@ footer .navbar ul li a:hover {
 	background: var(--tert-color);
 }
 
+.wallet-container .wallet-options {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	border-bottom: 1px solid var(--quart-color);
+	width: 100%;
+	gap: 10px;
+}
+
+.wallet-container .wallet-options button {
+	background-color: var(--tert-color);
+	color: var(--font-color);
+	border: none;
+	border-radius: 10px;
+	padding: 10px;
+	box-shadow: 2px 2px 5px 0 var(--sec-color);
+	min-width: 140px;
+	min-height: 40px;
+	margin: 20px 0;
+}
+
+.wallet-container .wallet-content {
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
 .wallet-container .wallet-content .wallet-header {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	color: var(--font-color);
-	border-bottom: 2px solid var(--quart-color);
+	border-bottom: 1px solid var(--quart-color);
 	margin-bottom: 30px;
+	width: 100%;
 }
 
 .wallet-container .wallet-content .wallet-body {
@@ -492,6 +531,102 @@ footer .navbar ul li a:hover {
 	height: 100%;
 	object-fit: cover;
 	border-radius: 20px;
+}
+
+.wallet-container .tx-content {
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.wallet-container .tx-content .tx-header {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: var(--font-color);
+	border-bottom: 2px solid var(--quart-color);
+	margin-bottom: 30px;
+	width: 100%;
+}
+
+.wallet-container .tx-content .tx-body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	font-size: 16px;
+}
+
+.wallet-container .tx-content .tx-body .tx-items {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.wallet-container .tx-content .tx-body .tx-item {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	border-radius: 10px;
+	box-shadow: 2px 2px 5px 0 var(--shadow-color);
+	margin: 10px;
+	padding: 10px;
+	background-color: var(--tert-color);
+	width: calc(100% - 20px);
+	gap: 5px;
+	max-width: 100%;
+	overflow: hidden;
+}
+
+.wallet-container .tx-content .tx-body .tx-item span {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	min-width: 100%;
+	width: 100%;
+	text-align: left;
+	border-bottom: 1px solid var(--quart-color);
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+.wallet-container .tx-content .tx-body .tx-item span::-webkit-scrollbar {
+	width: 5px;
+	height: 3px;
+	border-radius: 30px;
+}
+.wallet-container .tx-content .tx-body .tx-item span::-webkit-scrollbar-track {
+	background: transparent;
+	padding: 0;
+}
+
+.wallet-container .tx-content .tx-body .tx-item span::-webkit-scrollbar-thumb {
+	background: transparent;
+	border-radius: 50px;
+	margin: 0;
+}
+
+.wallet-container .tx-content .tx-body .tx-item span:hover {
+	background-color: var(--prim-color);
+	color: var(--font-color);
+	backdrop-filter: blur(0px);
+}
+
+.wallet-container .tx-content .tx-body .tx-item span:hover > .tx-item-p {
+	color: var(--font-color);
+}
+
+.wallet-container .tx-content .tx-body .tx-item span .tx-item-p {
+	font-weight: bold;
+	color: var(--sec-color);
 }
 
 .countdown-container {
