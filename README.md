@@ -1,14 +1,4 @@
-<<<<<<< HEAD
-
-### BraniacWiz Quiz Game README.md
-
-# <<<<<<< HEAD
-
-=======
-
-# BraniacWiz QuizREADME.md
-
-> > > > > > > 420992530a064c90384368d7e9dcb7d9a055f882
+# BraniacWiz Quiz README.md
 
 ## 🤓 **Overview**
 
