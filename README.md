@@ -1,10 +1,14 @@
 <<<<<<< HEAD
+
 ### BraniacWiz Quiz Game README.md
-<<<<<<< HEAD
+
+# <<<<<<< HEAD
+
 =======
-=======
+
 # BraniacWiz QuizREADME.md
->>>>>>> 420992530a064c90384368d7e9dcb7d9a055f882
+
+> > > > > > > 420992530a064c90384368d7e9dcb7d9a055f882
 
 ## 🤓 **Overview**
 
@@ -85,7 +89,7 @@ Welcome to the BraniacWiz Quiz Game, a decentralized application built on the Et
 
 ### 📝 **Additional Notes**
 
-- Ensure all dependencies are correctly installed for smooth operation (`whe running locally`).
+- Ensure all dependencies are correctly installed for smooth operation (`when running locally`).
 - Connect Metamask to the DApp to manage your account and interact with the game seamlessly.
 - Refresh the page to load account information and maintain a smooth user experience.
 - Make sure you are the `Celo alfajoris network` on your metamask wallet
@@ -93,12 +97,8 @@ Welcome to the BraniacWiz Quiz Game, a decentralized application built on the Et
 ### 🎮 **Explore the BraniacWiz Quiz Game**
 
 Enjoy a decentralized quiz experience like never before! Feel free to contribute, provide feedback, and engage with the developers to enhance the game further.
-<<<<<<< HEAD
->>>>>>> e125632b9297a1fdbcf3b8330f8fd6c3bb79cab1
-=======
 
 ## ⚠️ Issues reporting and Feature request
 
 - use this [link]() to report an issue to the game
 - use this [link]() to request a feature to the game
->>>>>>> 420992530a064c90384368d7e9dcb7d9a055f882
