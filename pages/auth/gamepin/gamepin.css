@@ -1,8 +1,3 @@
-body {
-	/* background-image: url('../../../assets/img/Untitled.png'); */
-	background-color: var(--quart-color) !important;
-}
-
 .generatePIN {
 	display: flex;
 	flex-direction: column;

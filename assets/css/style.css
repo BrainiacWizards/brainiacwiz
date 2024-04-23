@@ -15,7 +15,7 @@
 }
 
 body {
-	background-color: var(--font-color);
+	background-color: var(--tert-color);
 	color: var(--font-color);
 }
 
@@ -269,8 +269,8 @@ button:active {
 }
 
 .quiz-img {
-	width: 90%;
-	border-radius: 10%;
+	width: 100%;
+	border-radius: 20px;
 	margin: 20px 0 0 0;
 }
 
@@ -296,7 +296,7 @@ footer {
 
 .navbar {
 	text-align: center;
-	border-radius: 50px 10px; /* Add border radius */
+	border-radius: 50px 5px; /* Add border radius */
 	background-color: var(--quart-color); /* Add background color */
 	padding: 10px;
 	margin: 0;
@@ -460,6 +460,7 @@ footer .navbar ul li a:hover {
 	border-bottom: 1px solid var(--quart-color);
 	width: 100%;
 	gap: 10px;
+	margin-top: 20px;
 }
 
 .wallet-container .wallet-options button {
@@ -490,6 +491,7 @@ footer .navbar ul li a:hover {
 	color: var(--font-color);
 	border-bottom: 1px solid var(--quart-color);
 	margin-bottom: 30px;
+	font-size: 13px;
 	width: 100%;
 }
 
@@ -550,6 +552,7 @@ footer .navbar ul li a:hover {
 	border-bottom: 2px solid var(--quart-color);
 	margin-bottom: 30px;
 	width: 100%;
+	font-size: 13px;
 }
 
 .wallet-container .tx-content .tx-body {
@@ -709,8 +712,13 @@ footer .navbar ul li a:hover {
 		margin: 0 auto;
 		padding: 5px;
 		background-color: var(--tert-color);
+		color: var(--font-color);
 		border-radius: 20px;
 		flex-wrap: nowrap;
+		font-size: 18px;
+		border: 8px solid var(--tert-color);
+		border-bottom: none;
+		border-top: none;
 	}
 
 	.wallet-address::-webkit-scrollbar-track {
@@ -726,6 +734,14 @@ footer .navbar ul li a:hover {
 
 	.main-heading {
 		font-size: 25px;
+	}
+
+	.wallet-container {
+		min-width: 80% !important;
+	}
+
+	.wallet-container .wallet-content .wallet-header {
+		font-size: 13px;
 	}
 }
 @media (max-width: 400px) {

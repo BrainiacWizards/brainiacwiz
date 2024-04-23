@@ -108,6 +108,15 @@ class Navbar {
 		this.walletNfts.innerHTML = '';
 
 		tokenURI.forEach((uri) => {
+			// if url doesn't match the current url, replace it with the current url
+			const origin = window.location.origin;
+			if (!uri.includes(origin)) {
+				const nft = uri.split('/assets/nft/')[1];
+				uri = `${origin}/assets/nft/${nft}`;
+			}
+
+			console.log(uri);
+
 			this.walletNfts.innerHTML += `
                 <div class="nft-card">
                     <img src="${uri}" alt="NFT" />
