@@ -110,5 +110,5 @@ Enjoy a decentralized quiz experience like never before! Feel free to contribute
 
 ## ⚠️ Issues reporting and Feature request
 
-- use this [link]() to report an issue to the game
-- use this [link]() to request a feature to the game
+- use this [link](https://github.com/CPUT-DEVS/devpost-hackathon/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=) to report an issue to the game
+- use this [link](https://github.com/CPUT-DEVS/devpost-hackathon/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=) to request a feature to the game
