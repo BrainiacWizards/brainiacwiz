@@ -6,7 +6,10 @@ Welcome to the BraniacWiz Quiz Game, a decentralized application built on the Et
 
 👥 **Developers**
 
-- `coming soon`
+- Manelisi Mpotulo
+- Palesa Hope Motaung
+- Charles Polelo Ledwaba
+- Samkele Ndzululeka
 
 💡 **Purpose**
 
@@ -25,16 +28,17 @@ Welcome to the BraniacWiz Quiz Game, a decentralized application built on the Et
    - Install project dependencies using npm:
      ```
      $ npm install
-     ```
+   - make sure that your wallet is connected to CILO Alfajores Testnet and you must have some few tokens in your wallet
+   - if you don't have any free token click here https://faucet.celo.org/alfajores for free tokens then after that you can enjoy the game
+     ``` 
 
 3. **Running the Game**:
-   - Start Ganache for local blockchain development.
-   - For development purposes, we use Genach as our main game wallet:
-   - Have Genach running.
+   - You can run the game on your local desktop using live server
 
 4. **Connecting Metamask**:
    - Connect Metamask to the DApp and confirm account connection.
    - Switch between accounts using Metamask for different interactions.
+   - Verify that your using Cilo Alfajores Testnet or the game won't run
 
 🎲 **Usage Instructions (Player/Host)**
 
@@ -61,6 +65,7 @@ Welcome to the BraniacWiz Quiz Game, a decentralized application built on the Et
 - Ensure all dependencies are correctly installed for smooth operation.
 - Connect Metamask to the DApp to manage your account and interact with the game seamlessly.
 - Refresh the page to load account information and maintain a smooth user experience.
+- Make sure you Celo alf on your metamask wallet
 
 🎮 **Explore the BraniacWiz Quiz Game**
 
