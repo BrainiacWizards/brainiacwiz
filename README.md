@@ -28,12 +28,12 @@ Welcome to the BraniacWiz Quiz Game, a decentralized application built on the Et
    - Install project dependencies using npm:
      ```
      $ npm install
-     $ make sure that your wallet is connected to CILO Alfajores Testnet and you must have some few tokens in your wallet
-     $ if you don't have any free test token click here https://faucet.celo.org/alfajores for free tokens then after that you can enjoy the game
+   - make sure that your wallet is connected to CILO Alfajores Testnet and you must have some few tokens in your wallet
+   - if you don't have any free token click here https://faucet.celo.org/alfajores for free tokens then after that you can enjoy the game
      ``` 
 
 3. **Running the Game**:
-   - You can run the game on your local device using live server
+   - You can run the game on your local desktop using live server
 
 4. **Connecting Metamask**:
    - Connect Metamask to the DApp and confirm account connection.
