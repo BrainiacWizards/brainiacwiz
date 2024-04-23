@@ -82,13 +82,19 @@ Welcome to the BraniacWiz Quiz Game, a decentralized application built on the Et
 - A subgraph is named BraniacWiz. 
 - To create the graph the steps to be taken are:
 - On your local machine, run one of the following commands:
-- npm install -g @graphprotocol/graph-cli
+  ```
+  npm install -g @graphprotocol/graph-cli
+  ```
 - Initialize your Subgraph using command:
-- graph init --studio <SUBGRAPH_SLUG>
+  ```
+  graph init --studio <SUBGRAPH_SLUG>
+  ```
 - Then after writing the subgraph deploy to the subgraph studio.
 - Once your subgraph is written , run the following commands:
+```
 - $ graph codegen
 - $ graph build
+```
 - Publish Your Subgraph to The Graph’s Decentralized Network⁠.
 - Query your Subgraph. 
 - With regards to this Web application the query to the subgraph is your wallet under transactions.
