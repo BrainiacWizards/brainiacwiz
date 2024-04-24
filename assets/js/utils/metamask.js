@@ -1,4 +1,3 @@
-let token;
 const state = {
 	account: '0x0',
 	token: null,
