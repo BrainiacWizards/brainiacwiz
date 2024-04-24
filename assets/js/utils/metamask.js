@@ -44,11 +44,7 @@ async function loadContract(web3) {
 		state.tokenURI = [...state.tokenURI, tokenURI];
 	}
 
-	console.log(state.token);
-	console.log('address', state.address);
-	console.log('networkId', state.networkId);
-	console.log('totalSupply', state.totalSupply);
-	console.log('tokenURI', state.tokenURI);
+	console.log('state: ', state);
 
 	return token;
 }

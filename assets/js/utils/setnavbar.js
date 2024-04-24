@@ -121,8 +121,6 @@ class Navbar {
 				uri = `${origin}/assets/nft/${nft}`;
 			}
 
-			console.log(uri);
-
 			this.walletNfts.innerHTML += `
                 <div class="nft-card">
                     <img src="${uri}" alt="NFT" />
@@ -139,11 +137,8 @@ class Navbar {
 		this.txItems.innerHTML = '';
 
 		//get transfers from the current wallet
-		console.warn(transfers);
-
 		transfers.forEach((transfer) => {
 			//filter out transfers that are not from the current wallet
-			console.log(transfer.to, state.account);
 			if (transfer.to.toLowerCase() == state.account.toLowerCase()) {
 				//get timestamp and convert to date and time
 				const date = new Date(transfer.blockTimestamp * 1000);

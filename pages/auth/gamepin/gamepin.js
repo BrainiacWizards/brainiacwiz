@@ -96,14 +96,11 @@ async function validateInputs(gamePin) {
 		error.innerHTML = 'Game PIN exists';
 		console.log('Game PIN exists');
 		check = true;
-		console.log('setting check to true: data-in:', data);
 	} else {
 		error.style.display = 'block';
 		error.innerHTML = 'Game PIN does not exist';
-		console.log(error.innerHTML);
 		console.log('Game PIN does not exist');
 		check = false;
-		console.log('setting check to false data-out:', data);
 	}
 
 	gamePin = gamePin.value;

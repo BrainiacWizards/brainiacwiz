@@ -31,7 +31,6 @@ async function getTransfers({ state, url }) {
 		});
 
 		const data = await res.json();
-		console.log(data.data.transfers);
 		return data.data.transfers;
 	} catch (error) {
 		throw new Error(error);
