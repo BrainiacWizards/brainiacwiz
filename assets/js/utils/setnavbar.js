@@ -155,6 +155,10 @@ class Navbar {
 			}
 		});
 	}
+
+	async injectTrackingData(){
+		
+	}
 }
 
 const navbar = new Navbar();
