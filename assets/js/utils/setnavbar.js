@@ -85,10 +85,13 @@ class Navbar {
 			await this.showTransfers();
 		});
 
-		this.closeWalletBtn?.addEventListener(
-			'click',
-			() => (this.walletContainer.style.display = 'none'),
-		);
+		this.closeWalletBtn?.addEventListener('click', () => {
+			this.walletContainer.style.display = 'none';
+			this.walletContent.style.display = 'none';
+			this.txContent.style.display = 'none';
+			this.collectionBtn.classList.remove('btn-active');
+			this.transactionBtn.classList.remove('btn-active');
+		});
 		this.collectionBtn?.addEventListener('click', () =>
 			toggleDisplay(
 				this.walletContent,
