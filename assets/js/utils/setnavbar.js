@@ -1,31 +1,38 @@
+// ***************************************//
 import { getTransfers } from './graph_query.js';
 import { getState, metaConnection } from './metamask.js';
 
 class Navbar {
 	constructor() {
-		// data injections
 		this.injectWalletContainer();
 		this.injectTrackingData();
-
-		// dom elements
-		this.walletAddress = document.querySelector('#wallet-address-val');
-		this.walletBtn = document.querySelector('.wallet-btn');
-		this.walletNfts = document.querySelector('.wallet-nfts');
-		this.walletContainer = document.querySelector('.wallet-container');
-		this.closeWalletBtn = document.querySelector('#close-wallet');
-		this.txItems = document.querySelector('.tx-items');
-		this.collectionBtn = document.querySelector('#collection-btn');
-		this.transactionBtn = document.querySelector('#transaction-btn');
-		this.walletContent = document.querySelector('.wallet-content');
-		this.txContent = document.querySelector('.tx-content');
-
-		// constants
+		this.initDOMElements();
+		this.injectCopyToClipboard();
 		this.url =
 			'https://api.studio.thegraph.com/query/72281/celo-subgraph-box/version/latest';
 	}
 
+	initDOMElements() {
+		const selectors = {
+			walletAddress: '#wallet-address-val',
+			walletBtn: '.wallet-btn',
+			walletNfts: '.wallet-nfts',
+			walletContainer: '.wallet-container',
+			closeWalletBtn: '#close-wallet',
+			txItems: '.tx-items',
+			collectionBtn: '#collection-btn',
+			transactionBtn: '#transaction-btn',
+			walletContent: '.wallet-content',
+			txContent: '.tx-content',
+			walletAddressCont: '.wallet-address',
+		};
+		Object.keys(selectors).forEach((key) => {
+			this[key] = document.querySelector(selectors[key]);
+		});
+	}
+
 	injectWalletContainer() {
-		const walletContainer = `
+		const walletContainerHTML = `
 			<!-- wallet-container -->
 			<div class="wallet-container">
 				<div class="wallet-options">
@@ -58,44 +65,51 @@ class Navbar {
 				</div>
 			</div>
 		`;
-
-		document.body.insertAdjacentHTML('afterbegin', walletContainer);
+		document.body.insertAdjacentHTML('afterbegin', walletContainerHTML);
 	}
 
 	setNavbar() {
 		metaConnection(this.walletAddress, 1);
+		this.addEventListeners();
+	}
 
-		if (this.walletBtn) {
-			this.walletBtn.addEventListener('click', async () => {
-				this.walletContainer.style.display = 'flex';
-				this.showCollectedTokens();
-				await this.showTransfers();
-			});
-		}
+	addEventListeners() {
+		const toggleDisplay = (showElement, hideElement, activeBtn, inactiveBtn) => {
+			showElement.style.display = 'flex';
+			hideElement.style.display = 'none';
+			activeBtn.classList.add('btn-active');
+			inactiveBtn.classList.remove('btn-active');
+		};
 
-		if (this.closeWalletBtn) {
-			this.closeWalletBtn.addEventListener('click', () => {
-				this.walletContainer.style.display = 'none';
-			});
-		}
+		this.walletBtn?.addEventListener('click', async () => {
+			this.walletContainer.style.display = 'flex';
+			this.showCollectedTokens();
+			await this.showTransfers();
+		});
 
-		if (this.collectionBtn) {
-			this.collectionBtn.addEventListener('click', () => {
-				this.walletContent.style.display = 'flex';
-				this.txContent.style.display = 'none';
-				this.collectionBtn.classList.add('btn-active');
-				this.transactionBtn.classList.remove('btn-active');
-			});
-		}
-
-		if (this.transactionBtn) {
-			this.transactionBtn.addEventListener('click', () => {
-				this.walletContent.style.display = 'none';
-				this.txContent.style.display = 'flex';
-				this.transactionBtn.classList.add('btn-active');
-				this.collectionBtn.classList.remove('btn-active');
-			});
-		}
+		this.closeWalletBtn?.addEventListener('click', () => {
+			this.walletContainer.style.display = 'none';
+			this.walletContent.style.display = 'none';
+			this.txContent.style.display = 'none';
+			this.collectionBtn.classList.remove('btn-active');
+			this.transactionBtn.classList.remove('btn-active');
+		});
+		this.collectionBtn?.addEventListener('click', () =>
+			toggleDisplay(
+				this.walletContent,
+				this.txContent,
+				this.collectionBtn,
+				this.transactionBtn,
+			),
+		);
+		this.transactionBtn?.addEventListener('click', () =>
+			toggleDisplay(
+				this.txContent,
+				this.walletContent,
+				this.transactionBtn,
+				this.collectionBtn,
+			),
+		);
 	}
 
 	showCollectedTokens() {
@@ -104,7 +118,7 @@ class Navbar {
 		// display wallet container
 		this.walletContainer.style.display = 'flex';
 		const state = getState();
-		const tokenURI = state.tokenURI;
+		const { tokenURI } = state;
 
 		if (tokenURI.length === 0) {
 			this.walletNfts.innerHTML = `<h2>No NFTs collected yet</h2>`;
@@ -115,17 +129,17 @@ class Navbar {
 
 		tokenURI.forEach((uri) => {
 			// if url doesn't match the current url, replace it with the current url
-			const origin = window.location.origin;
+			const { origin } = window.location;
 			if (!uri.includes(origin)) {
 				const nft = uri.split('/assets/nft/')[1];
 				uri = `${origin}/assets/nft/${nft}`;
 			}
 
 			this.walletNfts.innerHTML += `
-                <div class="nft-card">
-                    <img src="${uri}" alt="NFT" />
-                </div>
-                `;
+          <div class="nft-card">
+              <img src="${uri}" alt="NFT" />
+          </div>
+          `;
 		});
 
 		return this.walletNfts;
@@ -136,9 +150,7 @@ class Navbar {
 		let transfers = await getTransfers({ state, url: this.url });
 		this.txItems.innerHTML = '';
 
-		//get transfers from the current wallet
 		transfers.forEach((transfer) => {
-			//filter out transfers that are not from the current wallet
 			if (transfer.to.toLowerCase() == state.account.toLowerCase()) {
 				//get timestamp and convert to date and time
 				const date = new Date(transfer.blockTimestamp * 1000);
@@ -157,21 +169,44 @@ class Navbar {
 		});
 	}
 
-	// inject tracking data to the head of the document
 	async injectTrackingData() {
 		const googleAnalytics = `<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-PV2XS36JE2"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-  		gtag('config', 'G-PV2XS36JE2');
-	</script>`;
-
-		const cookieBot = `<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="17b139ad-936f-4885-b63c-7b6ec1ee88e7" data-blockingmode="auto" type="text/javascript"></script>`;
-
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PV2XS36JE2"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+          gtag('config', 'G-PV2XS36JE2');
+      </script>`;
 		document.head.insertAdjacentHTML('beforeend', googleAnalytics);
-		document.head.insertAdjacentHTML('beforeend', cookieBot);
+	}
+
+	// inject copy to clipboard functionality
+	injectCopyToClipboard() {
+		const copyBtn = `
+							<button id="copy-btn"><i class="fas fa-copy"></i></button>`;
+		this.walletAddressCont.insertAdjacentHTML('beforeend', copyBtn);
+
+		this.copyToClipboard();
+	}
+
+	copyToClipboard() {
+		const copyBtn = document.querySelector('#copy-btn');
+		copyBtn.addEventListener('click', () => {
+			try {
+				navigator.clipboard.writeText(this.walletAddress.textContent);
+				copyBtn.innerHTML = `<i class="fas fa-check"></i>`;
+				setTimeout(() => {
+					copyBtn.innerHTML = `<i class="fas fa-copy"></i>`;
+				}, 1000);
+			} catch (error) {
+				alert('Failed to copy to clipboard');
+				copyBtn.innerHTML = `<i class="fas fa-times"></i>`;
+				setTimeout(() => {
+					copyBtn.innerHTML = `<i class="fas fa-copy"></i>`;
+				}, 1000);
+			}
+		});
 	}
 }
 

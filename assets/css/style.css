@@ -48,21 +48,44 @@ button:hover {
 
 button:active {
 	box-shadow: 2px 2px 5px 0 var(--shadow-color) !important;
+	scale: 0.9;
 }
 
 .btn-active {
-	background-color: var(--sec-color) !important;
+	background-color: var(--quart-color) !important;
 	box-shadow: 3px 3px 5px 0 var(--shadow-color) !important;
 }
 /***********************************************/
 .wallet-address {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	flex-wrap: nowrap;
 	margin: 0 auto;
+	max-width: 150px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	text-align: center;
+}
+
+.wallet-address button {
+	display: flex;
+	position: relative;
+	background-color: transparent;
+	max-width: 20px;
+	box-shadow: none;
+	display: inline;
+	max-width: 20px;
+	aspect-ratio: 1/1;
+	margin: 0;
+	margin-left: 10px;
+	padding: 0;
+	cursor: pointer;
+}
+
+#wallet-address-val {
 	max-width: 120px;
 	overflow-x: auto;
 	overflow-y: hidden;
-	text-align: center;
 
 	/* Add scrollbar styles */
 	&::-webkit-scrollbar {
@@ -413,6 +436,7 @@ footer .navbar ul li a:hover {
 .wallet-container {
 	display: none;
 	flex-direction: column;
+	justify-content: flex-start;
 	align-items: center;
 	margin: 0 auto;
 	background-color: var(--prim-color);
@@ -427,8 +451,7 @@ footer .navbar ul li a:hover {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	max-height: 80vh;
-	overflow-y: auto;
-	overflow-x: hidden;
+	overflow: hidden;
 	z-index: 2;
 }
 
@@ -538,9 +561,16 @@ footer .navbar ul li a:hover {
 .wallet-container .tx-content {
 	display: none;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 	width: 100%;
+	max-width: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.wallet-container .tx-content::-webkit-scrollbar {
+	display: none;
 }
 
 .wallet-container .tx-content .tx-header {
@@ -570,6 +600,7 @@ footer .navbar ul li a:hover {
 	justify-content: center;
 	align-items: center;
 	width: 100%;
+	min-width: 100%;
 }
 
 .wallet-container .tx-content .tx-body .tx-item {
@@ -578,8 +609,8 @@ footer .navbar ul li a:hover {
 	justify-content: flex-start;
 	align-items: flex-start;
 	border-radius: 10px;
-	box-shadow: 2px 2px 5px 0 var(--shadow-color);
-	margin: 10px;
+	box-shadow: 2px 2px 5px 0 var(--sec-color);
+	margin: 10px auto;
 	padding: 10px;
 	background-color: var(--tert-color);
 	width: calc(100% - 20px);
@@ -710,7 +741,7 @@ footer .navbar ul li a:hover {
 		display: flex;
 		flex-direction: row;
 		margin: 0 auto;
-		padding: 5px;
+		padding: 5px 0px;
 		background-color: var(--tert-color);
 		color: var(--font-color);
 		border-radius: 20px;
@@ -719,6 +750,15 @@ footer .navbar ul li a:hover {
 		border: 8px solid var(--tert-color);
 		border-bottom: none;
 		border-top: none;
+	}
+
+	.wallet-address p {
+		padding: 0;
+		margin: 0;
+		/* remove scrollbar */
+		&::-webkit-scrollbar {
+			display: none;
+		}
 	}
 
 	.wallet-address::-webkit-scrollbar-track {
