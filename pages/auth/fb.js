@@ -71,7 +71,6 @@ const fbLogin = async (email, password) => {
 		};
 
 		const userRef = ref(database, `users/${user.uid}`);
-		console.log(userRef, userData);
 
 		await update(userRef, userData);
 		alert('Login successful!, Enjoy');
@@ -98,7 +97,6 @@ const fbLogin = async (email, password) => {
 };
 
 async function createGamePinTable({ gamePin, topicID }) {
-	console.log('CreateGamePinTable', gamePin, topicID);
 	try {
 		console.log('Creating gamepin table', gamePin, topicID);
 		const gamePinRef = ref(database, `gamepin/${gamePin}-${topicID}`);

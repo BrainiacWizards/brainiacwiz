@@ -1,31 +1,31 @@
-import { getTransfers } from "./graph_query.js";
-import { getState, metaConnection } from "./metamask.js";
+import { getTransfers } from './graph_query.js';
+import { getState, metaConnection } from './metamask.js';
 
 class Navbar {
-  constructor() {
-    // data injections
-    this.injectWalletContainer();
-    this.injectTrackingData();
+	constructor() {
+		// data injections
+		this.injectWalletContainer();
+		this.injectTrackingData();
 
-    // dom elements
-    this.walletAddress = document.querySelector("#wallet-address-val");
-    this.walletBtn = document.querySelector(".wallet-btn");
-    this.walletNfts = document.querySelector(".wallet-nfts");
-    this.walletContainer = document.querySelector(".wallet-container");
-    this.closeWalletBtn = document.querySelector("#close-wallet");
-    this.txItems = document.querySelector(".tx-items");
-    this.collectionBtn = document.querySelector("#collection-btn");
-    this.transactionBtn = document.querySelector("#transaction-btn");
-    this.walletContent = document.querySelector(".wallet-content");
-    this.txContent = document.querySelector(".tx-content");
+		// dom elements
+		this.walletAddress = document.querySelector('#wallet-address-val');
+		this.walletBtn = document.querySelector('.wallet-btn');
+		this.walletNfts = document.querySelector('.wallet-nfts');
+		this.walletContainer = document.querySelector('.wallet-container');
+		this.closeWalletBtn = document.querySelector('#close-wallet');
+		this.txItems = document.querySelector('.tx-items');
+		this.collectionBtn = document.querySelector('#collection-btn');
+		this.transactionBtn = document.querySelector('#transaction-btn');
+		this.walletContent = document.querySelector('.wallet-content');
+		this.txContent = document.querySelector('.tx-content');
 
-    // constants
-    this.url =
-      "https://api.studio.thegraph.com/query/72281/celo-subgraph-box/version/latest";
-  }
+		// constants
+		this.url =
+			'https://api.studio.thegraph.com/query/72281/celo-subgraph-box/version/latest';
+	}
 
-  injectWalletContainer() {
-    const walletContainer = `
+	injectWalletContainer() {
+		const walletContainer = `
 			<!-- wallet-container -->
 			<div class="wallet-container">
 				<div class="wallet-options">
@@ -59,97 +59,92 @@ class Navbar {
 			</div>
 		`;
 
-    document.body.insertAdjacentHTML("afterbegin", walletContainer);
-  }
+		document.body.insertAdjacentHTML('afterbegin', walletContainer);
+	}
 
-  setNavbar() {
-    metaConnection(this.walletAddress, 1);
+	setNavbar() {
+		metaConnection(this.walletAddress, 1);
 
-    if (this.walletBtn) {
-      this.walletBtn.addEventListener("click", async () => {
-        this.walletContainer.style.display = "flex";
-        this.showCollectedTokens();
-        await this.showTransfers();
-      });
-    }
+		if (this.walletBtn) {
+			this.walletBtn.addEventListener('click', async () => {
+				this.walletContainer.style.display = 'flex';
+				this.showCollectedTokens();
+				await this.showTransfers();
+			});
+		}
 
-    if (this.closeWalletBtn) {
-      this.closeWalletBtn.addEventListener("click", () => {
-        this.walletContainer.style.display = "none";
-      });
-    }
+		if (this.closeWalletBtn) {
+			this.closeWalletBtn.addEventListener('click', () => {
+				this.walletContainer.style.display = 'none';
+			});
+		}
 
-    if (this.collectionBtn) {
-      this.collectionBtn.addEventListener("click", () => {
-        this.walletContent.style.display = "flex";
-        this.txContent.style.display = "none";
-        this.collectionBtn.classList.add("btn-active");
-        this.transactionBtn.classList.remove("btn-active");
-      });
-    }
+		if (this.collectionBtn) {
+			this.collectionBtn.addEventListener('click', () => {
+				this.walletContent.style.display = 'flex';
+				this.txContent.style.display = 'none';
+				this.collectionBtn.classList.add('btn-active');
+				this.transactionBtn.classList.remove('btn-active');
+			});
+		}
 
-    if (this.transactionBtn) {
-      this.transactionBtn.addEventListener("click", () => {
-        this.walletContent.style.display = "none";
-        this.txContent.style.display = "flex";
-        this.transactionBtn.classList.add("btn-active");
-        this.collectionBtn.classList.remove("btn-active");
-      });
-    }
-  }
+		if (this.transactionBtn) {
+			this.transactionBtn.addEventListener('click', () => {
+				this.walletContent.style.display = 'none';
+				this.txContent.style.display = 'flex';
+				this.transactionBtn.classList.add('btn-active');
+				this.collectionBtn.classList.remove('btn-active');
+			});
+		}
+	}
 
-  showCollectedTokens() {
-    this.collectionBtn.classList.add("btn-active");
-    this.transactionBtn.classList.remove("btn-active");
-    // display wallet container
-    this.walletContainer.style.display = "flex";
-    const state = getState();
-    const tokenURI = state.tokenURI;
+	showCollectedTokens() {
+		this.collectionBtn.classList.add('btn-active');
+		this.transactionBtn.classList.remove('btn-active');
+		// display wallet container
+		this.walletContainer.style.display = 'flex';
+		const state = getState();
+		const tokenURI = state.tokenURI;
 
-    if (tokenURI.length === 0) {
-      this.walletNfts.innerHTML = `<h2>No NFTs collected yet</h2>`;
-      return this.walletNfts;
-    }
+		if (tokenURI.length === 0) {
+			this.walletNfts.innerHTML = `<h2>No NFTs collected yet</h2>`;
+			return this.walletNfts;
+		}
 
-    this.walletNfts.innerHTML = "";
+		this.walletNfts.innerHTML = '';
 
-    tokenURI.forEach((uri) => {
-      // if url doesn't match the current url, replace it with the current url
-      const origin = window.location.origin;
-      if (!uri.includes(origin)) {
-        const nft = uri.split("/assets/nft/")[1];
-        uri = `${origin}/assets/nft/${nft}`;
-      }
+		tokenURI.forEach((uri) => {
+			// if url doesn't match the current url, replace it with the current url
+			const origin = window.location.origin;
+			if (!uri.includes(origin)) {
+				const nft = uri.split('/assets/nft/')[1];
+				uri = `${origin}/assets/nft/${nft}`;
+			}
 
-      console.log(uri);
-
-      this.walletNfts.innerHTML += `
+			this.walletNfts.innerHTML += `
                 <div class="nft-card">
                     <img src="${uri}" alt="NFT" />
                 </div>
                 `;
-    });
+		});
 
-    return this.walletNfts;
-  }
+		return this.walletNfts;
+	}
 
-  async showTransfers() {
-    const state = getState();
-    let transfers = await getTransfers({ state, url: this.url });
-    this.txItems.innerHTML = "";
+	async showTransfers() {
+		const state = getState();
+		let transfers = await getTransfers({ state, url: this.url });
+		this.txItems.innerHTML = '';
 
-    //get transfers from the current wallet
-    console.warn(transfers);
+		//get transfers from the current wallet
+		transfers.forEach((transfer) => {
+			//filter out transfers that are not from the current wallet
+			if (transfer.to.toLowerCase() == state.account.toLowerCase()) {
+				//get timestamp and convert to date and time
+				const date = new Date(transfer.blockTimestamp * 1000);
+				transfer.blockTimestamp = date.toLocaleString();
 
-    transfers.forEach((transfer) => {
-      //filter out transfers that are not from the current wallet
-      console.log(transfer.to, state.account);
-      if (transfer.to.toLowerCase() == state.account.toLowerCase()) {
-        //get timestamp and convert to date and time
-        const date = new Date(transfer.blockTimestamp * 1000);
-        transfer.blockTimestamp = date.toLocaleString();
-
-        this.txItems.innerHTML += `
+				this.txItems.innerHTML += `
 				<li class="tx-item">
 					<span><p class="tx-item-p">TokenID: </p>${transfer.tokenId}</span>
 					<span><p class="tx-item-p">TxHash: </p>${transfer.transactionHash}</span>
@@ -158,13 +153,13 @@ class Navbar {
 					<span><p class="tx-item-p">Date: </p>${transfer.blockTimestamp}</span>
 					<span><p class="tx-item-p">Block No: </p>${transfer.blockNumber}</span>
 				</li>`;
-      }
-    });
-  }
+			}
+		});
+	}
 
-  // inject tracking data to the head of the document
-  async injectTrackingData() {
-    const googleAnalystics = `<!-- Google tag (gtag.js) -->
+	// inject tracking data to the head of the document
+	async injectTrackingData() {
+		const googleAnalytics = `<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-PV2XS36JE2"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
@@ -173,8 +168,11 @@ class Navbar {
   		gtag('config', 'G-PV2XS36JE2');
 	</script>`;
 
-    document.head.insertAdjacentHTML("beforeend", googleAnalystics);
-  }
+		const cookieBot = `<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="17b139ad-936f-4885-b63c-7b6ec1ee88e7" data-blockingmode="auto" type="text/javascript"></script>`;
+
+		document.head.insertAdjacentHTML('beforeend', googleAnalytics);
+		document.head.insertAdjacentHTML('beforeend', cookieBot);
+	}
 }
 
 const navbar = new Navbar();

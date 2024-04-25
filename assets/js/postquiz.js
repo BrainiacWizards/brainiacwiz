@@ -47,7 +47,6 @@ async function setScoreBoard() {
 
 	// get score object from session storage
 	const sessionUser = JSON.parse(sessionStorage.getItem('sessionUser'));
-	// console.log(sessionUser);
 
 	let scoreData = await createScoreBoard({
 		gamePin: myPin,
@@ -76,7 +75,6 @@ async function setScoreBoard() {
 	}
 
 	// fund the account of the top 2 players
-	console.log(scoreData);
 	countdownContainer.style.display = 'flex';
 	countdown.innerHTML = time;
 

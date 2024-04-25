@@ -1,6 +1,5 @@
 // check login status from login object in session storage
 function checkLoginStatus({ path = './' }) {
-	console.log(path);
 	const loginObj = sessionStorage.getItem('login');
 	if (loginObj) {
 		const loginObject = JSON.parse(loginObj);

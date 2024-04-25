@@ -1,4 +1,3 @@
-let token;
 const state = {
 	account: '0x0',
 	token: null,
@@ -6,7 +5,6 @@ const state = {
 	address: null,
 	networkId: null,
 	totalSupply: null,
-	nftWon: [],
 };
 // set the nft token images
 const nfts = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg'];
@@ -44,16 +42,12 @@ async function loadContract(web3) {
 		state.tokenURI = [...state.tokenURI, tokenURI];
 	}
 
-	console.log(state.token);
-	console.log('address', state.address);
-	console.log('networkId', state.networkId);
-	console.log('totalSupply', state.totalSupply);
-	console.log('tokenURI', state.tokenURI);
+	console.log('state: ', state);
 
 	return token;
 }
 
-async function metaConnection(walletAddress, fund) {
+async function metaConnection(walletAddress) {
 	let web3;
 
 	if (typeof window.ethereum !== 'undefined') {

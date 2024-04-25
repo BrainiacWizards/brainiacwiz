@@ -138,7 +138,6 @@ const scoreData = await createScoreBoard({
 
 quizOptBtns.forEach((btn) => {
 	btn.addEventListener('click', async () => {
-		console.log('clicked');
 		const correctAnswer = questions[CA][question];
 		if (btn.innerHTML === correctAnswer) {
 			score++;
@@ -147,7 +146,6 @@ quizOptBtns.forEach((btn) => {
 		// set a object with score and username
 		sessionUser.score = score;
 		sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
-		console.log(sessionUser.score);
 
 		sessionUser = JSON.parse(sessionStorage.getItem('sessionUser'));
 		console.log(sessionUser);
