@@ -7,6 +7,7 @@ class Navbar {
 		this.injectWalletContainer();
 		this.injectTrackingData();
 		this.initDOMElements();
+		this.injectCopyToClipboard();
 		this.url =
 			'https://api.studio.thegraph.com/query/72281/celo-subgraph-box/version/latest';
 	}
@@ -23,6 +24,7 @@ class Navbar {
 			transactionBtn: '#transaction-btn',
 			walletContent: '.wallet-content',
 			txContent: '.tx-content',
+			walletAddressCont: '.wallet-address',
 		};
 		Object.keys(selectors).forEach((key) => {
 			this[key] = document.querySelector(selectors[key]);
@@ -177,6 +179,34 @@ class Navbar {
           gtag('config', 'G-PV2XS36JE2');
       </script>`;
 		document.head.insertAdjacentHTML('beforeend', googleAnalytics);
+	}
+
+	// inject copy to clipboard functionality
+	injectCopyToClipboard() {
+		const copyBtn = `
+							<button id="copy-btn"><i class="fas fa-copy"></i></button>`;
+		this.walletAddressCont.insertAdjacentHTML('beforeend', copyBtn);
+
+		this.copyToClipboard();
+	}
+
+	copyToClipboard() {
+		const copyBtn = document.querySelector('#copy-btn');
+		copyBtn.addEventListener('click', () => {
+			try {
+				navigator.clipboard.writeText(this.walletAddress.textContent);
+				copyBtn.innerHTML = `<i class="fas fa-check"></i>`;
+				setTimeout(() => {
+					copyBtn.innerHTML = `<i class="fas fa-copy"></i>`;
+				}, 1000);
+			} catch (error) {
+				alert('Failed to copy to clipboard');
+				copyBtn.innerHTML = `<i class="fas fa-times"></i>`;
+				setTimeout(() => {
+					copyBtn.innerHTML = `<i class="fas fa-copy"></i>`;
+				}, 1000);
+			}
+		});
 	}
 }
 

@@ -58,12 +58,34 @@ button:active {
 /***********************************************/
 .wallet-address {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	flex-wrap: nowrap;
 	margin: 0 auto;
+	max-width: 150px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	text-align: center;
+}
+
+.wallet-address button {
+	display: flex;
+	position: relative;
+	background-color: transparent;
+	max-width: 20px;
+	box-shadow: none;
+	display: inline;
+	max-width: 20px;
+	aspect-ratio: 1/1;
+	margin: 0;
+	margin-left: 10px;
+	padding: 0;
+	cursor: pointer;
+}
+
+#wallet-address-val {
 	max-width: 120px;
 	overflow-x: auto;
 	overflow-y: hidden;
-	text-align: center;
 
 	/* Add scrollbar styles */
 	&::-webkit-scrollbar {
@@ -719,7 +741,7 @@ footer .navbar ul li a:hover {
 		display: flex;
 		flex-direction: row;
 		margin: 0 auto;
-		padding: 5px;
+		padding: 5px 0px;
 		background-color: var(--tert-color);
 		color: var(--font-color);
 		border-radius: 20px;
@@ -728,6 +750,15 @@ footer .navbar ul li a:hover {
 		border: 8px solid var(--tert-color);
 		border-bottom: none;
 		border-top: none;
+	}
+
+	.wallet-address p {
+		padding: 0;
+		margin: 0;
+		/* remove scrollbar */
+		&::-webkit-scrollbar {
+			display: none;
+		}
 	}
 
 	.wallet-address::-webkit-scrollbar-track {
