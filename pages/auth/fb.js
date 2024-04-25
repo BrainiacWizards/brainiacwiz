@@ -1,14 +1,14 @@
-import * as fb from '../../fb_config';
+import * as fb from '../../fb_config.js';
 
 const fbSignUp = async (email, password, userName) => {
 	try {
 		const userCredential = await fb.createUserWithEmailAndPassword(
-			auth,
+			fb.auth,
 			email,
 			password,
 		);
 		const { user } = userCredential;
-		const userRef = fb.fb.ref(database, `users/${user.uid}`);
+		const userRef = fb.ref(fb.database, `users/${user.uid}`);
 		const userData = {
 			email: email,
 			username: userName,
@@ -31,7 +31,7 @@ const fbSignUp = async (email, password, userName) => {
 const fbLogin = async (email, password) => {
 	try {
 		const userCredential = await fb.signInWithEmailAndPassword(
-			auth,
+			fb.auth,
 			email,
 			password,
 		);
@@ -41,13 +41,13 @@ const fbLogin = async (email, password) => {
 			lastLogin: Date.now(),
 		};
 
-		const userRef = fb.ref(database, `users/${user.uid}`);
+		const userRef = fb.ref(fb.database, `users/${user.uid}`);
 
 		await fb.update(userRef, userData);
 		alert('Login successful!, Enjoy');
 
 		// query for username
-		const usernameRef = fb.ref(database, `users/${user.uid}/username`);
+		const usernameRef = fb.ref(fb.database, `users/${user.uid}/username`);
 		const usernameSnapshot = await fb.get(usernameRef);
 		const username = usernameSnapshot.val();
 
@@ -63,6 +63,7 @@ const fbLogin = async (email, password) => {
 		window.location.href = '../../index.html?login=success&username=' + username;
 	} catch (error) {
 		const errorMessage = error.message;
+		alert(errorMessage);
 		throw new Error(errorMessage);
 	}
 };
@@ -70,7 +71,7 @@ const fbLogin = async (email, password) => {
 async function createGamePinTable({ gamePin, topicID }) {
 	try {
 		console.log('Creating gamepin table', gamePin, topicID);
-		const gamePinRef = fb.ref(database, `gamepin/${gamePin}-${topicID}`);
+		const gamePinRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
 		await fb.set(gamePinRef, {});
 		const dummyObject = [{ username: 'dummy', score: 0 }];
 
@@ -82,10 +83,10 @@ async function createGamePinTable({ gamePin, topicID }) {
 	}
 }
 
-// set scoreboard in database in table named gamepin
+// set scoreboard in fb.database in table named gamepin
 async function createScoreBoard({ gamePin, username, score, topicID }) {
 	console.log('Creating gamepin table', gamePin, topicID);
-	const scoreRef = fb.ref(database, `gamepin/${gamePin}-${topicID}`);
+	const scoreRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
 
 	// get the values from the table and assign it to an object
 	// get the values from the table and assign it to an object
@@ -121,7 +122,7 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 }
 
 async function queryGamePin({ gamePin, topicID }) {
-	const playerNamesRef = fb.ref(database, `gamepin/${gamePin}-${topicID}`);
+	const playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
 	const playerNamesSnapshot = await fb.get(playerNamesRef);
 	const playerNames = playerNamesSnapshot.val();
 	return playerNames;
@@ -129,7 +130,7 @@ async function queryGamePin({ gamePin, topicID }) {
 
 //get player names using game pin
 async function getPlayerNames({ gamePin, topicID }) {
-	const playerNamesRef = fb.ref(database, `gamepin/${gamePin}-${topicID}`);
+	const playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
 	const playerNamesSnapshot = await fb.get(playerNamesRef);
 	const playerNames = playerNamesSnapshot.val();
 
