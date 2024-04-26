@@ -12,6 +12,9 @@ import {
 	get,
 } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
 
+import { getPerformance } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-performance.js';
+import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js';
+
 const firebaseConfig = {
 	apiKey: 'AIzaSyCeL875YW20dLfoeNxfR-EU4TeIPqkWc1Q',
 	authDomain: 'brainiacwiz.firebaseapp.com',
@@ -27,6 +30,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app);
+// Initialize Performance Monitoring and get a reference to the service
+const perf = getPerformance(app);
+const analytics = getAnalytics(app);
 
 export {
 	auth,
@@ -38,4 +44,6 @@ export {
 	ref,
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
+	perf,
+	analytics,
 };
