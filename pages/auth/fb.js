@@ -1,43 +1,14 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
-
-import {
-	getAuth,
-	createUserWithEmailAndPassword,
-	signInWithEmailAndPassword,
-} from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
-import { getDatabase } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
-import {
-	ref,
-	set,
-	update,
-	get,
-} from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
-
-const firebaseConfig = {
-	apiKey: 'AIzaSyCdlRc8cgZLCBT7lUkWePlMRVV_2a4viyQ',
-	authDomain: 'authcenterza.firebaseapp.com',
-	projectId: 'authcenterza',
-	storageBucket: 'authcenterza.appspot.com',
-	messagingSenderId: '940181212466',
-	appId: '1:940181212466:web:cfa738a16d1ded52fa9b2b',
-	measurementId: 'G-GC77HFB3XD',
-	databaseURL:
-		'https://authcenterza-default-rtdb.europe-west1.firebasedatabase.app/',
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const database = getDatabase(app);
+import * as fb from '../../fb_config.js';
 
 const fbSignUp = async (email, password, userName) => {
 	try {
-		const userCredential = await createUserWithEmailAndPassword(
-			auth,
+		const userCredential = await fb.createUserWithEmailAndPassword(
+			fb.auth,
 			email,
 			password,
 		);
 		const { user } = userCredential;
-		const userRef = ref(database, `users/${user.uid}`);
+		const userRef = fb.ref(fb.database, `users/${user.uid}`);
 		const userData = {
 			email: email,
 			username: userName,
@@ -45,7 +16,7 @@ const fbSignUp = async (email, password, userName) => {
 			lastLogin: Date.now(),
 		};
 
-		await set(userRef, userData);
+		await fb.set(userRef, userData);
 		console.log('Data written successfully');
 		alert('Registration successful!, Please login to continue');
 
@@ -59,8 +30,8 @@ const fbSignUp = async (email, password, userName) => {
 
 const fbLogin = async (email, password) => {
 	try {
-		const userCredential = await signInWithEmailAndPassword(
-			auth,
+		const userCredential = await fb.signInWithEmailAndPassword(
+			fb.auth,
 			email,
 			password,
 		);
@@ -70,14 +41,14 @@ const fbLogin = async (email, password) => {
 			lastLogin: Date.now(),
 		};
 
-		const userRef = ref(database, `users/${user.uid}`);
+		const userRef = fb.ref(fb.database, `users/${user.uid}`);
 
-		await update(userRef, userData);
+		await fb.update(userRef, userData);
 		alert('Login successful!, Enjoy');
 
 		// query for username
-		const usernameRef = ref(database, `users/${user.uid}/username`);
-		const usernameSnapshot = await get(usernameRef);
+		const usernameRef = fb.ref(fb.database, `users/${user.uid}/username`);
+		const usernameSnapshot = await fb.get(usernameRef);
 		const username = usernameSnapshot.val();
 
 		// set session storage for login object
@@ -92,6 +63,7 @@ const fbLogin = async (email, password) => {
 		window.location.href = '../../index.html?login=success&username=' + username;
 	} catch (error) {
 		const errorMessage = error.message;
+		alert(errorMessage);
 		throw new Error(errorMessage);
 	}
 };
@@ -99,11 +71,11 @@ const fbLogin = async (email, password) => {
 async function createGamePinTable({ gamePin, topicID }) {
 	try {
 		console.log('Creating gamepin table', gamePin, topicID);
-		const gamePinRef = ref(database, `gamepin/${gamePin}-${topicID}`);
-		await set(gamePinRef, {});
+		const gamePinRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
+		await fb.set(gamePinRef, {});
 		const dummyObject = [{ username: 'dummy', score: 0 }];
 
-		await set(gamePinRef, dummyObject);
+		await fb.set(gamePinRef, dummyObject);
 
 		alert('Game created! share your pin with others');
 	} catch (error) {
@@ -111,15 +83,15 @@ async function createGamePinTable({ gamePin, topicID }) {
 	}
 }
 
-// set scoreboard in database in table named gamepin
+// set scoreboard in fb.database in table named gamepin
 async function createScoreBoard({ gamePin, username, score, topicID }) {
 	console.log('Creating gamepin table', gamePin, topicID);
-	const scoreRef = ref(database, `gamepin/${gamePin}-${topicID}`);
+	const scoreRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
 
 	// get the values from the table and assign it to an object
 	// get the values from the table and assign it to an object
 	try {
-		const scoreSnapshot = await get(scoreRef);
+		const scoreSnapshot = await fb.get(scoreRef);
 		let scoreData = Object.values(scoreSnapshot.val() || {});
 
 		// Initialize scoreData if it's null
@@ -139,7 +111,7 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 			});
 		}
 
-		await set(scoreRef, scoreData);
+		await fb.set(scoreRef, scoreData);
 
 		console.log('Scoreboard updated successfully');
 
@@ -150,16 +122,16 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 }
 
 async function queryGamePin({ gamePin, topicID }) {
-	const playerNamesRef = ref(database, `gamepin/${gamePin}-${topicID}`);
-	const playerNamesSnapshot = await get(playerNamesRef);
+	const playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
+	const playerNamesSnapshot = await fb.get(playerNamesRef);
 	const playerNames = playerNamesSnapshot.val();
 	return playerNames;
 }
 
 //get player names using game pin
 async function getPlayerNames({ gamePin, topicID }) {
-	const playerNamesRef = ref(database, `gamepin/${gamePin}-${topicID}`);
-	const playerNamesSnapshot = await get(playerNamesRef);
+	const playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
+	const playerNamesSnapshot = await fb.get(playerNamesRef);
 	const playerNames = playerNamesSnapshot.val();
 
 	return playerNames || [{ username: 'No players yet' }];

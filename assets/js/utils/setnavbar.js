@@ -1,6 +1,10 @@
 // ***************************************//
+import { analytics, perf } from '../../../fb_config.js';
 import { getTransfers } from './graph_query.js';
 import { getState, metaConnection } from './metamask.js';
+
+console.log('performance', perf);
+console.log('analytics', analytics);
 
 class Navbar {
 	constructor() {
