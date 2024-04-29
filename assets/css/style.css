@@ -179,6 +179,7 @@ button:active {
 	text-align: center;
 	padding: 20px 0;
 	min-height: 35px;
+	transition: all ease-in-out 800ms;
 }
 
 .main-content {
@@ -240,6 +241,7 @@ button:active {
 		transparent
 	);
 	padding: 0;
+	transition: all ease-in-out 800ms;
 }
 
 .main-heading h1 {
@@ -268,6 +270,7 @@ button:active {
 	width: fit-content;
 	margin-inline: auto;
 	padding: 0 20px;
+	transition: all ease-in-out 800ms;
 }
 
 .quiz-card {
@@ -308,7 +311,7 @@ button:active {
 
 footer {
 	position: relative;
-	background-color: var(--tert-color);
+	background-color: var(--tert-color) !important;
 	padding: 0;
 	bottom: 0px;
 	height: 100%;
@@ -400,15 +403,16 @@ footer {
 }
 
 .body-content {
-	background-color: var(--tert-color);
+	background-color: var(--font-color);
 	margin: 0;
 	padding: 50px 0;
-	min-height: 88vh;
+	min-height: 0vh;
 }
 
 .no-background {
-	background-color: transparent !important;
+	background-color: var(--font-color) !important;
 	padding: 0 !important;
+	margin: 0;
 }
 
 footer .navbar ul li a:hover {
@@ -703,6 +707,7 @@ footer .navbar ul li a:hover {
 @media (max-width: 500px) {
 	.container {
 		grid-template-columns: repeat(1, 1fr);
+		margin-top: 50px;
 	}
 
 	.quiz-card {
@@ -712,6 +717,7 @@ footer .navbar ul li a:hover {
 	.main-header {
 		background-color: var(--sec-color);
 		border-radius: 0 0 20px 20px;
+		margin-bottom: 10px;
 	}
 
 	.wallet-btn {
@@ -774,6 +780,7 @@ footer .navbar ul li a:hover {
 
 	.main-heading {
 		font-size: 25px;
+		margin-top: 50px;
 	}
 
 	.wallet-container {

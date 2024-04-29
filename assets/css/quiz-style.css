@@ -95,7 +95,7 @@
 
 /* score-board */
 .score-board {
-	position: relative;
+	position: absolute;
 	background-color: var(--quart-color);
 	padding: 20px;
 	border: 2px solid var(--prim-color);
@@ -106,6 +106,9 @@
 	align-items: center;
 	margin: 50px auto;
 	width: fit-content;
+	top: 30%;
+	left: 50%;
+	transform: translate(-50%, -0%);
 }
 
 .score-board .header {

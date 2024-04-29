@@ -29,6 +29,7 @@ class Navbar {
 				justify-content: center;
 				align-items: center;
 				font-size: 2rem;
+				text-align: center;
 			`;
 		document.body.appendChild(offlineMessage);
 
