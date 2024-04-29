@@ -3,12 +3,61 @@ import { getState, metaConnection } from './metamask.js';
 
 class Navbar {
 	constructor() {
+		this.checkInternetConnection();
 		this.injectWalletContainer();
 		this.injectTrackingData();
 		this.initDOMElements();
 		this.injectCopyToClipboard();
 		this.url =
 			'https://api.studio.thegraph.com/query/72281/celo-subgraph-box/version/latest';
+		this.sentryUrl = ``;
+	}
+
+	checkInternetConnection() {
+		const offlineMessage = document.createElement('div');
+		offlineMessage.classList.add('offline-div');
+		offlineMessage.style.cssText = `
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100vh;
+				background-color: #000;
+				color: #fff;
+				display: none;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				font-size: 2rem;
+			`;
+		document.body.appendChild(offlineMessage);
+
+		window.addEventListener('offline', () => {
+			console.log('offline');
+			offlineMessage.innerHTML = `
+				<h1>Internet Connection Lost</h1>
+				<br>
+				<p>You might have to reload the page.</p>
+				`;
+			offlineMessage.style.display = 'flex';
+		});
+
+		if (!navigator.onLine) {
+			offlineMessage.innerHTML = `
+				<h1>Internet Connection Lost</h1>
+				<br>
+				<p>You might have to reload the page.</p>
+				`;
+			offlineMessage.style.display = 'flex';
+		}
+
+		window.addEventListener('online', () => {
+			console.log('online');
+			offlineMessage.innerHTML = `<h1>Connection is back on.</h1>`;
+			setTimeout(() => {
+				offlineMessage.style.display = 'none';
+			}, 1500);
+		});
 	}
 
 	initDOMElements() {
@@ -178,6 +227,28 @@ class Navbar {
           gtag('config', 'G-PV2XS36JE2');
       </script>`;
 		document.head.insertAdjacentHTML('beforeend', googleAnalytics);
+
+		// start sentry transaction
+		const sentry = document.createElement('script');
+		sentry.src = `https://js.sentry-cdn.com/28e0779f6d4ee26fe0de02fcc3239280.min.js`;
+		sentry.crossOrigin = 'anonymous';
+		document.head.appendChild(sentry);
+
+		// sentry tracking
+		const sentryTracking = `<!-- Sentry.io tracking -->
+	  	<script>
+			Sentry.onLoad(function() {
+				Sentry.init({
+				// Performance Monitoring
+				tracesSampleRate: 1.0, // Capture 100% of the transactions
+				// Session Replay
+				replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
+				replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
+				});
+			});
+		</script>`;
+
+		document.head.insertAdjacentHTML('beforeend', sentryTracking);
 	}
 
 	// inject copy to clipboard functionality
