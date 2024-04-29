@@ -406,7 +406,7 @@ footer {
 	background-color: var(--font-color);
 	margin: 0;
 	padding: 50px 0;
-	min-height: 0vh;
+	min-height: 80vh;
 }
 
 .no-background {
