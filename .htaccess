@@ -1,0 +1,10 @@
+# Prevent access to sensitive files
+
+<FilesMatch "(^\.|\/\.)">
+Order Deny,Allow
+Deny from all
+</FilesMatch>
+
+# Prevent directory listing
+
+Options -Indexes
