@@ -137,6 +137,41 @@ async function getPlayerNames({ gamePin, topicID }) {
 	return playerNames || [{ username: 'No players yet' }];
 }
 
+// set overall ranking
+async function overallRanking({ username, points, time }) {
+	const overallRankingRef = fb.ref(fb.database, 'overallRanking');
+	const overallRankingSnapshot = await fb.get(overallRankingRef);
+	let overallRanking = Object.values(overallRankingSnapshot.val() || []);
+
+	// Initialize overallRanking if it's null
+	if (!overallRanking) {
+		overallRanking = [{ username: username, points: points, time: time }];
+	}
+
+	// add the new points to the existing data if the username doesn't already exist
+	if (!overallRanking.some((obj) => obj.username === username)) {
+		overallRanking.push({ username: username, points: points, time: time });
+	} else {
+		// update the score if the username already exists
+		overallRanking = overallRanking.map((obj) => {
+			if (obj.username === username) {
+				obj.points += points;
+				obj.time = time;
+			}
+			return obj;
+		});
+	}
+
+	try {
+		await fb.set(overallRankingRef, overallRanking);
+		console.log('Overall ranking updated successfully');
+	} catch (error) {
+		console.error(`could not update the overall ranking\n\n ${error}`);
+	}
+
+	return overallRanking;
+}
+
 export {
 	fbSignUp,
 	fbLogin,
@@ -144,4 +179,5 @@ export {
 	createScoreBoard,
 	queryGamePin,
 	getPlayerNames,
+	overallRanking,
 };

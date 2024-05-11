@@ -1,4 +1,4 @@
-import { createScoreBoard } from '../../pages/auth/fb.js';
+import { createScoreBoard, overallRanking } from '../../pages/auth/fb.js';
 import { fundAccount } from './utils/metamask.js';
 import { topics, questions } from './utils/questions.js';
 // checkLoginStatus({ path: '../auth/' });
@@ -30,14 +30,14 @@ const setQuizDetails = (playerNames) => {
 	playerCount.innerHTML = `Players: ${playerNames.length}`;
 };
 
-playBtn.addEventListener('click', () => {
+playBtn?.addEventListener('click', () => {
 	window.location.href = `../auth/gamepin/gamepinUI/index.html?topic=${topicID}`;
 });
 
 // set scoreboard
 let tokenTransferred = false;
 let reload = true;
-let time = 10;
+let time = 5;
 
 async function setScoreBoard() {
 	// get username from login
@@ -85,7 +85,7 @@ async function setScoreBoard() {
 
 	if (time <= 0) {
 		countdown.innerHTML = 0;
-		await checkWin(scoreData, username);
+		await checkWin(scoreData, username, myPin, sessionUser.score);
 		countdownContainer.style.display = 'none';
 		reload = false;
 		return;
@@ -100,11 +100,22 @@ async function setScoreBoard() {
 setScoreBoard();
 
 // check win and transfer token
-async function checkWin(scoreData, username) {
+async function checkWin(scoreData, username, gamePin, score) {
+	// check if score equals the number of questions
+	if (score < questions[`Q${topicID}`].length / 2) {
+		alert('You should get 50% of the questions correctly to win, try again!');
+		// restart the game move the play.html
+		window.location.href = `../play/quiz.html?topic=${topicID}&gamePin=${gamePin}`;
+		return;
+	}
+
 	if (scoreData[0].username === username && !tokenTransferred) {
 		alert(
-			'Congratulations! You are the winner, transferring token to your account...',
+			'Congratulations! You are the won, wait for NFT token transfer to your wallet',
 		);
+
+		// set overall ranking
+		await setOverallRanking({ username, score });
 
 		try {
 			await fundAccount();
@@ -123,4 +134,20 @@ async function checkWin(scoreData, username) {
 			}
 		}
 	}
+}
+
+// set overall ranking
+async function setOverallRanking({ username, score }) {
+	console.log('setting overall ranking for', username, score);
+	const currentTime = new Date().getTime();
+
+	// set overall ranking
+	const ranking = await overallRanking({
+		username,
+		points: score,
+		time: currentTime,
+	});
+
+	console.log('overall ranking', ranking);
+	return ranking;
 }

@@ -111,7 +111,7 @@ const setQuizTImer = ({ duration = 30, speed = 200 }) => {
 	}, speed);
 };
 
-setQuizTImer({ duration: 15, speed: 200 });
+setQuizTImer({ duration: 30, speed: 150 });
 
 function moveToPostQuiz(intervalId) {
 	clearInterval(intervalId); // stop the interval
