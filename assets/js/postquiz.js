@@ -31,7 +31,10 @@ const setQuizDetails = (playerNames) => {
 };
 
 playBtn?.addEventListener('click', () => {
-	window.location.href = `../auth/gamepin/gamepinUI/index.html?topic=${topicID}`;
+	// get score object from session storage
+	const sessionUser = JSON.parse(sessionStorage.getItem('sessionUser'));
+
+	window.location.href = `../auth/gamepin/gamepinUI/index.html?topic=${topicID}&retry=${sessionUser.score}`;
 });
 
 // set scoreboard
@@ -105,17 +108,23 @@ async function checkWin(scoreData, username, gamePin, score) {
 	if (score < questions[`Q${topicID}`].length / 2) {
 		alert('You should get 50% of the questions correctly to win, try again!');
 		// restart the game move the play.html
-		window.location.href = `../play/quiz.html?topic=${topicID}&gamePin=${gamePin}`;
+		window.location.href = `../play/quiz.html?topic=${topicID}&gamePin=${gamePin}&retry=${score}`;
 		return;
+	}
+
+	const retry = new URLSearchParams(window.location.search).get('retry');
+
+	// set overall ranking
+	if (retry) {
+		await setOverallRanking({ username, score, retry: '2' });
+	} else {
+		await setOverallRanking({ username, score });
 	}
 
 	if (scoreData[0].username === username && !tokenTransferred) {
 		alert(
 			'Congratulations! You are the won, wait for NFT token transfer to your wallet',
 		);
-
-		// set overall ranking
-		await setOverallRanking({ username, score });
 
 		try {
 			await fundAccount();
@@ -133,12 +142,17 @@ async function checkWin(scoreData, username, gamePin, score) {
 				throw error;
 			}
 		}
+	} else {
+		alert('congratulations! you have completed the quiz, see you next time');
+		reload = false;
+		window.location.href = '../../index.html';
+		return;
 	}
 }
 
 // set overall ranking
-async function setOverallRanking({ username, score }) {
-	console.log('setting overall ranking for', username, score);
+async function setOverallRanking({ username, score, retry }) {
+	console.log('setting overall ranking for', username, score, retry);
 	const currentTime = new Date().getTime();
 
 	// set overall ranking
@@ -146,6 +160,7 @@ async function setOverallRanking({ username, score }) {
 		username,
 		points: score,
 		time: currentTime,
+		retry: retry,
 	});
 
 	console.log('overall ranking', ranking);

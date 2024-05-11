@@ -8,9 +8,10 @@
 			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
 			rel="stylesheet"
 		/>
-		<link rel="stylesheet" href="./assets/css/style.css" />
-		<link rel="shortcut icon" href="./assets/img/brainacwiz-logo.jpeg" />
-		<link rel="stylesheet" href="./assets/fontawesome-6.5.2/css/all.css" />
+		<link rel="stylesheet" href="../assets/css/style.css" />
+		<link rel="shortcut icon" href="../assets/img/brainacwiz-logo.jpeg" />
+		<link rel="stylesheet" href="../assets/fontawesome-6.5.2/css/all.css" />
+		<link rel="stylesheet" href="../assets/css/quiz-style.css" />
 
 		<!-- Google tag (gtag.js) -->
 		<script
@@ -35,42 +36,11 @@
 	</head>
 	<body>
 		<main>
-			<div class="landing-overlay">
-				<div class="landing-content">
-					<img src="./assets/img/brainacwiz-logo.jpeg" alt="Placeholder Image" />
-					<h1>BraniacWiz</h1>
-					<h3>Ready to Win?</h3>
-					<p>Play now, play with your friends</p>
-					<div class="overlay-buttons">
-						<button id="explore-btn"
-							>Explore <i class="fa-solid fa-magnifying-glass-dollar fa-beat-fade"></i
-						></button>
-					</div>
-				</div>
-			</div>
-			<div class="quiz-options">
-				<span id="close-btn"><i class="fa-regular fa-circle-xmark"></i></span>
-				<div class="head">
-					<h1>Pick and Option</h1>
-				</div>
-				<div class="body">
-					<a class="host-btn" href=""
-						><button id=""
-							>Host Quiz <i class="fa-regular fa-square-plus fa-fade"></i></button
-					></a>
-					<a class="join-btn" href=""
-						><button id=""
-							>Join Quiz
-							<i class="fa-solid fa-arrow-right-to-bracket fa-fade"></i></button
-					></a>
-				</div>
-			</div>
-
 			<section class="main-content">
 				<div class="main-header">
 					<div class="logo">
-						<a href="./pages/ranking.html"
-							><img src="./assets/img/brainacwiz-logo.jpeg" alt="Logo"
+						<a href="#"
+							><img src="../assets/img/brainacwiz-logo.jpeg" alt="Logo"
 						/></a>
 					</div>
 
@@ -85,15 +55,34 @@
 					</div>
 				</div>
 
-				<div class="main-heading"> <h1> CATEGORIES </h1> </div>
-				<!-- quiz topic container -->
-				<div class="container"> </div>
+				<div class="content fullheight">
+					<div class="main-heading"> <h1> LeaderBoard </h1> </div>
+
+					<!-- leader board -->
+					<div class="score-board">
+						<div class="body">
+							<table class="score-board-table" id="ranking-table">
+								<thead>
+									<tr>
+										<th class="colA">Pos</th>
+										<th class="colB">username</th>
+										<th class="colC">points</th>
+										<th class="colD">Start</th>
+										<th class="colD">End</th>
+										<th class="colD">Duration</th>
+									</tr>
+								</thead>
+								<tbody id="ranking-body"> </tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 
 				<footer class="">
 					<nav class="navbar">
 						<ul>
 							<li>
-								<a href="#"><i class="bx bx-home"></i><p>Home</p></a>
+								<a href="../index.html"><i class="bx bx-home"></i><p>Home</p></a>
 							</li>
 							<li>
 								<a href="#"><i class="bx bx-book"></i><p>My Library</p></a>
@@ -110,13 +99,13 @@
 			</section>
 		</main>
 
-		<script type="module" defer src="./assets/js/index.js"></script>
+		<script type="module" src="../assets/js/ranking.js"></script>
 		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
 		<script
 			src="https://kit.fontawesome.com/cda065bf16.js"
 			crossorigin="anonymous"
 		></script>
 		<!-- load navbar -->
-		<script type="module" src="./assets/js/utils/setnavbar.js"></script>
+		<script type="module" src="../assets/js/utils/setnavbar.js"></script>
 	</body>
 </html>

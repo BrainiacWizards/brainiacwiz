@@ -138,7 +138,7 @@ async function getPlayerNames({ gamePin, topicID }) {
 }
 
 // set overall ranking
-async function overallRanking({ username, points, time }) {
+async function overallRanking({ username, points, time, retry }) {
 	const overallRankingRef = fb.ref(fb.database, 'overallRanking');
 	const overallRankingSnapshot = await fb.get(overallRankingRef);
 	let overallRanking = Object.values(overallRankingSnapshot.val() || []);
@@ -150,13 +150,20 @@ async function overallRanking({ username, points, time }) {
 
 	// add the new points to the existing data if the username doesn't already exist
 	if (!overallRanking.some((obj) => obj.username === username)) {
-		overallRanking.push({ username: username, points: points, time: time });
+		overallRanking.push({
+			username: username,
+			points: points,
+			time: time,
+			startTime: Date.now(),
+			duration: time,
+		});
 	} else {
 		// update the score if the username already exists
 		overallRanking = overallRanking.map((obj) => {
 			if (obj.username === username) {
-				obj.points += points;
+				retry ? (obj.points += points - retry) : (obj.points += points);
 				obj.time = time;
+				obj.duration = time - obj.startTime;
 			}
 			return obj;
 		});
@@ -172,6 +179,14 @@ async function overallRanking({ username, points, time }) {
 	return overallRanking;
 }
 
+async function getOverallRanking() {
+	const overallRankingRef = fb.ref(fb.database, 'overallRanking');
+	const overallRankingSnapshot = await fb.get(overallRankingRef);
+	const overallRanking = overallRankingSnapshot.val();
+
+	return overallRanking || [{ username: 'No players yet', points: 0, time: 0 }];
+}
+
 export {
 	fbSignUp,
 	fbLogin,
@@ -180,4 +195,5 @@ export {
 	queryGamePin,
 	getPlayerNames,
 	overallRanking,
+	getOverallRanking,
 };

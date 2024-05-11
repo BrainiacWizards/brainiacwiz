@@ -115,7 +115,9 @@ setQuizTImer({ duration: 30, speed: 150 });
 
 function moveToPostQuiz(intervalId) {
 	clearInterval(intervalId); // stop the interval
-	window.location.href = `./post-quiz.html?gamePin=${gamePin}&topic=${topicID}`;
+	const retry =
+		new URLSearchParams(window.location.search).get('retry') || false;
+	window.location.href = `./post-quiz.html?gamePin=${gamePin}&topic=${topicID}&retry=${retry}`;
 }
 
 // check answers and set score
