@@ -11,7 +11,7 @@ async function getRanking() {
 
 	// sort the ranking by time latest to oldest
 	const sortedRanking = overallRanking.sort((a, b) => {
-		return a.duration - b.duration;
+		return a.time - b.time;
 	});
 
 	// create the ranking table
