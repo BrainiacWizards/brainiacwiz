@@ -86,7 +86,8 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	color: var(--prim-color);
+	color: var(--font-color);
+	background-color: var(--prim-color);
 	border-radius: 50px;
 	padding: 10px;
 	font-size: 40px;
@@ -100,4 +101,37 @@
 .host-view .players-block .players .player:hover {
 	background-color: var(--tert-color);
 	color: var(--font-color);
+}
+
+.game-status {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 20px;
+	color: var(--prim-color);
+	font-size: 30px;
+}
+
+.game-status .status {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 20px;
+	color: var(--prim-color);
+	font-size: 30px;
+}
+
+.game-status .status #status-text {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 20px;
+	color: var(--prim-color);
+	font-size: 30px;
 }
