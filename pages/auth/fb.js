@@ -24,7 +24,7 @@ const fbSignUp = async (email, password, userName) => {
 		window.location.href = './login.html';
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			alert('client is offline');
+			// alert('client is offline, click OK to retry');
 			// recall the function
 			fbSignUp(email, password, userName);
 		} else {
@@ -68,7 +68,7 @@ const fbLogin = async (email, password) => {
 		window.location.href = '../../index.html?login=success&username=' + username;
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			alert('client is offline');
+			// alert('client is offline, click OK to retry');
 			// recall the function
 			fbLogin(email, password);
 		} else {
@@ -90,7 +90,7 @@ async function createGamePinTable({ gamePin, topicID }) {
 		alert('Game created! share your pin with others');
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			alert('client is offline');
+			// alert('client is offline, click OK to retry');
 			// recall the function
 			createGamePinTable({ gamePin, topicID });
 		} else {
@@ -102,11 +102,10 @@ async function createGamePinTable({ gamePin, topicID }) {
 // set scoreboard in fb.database in table named gamepin
 async function createScoreBoard({ gamePin, username, score, topicID }) {
 	console.log('Creating gamepin table', gamePin, topicID);
-	const scoreRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
+	let scoreRef = null;
 
-	// get the values from the table and assign it to an object
-	// get the values from the table and assign it to an object
 	try {
+		scoreRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
 		const scoreSnapshot = await fb.get(scoreRef);
 		let scoreData = Object.values(scoreSnapshot.val() || {});
 
@@ -135,7 +134,7 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 	} catch (error) {
 		// check for client offline error
 		if (error.message.includes('offline')) {
-			alert('client is offline');
+			// alert('client is offline, click OK to retry');
 			// recall the function
 			createScoreBoard({ gamePin, username, score, topicID });
 		} else {
@@ -145,22 +144,33 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 }
 
 async function queryGamePin({ gamePin, topicID }) {
-	const playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
-	const playerNamesSnapshot = await fb.get(playerNamesRef);
-	const playerNames = playerNamesSnapshot.val();
-	return playerNames;
+	try {
+		const playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
+		const playerNamesSnapshot = await fb.get(playerNamesRef);
+		const playerNames = playerNamesSnapshot.val();
+		return playerNames;
+	} catch (error) {
+		if (error.message.includes('offline')) {
+			// alert('client is offline, click OK to retry');
+			// recall the function
+			queryGamePin({ gamePin, topicID });
+		} else {
+			throw new Error(`could not get player names\n\n ${error}`);
+		}
+	}
 }
 
 //get player names using game pin
 async function getPlayerNames({ gamePin, topicID }) {
-	const playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
+	let playerNamesRef = null;
 	let playerNamesSnapshot = null;
 
 	try {
+		playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
 		playerNamesSnapshot = await fb.get(playerNamesRef);
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			alert('client is offline');
+			// alert('client is offline, click OK to retry');
 			// recall the function
 			getPlayerNames({ gamePin, topicID });
 		} else {
@@ -175,8 +185,21 @@ async function getPlayerNames({ gamePin, topicID }) {
 
 // set overall ranking
 async function overallRanking({ username, points, time, retry }) {
-	const overallRankingRef = fb.ref(fb.database, 'overallRanking');
-	const overallRankingSnapshot = await fb.get(overallRankingRef);
+	let overallRankingSnapshot = null;
+	let overallRankingRef = null;
+	try {
+		overallRankingRef = fb.ref(fb.database, 'overallRanking');
+		overallRankingSnapshot = await fb.get(overallRankingRef);
+	} catch (error) {
+		if (error.message.includes('offline')) {
+			// alert('client is offline, click OK to retry');
+			// recall the function
+			overallRanking({ username, points, time, retry });
+		} else {
+			throw new Error(`could not get overall ranking\n\n ${error}`);
+		}
+	}
+
 	let overallRanking = Object.values(overallRankingSnapshot.val() || []);
 
 	// Initialize overallRanking if it's null
@@ -211,9 +234,9 @@ async function overallRanking({ username, points, time, retry }) {
 	} catch (error) {
 		// check for client offline error
 		if (error.message.includes('offline')) {
-			alert('client is offline');
+			// alert('client is offline, click OK to retry');
 			// recall the function
-			overallRanking({ username, points, time });
+			overallRanking({ username, points, time, retry });
 		} else {
 			console.error(`could not update the overall ranking\n\n ${error}`);
 		}
@@ -223,11 +246,26 @@ async function overallRanking({ username, points, time, retry }) {
 }
 
 async function getOverallRanking() {
-	const overallRankingRef = fb.ref(fb.database, 'overallRanking');
-	const overallRankingSnapshot = await fb.get(overallRankingRef);
-	const overallRanking = overallRankingSnapshot.val();
+	let overallRankingSnapshot = null;
+	let overallRankingRef = null;
+	let overallRanking = null;
 
-	return overallRanking || [{ username: 'No players yet', points: 0, time: 0 }];
+	try {
+		overallRankingRef = fb.ref(fb.database, 'overallRanking');
+		overallRankingSnapshot = await fb.get(overallRankingRef);
+		overallRanking = overallRankingSnapshot.val();
+		return overallRanking || [{ username: 'No players yet', points: 0, time: 0 }];
+	} catch (error) {
+		if (error.message.includes('offline')) {
+			// alert('client is offline, click OK to retry');
+			// recall the function
+			getOverallRanking();
+			console.error(error);
+		} else {
+			throw new Error(`could not get overall ranking\n\n ${error}`);
+		}
+		return overallRanking || [{ username: 'No players yet', points: 0, time: 0 }];
+	}
 }
 
 export {
