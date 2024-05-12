@@ -1,4 +1,9 @@
-import { createGamePinTable, getPlayerNames } from '../../pages/auth/fb.js';
+import {
+	createGamePinTable,
+	endGame,
+	getPlayerNames,
+	startGame,
+} from '../../pages/auth/fb.js';
 import { checkLoginStatus } from './main.js';
 import { topics, questions } from './utils/questions.js';
 // checkLoginStatus({ path: '../../auth/' });
@@ -7,6 +12,8 @@ const title = document.getElementById('title');
 const playerCount = document.getElementById('player-count');
 const questionsCount = document.getElementById('questions-count');
 const players = document.querySelector('.players');
+const startBtn = document.getElementById('host-start-btn');
+const cancelBtn = document.getElementById('host-cancel-btn');
 
 const colors = [
 	'var(--prim-color)',
@@ -43,7 +50,9 @@ async function setPlayerNames() {
 	}
 
 	playerNames.forEach((playerName) => {
-		const player = `<li class="player">${playerName.username || 'error'}</li>`;
+		const player = `<li class="player">${playerName.username || '?'} (${
+			playerName.score
+		})</li>`;
 		players.innerHTML += player;
 	});
 
@@ -66,5 +75,19 @@ function setQuizDetails(playerNames = []) {
 }
 
 await setPlayerNames();
+
+// start and cancel game
+startBtn?.addEventListener('click', async () => {
+	startBtn.disabled = true;
+	await startGame({ gamePin, topicID });
+	alert('Game has started, lets play!');
+});
+
+cancelBtn?.addEventListener('click', async () => {
+	const confirmEnd = confirm('Are you sure you want to end the game?');
+	if (!confirmEnd) return;
+	await endGame({ gamePin, topicID });
+	alert('Game has ended');
+});
 
 setQuizDetails();

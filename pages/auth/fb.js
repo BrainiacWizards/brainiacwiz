@@ -163,9 +163,25 @@ async function getPlayerNames({ gamePin, topicID }) {
 		}
 	}
 
-	const playerNames = playerNamesSnapshot.val();
+	if (!playerNamesSnapshot) return [{ username: 'No players yet' }];
 
-	return playerNames || [{ username: 'No players yet' }];
+	const playerNames = playerNamesSnapshot.val();
+	return playerNames;
+}
+
+async function setPlayers({ gamePin, topicID, playerNames }) {
+	let playerNamesRef = null;
+
+	try {
+		playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
+		await fb.set(playerNamesRef, playerNames);
+	} catch (error) {
+		if (error.message.includes('offline')) {
+			setPlayers({ gamePin, topicID, playerNames });
+		} else {
+			console.error(`could not set player names\n\n ${error}`);
+		}
+	}
 }
 
 // set overall ranking
@@ -256,10 +272,22 @@ async function getOverallRanking() {
 
 // start hosted game
 async function startGame({ gamePin, topicID }) {
+	let playerNames = await getPlayerNames({ gamePin, topicID });
+
 	try {
-		const gamePinRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
-		await fb.update(gamePinRef, { gameStarted: true, gameEnded: false });
-		alert('Game has started, lets play!');
+		// change only dummy
+		if (playerNames) {
+			playerNames = playerNames.map((player) => {
+				if (player.username == 'dummy') {
+					player.gameStarted = true;
+					player.gameEnded = false;
+					player.startTime = new Date();
+				}
+				return player;
+			});
+		}
+
+		await setPlayers({ gamePin, topicID, playerNames });
 		return { status: true, message: 'Game has started, lets play!' };
 	} catch (error) {
 		if (error.message.includes('offline')) {
@@ -272,9 +300,23 @@ async function startGame({ gamePin, topicID }) {
 
 // end hosted game
 async function endGame({ gamePin, topicID }) {
+	let playerNames = await getPlayerNames({ gamePin, topicID });
+
 	try {
-		const gamePinRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
-		await fb.update(gamePinRef, { gameEnded: true });
+		// change only dummy
+		if (playerNames) {
+			playerNames = playerNames.map((player) => {
+				if (player.username == 'dummy') {
+					player.gameStarted = true;
+					player.gameEnded = true;
+					player.startTime = new Date();
+				}
+				return player;
+			});
+		}
+
+		await setPlayers({ gamePin, topicID, playerNames });
+		return { status: true, msg: 'Game ended!' };
 	} catch (error) {
 		if (error.message.includes('offline')) {
 			endGame({ gamePin, topicID });
@@ -286,37 +328,42 @@ async function endGame({ gamePin, topicID }) {
 
 // get game status
 async function getGameStatus({ gamePin, topicID }) {
-	try {
-		const gamePinRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
-		const gamePinSnapshot = await fb.get(gamePinRef);
+	const response = {
+		status: false,
+		msg: 'Waiting for game status',
+	};
 
-		// check if game has started
-		if (gamePinSnapshot.val().gameStarted) {
-			// check if game has ended
-			if (gamePinSnapshot.val().gameEnded) {
-				alert('Game has ended, exiting to home page');
-				return { status: false, message: 'Game has ended, try another game pin' };
-			} else {
-				alert('Game is ongoing, lets play!');
-				return { status: true, message: 'Game is ongoing, lets play!' };
+	try {
+		const playerName = await getPlayerNames({ gamePin, topicID });
+
+		// check on dummy
+		playerName.map((player) => {
+			if (player.username === 'dummy') {
+				if (player.gameStarted && !player.gameEnded) {
+					response.status = true;
+					response.msg = 'Game has started';
+				} else if (player.gameEnded) {
+					response.status = false;
+					response.msg = 'Game has ended, try another one';
+				} else {
+					response.status = false;
+					response.msg = `Game hasn't started yet`;
+				}
+
+				return player;
 			}
-		} else {
-			alert(
-				'Game has not started yet, please wait for the host to start the game',
-			);
-			return {
-				status: false,
-				message:
-					'Game has not started yet, please wait for the host to start the game',
-			};
-		}
+		});
 	} catch (error) {
+		response.status = false;
+		response.msg = error.message;
 		if (error.message.includes('offline')) {
 			getGameStatus({ gamePin, topicID });
 		} else {
 			throw new Error(`could not get game status\n\n ${error}`);
 		}
 	}
+
+	return response;
 }
 
 export {

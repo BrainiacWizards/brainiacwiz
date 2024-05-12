@@ -114,6 +114,11 @@ const setQuizTImer = ({ duration = 30 }) => {
 			question++;
 			setQuestions(question);
 			time = duration;
+
+			// enable all buttons
+			quizOptBtns.forEach((btn) => {
+				btn.disabled = false;
+			});
 		}
 
 		time--;
@@ -160,6 +165,8 @@ quizOptBtns.forEach((btn) => {
 			score++;
 			// set button color to green
 			btn.style.backgroundColor = 'green';
+			// disable button
+			btn.disabled = true;
 		} else {
 			// set button color to red
 			btn.style.backgroundColor = 'red';
