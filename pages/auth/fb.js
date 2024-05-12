@@ -1,6 +1,6 @@
 import * as fb from '../../fb_config.js';
 
-const fbSignUp = async (email, password, userName) => {
+const fbSignUp = async ({ email, password, userName }) => {
 	try {
 		const userCredential = await fb.createUserWithEmailAndPassword(
 			fb.auth,
@@ -24,8 +24,6 @@ const fbSignUp = async (email, password, userName) => {
 		window.location.href = './login.html';
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			// alert('client is offline, click OK to retry');
-			// recall the function
 			fbSignUp(email, password, userName);
 		} else {
 			throw new Error(`could not create user\n\n ${error}`);
@@ -33,7 +31,7 @@ const fbSignUp = async (email, password, userName) => {
 	}
 };
 
-const fbLogin = async (email, password) => {
+const fbLogin = async ({ email, password }) => {
 	try {
 		const userCredential = await fb.signInWithEmailAndPassword(
 			fb.auth,
@@ -68,8 +66,6 @@ const fbLogin = async (email, password) => {
 		window.location.href = '../../index.html?login=success&username=' + username;
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			// alert('client is offline, click OK to retry');
-			// recall the function
 			fbLogin(email, password);
 		} else {
 			alert(error.message);
@@ -90,8 +86,6 @@ async function createGamePinTable({ gamePin, topicID }) {
 		alert('Game created! share your pin with others');
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			// alert('client is offline, click OK to retry');
-			// recall the function
 			createGamePinTable({ gamePin, topicID });
 		} else {
 			throw new Error(`could not create gamepin table\n\n ${error}`);
@@ -127,15 +121,11 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 		}
 
 		await fb.set(scoreRef, scoreData);
-
 		console.log('Scoreboard updated successfully');
 
 		return scoreData;
 	} catch (error) {
-		// check for client offline error
 		if (error.message.includes('offline')) {
-			// alert('client is offline, click OK to retry');
-			// recall the function
 			createScoreBoard({ gamePin, username, score, topicID });
 		} else {
 			throw new Error(`could not update the scoreboard\n\n ${error}`);
@@ -147,12 +137,9 @@ async function queryGamePin({ gamePin, topicID }) {
 	try {
 		const playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
 		const playerNamesSnapshot = await fb.get(playerNamesRef);
-		const playerNames = playerNamesSnapshot.val();
-		return playerNames;
+		return playerNamesSnapshot.val();
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			// alert('client is offline, click OK to retry');
-			// recall the function
 			queryGamePin({ gamePin, topicID });
 		} else {
 			throw new Error(`could not get player names\n\n ${error}`);
@@ -170,8 +157,6 @@ async function getPlayerNames({ gamePin, topicID }) {
 		playerNamesSnapshot = await fb.get(playerNamesRef);
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			// alert('client is offline, click OK to retry');
-			// recall the function
 			getPlayerNames({ gamePin, topicID });
 		} else {
 			console.error(`could not get player names\n\n ${error}`);
@@ -192,8 +177,6 @@ async function overallRanking({ username, points, time, retry }) {
 		overallRankingSnapshot = await fb.get(overallRankingRef);
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			// alert('client is offline, click OK to retry');
-			// recall the function
 			overallRanking({ username, points, time, retry });
 		} else {
 			throw new Error(`could not get overall ranking\n\n ${error}`);
@@ -232,10 +215,7 @@ async function overallRanking({ username, points, time, retry }) {
 		await fb.set(overallRankingRef, overallRanking);
 		console.log('Overall ranking updated successfully');
 	} catch (error) {
-		// check for client offline error
 		if (error.message.includes('offline')) {
-			// alert('client is offline, click OK to retry');
-			// recall the function
 			overallRanking({ username, points, time, retry });
 		} else {
 			console.error(`could not update the overall ranking\n\n ${error}`);
@@ -254,17 +234,23 @@ async function getOverallRanking() {
 		overallRankingRef = fb.ref(fb.database, 'overallRanking');
 		overallRankingSnapshot = await fb.get(overallRankingRef);
 		overallRanking = overallRankingSnapshot.val();
-		return overallRanking || [{ username: 'No players yet', points: 0, time: 0 }];
+		return (
+			overallRanking || [
+				{ username: 'No players yet', points: 0, time: 0, startTime: 0 },
+			]
+		);
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			// alert('client is offline, click OK to retry');
-			// recall the function
 			getOverallRanking();
 			console.error(error);
 		} else {
 			throw new Error(`could not get overall ranking\n\n ${error}`);
 		}
-		return overallRanking || [{ username: 'No players yet', points: 0, time: 0 }];
+		return (
+			overallRanking || [
+				{ username: 'No players yet', points: 0, time: 0, startTime: 0 },
+			]
+		);
 	}
 }
 
