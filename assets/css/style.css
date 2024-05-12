@@ -451,6 +451,7 @@ footer .navbar ul li a:hover {
 	min-width: 230px;
 	max-width: 90%;
 	width: 30%;
+	min-width: fit-content;
 	border-radius: 20px;
 	box-shadow: 2px 2px 5px 0 var(--shadow-color);
 	padding: 0 20px 20px 20px;
@@ -509,9 +510,15 @@ footer .navbar ul li a:hover {
 .wallet-container .wallet-content {
 	display: none;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 	width: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
 }
 
 .wallet-container .wallet-content .wallet-header {
@@ -531,14 +538,16 @@ footer .navbar ul li a:hover {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	min-width: 100%;
 }
 
 .wallet-container .wallet-content .wallet-body .wallet-nfts {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	align-items: flex-start;
 	flex-wrap: wrap;
-	align-items: center;
+	padding: 10px;
 	background-color: var(--tert-color);
 	border-radius: 20px;
 	overflow: hidden;
