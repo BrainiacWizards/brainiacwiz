@@ -484,12 +484,12 @@ const topics = [
 	{
 		id: 2,
 		name: 'Programming and coding',
-		image: 'programming.webp',
+		image: 'programming.jpg',
 	},
 	{
 		id: 3,
 		name: 'Mathematics',
-		image: 'mathematics.webp',
+		image: 'mathematics.jpg',
 	},
 	{
 		id: 4,
