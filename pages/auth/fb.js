@@ -154,7 +154,20 @@ async function queryGamePin({ gamePin, topicID }) {
 //get player names using game pin
 async function getPlayerNames({ gamePin, topicID }) {
 	const playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
-	const playerNamesSnapshot = await fb.get(playerNamesRef);
+	let playerNamesSnapshot = null;
+
+	try {
+		playerNamesSnapshot = await fb.get(playerNamesRef);
+	} catch (error) {
+		if (error.message.includes('offline')) {
+			alert('client is offline');
+			// recall the function
+			getPlayerNames({ gamePin, topicID });
+		} else {
+			console.error(`could not get player names\n\n ${error}`);
+		}
+	}
+
 	const playerNames = playerNamesSnapshot.val();
 
 	return playerNames || [{ username: 'No players yet' }];

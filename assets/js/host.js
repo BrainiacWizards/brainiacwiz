@@ -8,6 +8,13 @@ const playerCount = document.getElementById('player-count');
 const questionsCount = document.getElementById('questions-count');
 const players = document.querySelector('.players');
 
+const colors = [
+	'var(--prim-color)',
+	'var(--sec-color)',
+	'var(--tert-color)',
+	'var(--quart-color)',
+];
+
 // check gamePin in url
 const urlParams = new URLSearchParams(window.location.search);
 const gamePin = urlParams.get('gamePin');
