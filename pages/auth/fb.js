@@ -23,8 +23,13 @@ const fbSignUp = async (email, password, userName) => {
 		// redirect to the login page
 		window.location.href = './login.html';
 	} catch (error) {
-		const errorMessage = error.message;
-		throw new Error(errorMessage);
+		if (error.message.includes('offline')) {
+			alert('client is offline');
+			// recall the function
+			fbSignUp(email, password, userName);
+		} else {
+			throw new Error(`could not create user\n\n ${error}`);
+		}
 	}
 };
 
@@ -62,9 +67,14 @@ const fbLogin = async (email, password) => {
 		// redirect to the home page
 		window.location.href = '../../index.html?login=success&username=' + username;
 	} catch (error) {
-		const errorMessage = error.message;
-		alert(errorMessage);
-		throw new Error(errorMessage);
+		if (error.message.includes('offline')) {
+			alert('client is offline');
+			// recall the function
+			fbLogin(email, password);
+		} else {
+			alert(error.message);
+			throw new Error(`could not login user\n\n ${error}`);
+		}
 	}
 };
 
@@ -79,7 +89,13 @@ async function createGamePinTable({ gamePin, topicID }) {
 
 		alert('Game created! share your pin with others');
 	} catch (error) {
-		throw new Error(`could not create gamepin table\n\n ${error}`);
+		if (error.message.includes('offline')) {
+			alert('client is offline');
+			// recall the function
+			createGamePinTable({ gamePin, topicID });
+		} else {
+			throw new Error(`could not create gamepin table\n\n ${error}`);
+		}
 	}
 }
 
@@ -117,7 +133,14 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 
 		return scoreData;
 	} catch (error) {
-		throw new Error(`could not update the scoreboard\n\n ${error}`);
+		// check for client offline error
+		if (error.message.includes('offline')) {
+			alert('client is offline');
+			// recall the function
+			createScoreBoard({ gamePin, username, score, topicID });
+		} else {
+			throw new Error(`could not update the scoreboard\n\n ${error}`);
+		}
 	}
 }
 
@@ -131,7 +154,20 @@ async function queryGamePin({ gamePin, topicID }) {
 //get player names using game pin
 async function getPlayerNames({ gamePin, topicID }) {
 	const playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
-	const playerNamesSnapshot = await fb.get(playerNamesRef);
+	let playerNamesSnapshot = null;
+
+	try {
+		playerNamesSnapshot = await fb.get(playerNamesRef);
+	} catch (error) {
+		if (error.message.includes('offline')) {
+			alert('client is offline');
+			// recall the function
+			getPlayerNames({ gamePin, topicID });
+		} else {
+			console.error(`could not get player names\n\n ${error}`);
+		}
+	}
+
 	const playerNames = playerNamesSnapshot.val();
 
 	return playerNames || [{ username: 'No players yet' }];
@@ -173,7 +209,14 @@ async function overallRanking({ username, points, time, retry }) {
 		await fb.set(overallRankingRef, overallRanking);
 		console.log('Overall ranking updated successfully');
 	} catch (error) {
-		console.error(`could not update the overall ranking\n\n ${error}`);
+		// check for client offline error
+		if (error.message.includes('offline')) {
+			alert('client is offline');
+			// recall the function
+			overallRanking({ username, points, time });
+		} else {
+			console.error(`could not update the overall ranking\n\n ${error}`);
+		}
 	}
 
 	return overallRanking;

@@ -16,9 +16,17 @@ const countdown = document.querySelector('.countdown');
 const countdownContainer = document.querySelector('.countdown-container');
 
 const setQuizDetails = (playerNames) => {
-	if (topicID >= topics.length || topicID === undefined || topicID < 0) {
+	if (topicID == undefined || topicID < 0) {
 		alert('Invalid topic selected');
 		window.location.href = '../../index.html';
+		return;
+	} else {
+		const topic = topics.find((topic) => topic.id === parseInt(topicID));
+		if (!topic) {
+			alert('Invalid topic selected');
+			window.location.href = '../../index.html';
+			return;
+		}
 	}
 
 	const topic = topics.find((topic) => topic.id === parseInt(topicID));

@@ -9,18 +9,28 @@ const quizQuestion = document.querySelector('.quiz-question #question');
 const quizTitle = document.querySelector('#quiz-title');
 const gamePin = new URLSearchParams(window.location.search).get('gamePin');
 const topicID = new URLSearchParams(window.location.search).get('topic');
+const quizBody = document.querySelector('.quiz-body');
 
 //topic questions and correct answer
 let T, Q, A, CA;
 let question = 0;
+const colors = [
+	'var(--prim-color)',
+	'var(--sec-color)',
+	'var(--tert-color)',
+	'var(--quart-color)',
+];
 
 const setQuizDetails = () => {
 	if (!topicID) {
 		alert('Please select a topic to continue');
 		window.location.href = '../../index.html';
-	} else if (topicID >= topics.length) {
-		alert('Invalid topic selected');
-		window.location.href = '../../index.html';
+	} else {
+		const topic = topics.find((topic) => topic.id === parseInt(topicID));
+		if (!topic) {
+			alert('Invalid topic selected');
+			window.location.href = '../../index.html';
+		}
 	}
 
 	const topic = topics.find((topic) => topic.id === parseInt(topicID));
@@ -32,7 +42,15 @@ const setQuizDetails = () => {
 	CA = `CA${T}`;
 };
 
+const setTranslateAnimation = ({ element, translation }) => {
+	element.style.transform = `translateX(${translation}px)`;
+	element.style.transition = 'transform 0.2s ease-out';
+};
+
 const setQuestions = (question) => {
+	const translation = window.innerWidth;
+	setTranslateAnimation({ element: quizBody, translation: -translation });
+
 	if (question >= questions[Q].length) {
 		moveToPostQuiz();
 		return;
@@ -48,14 +66,11 @@ const setQuestions = (question) => {
 	});
 
 	setQuizBtns();
-};
 
-const colors = [
-	'var(--prim-color)',
-	'var(--sec-color)',
-	'var(--tert-color)',
-	'var(--quart-color)',
-];
+	setTimeout(() => {
+		setTranslateAnimation({ element: quizBody, translation: 0 });
+	}, translation / 2);
+};
 
 function setQuizBtns() {
 	const chosen = [];
@@ -71,7 +86,7 @@ function setQuizBtns() {
 		}
 	});
 
-	quizOptBtns.forEach((btn, index) => {
+	quizOptBtns.forEach((btn) => {
 		let prevStyle = btn.style.backgroundColor;
 		btn.addEventListener('mouseover', () => {
 			btn.style.backgroundColor = 'rgb(73, 165, 165)';
@@ -86,7 +101,7 @@ setQuizDetails();
 setQuizBtns();
 setQuestions(0);
 
-const setQuizTImer = ({ duration = 30, speed = 200 }) => {
+const setQuizTImer = ({ duration = 30 }) => {
 	quizTimer.style.color = 'white';
 	let time = duration;
 
@@ -108,10 +123,10 @@ const setQuizTImer = ({ duration = 30, speed = 200 }) => {
 
 		// change the with of the timer with respect to the time
 		quizTimer.style.width = `${(time / duration) * 100}%`;
-	}, speed);
+	}, 200);
 };
 
-setQuizTImer({ duration: 30, speed: 150 });
+setQuizTImer({ duration: 25 });
 
 function moveToPostQuiz(intervalId) {
 	clearInterval(intervalId); // stop the interval
@@ -143,6 +158,11 @@ quizOptBtns.forEach((btn) => {
 		const correctAnswer = questions[CA][question];
 		if (btn.innerHTML === correctAnswer) {
 			score++;
+			// set button color to green
+			btn.style.backgroundColor = 'green';
+		} else {
+			// set button color to red
+			btn.style.backgroundColor = 'red';
 		}
 
 		// set a object with score and username

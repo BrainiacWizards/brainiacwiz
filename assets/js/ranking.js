@@ -10,9 +10,7 @@ async function getRanking() {
 	rankingTableBody.innerHTML = '';
 
 	// sort the ranking by time latest to oldest
-	const sortedRanking = overallRanking.sort((a, b) => {
-		return a.time - b.time;
-	});
+	let sortedRanking = overallRanking.sort((a, b) => b.points - a.points);
 
 	// create the ranking table
 	sortedRanking.forEach((player, index) => {

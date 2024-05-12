@@ -56,7 +56,9 @@
 				</div>
 
 				<div class="content fullheight">
-					<div class="main-heading"> <h1> LeaderBoard </h1> </div>
+					<div class="main-heading" id="ranking-heading">
+						<h1> LeaderBoard </h1>
+					</div>
 
 					<!-- leader board -->
 					<div class="score-board">
@@ -64,12 +66,12 @@
 							<table class="score-board-table" id="ranking-table">
 								<thead>
 									<tr>
-										<th class="colA">Pos</th>
+										<th class="colA">pos</th>
 										<th class="colB">username</th>
 										<th class="colC">points</th>
-										<th class="colD">Start</th>
-										<th class="colD">End</th>
-										<th class="colD">Duration</th>
+										<th class="colD">start</th>
+										<th class="colD">end</th>
+										<th class="colD">duration</th>
 									</tr>
 								</thead>
 								<tbody id="ranking-body"> </tbody>
@@ -85,10 +87,14 @@
 								<a href="../index.html"><i class="bx bx-home"></i><p>Home</p></a>
 							</li>
 							<li>
-								<a href="#"><i class="bx bx-book"></i><p>My Library</p></a>
+								<a href="./ranking.html"
+									><i class="bx bx-book"></i><p>LeaderBoard</p></a
+								>
 							</li>
 							<li>
-								<a href="#"><i class="bx bx-info-circle"></i><p>About</p></a>
+								<a href="./auth/login.html"
+									><i class="bx bx-user-circle"></i><p>Login</p></a
+								>
 							</li>
 							<li>
 								<a href="#"><i class="bx bx-envelope"></i><p>Contact</p></a>
@@ -101,10 +107,7 @@
 
 		<script type="module" src="../assets/js/ranking.js"></script>
 		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
-		<script
-			src="https://kit.fontawesome.com/cda065bf16.js"
-			crossorigin="anonymous"
-		></script>
+
 		<!-- load navbar -->
 		<script type="module" src="../assets/js/utils/setnavbar.js"></script>
 	</body>

@@ -264,9 +264,9 @@ button:active {
 
 .container {
 	display: grid;
-	grid-template-columns: repeat(2, minmax(200px, 500px));
-	grid-gap: 10px;
-	align-items: grid-start;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 400px));
+	grid-gap: 30px 10px;
+	align-items: grid-items;
 	justify-content: center;
 	margin-top: 80px;
 	margin-bottom: 50px;
@@ -275,6 +275,8 @@ button:active {
 	margin-inline: auto;
 	padding: 0 20px;
 	transition: all ease-in-out 800ms;
+	width: 90%;
+	min-width: 90%;
 }
 
 .quiz-card {
@@ -407,7 +409,7 @@ footer {
 }
 
 .body-content {
-	background-color: var(--font-color);
+	background-color: transparent;
 	margin: 0;
 	padding: 50px 0;
 	min-height: 80vh;
@@ -451,6 +453,7 @@ footer .navbar ul li a:hover {
 	min-width: 230px;
 	max-width: 90%;
 	width: 30%;
+	min-width: fit-content;
 	border-radius: 20px;
 	box-shadow: 2px 2px 5px 0 var(--shadow-color);
 	padding: 0 20px 20px 20px;
@@ -509,9 +512,15 @@ footer .navbar ul li a:hover {
 .wallet-container .wallet-content {
 	display: none;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 	width: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
 }
 
 .wallet-container .wallet-content .wallet-header {
@@ -531,14 +540,16 @@ footer .navbar ul li a:hover {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	min-width: 100%;
 }
 
 .wallet-container .wallet-content .wallet-body .wallet-nfts {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	align-items: flex-start;
 	flex-wrap: wrap;
-	align-items: center;
+	padding: 10px;
 	background-color: var(--tert-color);
 	border-radius: 20px;
 	overflow: hidden;
@@ -708,6 +719,18 @@ footer .navbar ul li a:hover {
 }
 
 /* responsive css */
+@media (max-width: 1800px) {
+	.container {
+		grid-template-columns: repeat(3, 1fr);
+		margin-top: 50px;
+	}
+}
+@media (max-width: 1000px) {
+	.container {
+		grid-template-columns: repeat(2, 1fr);
+		margin-top: 50px;
+	}
+}
 @media (max-width: 500px) {
 	.container {
 		grid-template-columns: repeat(1, 1fr);
