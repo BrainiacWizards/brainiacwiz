@@ -106,7 +106,7 @@
 	align-items: center;
 	margin: 50px auto;
 	width: fit-content;
-	max-width: 80% !important;
+	max-width: 80%;
 	box-shadow: 2px 2px 10px var(--prim-color);
 }
 
