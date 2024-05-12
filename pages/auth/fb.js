@@ -165,8 +165,8 @@ async function getPlayerNames({ gamePin, topicID }) {
 
 	if (!playerNamesSnapshot) return [{ username: 'No players yet' }];
 
-	const playerNames = playerNamesSnapshot.val();
-	return playerNames;
+	return playerNamesSnapshot.val();
+
 }
 
 async function setPlayers({ gamePin, topicID, playerNames }) {
