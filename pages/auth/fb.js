@@ -254,6 +254,71 @@ async function getOverallRanking() {
 	}
 }
 
+// start hosted game
+async function startGame({ gamePin, topicID }) {
+	try {
+		const gamePinRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
+		await fb.update(gamePinRef, { gameStarted: true, gameEnded: false });
+		alert('Game has started, lets play!');
+		return { status: true, message: 'Game has started, lets play!' };
+	} catch (error) {
+		if (error.message.includes('offline')) {
+			startGame({ gamePin, topicID });
+		} else {
+			throw new Error(`could not start the game\n\n ${error}`);
+		}
+	}
+}
+
+// end hosted game
+async function endGame({ gamePin, topicID }) {
+	try {
+		const gamePinRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
+		await fb.update(gamePinRef, { gameEnded: true });
+	} catch (error) {
+		if (error.message.includes('offline')) {
+			endGame({ gamePin, topicID });
+		} else {
+			throw new Error(`could not end the game\n\n ${error}`);
+		}
+	}
+}
+
+// get game status
+async function getGameStatus({ gamePin, topicID }) {
+	try {
+		const gamePinRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
+		const gamePinSnapshot = await fb.get(gamePinRef);
+
+		// check if game has started
+		if (gamePinSnapshot.val().gameStarted) {
+			// check if game has ended
+			if (gamePinSnapshot.val().gameEnded) {
+				alert('Game has ended, exiting to home page');
+				return { status: false, message: 'Game has ended, try another game pin' };
+			} else {
+				alert('Game is ongoing, lets play!');
+				return { status: true, message: 'Game is ongoing, lets play!' };
+			}
+		} else {
+			alert(
+				'Game has not started yet, please wait for the host to start the game',
+			);
+			return {
+				status: false,
+				message:
+					'Game has not started yet, please wait for the host to start the game',
+			};
+		}
+	} catch (error) {
+		if (error.message.includes('offline')) {
+			getGameStatus({ gamePin, topicID });
+		} else {
+			throw new Error(`could not get game status\n\n ${error}`);
+		}
+	}
+}
+
 export {
 	fbSignUp,
 	fbLogin,
@@ -263,4 +328,7 @@ export {
 	getPlayerNames,
 	overallRanking,
 	getOverallRanking,
+	startGame,
+	endGame,
+	getGameStatus,
 };

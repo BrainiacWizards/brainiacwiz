@@ -65,12 +65,9 @@ async function setTimes({ player }) {
 	let durationHours = Math.floor(durationDate / 3600000);
 	let durationMinutes = Math.floor((durationDate % 3600000) / 60000);
 	let durationSeconds = Math.floor((durationDate % 60000) / 1000);
-
-	// if any is -1, set it to 0
 	durationHours = durationHours < 0 ? '00' : durationHours;
 	durationMinutes = durationMinutes < 0 ? '00' : durationMinutes;
 	durationSeconds = durationSeconds < 0 ? '00' : durationSeconds;
-
 	const durationString = `${durationHours}:${durationMinutes}:${durationSeconds}`;
 
 	return { dateString, startDateString, durationString };
