@@ -264,9 +264,9 @@ button:active {
 
 .container {
 	display: grid;
-	grid-template-columns: repeat(2, minmax(200px, 500px));
+	grid-template-columns: repeat(auto-fill, minmax(200px, 400px));
 	grid-gap: 10px;
-	align-items: grid-start;
+	align-items: grid-items;
 	justify-content: center;
 	margin-top: 80px;
 	margin-bottom: 50px;
@@ -275,6 +275,8 @@ button:active {
 	margin-inline: auto;
 	padding: 0 20px;
 	transition: all ease-in-out 800ms;
+	width: 90%;
+	min-width: 90%;
 }
 
 .quiz-card {
@@ -717,6 +719,18 @@ footer .navbar ul li a:hover {
 }
 
 /* responsive css */
+@media (max-width: 1800px) {
+	.container {
+		grid-template-columns: repeat(3, 1fr);
+		margin-top: 50px;
+	}
+}
+@media (max-width: 1000px) {
+	.container {
+		grid-template-columns: repeat(2, 1fr);
+		margin-top: 50px;
+	}
+}
 @media (max-width: 500px) {
 	.container {
 		grid-template-columns: repeat(1, 1fr);
