@@ -82,13 +82,15 @@
 	margin-top: 20px;
 	z-index: 0;
 	top: 0;
+	text-wrap: wrap !important;
 }
 
 .quiz-container .quiz-body .quiz-options-block button {
 	font-size: 20px;
 	min-width: 100px;
 	width: 100%;
-	min-height: 70px;
+	word-wrap: break-word;
+	min-height: 80px;
 	text-wrap: wrap !important;
 	font-size: 25px;
 }
