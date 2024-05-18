@@ -2,11 +2,7 @@ import * as fb from '../../fb_config.js';
 
 const fbSignUp = async ({ email, password, userName }) => {
 	try {
-		const userCredential = await fb.createUserWithEmailAndPassword(
-			fb.auth,
-			email,
-			password,
-		);
+		const userCredential = await fb.createUserWithEmailAndPassword(fb.auth, email, password);
 		const { user } = userCredential;
 		const userRef = fb.ref(fb.database, `users/${user.uid}`);
 		const userData = {
@@ -33,11 +29,7 @@ const fbSignUp = async ({ email, password, userName }) => {
 
 const fbLogin = async ({ email, password }) => {
 	try {
-		const userCredential = await fb.signInWithEmailAndPassword(
-			fb.auth,
-			email,
-			password,
-		);
+		const userCredential = await fb.signInWithEmailAndPassword(fb.auth, email, password);
 		const { user } = userCredential;
 
 		const userData = {
@@ -166,7 +158,6 @@ async function getPlayerNames({ gamePin, topicID }) {
 	if (!playerNamesSnapshot) return [{ username: 'No players yet' }];
 
 	return playerNamesSnapshot.val();
-
 }
 
 async function setPlayers({ gamePin, topicID, playerNames }) {
@@ -185,7 +176,7 @@ async function setPlayers({ gamePin, topicID, playerNames }) {
 }
 
 // set overall ranking
-async function overallRanking({ username, points, time, retry }) {
+async function overallRanking({ username, points, time, retry, gamePin }) {
 	let overallRankingSnapshot = null;
 	let overallRankingRef = null;
 	try {
@@ -214,6 +205,7 @@ async function overallRanking({ username, points, time, retry }) {
 			time: time,
 			startTime: Date.now(),
 			duration: time,
+			gamePin: gamePin,
 		});
 	} else {
 		// update the score if the username already exists
@@ -222,6 +214,7 @@ async function overallRanking({ username, points, time, retry }) {
 				retry ? (obj.points += points - retry) : (obj.points += points);
 				obj.time = time;
 				obj.duration = time - obj.startTime;
+				obj.gamePin = gamePin;
 			}
 			return obj;
 		});
@@ -232,7 +225,7 @@ async function overallRanking({ username, points, time, retry }) {
 		console.log('Overall ranking updated successfully');
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			overallRanking({ username, points, time, retry });
+			overallRanking({ username, points, time, retry, gamePin });
 		} else {
 			console.error(`could not update the overall ranking\n\n ${error}`);
 		}
@@ -252,7 +245,7 @@ async function getOverallRanking() {
 		overallRanking = overallRankingSnapshot.val();
 		return (
 			overallRanking || [
-				{ username: 'No players yet', points: 0, time: 0, startTime: 0 },
+				{ username: 'No players yet', points: 0, time: 0, startTime: 0, gamePin: 'N/A' },
 			]
 		);
 	} catch (error) {
@@ -264,7 +257,7 @@ async function getOverallRanking() {
 		}
 		return (
 			overallRanking || [
-				{ username: 'No players yet', points: 0, time: 0, startTime: 0 },
+				{ username: 'No players yet', points: 0, time: 0, startTime: 0, gamePin: 'N/A' },
 			]
 		);
 	}
@@ -309,7 +302,7 @@ async function endGame({ gamePin, topicID }) {
 				if (player.username == 'dummy') {
 					player.gameStarted = true;
 					player.gameEnded = true;
-					player.startTime = new Date();
+					player.endTime = new Date();
 				}
 				return player;
 			});

@@ -32,8 +32,6 @@ async function setQuizDetails() {
 	questionsCount.innerHTML = 'Questions: ';
 	questionsCount.innerHTML += questions[`Q${topicID}`].length;
 
-	// log joined user
-
 	await createScoreBoard({
 		gamePin: gamePin,
 		username: login.username,
@@ -44,7 +42,6 @@ async function setQuizDetails() {
 
 async function checkGameStatus() {
 	const gameStatus = await getGameStatus({ gamePin, topicID });
-	// console.log(gameStatus);
 	statusText.innerHTML = gameStatus.msg;
 
 	if (gameStatus.status) {

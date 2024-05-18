@@ -9,35 +9,45 @@ async function getRanking() {
 	// sort the ranking by time latest to oldest
 	let sortedRanking = overallRanking.sort((a, b) => b.points - a.points);
 
-	// create the ranking table
-	sortedRanking.forEach(async (player, index) => {
-		const row = document.createElement('tr');
-		const rank = document.createElement('td');
-		const username = document.createElement('td');
-		const points = document.createElement('td');
-		const time = document.createElement('td');
-		const startTime = document.createElement('td');
-		const duration = document.createElement('td');
+	// groud the rankings by gamePin
+	const rankingByGamePin = {};
+	sortedRanking.forEach((player) => {
+		// if player does	not have a gamePin, add NA
+		if (!player.gamePin) {
+			player.gamePin = 'NA';
+		}
+		if (!rankingByGamePin[player.gamePin]) {
+			rankingByGamePin[player.gamePin] = [];
+		}
+		rankingByGamePin[player.gamePin].push(player);
+	});
 
-		rank.textContent = index + 1;
-		username.textContent = player.username;
-		points.textContent = player.points;
+	// create the ranking table for each gamePin
+	Object.keys(rankingByGamePin).forEach(async (gamePin) => {
+		const players = rankingByGamePin[gamePin];
+		const gamePinRow = document.createElement('tr');
+		gamePinRow.innerHTML = `
+			<td colspan="6" class="game-pin-col">${gamePin}</td>
+		`;
 
-		const { dateString, startDateString, durationString } = await setTimes({
-			player,
+		let group = [gamePinRow];
+
+		await players.forEach(async (player, index) => {
+			const { dateString, startDateString, durationString } = await setTimes({ player });
+			const playerRow = document.createElement('tr');
+			playerRow.innerHTML = `
+				<td>${index + 1}</td>
+				<td>${player.username}</td>
+				<td>${player.points}</td>
+				<td>${startDateString}</td>
+				<td>${dateString}</td>
+				<td>${durationString}</td>
+			`;
+
+			group.push(playerRow);
 		});
-		time.textContent = dateString;
-		startTime.textContent = startDateString;
-		duration.textContent = durationString;
 
-		row.appendChild(rank);
-		row.appendChild(username);
-		row.appendChild(points);
-		row.appendChild(startTime);
-		row.appendChild(time);
-		row.appendChild(duration);
-
-		rankingTableBody.appendChild(row);
+		rankingTableBody.append(...group);
 	});
 
 	setTimeout(() => {

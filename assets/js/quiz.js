@@ -14,12 +14,7 @@ const quizBody = document.querySelector('.quiz-body');
 //topic questions and correct answer
 let T, Q, A, CA;
 let question = 0;
-const colors = [
-	'var(--prim-color)',
-	'var(--sec-color)',
-	'var(--tert-color)',
-	'var(--quart-color)',
-];
+const colors = ['var(--prim-color)', 'var(--sec-color)', 'var(--tert-color)', 'var(--quart-color)'];
 
 const setQuizDetails = () => {
 	if (!topicID) {
@@ -55,9 +50,7 @@ const setQuestions = (question) => {
 		moveToPostQuiz();
 		return;
 	}
-	questions[A][question] = questions[A][question].sort(
-		() => Math.random() - 0.5,
-	);
+	questions[A][question] = questions[A][question].sort(() => Math.random() - 0.5);
 
 	quizQuestion.innerHTML = questions[Q][question];
 
@@ -135,8 +128,7 @@ setQuizTImer({ duration: 25 });
 
 function moveToPostQuiz(intervalId) {
 	clearInterval(intervalId); // stop the interval
-	const retry =
-		new URLSearchParams(window.location.search).get('retry') || false;
+	const retry = new URLSearchParams(window.location.search).get('retry') || false;
 	window.location.href = `./post-quiz.html?gamePin=${gamePin}&topic=${topicID}&retry=${retry}`;
 }
 
