@@ -173,6 +173,7 @@
 	font-size: 20px;
 	font-style: oblique;
 }
+
 .score-board .body table {
 	width: 100%;
 	text-align: center;
@@ -224,6 +225,14 @@
 .score-board .body table .colC {
 	width: fit-content !important;
 	padding: 10px;
+}
+
+.score-board .body table tbody .game-pin-col {
+	background-color: var(--prim-color) !important;
+	color: var(--font-color) !important;
+	max-height: 10px !important;
+	font-weight: bold;
+	font-size: 15px;
 }
 
 .score-board .body table .colB {
