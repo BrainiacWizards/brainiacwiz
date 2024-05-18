@@ -180,6 +180,8 @@
 	min-width: 100%;
 	table-layout: auto;
 	border-collapse: collapse;
+	border-radius: 10px !important;
+	overflow: hidden;
 }
 
 .score-board .body table thead tr {
