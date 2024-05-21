@@ -1,3 +1,5 @@
+import { query } from "../api/api.js";
+
 const state = {
 	account: '0x0',
 	token: null,
@@ -78,7 +80,9 @@ async function fundAccount() {
 	const randomIndex = Math.floor(Math.random() * nfts.length);
 	const nft = nfts[randomIndex];
 	const { origin } = window.location;
-	const nftLink = `${origin}/assets/nft/${nft}`;
+	// const nftLink = `${origin}/assets/nft/${nft}`;
+	const nftLink = await query({ "inputs": "nft programming" })
+	console.log('nftLink', nftLink);
 
 	await state.token.methods
 		.mint(state.account, nftLink)
