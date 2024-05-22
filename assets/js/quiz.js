@@ -56,15 +56,14 @@ const setQuestions = (question) => {
 		return;
 	}
 	questions[A][question] = questions[A][question].sort(() => Math.random() - 0.5);
-
 	quizQuestion.innerHTML = questionsAI[question].question;
-	console.log(quizQuestion.innerHTML);
 
 	quizOptBtns.forEach((btn, index) => {
 		btn.innerHTML = questionsAI[question].answers[index];
 	});
 
 	setQuizBtns();
+	setCheckScore(question);
 
 	setTimeout(() => {
 		setTranslateAnimation({ element: quizBody, translation: 0 });
@@ -157,39 +156,41 @@ let sessionUser = {
 sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
 
 let score = 0;
-const scoreData = await createScoreBoard({
+await createScoreBoard({
 	gamePin: gamePin,
 	username: username,
 	score: sessionUser.score,
 	topicID: topicID,
 });
 
-quizOptBtns.forEach((btn) => {
-	btn.addEventListener('click', async () => {
-		const correctAnswer = questions[CA][question];
-		if (btn.innerHTML === correctAnswer) {
-			score++;
-			// set button color to green
-			btn.style.backgroundColor = 'green';
-			// disable button
-			btn.disabled = true;
-		} else {
-			// set button color to red
-			btn.style.backgroundColor = 'red';
-		}
+async function setCheckScore(question) {
+	quizOptBtns.forEach((btn) => {
+		btn.addEventListener('click', async () => {
+			const correctAnswer = questionsAI[question].correctAnswer;
+			if (btn.innerHTML === correctAnswer) {
+				score++;
+				// set button color to green
+				btn.style.backgroundColor = 'green';
+				// disable button
+				btn.disabled = true;
+			} else {
+				// set button color to red
+				btn.style.backgroundColor = 'red';
+			}
 
-		// set a object with score and username
-		sessionUser.score = score;
-		sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
+			// set a object with score and username
+			sessionUser.score = score;
+			sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
 
-		sessionUser = JSON.parse(sessionStorage.getItem('sessionUser'));
-		console.log(sessionUser);
+			sessionUser = JSON.parse(sessionStorage.getItem('sessionUser'));
+			console.log(sessionUser);
 
-		await createScoreBoard({
-			gamePin: gamePin,
-			username: username,
-			score: sessionUser.score,
-			topicID: topicID,
+			await createScoreBoard({
+				gamePin: gamePin,
+				username: username,
+				score: sessionUser.score,
+				topicID: topicID,
+			});
 		});
 	});
-});
+}
