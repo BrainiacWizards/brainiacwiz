@@ -1,17 +1,15 @@
 .generatePIN {
 	display: flex;
 	flex-direction: column;
-	position: absolute;
+	position: relative;
 	background-color: var(--quart-color);
 	padding: 20px;
 	border: 1px solid var(--quart-color);
 	border-radius: 30px;
-	top: 45%;
-	left: 50%;
-	transform: translate(-50%, -50%);
 	z-index: 1;
 	height: fit-content;
-	max-width: 90%;
+	max-width: 80%;
+	margin: auto;
 }
 
 .header {

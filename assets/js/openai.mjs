@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from 'https://cdn.skypack.dev/@google/generative-ai';
+const questionsblock = document.querySelector('.questions-block');
 
 // Access your API key as an environment variable (see "Set up your API key" above)
 const api_key = 'AIzaSyDgx9kucPZV4kAab55IzII0qFnxt2n26eY';
@@ -10,9 +11,9 @@ async function run() {
 
 	const prompt = `
   1. Generate 6 multiple choice questions with 4 possible answers for the following topic:"Technology",
-  2. seperate the questions with a '--'.
-  3. each question should be preceded by a number (1), (2), (3), or (4).
-  4. each answer should be preceded by a letter (A), (B), (C), or (D).
+  2. seperate the questions with a  only '--'.
+  3. each question should be preceded by a number 1., 2., 3., or 4..
+  4. each answer should be preceded by a only >>.
   5. the correct answer should be preceded by an equal sign (=) on a new line referencing to the correct answer.
   `;
 
@@ -22,11 +23,11 @@ async function run() {
 	console.log(text);
 
 	// proccess response and add each question in a object with all the answers in an array
-	const questions = [];
+	const questionsAI = [];
 	const regex = {
 		question: /^\d/,
 		correctAnswer: /^=/,
-		answer: /^\([A-D]\)/,
+		answer: /^>>/,
 	};
 	const qs = text.split('--');
 
@@ -44,7 +45,7 @@ async function run() {
 			}
 
 			if (line.match(regex.answer)) {
-				question.answers.push(line);
+				question.answers.push(line.replace('>>', '').trim());
 			}
 
 			if (line.match(regex.correctAnswer)) {
@@ -52,10 +53,26 @@ async function run() {
 			}
 		}
 
-		questions.push(question);
+		questionsAI.push(question);
 	}
 
-	console.log(questions);
+	console.log(questionsAI);
+
+	// display the questionsAI in the DOM
+	// questionsAI.forEach((question, index) => {
+	// 	const questionDiv = document.createElement('div');
+	// 	questionDiv.classList.add('question');
+	// 	questionDiv.innerHTML = `
+	// 					<h3>${question.question}</h3>
+	// 					<ul>
+	// 							${question.answers.map((answer) => `<li>${answer}</li>`).join('')}
+	// 					</ul>
+	// 					<p>Correct Answer: ${question.correctAnswer}</p>
+	// 			`;
+	// 	questionsblock.appendChild(questionDiv);
+	// });
+
+	return questionsAI;
 }
 
-run();
+export { run };

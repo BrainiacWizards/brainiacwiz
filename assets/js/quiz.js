@@ -1,7 +1,10 @@
 import { createScoreBoard } from '../../pages/auth/fb.js';
 import { checkLoginStatus } from './main.js';
+import { run } from './openai.mjs';
 import { questions, topics } from './utils/questions.js';
 // checkLoginStatus({ path: '../auth/' });
+
+const questionsAI = await run();
 
 const quizOptBtns = document.querySelectorAll('.quiz-opt-btn');
 const quizTimer = document.querySelector('.quiz-timer > #timer');
@@ -52,10 +55,10 @@ const setQuestions = (question) => {
 	}
 	questions[A][question] = questions[A][question].sort(() => Math.random() - 0.5);
 
-	quizQuestion.innerHTML = questions[Q][question];
+	quizQuestion.innerHTML = questionsAI[question].question;
 
 	quizOptBtns.forEach((btn, index) => {
-		btn.innerHTML = questions[A][question][index];
+		btn.innerHTML = questionsAI[index].answers[question];
 	});
 
 	setQuizBtns();
@@ -114,7 +117,7 @@ const setQuizTImer = ({ duration = 30 }) => {
 			});
 		}
 
-		time--;
+		// time--;
 		let min = Math.floor(time / 60);
 		let sec = time % 60;
 		quizTimer.innerHTML = `${min}:${sec}`;

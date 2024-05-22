@@ -25,6 +25,7 @@
     "chai-as-promised": "7.1.1",
     "chai-bignumber": "3.0.0",
     "dotenv": "^16.4.5",
+    "esm": "^3.2.25",
     "firebase": "^10.11.0",
     "fs": "^0.0.1-security",
     "openai": "^4.47.1",
