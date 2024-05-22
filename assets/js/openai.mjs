@@ -5,12 +5,12 @@ const questionsblock = document.querySelector('.questions-block');
 const api_key = 'AIzaSyDgx9kucPZV4kAab55IzII0qFnxt2n26eY';
 const genAI = new GoogleGenerativeAI(api_key);
 
-async function run() {
+async function run({ topic }) {
 	// For text-only input, use the gemini-pro model
 	const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
 	const prompt = `
-  1. Generate 6 multiple choice questions with 4 possible answers for the following topic:"Technology",
+  1. Generate 6 multiple choice questions with 4 possible answers for the following topic:"${topic}",
   2. seperate the questions with a  only '--'.
   3. each question should be preceded by a number 1., 2., 3., or 4..
   4. each answer should be preceded by a only >>.

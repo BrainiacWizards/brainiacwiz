@@ -4,7 +4,7 @@ import { run } from './openai.mjs';
 import { questions, topics } from './utils/questions.js';
 // checkLoginStatus({ path: '../auth/' });
 
-const questionsAI = await run();
+let questionsAI = [];
 
 const quizOptBtns = document.querySelectorAll('.quiz-opt-btn');
 const quizTimer = document.querySelector('.quiz-timer > #timer');
@@ -19,7 +19,7 @@ let T, Q, A, CA;
 let question = 0;
 const colors = ['var(--prim-color)', 'var(--sec-color)', 'var(--tert-color)', 'var(--quart-color)'];
 
-const setQuizDetails = () => {
+const setQuizDetails = async () => {
 	if (!topicID) {
 		alert('Please select a topic to continue');
 		window.location.href = '../../index.html';
@@ -38,6 +38,8 @@ const setQuizDetails = () => {
 	Q = `Q${T}`;
 	A = `A${T}`;
 	CA = `CA${T}`;
+
+	return topic;
 };
 
 const setTranslateAnimation = ({ element, translation }) => {
@@ -56,9 +58,10 @@ const setQuestions = (question) => {
 	questions[A][question] = questions[A][question].sort(() => Math.random() - 0.5);
 
 	quizQuestion.innerHTML = questionsAI[question].question;
+	console.log(quizQuestion.innerHTML);
 
 	quizOptBtns.forEach((btn, index) => {
-		btn.innerHTML = questionsAI[index].answers[question];
+		btn.innerHTML = questionsAI[question].answers[index];
 	});
 
 	setQuizBtns();
@@ -93,9 +96,13 @@ function setQuizBtns() {
 	});
 }
 
-setQuizDetails();
-setQuizBtns();
-setQuestions(0);
+setQuizDetails().then(async (topic) => {
+	questionsAI = await run({ topic: topic.name });
+
+	setQuizBtns();
+	setQuestions(0);
+	setQuizTImer({ duration: 40 });
+});
 
 const setQuizTImer = ({ duration = 30 }) => {
 	quizTimer.style.color = 'white';
@@ -103,8 +110,8 @@ const setQuizTImer = ({ duration = 30 }) => {
 
 	let intervalId = setInterval(() => {
 		if (time <= 0) {
-			if (question >= questions[Q].length - 1) {
-				moveToPostQuiz(intervalId);
+			if (question >= questions.length - 1) {
+				return;
 			}
 
 			question++;
@@ -117,6 +124,12 @@ const setQuizTImer = ({ duration = 30 }) => {
 			});
 		}
 
+		if (quizTimer.style.width <= '50%') {
+			quizTimer.style.backgroundColor = 'red';
+		} else {
+			quizTimer.style.backgroundColor = 'var(--quart-color)';
+		}
+
 		// time--;
 		let min = Math.floor(time / 60);
 		let sec = time % 60;
@@ -126,8 +139,6 @@ const setQuizTImer = ({ duration = 30 }) => {
 		quizTimer.style.width = `${(time / duration) * 100}%`;
 	}, 200);
 };
-
-setQuizTImer({ duration: 25 });
 
 function moveToPostQuiz(intervalId) {
 	clearInterval(intervalId); // stop the interval
