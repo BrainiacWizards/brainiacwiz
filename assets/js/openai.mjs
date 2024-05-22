@@ -27,9 +27,12 @@ async function run({ topic }) {
 	const regex = {
 		question: /^\d/,
 		correctAnswer: /^=/,
-		answer: /^>>/,
+		answer: /^\s?>>\s?/,
 	};
-	const qs = text.split('--');
+
+	let qs = text.split('--');
+	// remove all	empty strings
+	qs = qs.filter((q) => q.trim() !== '');
 
 	for (let q of qs) {
 		//loop through each question

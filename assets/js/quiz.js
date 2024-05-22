@@ -55,6 +55,7 @@ const setQuestions = (question) => {
 		moveToPostQuiz();
 		return;
 	}
+
 	questions[A][question] = questions[A][question].sort(() => Math.random() - 0.5);
 	quizQuestion.innerHTML = questionsAI[question].question;
 
@@ -94,14 +95,6 @@ function setQuizBtns() {
 		});
 	});
 }
-
-setQuizDetails().then(async (topic) => {
-	questionsAI = await run({ topic: topic.name });
-
-	setQuizBtns();
-	setQuestions(0);
-	setQuizTImer({ duration: 40 });
-});
 
 const setQuizTImer = ({ duration = 30 }) => {
 	quizTimer.style.color = 'white';
@@ -145,17 +138,24 @@ function moveToPostQuiz(intervalId) {
 	window.location.href = `./post-quiz.html?gamePin=${gamePin}&topic=${topicID}&retry=${retry}`;
 }
 
+// set quiz details [1st function to be called]
+setQuizDetails().then(async (topic) => {
+	questionsAI = await run({ topic: topic.name });
+
+	setQuestions(0);
+	setQuizTImer({ duration: 40 });
+});
+
 // check answers and set score
 const loginObj = JSON.parse(sessionStorage.getItem('login'));
 const username = loginObj.username;
-const userScore = 0;
+let score = 0;
 let sessionUser = {
 	username: username,
-	score: userScore,
+	score: score,
 };
 sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
-
-let score = 0;
+// initial score
 await createScoreBoard({
 	gamePin: gamePin,
 	username: username,
@@ -167,12 +167,15 @@ async function setCheckScore(question) {
 	quizOptBtns.forEach((btn) => {
 		btn.addEventListener('click', async () => {
 			const correctAnswer = questionsAI[question].correctAnswer;
-			if (btn.innerHTML === correctAnswer) {
+			console.log(correctAnswer, btn.textContent);
+			if (btn.textContent.includes(correctAnswer)) {
 				score++;
 				// set button color to green
 				btn.style.backgroundColor = 'green';
-				// disable button
-				btn.disabled = true;
+				// disable all button
+				quizOptBtns.forEach((btn) => {
+					btn.disabled = true;
+				});
 			} else {
 				// set button color to red
 				btn.style.backgroundColor = 'red';
