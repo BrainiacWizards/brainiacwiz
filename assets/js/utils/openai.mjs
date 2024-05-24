@@ -19,7 +19,7 @@ async function run({ topic, topicID }) {
   `;
 
 	const result = await model.generateContent(prompt);
-	const response = result.response;
+	const {response} = result;
 	const text = response.text();
 	// console.log(text);
 
