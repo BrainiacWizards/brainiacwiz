@@ -28,11 +28,8 @@ const setQuizDetails = (playerNames) => {
 	}
 
 	const topic = topics.find((topic) => topic.id === parseInt(topicID));
-	const question = questions[`Q${topic.id}`];
-
 	title.innerHTML = 'Title: ' + topic.name;
-	questionCount.innerHTML = 'Questions: ';
-	questionCount.innerHTML += question.length;
+	questionCount.innerHTML = 'Questions: 6';
 	playerCount.innerHTML = `Players: ${playerNames.length}`;
 };
 

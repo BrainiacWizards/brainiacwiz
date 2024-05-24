@@ -1,7 +1,7 @@
 import { createScoreBoard } from '../../pages/auth/fb.js';
 import { checkLoginStatus } from './main.js';
-import { run } from './openai.mjs';
-import { questions, topics } from './utils/questions.js';
+import { run } from './utils/openai.mjs';
+import { topics } from './utils/questions.js';
 // checkLoginStatus({ path: '../auth/' });
 
 let questionsAI = [];
@@ -51,12 +51,11 @@ const setQuestions = (question) => {
 	const translation = window.innerWidth;
 	setTranslateAnimation({ element: quizBody, translation: -translation });
 
-	if (question >= questions[Q].length) {
+	if (question >= questionsAI.length - 1) {
 		moveToPostQuiz();
 		return;
 	}
 
-	questions[A][question] = questions[A][question].sort(() => Math.random() - 0.5);
 	quizQuestion.innerHTML = questionsAI[question].question;
 
 	quizOptBtns.forEach((btn, index) => {
@@ -102,7 +101,7 @@ const setQuizTImer = ({ duration = 30 }) => {
 
 	let intervalId = setInterval(() => {
 		if (time <= 0) {
-			if (question >= questions.length - 1) {
+			if (question >= questionsAI.length - 1) {
 				return;
 			}
 
@@ -116,19 +115,15 @@ const setQuizTImer = ({ duration = 30 }) => {
 			});
 		}
 
-		if (quizTimer.style.width <= '50%') {
-			quizTimer.style.backgroundColor = 'red';
+		if (quizTimer.style.width < '50%') {
+			quizTimer.style.backgroundColor = 'white';
 		} else {
 			quizTimer.style.backgroundColor = 'var(--quart-color)';
 		}
 
-		// time--;
-		let min = Math.floor(time / 60);
-		let sec = time % 60;
-		quizTimer.innerHTML = `${min}:${sec}`;
-
 		// change the with of the timer with respect to the time
 		quizTimer.style.width = `${(time / duration) * 100}%`;
+		time--;
 	}, 200);
 };
 
@@ -140,7 +135,7 @@ function moveToPostQuiz(intervalId) {
 
 // set quiz details [1st function to be called]
 setQuizDetails().then(async (topic) => {
-	questionsAI = await run({ topic: topic.name });
+	questionsAI = await run({ topic: topic.name, topicID: topic.id });
 
 	setQuestions(0);
 	setQuizTImer({ duration: 40 });
@@ -167,7 +162,6 @@ async function setCheckScore(question) {
 	quizOptBtns.forEach((btn) => {
 		btn.addEventListener('click', async () => {
 			const correctAnswer = questionsAI[question].correctAnswer;
-			console.log(correctAnswer, btn.textContent);
 			if (btn.textContent.includes(correctAnswer)) {
 				score++;
 				// set button color to green
@@ -190,7 +184,7 @@ async function setCheckScore(question) {
 
 			await createScoreBoard({
 				gamePin: gamePin,
-				username: username,
+				username: sessionUser.username,
 				score: sessionUser.score,
 				topicID: topicID,
 			});
