@@ -77,7 +77,7 @@ startBtn?.addEventListener('click', async () => {
 
 cancelBtn?.addEventListener('click', async () => {
 	const confirmEnd = confirm('Are you sure you want to end the game?');
-	if (!confirmEnd) return;
+	if (!confirmEnd) {
 	await endGame({ gamePin, topicID });
 	alert('Game has ended');
 });
