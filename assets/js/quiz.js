@@ -161,7 +161,7 @@ await createScoreBoard({
 async function setCheckScore(question) {
 	quizOptBtns.forEach((btn) => {
 		btn.addEventListener('click', async () => {
-			const correctAnswer = questionsAI[question].correctAnswer;
+			const {correctAnswer} = questionsAI[question];
 			if (btn.textContent.includes(correctAnswer)) {
 				score++;
 				// set button color to green
