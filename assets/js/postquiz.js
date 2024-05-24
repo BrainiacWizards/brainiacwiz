@@ -155,13 +155,12 @@ async function setOverallRanking({ username, score, retry, gamePin }) {
 	const currentTime = new Date().getTime();
 
 	// set overall ranking
-	const ranking = await overallRanking({
-		username,
-		points: score,
-		time: currentTime,
-		retry: retry,
-		gamePin: gamePin,
-	});
+	return await overallRanking({
+ 		username,
+ 		points: score,
+ 		time: currentTime,
+ 		retry: retry,
+ 		gamePin: gamePin,
+ 	});
 
-	return ranking;
 }
