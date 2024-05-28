@@ -78,8 +78,8 @@ async function gamePinFormHandling() {
 
 			setLogin();
 
-			// redirect to quiz play page
-			window.location.href = `../../../play/quiz.html?gamePin=${gamePin.value}&topic=${topic}`;
+			// redirect to lobby page
+			window.location.href = `../../../play/lobby.html?gamePin=${gamePin.value}&topic=${topic}`;
 		});
 	}
 }

@@ -34,7 +34,7 @@
 	padding: 0 10px;
 	max-height: 12px;
 	min-height: 12px;
-	margin-left: -5px;
+	margin-left: 5px;
 }
 
 .quiz-container .quiz-header .quiz-timer span:hover {
@@ -65,7 +65,7 @@
 	width: 90%;
 	text-align: center;
 	justify-content: center;
-	font-size: 30px;
+	font-size: 25px;
 	z-index: 0;
 }
 
@@ -82,23 +82,25 @@
 	margin-top: 20px;
 	z-index: 0;
 	top: 0;
+	text-wrap: wrap !important;
 }
 
 .quiz-container .quiz-body .quiz-options-block button {
 	font-size: 20px;
 	min-width: 100px;
 	width: 100%;
-	min-height: 70px;
+	word-wrap: break-word;
+	min-height: 80px;
 	text-wrap: wrap !important;
 	font-size: 25px;
 }
 
 /* score-board */
 .score-board {
-	position: absolute;
+	position: relative;
 	background-color: var(--quart-color);
 	padding: 20px;
-	border: 2px solid var(--prim-color);
+	border: 1px solid var(--prim-color);
 	border-radius: 10px;
 	display: flex;
 	flex-direction: column;
@@ -106,9 +108,8 @@
 	align-items: center;
 	margin: 50px auto;
 	width: fit-content;
-	top: 30%;
-	left: 50%;
-	transform: translate(-50%, -0%);
+	max-width: 80%;
+	box-shadow: 2px 2px 10px var(--prim-color);
 }
 
 .score-board .header {
@@ -117,48 +118,125 @@
 	color: var(--prim-color);
 }
 
+#ranking-heading {
+	margin-top: 30px;
+}
+
 .score-board .body {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	max-width: 500px !important;
+	align-items: flex-start;
 	width: fit-content;
 	min-width: 250px;
+	overflow: auto;
+	max-width: 100%;
+	padding: 5px;
+
+	max-height: 600px;
+
+	&::-webkit-scrollbar {
+		width: 6px;
+		height: 6px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--prim-color);
+		border-radius: 20px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: var(--quart-color);
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background-color: var(--font-color);
+	}
+
+	&::-webkit-scrollbar-thumb:active {
+		background-color: var(--font-color);
+	}
+
+	&::-webkit-scrollbar-button {
+		background-color: var(--quart-color);
+		height: 2px;
+		width: 2px;
+	}
+
+	&::-webkit-scrollbar-corner {
+		background-color: var(--tert-color);
+	}
+
+	&::-webkit-scrollbar-track-piece {
+		background-color: var(--tert-color);
+	}
 }
 
 .scoreFont {
 	font-size: 20px;
 	font-style: oblique;
 }
+
 .score-board .body table {
 	width: 100%;
-	border: 2px solid var(--prim-color);
-	border-collapse: collapse;
 	text-align: center;
+	min-width: 100%;
+	table-layout: auto;
+	border-collapse: collapse;
+	border-radius: 10px !important;
+	overflow: hidden;
 }
 
 .score-board .body table thead tr {
-	background-color: var(--prim-color);
+	background-color: var(--tert-color);
 	color: var(--font-color);
 }
 
 .score-board .body table thead tr th {
 	padding: 5px 20px;
-	/* min-width: 100px; */
-	border-right: 2px solid var(--prim-color);
+	border-right: 1px solid var(--tert-color);
+}
+
+.score-board .body table tbody tr:nth-child(odd) {
+	background-color: #1e102b15;
+	color: var(--sec-color);
+}
+
+.score-board .body table tbody tr {
+	background-color: var(--quart-color);
+	color: var(--prim-color) !important;
+	box-shadow: 2px 2px 10px var(--tert-color);
+
+	&:hover {
+		background-color: var(--tert-color);
+		color: var(--font-color) !important;
+		scale: 0.95;
+		box-shadow: 1px 1px 5px var(--font-color);
+	}
 }
 
 .score-board .body table tbody tr td {
 	padding: 5px 20px;
-	/* min-width: 100px; */
-	border-right: 2px solid var(--prim-color);
+	border-right: 1px solid var(--tert-color);
+	overflow: auto;
+	font-weight: 500;
+
+	&:last-child {
+		border-right: none !important;
+	}
 }
 
 .score-board .body table .colA,
 .score-board .body table .colC {
 	width: fit-content !important;
 	padding: 10px;
+}
+
+.score-board .body table tbody .game-pin-col {
+	background-color: var(--prim-color) !important;
+	color: var(--font-color) !important;
+	max-height: 10px !important;
+	font-weight: bold;
+	font-size: 15px;
 }
 
 .score-board .body table .colB {

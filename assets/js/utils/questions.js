@@ -1,166 +1,354 @@
-const questions = {
-	Q0: [
-		'What does GTP Stand for?',
-		'What is the full form of HTTP?',
-		'What is the full form of "OS"?',
-		'Who is known as the father of Computer?',
-		'What was the first high-level programming language?',
-		'What does AI stand for?',
+const questions = [
+	// tech	trends
+	[
+		{
+			question: 'What is the most popular technology trend?',
+			answers: ['Artificial Intelligence', 'Blockchain', 'Internet of Things', 'Virtual Reality'],
+			correctAnswer: 'Artificial Intelligence',
+		},
+		{
+			question: 'What is the fastest-growing technology trend?',
+			answers: ['Machine Learning', 'Cybersecurity', 'Cloud Computing', 'Data Science'],
+			correctAnswer: 'Machine Learning',
+		},
+		{
+			question: 'What is the most disruptive technology trend?',
+			answers: ['Augmented Reality', 'Quantum Computing', 'Robotics', 'Big Data'],
+			correctAnswer: 'Quantum Computing',
+		},
+		{
+			question: 'What is the most promising technology trend?',
+			answers: ['Edge Computing', '5G', 'Biotechnology', 'Autonomous Vehicles'],
+			correctAnswer: '5G',
+		},
+		{
+			question: 'What is the most innovative technology trend?',
+			answers: ['Internet of Things', 'Artificial Intelligence', 'Virtual Reality', 'Blockchain'],
+			correctAnswer: 'Internet of Things',
+		},
+		{
+			question: 'What is the most impactful technology trend?',
+			answers: ['Renewable Energy', 'Smart Cities', 'Health Tech', 'Space Exploration'],
+			correctAnswer: 'Renewable Energy',
+		},
 	],
-	A0: {
-		0: [
-			'Generative Pre-training Transformer',
-			'General Purpose Transistor',
-			'Global Positioning Technology',
-			'Gigabit Transfer Protocol',
-		],
-		1: [
-			'Hyper Text Transfer Protocol',
-			'Higher Text Translation Protocol',
-			'Hyper Text Transmission Protocol',
-			'Hyper Text Tracking Protection',
-		],
-		2: ['Operating System', 'Open Source', 'Optical Sensor', 'Output System'],
-		3: ['Charles Babbage', 'Alan Turing', 'John von Neumann', 'Bill Gates'],
-		4: ['FORTRAN', 'C', 'COBOL', 'BASIC'],
-		5: [
-			'Artificial Intelligence',
-			'Automated Interface',
-			'Advanced Index',
-			'Automated Intelligence',
-		],
-	},
 
-	CA0: {
-		0: 'Generative Pre-training Transformer',
-		1: 'Hyper Text Transfer Protocol',
-		2: 'Operating System',
-		3: 'Charles Babbage',
-		4: 'FORTRAN',
-		5: 'Artificial Intelligence',
-	},
+	// general	knowledge
+	[
+		{
+			question: 'What is the capital of France?',
+			answers: ['Paris', 'London', 'Berlin', 'Madrid'],
+			correctAnswer: 'Paris',
+		},
+		{
+			question: 'What is the largest continent?',
+			answers: ['Asia', 'Africa', 'Europe', 'North America'],
+			correctAnswer: 'Asia',
+		},
+		{
+			question: 'What is the longest river in the world?',
+			answers: ['Amazon', 'Nile', 'Yangtze', 'Mississippi'],
+			correctAnswer: 'Nile',
+		},
+		{
+			question: 'What is the smallest country in the world?',
+			answers: ['Monaco', 'Vatican City', 'San Marino', 'Nauru'],
+			correctAnswer: 'Vatican City',
+		},
+		{
+			question: 'What is the largest ocean in the world?',
+			answers: ['Atlantic', 'Indian', 'Arctic', 'Pacific'],
+			correctAnswer: 'Pacific',
+		},
+		{
+			question: 'What is the tallest mountain in the world?',
+			answers: ['K2', 'Kangchenjunga', 'Mount Everest', 'Lhotse'],
+			correctAnswer: 'Mount Everest',
+		},
+	],
 
-	Q1: [
-		'What is the capital of Australia?',
-		'Which country has the best military in the world?',
-		'What is the largest country in the world?',
-		'Who is the current president of the United States?',
-		'What is the currency of Japan?',
-		'Where is the Great Barrier Reef located?',
+	// programming	and	coding
+	[
+		{
+			question: 'What is the most popular programming language?',
+			answers: ['Python', 'JavaScript', 'Java', 'C++'],
+			correctAnswer: 'Python',
+		},
+		{
+			question: 'What is the most in-demand programming language?',
+			answers: ['JavaScript', 'Python', 'Java', 'C#'],
+			correctAnswer: 'JavaScript',
+		},
+		{
+			question: 'What is the most widely-used programming language?',
+			answers: ['Java', 'Python', 'C', 'C++'],
+			correctAnswer: 'Java',
+		},
+		{
+			question: 'What is the most versatile programming language?',
+			answers: ['JavaScript', 'Python', 'Java', 'Ruby'],
+			correctAnswer: 'JavaScript',
+		},
+		{
+			question: 'What is the most beginner-friendly programming language?',
+			answers: ['Python', 'JavaScript', 'Java', 'Ruby'],
+			correctAnswer: 'Python',
+		},
+		{
+			question: 'What is the most powerful programming language?',
+			answers: ['C++', 'Java', 'Python', 'JavaScript'],
+			correctAnswer: 'C++',
+		},
 	],
-	A1: {
-		0: ['Canberra', 'Sydney', 'Melbourne', 'Brisbane'],
-		1: ['United States', 'Russia', 'China', 'India'],
-		2: ['Russia', 'Canada', 'China', 'United States'],
-		3: ['Joe Biden', 'Donald Trump', 'Barack Obama', 'George Bush'],
-		4: ['Yen', 'Dollar', 'Euro', 'Pound'],
-		5: ['Australia', 'Philippines', 'Indonesia', 'Thailand'],
-	},
-	CA1: {
-		0: 'Canberra',
-		1: 'United States',
-		2: 'Russia',
-		3: 'Joe Biden',
-		4: 'Yen',
-		5: 'Australia',
-	},
-	// Programming and coding
-	Q2: [
-		'What is the full form of HTML?',
-		'Who is the father of C language?',
-		'When was Python released?',
-		'What is the full form of CSS?',
-		"How do you write 'Hello World' in Python?",
-		'What is the full form of SQL?',
-		'How do you write "Hello World" in C?',
+
+	// mathematics
+	[
+		{
+			question: 'What is the most important branch of mathematics?',
+			answers: ['Algebra', 'Calculus', 'Geometry', 'Statistics'],
+			correctAnswer: 'Calculus',
+		},
+		{
+			question: 'What is the most challenging branch of mathematics?',
+			answers: ['Algebra', 'Calculus', 'Geometry', 'Statistics'],
+			correctAnswer: 'Statistics',
+		},
+		{
+			question: 'What is the most useful branch of mathematics?',
+			answers: ['Algebra', 'Calculus', 'Geometry', 'Statistics'],
+			correctAnswer: 'Statistics',
+		},
+		{
+			question: 'What is the most beautiful branch of mathematics?',
+			answers: ['Algebra', 'Calculus', 'Geometry', 'Statistics'],
+			correctAnswer: 'Geometry',
+		},
+		{
+			question: 'What is the most practical branch of mathematics?',
+			answers: ['Algebra', 'Calculus', 'Geometry', 'Statistics'],
+			correctAnswer: 'Statistics',
+		},
+		{
+			question: 'What is the most interesting branch of mathematics?',
+			answers: ['Algebra', 'Calculus', 'Geometry', 'Statistics'],
+			correctAnswer: 'Calculus',
+		},
 	],
-	A2: {
-		0: [
-			'Hyper Text Markup Language',
-			'High Text Markup Language',
-			'Hyper Tabular Markup Language',
-			'Higher Text Markup Language',
-		],
-		1: [
-			'Dennis Ritchie',
-			'Bjarne Stroustrup',
-			'James A. Gosling',
-			'Guido van Rossum',
-		],
-		2: ['1991', '1989', '1995', '2000'],
-		3: [
-			'Cascading Style Sheet',
-			'Creative Style Sheet',
-			'Computer Style Sheet',
-			'Colorful Style Sheet',
-		],
-		4: [
-			'print("Hello World")',
-			'echo "Hello World"',
-			'cout << "Hello World"',
-			'printf("Hello World")',
-		],
-		5: [
-			'Structured Query Language',
-			'Standard Query Language',
-			'Simple Query Language',
-			'Sequential Query Language',
-		],
-		6: [
-			'printf("Hello World")',
-			'echo "Hello World"',
-			'cout << "Hello World"',
-			'print("Hello World")',
-		],
-	},
-	CA2: {
-		0: 'Hyper Text Markup Language',
-		1: 'Dennis Ritchie',
-		2: '1991',
-		3: 'Cascading Style Sheet',
-		4: 'print("Hello World")',
-		5: 'Structured Query Language',
-		6: 'printf("Hello World")',
-	},
-	// Mathematics
-	Q3: [
-		'What is the value of π (pi)?',
-		'How many sides does a hexagon have?',
-		'What is the value of 2^8?',
-		"who is known as the 'Prince of Mathematicians'?",
-		'which is the only even prime number?',
-		'How many degrees are in a circle?',
-		'Why is 7 the most feared number?',
+
+	// physics
+	[
+		{
+			question: 'What is the most fundamental law of physics?',
+			answers: [
+				"Newton's Laws of Motion",
+				'Law of Gravitation',
+				'Law of Conservation of Energy',
+				'Theory of Relativity',
+			],
+			correctAnswer: "Newton's Laws of Motion",
+		},
+		{
+			question: 'What is the most important concept in physics?',
+			answers: ['Force', 'Energy', 'Matter', 'Motion'],
+			correctAnswer: 'Energy',
+		},
+		{
+			question: 'What is the most fascinating phenomenon in physics?',
+			answers: ['Black Holes', 'Quantum Entanglement', 'Dark Matter', 'String Theory'],
+			correctAnswer: 'Black Holes',
+		},
+		{
+			question: 'What is the most intriguing theory in physics?',
+			answers: ['Quantum Mechanics', 'General Relativity', 'String Theory', 'Big Bang Theory'],
+			correctAnswer: 'Quantum Mechanics',
+		},
+		{
+			question: 'What is the most complex concept in physics?',
+			answers: ['Quantum Mechanics', 'General Relativity', 'String Theory', 'Big Bang Theory'],
+			correctAnswer: 'String Theory',
+		},
+		{
+			question: 'What is the most mysterious force in physics?',
+			answers: ['Gravity', 'Electromagnetism', 'Weak Nuclear Force', 'Strong Nuclear Force'],
+			correctAnswer: 'Gravity',
+		},
 	],
-	A3: {
-		0: ['3.14159', '3.1415', '3.1416', '3.1417'],
-		1: ['6', '5', '7', '8'],
-		2: ['256', '512', '1024', '128'],
-		3: [
-			'Carl Friedrich Gauss',
-			'Leonhard Euler',
-			'Isaac Newton',
-			'Pierre-Simon Laplace',
-		],
-		4: ['2', '4', '6', '8'],
-		5: ['360', '180', '270', '90'],
-		6: [
-			'Because 7 8 9',
-			'Because 7 is a prime number',
-			'Because 7 is a lucky number',
-			'Because 7 is a magic number',
-		],
-	},
-	CA3: {
-		0: '3.14159',
-		1: '6',
-		2: '256',
-		3: 'Carl Friedrich Gauss',
-		4: '2',
-		5: '360',
-		6: 'Because 7 8 9',
-	},
-};
+
+	// english
+	[
+		{
+			question: 'What is the most widely-spoken language in the world?',
+			answers: ['English', 'Mandarin', 'Spanish', 'Hindi'],
+			correctAnswer: 'English',
+		},
+		{
+			question: 'What is the most popular form of literature?',
+			answers: ['Poetry', 'Drama', 'Fiction', 'Non-Fiction'],
+			correctAnswer: 'Fiction',
+		},
+		{
+			question: 'What is the most famous work of literature?',
+			answers: ['Romeo and Juliet', 'Hamlet', 'Pride and Prejudice', 'To Kill a Mockingbird'],
+			correctAnswer: 'Romeo and Juliet',
+		},
+		{
+			question: 'What is the most influential writer in history?',
+			answers: ['Shakespeare', 'Dickens', 'Austen', 'Twain'],
+			correctAnswer: 'Shakespeare',
+		},
+		{
+			question: 'What is the most enduring genre of literature?',
+			answers: ['Poetry', 'Drama', 'Fiction', 'Non-Fiction'],
+			correctAnswer: 'Poetry',
+		},
+		{
+			question: 'What is the most powerful form of expression?',
+			answers: ['Poetry', 'Drama', 'Fiction', 'Non-Fiction'],
+			correctAnswer: 'Poetry',
+		},
+	],
+
+	// engineering
+	[
+		{
+			question: 'What is the most challenging field of engineering?',
+			answers: ['Aerospace', 'Biomedical', 'Civil', 'Electrical'],
+			correctAnswer: 'Aerospace',
+		},
+		{
+			question: 'What is the most innovative field of engineering?',
+			answers: ['Aerospace', 'Biomedical', 'Civil', 'Electrical'],
+			correctAnswer: 'Biomedical',
+		},
+		{
+			question: 'What is the most important field of engineering?',
+			answers: ['Aerospace', 'Biomedical', 'Civil', 'Electrical'],
+			correctAnswer: 'Civil',
+		},
+		{
+			question: 'What is the most promising field of engineering?',
+			answers: ['Aerospace', 'Biomedical', 'Civil', 'Electrical'],
+			correctAnswer: 'Electrical',
+		},
+		{
+			question: 'What is the most impactful field of engineering?',
+			answers: ['Aerospace', 'Biomedical', 'Civil', 'Electrical'],
+			correctAnswer: 'Civil',
+		},
+		{
+			question: 'What is the most exciting field of engineering?',
+			answers: ['Aerospace', 'Biomedical', 'Civil', 'Electrical'],
+			correctAnswer: 'Aerospace',
+		},
+	],
+
+	// science
+	[
+		{
+			question: 'What is the most important branch of science?',
+			answers: ['Biology', 'Chemistry', 'Physics', 'Earth Science'],
+			correctAnswer: 'Physics',
+		},
+		{
+			question: 'What is the most fascinating branch of science?',
+			answers: ['Astronomy', 'Genetics', 'Geology', 'Meteorology'],
+			correctAnswer: 'Astronomy',
+		},
+		{
+			question: 'What is the most complex branch of science?',
+			answers: ['Quantum Physics', 'Astrophysics', 'Nuclear Physics', 'Particle Physics'],
+			correctAnswer: 'Quantum Physics',
+		},
+		{
+			question: 'What is the most mysterious branch of science?',
+			answers: ['Cosmology', 'String Theory', 'Dark Matter', 'Black Holes'],
+			correctAnswer: 'String Theory',
+		},
+		{
+			question: 'What is the most exciting branch of science?',
+			answers: ['Space Exploration', 'Biotechnology', 'Nanotechnology', 'Robotics'],
+			correctAnswer: 'Space Exploration',
+		},
+		{
+			question: 'What is the most promising branch of science?',
+			answers: ['Genomics', 'Neuroscience', 'Artificial Intelligence', 'Quantum Computing'],
+			correctAnswer: 'Artificial Intelligence',
+		},
+	],
+
+	// entertainment
+	[
+		{
+			question: 'What is the most popular form of entertainment?',
+			answers: ['Movies', 'Music', 'Television', 'Video Games'],
+			correctAnswer: 'Movies',
+		},
+		{
+			question: 'What is the most influential form of entertainment?',
+			answers: ['Movies', 'Music', 'Television', 'Video Games'],
+			correctAnswer: 'Television',
+		},
+		{
+			question: 'What is the most powerful form of entertainment?',
+			answers: ['Movies', 'Music', 'Television', 'Video Games'],
+			correctAnswer: 'Music',
+		},
+		{
+			question: 'What is the most enduring form of entertainment?',
+			answers: ['Movies', 'Music', 'Television', 'Video Games'],
+			correctAnswer: 'Movies',
+		},
+		{
+			question: 'What is the most exciting form of entertainment?',
+			answers: ['Movies', 'Music', 'Television', 'Video Games'],
+			correctAnswer: 'Video Games',
+		},
+		{
+			question: 'What is the most engaging form of entertainment?',
+			answers: ['Movies', 'Music', 'Television', 'Video Games'],
+			correctAnswer: 'Television',
+		},
+	],
+
+	// movies
+	[
+		{
+			question: 'What is the most popular movie genre?',
+			answers: ['Action', 'Comedy', 'Drama', 'Science Fiction'],
+			correctAnswer: 'Action',
+		},
+		{
+			question: 'What is the most successful movie franchise?',
+			answers: ['Marvel Cinematic Universe', 'Star Wars', 'Harry Potter', 'James Bond'],
+			correctAnswer: 'Marvel Cinematic Universe',
+		},
+		{
+			question: 'What is the most iconic movie character?',
+			answers: ['James Bond', 'Indiana Jones', 'Rocky Balboa', 'Terminator'],
+			correctAnswer: 'James Bond',
+		},
+		{
+			question: 'What is the most memorable movie quote?',
+			answers: [
+				'"Here\'s looking at you, kid."',
+				'"May the Force be with you."',
+				'"You can\'t handle the truth!"',
+				'"I\'ll be back."',
+			],
+			correctAnswer: '"May the Force be with you."',
+		},
+		{
+			question: 'What is the most famous movie director?',
+			answers: ['Steven Spielberg', 'Martin Scorsese', 'Alfred Hitchcock', 'Quentin Tarantino'],
+			correctAnswer: 'Steven Spielberg',
+		},
+		{
+			question: 'What is the most prestigious movie award?',
+			answers: ['Oscar', 'Golden Globe', 'BAFTA', "Palme d'Or"],
+			correctAnswer: 'Oscar',
+		},
+	],
+];
 
 const topics = [
 	{
@@ -176,40 +364,43 @@ const topics = [
 	{
 		id: 2,
 		name: 'Programming and coding',
-		image: 'programming.webp',
+		image: 'programming.jpg',
 	},
 	{
 		id: 3,
 		name: 'Mathematics',
-		image: 'mathematics.webp',
+		image: 'mathematics.jpg',
+	},
+	{
+		id: 4,
+		name: 'Physics',
+		image: 'physics.jpeg',
+	},
+	{
+		id: 5,
+		name: 'English',
+		image: 'english.webp',
+	},
+	{
+		id: 6,
+		name: 'Engineering',
+		image: 'engineering.webp',
+	},
+	{
+		id: 7,
+		name: 'Science',
+		image: 'science.jpeg',
+	},
+	{
+		id: 10,
+		name: 'Entertainment',
+		image: 'entertainment.jpg',
+	},
+	{
+		id: 12,
+		name: 'Movies',
+		image: 'movies.jpeg',
 	},
 ];
 
-const nfts = [
-	{
-		name: 'fries',
-		image: './nft/fries.png',
-	},
-	{
-		name: 'cheeseburger',
-		image: './nft/cheeseburger.png',
-	},
-	{
-		name: 'hotdog',
-		image: './nft/hotdog.png',
-	},
-	{
-		name: 'ice-cream',
-		image: './nft/ice-cream.png',
-	},
-	{
-		name: 'milkshake',
-		image: './nft/milkshake.png',
-	},
-	{
-		name: 'pizza',
-		image: './nft/pizza.png',
-	},
-];
-
-export { questions, topics, nfts };
+export { questions, topics };

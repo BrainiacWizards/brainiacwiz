@@ -1,11 +1,17 @@
 .host-view {
 	display: flex;
 	flex-direction: column;
-	min-height: 90vh;
+	min-height: fit-content;
 }
 
 .host-view .header {
-	background-color: var(--prim-color);
+	background: linear-gradient(
+		90deg,
+		var(--tert-color),
+		var(--tert-color),
+		var(--prim-color),
+		var(--sec-color)
+	);
 	color: var(--font-color);
 	display: flex;
 	justify-content: space-between;
@@ -13,6 +19,7 @@
 	margin: 0;
 	padding: 10px 40px;
 	gap: 20px;
+	border-radius: 0 0 20px 20px;
 }
 
 .host-view .header .quiz-details {
@@ -23,6 +30,7 @@
 	padding: 10px;
 	color: var(--prim-color);
 	text-align: center;
+	box-shadow: 2px 2px 5px 0 var(--sec-color);
 }
 
 .host-view .header .quiz-details #title {
@@ -77,22 +85,67 @@
 	margin: 0;
 	color: var(--prim-color);
 	padding: 20px;
-	max-width: 600px;
+	max-width: 1000px;
 	flex-wrap: wrap;
 	justify-content: center;
+	position: relative;
 }
 
 .host-view .players-block .players .player {
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	flex-wrap: wrap;
+	text-wrap: break-word;
+	word-break: break-all;
+	text-align: center;
 	align-items: center;
-	background-color: var(--prim-color);
 	color: var(--font-color);
-	border-radius: 20px 40px;
+	background-color: var(--prim-color);
+	border-radius: 50px;
 	padding: 10px;
-	font-size: 25px;
+	font-size: 35px;
 	min-width: 150px;
+	max-width: 350px;
 	min-height: 50px;
 	justify-content: center;
 	align-items: center;
+}
+
+.host-view .players-block .players .player:hover {
+	background-color: var(--tert-color);
+	color: var(--font-color);
+}
+
+.game-status {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 20px;
+	color: var(--prim-color);
+	font-size: 30px;
+}
+
+.game-status .status {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 20px;
+	color: var(--prim-color);
+	font-size: 30px;
+}
+
+.game-status .status #status-text {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 20px;
+	color: var(--prim-color);
+	font-size: 30px;
 }

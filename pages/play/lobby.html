@@ -3,15 +3,14 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Generate a gamePIN | BrainiacWiz</title>
-		<script type="module" src="./gamepin.js" defer></script>
-		<link rel="stylesheet" href="gamepin.css" />
-		<link rel="stylesheet" href="../../../assets/css/style.css" />
+		<link rel="stylesheet" href="../../assets/css/style.css" />
+		<link rel="stylesheet" href="../../assets/css/host.css" />
 		<link
 			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
 			rel="stylesheet"
 		/>
-		<link rel="stylesheet" href="../../../assets/fontawesome-6.5.2/css/all.css" />
+		<link rel="stylesheet" href="../../assets/fontawesome-6.5.2/css/all.css" />
+		<title>Host Vew | BrainiacWiz</title>
 		<!-- Google tag (gtag.js) -->
 		<script
 			async
@@ -34,10 +33,9 @@
 		></script>
 	</head>
 	<body>
-		<!-- header  -->
-		<div class="main-header">
+		<header class="main-header">
 			<div class="logo">
-				<img src="../../../assets/img/brainacwiz-logo.jpeg" alt="Logo" />
+				<img src="../../assets/img/brainacwiz-logo.jpeg" alt="Logo" />
 			</div>
 
 			<div class="wallet-details">
@@ -49,31 +47,45 @@
 					<button class="wallet-btn"><i class="bx bx-wallet"></i></button>
 				</div>
 			</div>
-		</div>
-		<main class="body-content">
-			<div class="generatePIN">
-				<button id="nextB" class="button2"
-					><i class="fa-regular fa-circle-right"></i
-				></button>
-				<img class="logo-image" src="gamepinUI/logo.jpeg" />
-				<h1 class="gamepin-heading">Generate a gamepin:</h1>
-				<form id="pinForm">
-					<input type="text" id="pinDisplay" class="text" readonly />
-					<button type="button" id="generateBtn" class="button">Generate PIN</button>
-				</form>
-			</div>
+		</header>
+		<main class="body-content no-background">
+			<section class="host-view">
+				<div class="header">
+					<div class="quiz-details">
+						<h1 id="title"></h1>
+						<h3 id="player-count"></h3>
+						<h4 id="questions-count"></h4>
+					</div>
+					<div class="game-code">
+						<h2>Game Code</h2>
+						<p id="code-view"><span></span></p>
+					</div>
+				</div>
+			</section>
+
+			<!-- game status section -->
+			<section class="game-status">
+				<div class="status">
+					<h2>Game Status</h2>
+					<p id="status-text">N/A</p>
+				</div>
+			</section>
 		</main>
-		<footer>
+		<footer class="">
 			<nav class="navbar">
 				<ul>
 					<li>
-						<a href="../../../index.html"><i class="bx bx-home"></i><p>Home</p></a>
+						<a href="../../index.html"><i class="bx bx-home"></i><p>Home</p></a>
 					</li>
 					<li>
-						<a href="#"><i class="bx bx-book"></i><p>My Library</p></a>
+						<a href="../../ranking.html"
+							><i class="bx bx-book"></i><p>Leaderboard</p></a
+						>
 					</li>
 					<li>
-						<a href="#"><i class="bx bx-info-circle"></i><p>About</p></a>
+						<a href="../../auth/login.html"
+							><i class="bx bx-user-circle"></i><p>Login</p></a
+						>
 					</li>
 					<li>
 						<a href="#"><i class="bx bx-envelope"></i><p>Contact</p></a>
@@ -83,6 +95,7 @@
 		</footer>
 
 		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
-		<script type="module" src="../../../assets/js/utils/setnavbar.js"></script>
+		<script type="module" src="../../assets/js/utils/setnavbar.js"></script>
+		<script type="module" src="../../assets/js/looby.js"></script>
 	</body>
 </html>
