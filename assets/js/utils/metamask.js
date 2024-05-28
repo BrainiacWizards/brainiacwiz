@@ -1,4 +1,4 @@
-import { query } from "../api/api.js";
+// import { query } from "../api/api.js";
 
 const state = {
 	account: '0x0',
