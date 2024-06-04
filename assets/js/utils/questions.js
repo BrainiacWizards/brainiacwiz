@@ -1,354 +1,429 @@
-const questions = [
-	// tech	trends
-	[
-		{
-			question: 'What is the most popular technology trend?',
-			answers: ['Artificial Intelligence', 'Blockchain', 'Internet of Things', 'Virtual Reality'],
-			correctAnswer: 'Artificial Intelligence',
-		},
-		{
-			question: 'What is the fastest-growing technology trend?',
-			answers: ['Machine Learning', 'Cybersecurity', 'Cloud Computing', 'Data Science'],
-			correctAnswer: 'Machine Learning',
-		},
-		{
-			question: 'What is the most disruptive technology trend?',
-			answers: ['Augmented Reality', 'Quantum Computing', 'Robotics', 'Big Data'],
-			correctAnswer: 'Quantum Computing',
-		},
-		{
-			question: 'What is the most promising technology trend?',
-			answers: ['Edge Computing', '5G', 'Biotechnology', 'Autonomous Vehicles'],
-			correctAnswer: '5G',
-		},
-		{
-			question: 'What is the most innovative technology trend?',
-			answers: ['Internet of Things', 'Artificial Intelligence', 'Virtual Reality', 'Blockchain'],
-			correctAnswer: 'Internet of Things',
-		},
-		{
-			question: 'What is the most impactful technology trend?',
-			answers: ['Renewable Energy', 'Smart Cities', 'Health Tech', 'Space Exploration'],
-			correctAnswer: 'Renewable Energy',
-		},
+const questions = {
+	Q0: [
+		'What does GTP Stand for?',
+		'What is the full form of HTTP?',
+		'What is the full form of "OS"?',
+		'Who is known as the father of Computer?',
+		'What was the first high-level programming language?',
+		'What does AI stand for?',
 	],
+	A0: {
+		0: [
+			'Generative Pre-training Transformer',
+			'General Purpose Transistor',
+			'Global Positioning Technology',
+			'Gigabit Transfer Protocol',
+		],
+		1: [
+			'Hyper Text Transfer Protocol',
+			'Higher Text Translation Protocol',
+			'Hyper Text Transmission Protocol',
+			'Hyper Text Tracking Protection',
+		],
+		2: ['Operating System', 'Open Source', 'Optical Sensor', 'Output System'],
+		3: ['Charles Babbage', 'Alan Turing', 'John von Neumann', 'Bill Gates'],
+		4: ['FORTRAN', 'C', 'COBOL', 'BASIC'],
+		5: ['Artificial Intelligence', 'Automated Interface', 'Advanced Index', 'Automated Intelligence'],
+	},
 
-	// general	knowledge
-	[
-		{
-			question: 'What is the capital of France?',
-			answers: ['Paris', 'London', 'Berlin', 'Madrid'],
-			correctAnswer: 'Paris',
-		},
-		{
-			question: 'What is the largest continent?',
-			answers: ['Asia', 'Africa', 'Europe', 'North America'],
-			correctAnswer: 'Asia',
-		},
-		{
-			question: 'What is the longest river in the world?',
-			answers: ['Amazon', 'Nile', 'Yangtze', 'Mississippi'],
-			correctAnswer: 'Nile',
-		},
-		{
-			question: 'What is the smallest country in the world?',
-			answers: ['Monaco', 'Vatican City', 'San Marino', 'Nauru'],
-			correctAnswer: 'Vatican City',
-		},
-		{
-			question: 'What is the largest ocean in the world?',
-			answers: ['Atlantic', 'Indian', 'Arctic', 'Pacific'],
-			correctAnswer: 'Pacific',
-		},
-		{
-			question: 'What is the tallest mountain in the world?',
-			answers: ['K2', 'Kangchenjunga', 'Mount Everest', 'Lhotse'],
-			correctAnswer: 'Mount Everest',
-		},
-	],
+	CA0: {
+		0: 'Generative Pre-training Transformer',
+		1: 'Hyper Text Transfer Protocol',
+		2: 'Operating System',
+		3: 'Charles Babbage',
+		4: 'FORTRAN',
+		5: 'Artificial Intelligence',
+	},
 
-	// programming	and	coding
-	[
-		{
-			question: 'What is the most popular programming language?',
-			answers: ['Python', 'JavaScript', 'Java', 'C++'],
-			correctAnswer: 'Python',
-		},
-		{
-			question: 'What is the most in-demand programming language?',
-			answers: ['JavaScript', 'Python', 'Java', 'C#'],
-			correctAnswer: 'JavaScript',
-		},
-		{
-			question: 'What is the most widely-used programming language?',
-			answers: ['Java', 'Python', 'C', 'C++'],
-			correctAnswer: 'Java',
-		},
-		{
-			question: 'What is the most versatile programming language?',
-			answers: ['JavaScript', 'Python', 'Java', 'Ruby'],
-			correctAnswer: 'JavaScript',
-		},
-		{
-			question: 'What is the most beginner-friendly programming language?',
-			answers: ['Python', 'JavaScript', 'Java', 'Ruby'],
-			correctAnswer: 'Python',
-		},
-		{
-			question: 'What is the most powerful programming language?',
-			answers: ['C++', 'Java', 'Python', 'JavaScript'],
-			correctAnswer: 'C++',
-		},
+	Q1: [
+		'What is the capital of Australia?',
+		'Which country has the best military in the world?',
+		'What is the largest country in the world?',
+		'Who is the current president of the United States?',
+		'What is the currency of Japan?',
+		'Where is the Great Barrier Reef located?',
 	],
-
-	// mathematics
-	[
-		{
-			question: 'What is the most important branch of mathematics?',
-			answers: ['Algebra', 'Calculus', 'Geometry', 'Statistics'],
-			correctAnswer: 'Calculus',
-		},
-		{
-			question: 'What is the most challenging branch of mathematics?',
-			answers: ['Algebra', 'Calculus', 'Geometry', 'Statistics'],
-			correctAnswer: 'Statistics',
-		},
-		{
-			question: 'What is the most useful branch of mathematics?',
-			answers: ['Algebra', 'Calculus', 'Geometry', 'Statistics'],
-			correctAnswer: 'Statistics',
-		},
-		{
-			question: 'What is the most beautiful branch of mathematics?',
-			answers: ['Algebra', 'Calculus', 'Geometry', 'Statistics'],
-			correctAnswer: 'Geometry',
-		},
-		{
-			question: 'What is the most practical branch of mathematics?',
-			answers: ['Algebra', 'Calculus', 'Geometry', 'Statistics'],
-			correctAnswer: 'Statistics',
-		},
-		{
-			question: 'What is the most interesting branch of mathematics?',
-			answers: ['Algebra', 'Calculus', 'Geometry', 'Statistics'],
-			correctAnswer: 'Calculus',
-		},
+	A1: {
+		0: ['Canberra', 'Sydney', 'Melbourne', 'Brisbane'],
+		1: ['United States', 'Russia', 'China', 'India'],
+		2: ['Russia', 'Canada', 'China', 'United States'],
+		3: ['Joe Biden', 'Donald Trump', 'Barack Obama', 'George Bush'],
+		4: ['Yen', 'Dollar', 'Euro', 'Pound'],
+		5: ['Australia', 'Philippines', 'Indonesia', 'Thailand'],
+	},
+	CA1: {
+		0: 'Canberra',
+		1: 'United States',
+		2: 'Russia',
+		3: 'Joe Biden',
+		4: 'Yen',
+		5: 'Australia',
+	},
+	// Programming and coding
+	Q2: [
+		'What is the full form of HTML?',
+		'Who is the father of C language?',
+		'When was Python released?',
+		'What is the full form of CSS?',
+		"How do you write 'Hello World' in Python?",
+		'What is the full form of SQL?',
+		'How do you write "Hello World" in C?',
 	],
-
-	// physics
-	[
-		{
-			question: 'What is the most fundamental law of physics?',
-			answers: [
-				"Newton's Laws of Motion",
-				'Law of Gravitation',
-				'Law of Conservation of Energy',
-				'Theory of Relativity',
-			],
-			correctAnswer: "Newton's Laws of Motion",
-		},
-		{
-			question: 'What is the most important concept in physics?',
-			answers: ['Force', 'Energy', 'Matter', 'Motion'],
-			correctAnswer: 'Energy',
-		},
-		{
-			question: 'What is the most fascinating phenomenon in physics?',
-			answers: ['Black Holes', 'Quantum Entanglement', 'Dark Matter', 'String Theory'],
-			correctAnswer: 'Black Holes',
-		},
-		{
-			question: 'What is the most intriguing theory in physics?',
-			answers: ['Quantum Mechanics', 'General Relativity', 'String Theory', 'Big Bang Theory'],
-			correctAnswer: 'Quantum Mechanics',
-		},
-		{
-			question: 'What is the most complex concept in physics?',
-			answers: ['Quantum Mechanics', 'General Relativity', 'String Theory', 'Big Bang Theory'],
-			correctAnswer: 'String Theory',
-		},
-		{
-			question: 'What is the most mysterious force in physics?',
-			answers: ['Gravity', 'Electromagnetism', 'Weak Nuclear Force', 'Strong Nuclear Force'],
-			correctAnswer: 'Gravity',
-		},
+	A2: {
+		0: [
+			'Hyper Text Markup Language',
+			'High Text Markup Language',
+			'Hyper Tabular Markup Language',
+			'Higher Text Markup Language',
+		],
+		1: ['Dennis Ritchie', 'Bjarne Stroustrup', 'James A. Gosling', 'Guido van Rossum'],
+		2: ['1991', '1989', '1995', '2000'],
+		3: [
+			'Cascading Style Sheet',
+			'Creative Style Sheet',
+			'Computer Style Sheet',
+			'Colorful Style Sheet',
+		],
+		4: [
+			'print("Hello World")',
+			'echo "Hello World"',
+			'cout << "Hello World"',
+			'printf("Hello World")',
+		],
+		5: [
+			'Structured Query Language',
+			'Standard Query Language',
+			'Simple Query Language',
+			'Sequential Query Language',
+		],
+		6: [
+			'printf("Hello World")',
+			'echo "Hello World"',
+			'cout << "Hello World"',
+			'print("Hello World")',
+		],
+	},
+	CA2: {
+		0: 'Hyper Text Markup Language',
+		1: 'Dennis Ritchie',
+		2: '1991',
+		3: 'Cascading Style Sheet',
+		4: 'print("Hello World")',
+		5: 'Structured Query Language',
+		6: 'printf("Hello World")',
+	},
+	// Mathematics
+	Q3: [
+		'What is the value of π (pi)?',
+		'How many sides does a hexagon have?',
+		'What is the value of 2^8?',
+		"who is known as the 'Prince of Mathematicians'?",
+		'which is the only even prime number?',
+		'How many degrees are in a circle?',
+		'Why is 7 the most feared number?',
 	],
-
-	// english
-	[
-		{
-			question: 'What is the most widely-spoken language in the world?',
-			answers: ['English', 'Mandarin', 'Spanish', 'Hindi'],
-			correctAnswer: 'English',
-		},
-		{
-			question: 'What is the most popular form of literature?',
-			answers: ['Poetry', 'Drama', 'Fiction', 'Non-Fiction'],
-			correctAnswer: 'Fiction',
-		},
-		{
-			question: 'What is the most famous work of literature?',
-			answers: ['Romeo and Juliet', 'Hamlet', 'Pride and Prejudice', 'To Kill a Mockingbird'],
-			correctAnswer: 'Romeo and Juliet',
-		},
-		{
-			question: 'What is the most influential writer in history?',
-			answers: ['Shakespeare', 'Dickens', 'Austen', 'Twain'],
-			correctAnswer: 'Shakespeare',
-		},
-		{
-			question: 'What is the most enduring genre of literature?',
-			answers: ['Poetry', 'Drama', 'Fiction', 'Non-Fiction'],
-			correctAnswer: 'Poetry',
-		},
-		{
-			question: 'What is the most powerful form of expression?',
-			answers: ['Poetry', 'Drama', 'Fiction', 'Non-Fiction'],
-			correctAnswer: 'Poetry',
-		},
+	A3: {
+		0: ['3.14159', '3.1415', '3.1416', '3.1417'],
+		1: ['6', '5', '7', '8'],
+		2: ['256', '512', '1024', '128'],
+		3: ['Carl Friedrich Gauss', 'Leonhard Euler', 'Isaac Newton', 'Pierre-Simon Laplace'],
+		4: ['2', '4', '6', '8'],
+		5: ['360', '180', '270', '90'],
+		6: [
+			'Because 7 8 9',
+			'Because 7 is a prime number',
+			'Because 7 is a lucky number',
+			'Because 7 is a magic number',
+		],
+	},
+	CA3: {
+		0: '3.14159',
+		1: '6',
+		2: '256',
+		3: 'Carl Friedrich Gauss',
+		4: '2',
+		5: '360',
+		6: 'Because 7 8 9',
+	},
+	// Physics
+	Q4: [
+		'What is the unit of force?',
+		'who is known as the father of Physics?',
+		'What is the speed of light?',
+		'how many laws of motion are there?',
+		'What is the unit of power?',
+		'What is the unit of electric current?',
+		'how many elements are there in the periodic table?',
+		'what is newton’s third law?',
+		'what is the unit of energy?',
+		'which law relates to the force between two bodies?',
 	],
-
-	// engineering
-	[
-		{
-			question: 'What is the most challenging field of engineering?',
-			answers: ['Aerospace', 'Biomedical', 'Civil', 'Electrical'],
-			correctAnswer: 'Aerospace',
-		},
-		{
-			question: 'What is the most innovative field of engineering?',
-			answers: ['Aerospace', 'Biomedical', 'Civil', 'Electrical'],
-			correctAnswer: 'Biomedical',
-		},
-		{
-			question: 'What is the most important field of engineering?',
-			answers: ['Aerospace', 'Biomedical', 'Civil', 'Electrical'],
-			correctAnswer: 'Civil',
-		},
-		{
-			question: 'What is the most promising field of engineering?',
-			answers: ['Aerospace', 'Biomedical', 'Civil', 'Electrical'],
-			correctAnswer: 'Electrical',
-		},
-		{
-			question: 'What is the most impactful field of engineering?',
-			answers: ['Aerospace', 'Biomedical', 'Civil', 'Electrical'],
-			correctAnswer: 'Civil',
-		},
-		{
-			question: 'What is the most exciting field of engineering?',
-			answers: ['Aerospace', 'Biomedical', 'Civil', 'Electrical'],
-			correctAnswer: 'Aerospace',
-		},
+	A4: {
+		0: ['Newton', 'Joule', 'Watt', 'Pascal'],
+		1: ['Isaac Newton', 'Galileo Galilei', 'Albert Einstein', 'Nikola Tesla'],
+		2: ['299,792,458 m/s', '300,000,000 m/s', '200,000,000 m/s', '400,000,000 m/s'],
+		3: ['3', '4', '2', '1'],
+		4: ['Watt', 'Joule', 'Newton', 'Pascal'],
+		5: ['Ampere', 'Volt', 'Ohm', 'Watt'],
+		6: ['118', '119', '120', '121'],
+		7: [
+			'For every action, there is an equal and opposite reaction',
+			'An object at rest stays at rest and an object in motion stays in motion',
+			'Force is equal to mass times acceleration',
+			'Energy cannot be created or destroyed',
+		],
+		8: ['Joule', 'Newton', 'Watt', 'Pascal'],
+		9: [
+			'Newton’s Law of Universal Gravitation',
+			'Newton’s Third Law of Motion',
+			'Newton’s First Law of Motion',
+			'Newton’s Second Law of Motion',
+		],
+	},
+	CA4: {
+		0: 'Newton',
+		1: 'Isaac Newton',
+		2: '299,792,458 m/s',
+		3: '3',
+		4: 'Watt',
+		5: 'Ampere',
+		6: '118',
+		7: 'For every action, there is an equal and opposite reaction',
+		8: 'Joule',
+		9: 'Newton’s Third Law of Motion',
+	},
+	// English
+	Q5: [
+		'What is the longest word in the English language?',
+		'What is the past tense of “run”?',
+		'who wrote the play “Romeo and Juliet”?',
+		'how many letters are there in the English alphabet?',
+		'what is the plural of “child”?',
+		'which one of these is an acronym?',
+		'what is a word that is spelled the same forwards and backwards?',
+		'which word is the odd one out?',
+		'who is the best male english poet?',
+		'what is the meaning of onomatopoeia?',
 	],
-
-	// science
-	[
-		{
-			question: 'What is the most important branch of science?',
-			answers: ['Biology', 'Chemistry', 'Physics', 'Earth Science'],
-			correctAnswer: 'Physics',
-		},
-		{
-			question: 'What is the most fascinating branch of science?',
-			answers: ['Astronomy', 'Genetics', 'Geology', 'Meteorology'],
-			correctAnswer: 'Astronomy',
-		},
-		{
-			question: 'What is the most complex branch of science?',
-			answers: ['Quantum Physics', 'Astrophysics', 'Nuclear Physics', 'Particle Physics'],
-			correctAnswer: 'Quantum Physics',
-		},
-		{
-			question: 'What is the most mysterious branch of science?',
-			answers: ['Cosmology', 'String Theory', 'Dark Matter', 'Black Holes'],
-			correctAnswer: 'String Theory',
-		},
-		{
-			question: 'What is the most exciting branch of science?',
-			answers: ['Space Exploration', 'Biotechnology', 'Nanotechnology', 'Robotics'],
-			correctAnswer: 'Space Exploration',
-		},
-		{
-			question: 'What is the most promising branch of science?',
-			answers: ['Genomics', 'Neuroscience', 'Artificial Intelligence', 'Quantum Computing'],
-			correctAnswer: 'Artificial Intelligence',
-		},
+	A5: {
+		0: [
+			'pneumonoultramicroscopicsilicovolcanoconiosis',
+			'antidisestablishmentarianism',
+			'floccinaucinihilipilification',
+			'pseudopseudohypoparathyroidism',
+		],
+		1: ['ran', 'runned', 'running', 'run'],
+		2: ['William Shakespeare', 'Charles Dickens', 'Jane Austen', 'Mark Twain'],
+		3: ['26', '24', '28', '30'],
+		4: ['children', 'childs', 'childes', 'child'],
+		5: ['NASA', 'USA', 'UK', 'UAE'],
+		6: ['Palindrome', 'Anagram', 'Simile', 'Metaphor'],
+		7: ['Apple', 'Banana', 'Orange', 'Mango'],
+		8: ['William Shakespeare', 'John Keats', 'Percy Bysshe Shelley', 'Lord Byron'],
+		9: [
+			'A word that imitates the sound it represents',
+			'A word that rhymes with another word',
+			'A word that is spelled the same forwards and backwards',
+			'A word that is spelled the same as another word',
+		],
+	},
+	CA5: {
+		0: 'pneumonoultramicroscopicsilicovolcanoconiosis',
+		1: 'ran',
+		2: 'William Shakespeare',
+		3: '26',
+		4: 'children',
+		5: 'NASA',
+		6: 'Palindrome',
+		7: 'Apple',
+		8: 'William Shakespeare',
+		9: 'A word that imitates the sound it represents',
+	},
+	// Engineering
+	Q6: [
+		'What is the full form of CPU?',
+		'how many bits are in a byte?',
+		'which one of these is a programming language?',
+		'what does a resistor do?',
+		'what are the units of voltage?',
+		'what is the full form of RAM?',
+		'which course deals with the design of aircraft and spacecraft?',
+		'what is the full form of USB?',
+		'which course deals with the design of buildings and structures?',
+		'what is ohm’s law?',
+		'which course deals with the design of computer hardware and software?',
 	],
-
-	// entertainment
-	[
-		{
-			question: 'What is the most popular form of entertainment?',
-			answers: ['Movies', 'Music', 'Television', 'Video Games'],
-			correctAnswer: 'Movies',
-		},
-		{
-			question: 'What is the most influential form of entertainment?',
-			answers: ['Movies', 'Music', 'Television', 'Video Games'],
-			correctAnswer: 'Television',
-		},
-		{
-			question: 'What is the most powerful form of entertainment?',
-			answers: ['Movies', 'Music', 'Television', 'Video Games'],
-			correctAnswer: 'Music',
-		},
-		{
-			question: 'What is the most enduring form of entertainment?',
-			answers: ['Movies', 'Music', 'Television', 'Video Games'],
-			correctAnswer: 'Movies',
-		},
-		{
-			question: 'What is the most exciting form of entertainment?',
-			answers: ['Movies', 'Music', 'Television', 'Video Games'],
-			correctAnswer: 'Video Games',
-		},
-		{
-			question: 'What is the most engaging form of entertainment?',
-			answers: ['Movies', 'Music', 'Television', 'Video Games'],
-			correctAnswer: 'Television',
-		},
+	A6: {
+		0: [
+			'Central Processing Unit',
+			'Computer Processing Unit',
+			'Central Processor Unit',
+			'Computer Processor Unit',
+		],
+		1: ['8', '16', '32', '64'],
+		2: ['Python', 'HTML', 'CSS', 'HTTP'],
+		3: [
+			'limits the flow of current',
+			'increases the flow of current',
+			'decreases the flow of current',
+			'blocks the flow of current',
+		],
+		4: ['Volts', 'Watts', 'Amps', 'Ohms'],
+		5: [
+			'Random Access Memory',
+			'Read Access Memory',
+			'Readily Accessible Memory',
+			'Randomly Accessible Memory',
+		],
+		6: [
+			'Aeronautical Engineering',
+			'Mechanical Engineering',
+			'Civil Engineering',
+			'Electrical Engineering',
+		],
+		7: ['Universal Serial Bus', 'Unified Serial Bus', 'Uniform Serial Bus', 'United Serial Bus'],
+		8: [
+			'Civil Engineering',
+			'Mechanical Engineering',
+			'Electrical Engineering',
+			'Computer Engineering',
+		],
+		9: ['V = IR', 'P = IV', 'V = I/R', 'P = I^2R'],
+		10: [
+			'Computer Engineering',
+			'Mechanical Engineering',
+			'Civil Engineering',
+			'Electrical Engineering',
+		],
+	},
+	CA6: {
+		0: 'Central Processing Unit',
+		1: '8',
+		2: 'Python',
+		3: 'limits the flow of current',
+		4: 'Volts',
+		5: 'Random Access Memory',
+		6: 'Aeronautical Engineering',
+		7: 'Universal Serial Bus',
+		8: 'Civil Engineering',
+		9: 'V = IR',
+		10: 'Computer Engineering',
+	},
+	// Science
+	Q7: [
+		'what is the study of living organisms called?',
+		'what is the study of the earth called?',
+		'what is the study of the universe called?',
+		'what is the study of the human body called',
+		'which one of these is a branch of biology?',
+		'which one of these is a branch of physics?',
+		'which one of these is a branch of chemistry?',
+		'which ones are positively charged particles?',
+		'which ones are negatively charged particles?',
+		'which ones are neutral particles?',
 	],
-
-	// movies
-	[
-		{
-			question: 'What is the most popular movie genre?',
-			answers: ['Action', 'Comedy', 'Drama', 'Science Fiction'],
-			correctAnswer: 'Action',
-		},
-		{
-			question: 'What is the most successful movie franchise?',
-			answers: ['Marvel Cinematic Universe', 'Star Wars', 'Harry Potter', 'James Bond'],
-			correctAnswer: 'Marvel Cinematic Universe',
-		},
-		{
-			question: 'What is the most iconic movie character?',
-			answers: ['James Bond', 'Indiana Jones', 'Rocky Balboa', 'Terminator'],
-			correctAnswer: 'James Bond',
-		},
-		{
-			question: 'What is the most memorable movie quote?',
-			answers: [
-				'"Here\'s looking at you, kid."',
-				'"May the Force be with you."',
-				'"You can\'t handle the truth!"',
-				'"I\'ll be back."',
-			],
-			correctAnswer: '"May the Force be with you."',
-		},
-		{
-			question: 'What is the most famous movie director?',
-			answers: ['Steven Spielberg', 'Martin Scorsese', 'Alfred Hitchcock', 'Quentin Tarantino'],
-			correctAnswer: 'Steven Spielberg',
-		},
-		{
-			question: 'What is the most prestigious movie award?',
-			answers: ['Oscar', 'Golden Globe', 'BAFTA', "Palme d'Or"],
-			correctAnswer: 'Oscar',
-		},
+	A7: {
+		0: ['Biology', 'Physics', 'Chemistry', 'Astronomy'],
+		1: ['Geology', 'Biology', 'Physics', 'Chemistry'],
+		2: ['Astronomy', 'Geology', 'Biology', 'Physics'],
+		3: ['Anatomy', 'Physiology', 'Zoology', 'Botany'],
+		4: ['Botany', 'Astronomy', 'Geology', 'Physics'],
+		5: ['Thermodynamics', 'Optics', 'Acoustics', 'Electromagnetism'],
+		6: ['Organic Chemistry', 'Inorganic Chemistry', 'Physical Chemistry', 'Biochemistry'],
+		7: ['Protons', 'Neutrons', 'Electrons', 'Positrons'],
+		8: ['Protons', 'Neutrons', 'Electrons', 'Positrons'],
+		9: ['Protons', 'Neutrons', 'Electrons', 'Positrons'],
+	},
+	CA7: {
+		0: 'Biology',
+		1: 'Geology',
+		2: 'Astronomy',
+		3: 'Anatomy',
+		4: 'Botany',
+		5: 'Optics',
+		6: 'Organic Chemistry',
+		7: 'Protons',
+		8: 'Electrons',
+		9: 'Neutrons',
+	},
+	// Entertainment
+	Q10: [
+		'who is the highest paid actor in the world?',
+		'which movie won the Oscar for Best Picture in 2020?',
+		'which movie name is Sylvester Stallone famous for?',
+		'which comic book character is known as the man of steel?',
+		'who sings the song “Shape of You”?',
+		'which record label is Drake signed to?',
+		'who sings the song “Blinding Lights”?',
+		'which genre of music does Nasty C sing?',
+		'how many members are in the band BTS?',
+		'which movie streaming platform is known as the “Netflix of China”?',
 	],
-];
+	A10: {
+		0: ['Dwayne Johnson', 'Robert Downey Jr.', 'Chris Hemsworth', 'Akshay Kumar'],
+		1: ['Parasite', '1917', 'Joker', 'The Shape of Water'],
+		2: ['Rocky', 'Rambo', 'Terminator', 'Die Hard'],
+		3: ['Superman', 'Batman', 'Spiderman', 'Ironman'],
+		4: ['Ed Sheeran', 'Justin Bieber', 'Shawn Mendes', 'The Weeknd'],
+		5: ['OVO Sound', 'Warner Music', 'Sony Music', 'Universal Music'],
+		6: ['The Weeknd', 'Drake', 'Kanye West', 'Justin Bieber'],
+		7: ['Hip Hop', 'Rap', 'Afrobeat', 'Pop'],
+		8: ['7', '5', '4', '8'],
+		9: ['iQiyi', 'Tencent Video', 'Youku', 'Baidu'],
+	},
+	CA10: {
+		0: 'Dwayne Johnson',
+		1: 'Parasite',
+		2: 'Rocky',
+		3: 'Superman',
+		4: 'Ed Sheeran',
+		5: 'OVO Sound',
+		6: 'The Weeknd',
+		7: 'Hip Hop',
+		8: '7',
+		9: 'iQiyi',
+	},
+	// Movies
+	Q12: [
+		'which movie won the Oscar for Best Picture in 2020?',
+		'which movie name is Sylvester Stallone famous for?',
+		'who is the highest paid actor in the world?',
+		'who plays the character Thor',
+		'who plays the character Ironman',
+		'Which character does Robert Downey Jr. play in the Marvel Cinematic Universe?',
+		'finish the movie title: “The Dark Knight ______”',
+		'who plays the character Black Widow',
+		'finish the movie title: “The Lord of the Rings: The _______ of the Ring”',
+		'finish the series title: “Harry Potter and the _______”',
+		'finish the series title: “beauty and the _________”',
+	],
+	A12: {
+		0: ['Parasite', '1917', 'Joker', 'The Shape of Water'],
+		1: ['Rocky', 'Rambo', 'Terminator', 'Die Hard'],
+		2: ['Dwayne Johnson', 'Robert Downey Jr.', 'Chris Hemsworth', 'Akshay Kumar'],
+		3: ['Chris Hemsworth', 'Robert Downey Jr.', 'Chris Evans', 'Mark Ruffalo'],
+		4: ['Robert Downey Jr.', 'Chris Hemsworth', 'Chris Evans', 'Mark Ruffalo'],
+		5: ['Ironman', 'Thor', 'Captain America', 'Hulk'],
+		6: ['Rises', 'Returns', 'Begins', 'Ends'],
+		7: ['Scarlett Johansson', 'Elizabeth Olsen', 'Gwyneth Paltrow', 'Natalie Portman'],
+		8: ['Fellowship', 'Two Towers', 'Return', 'King'],
+		9: ['Sorcerer’s Stone', 'Chamber of Secrets', 'Prisoner of Azkaban', 'Goblet of Fire'],
+		10: ['Beast', 'Prince', 'Monster', 'Creature'],
+	},
+	CA12: {
+		0: 'Parasite',
+		1: 'Rocky',
+		2: 'Dwayne Johnson',
+		3: 'Chris Hemsworth',
+		4: 'Robert Downey Jr.',
+		5: 'Ironman',
+		6: 'Rises',
+		7: 'Scarlett Johansson',
+		8: 'Fellowship',
+		9: 'Sorcerer’s Stone',
+		10: 'Beast',
+	},
+};
 
 const topics = [
 	{
@@ -377,30 +452,37 @@ const topics = [
 		image: 'physics.jpeg',
 	},
 	{
-		id: 5,
-		name: 'English',
-		image: 'english.webp',
-	},
-	{
-		id: 6,
-		name: 'Engineering',
-		image: 'engineering.webp',
-	},
-	{
-		id: 7,
-		name: 'Science',
-		image: 'science.jpeg',
-	},
-	{
 		id: 10,
 		name: 'Entertainment',
 		image: 'entertainment.jpg',
 	},
+];
+
+const nfts = [
 	{
-		id: 12,
-		name: 'Movies',
-		image: 'movies.jpeg',
+		name: 'fries',
+		image: './nft/fries.png',
+	},
+	{
+		name: 'cheeseburger',
+		image: './nft/cheeseburger.png',
+	},
+	{
+		name: 'hotdog',
+		image: './nft/hotdog.png',
+	},
+	{
+		name: 'ice-cream',
+		image: './nft/ice-cream.png',
+	},
+	{
+		name: 'milkshake',
+		image: './nft/milkshake.png',
+	},
+	{
+		name: 'pizza',
+		image: './nft/pizza.png',
 	},
 ];
 
-export { questions, topics };
+export { questions, topics, nfts };
