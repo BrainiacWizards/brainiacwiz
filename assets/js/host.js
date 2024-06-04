@@ -26,11 +26,11 @@ if (!gamePin || !topicID) {
 }
 
 async function setPlayerNames() {
-	playerNames = [];
-	playerNames = await getPlayerNames({
-		gamePin: gamePin,
-		topicID: topicID,
-	});
+	playerNames =
+		(await getPlayerNames({
+			gamePin: gamePin,
+			topicID: topicID,
+		})) || [];
 
 	playerNames = playerNames.filter((player) => player.username != 'dummy');
 	setQuizDetails(playerNames);

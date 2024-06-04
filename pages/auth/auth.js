@@ -54,7 +54,7 @@ function register() {
 	}
 
 	console.log('All fields are valid');
-	fbSignUp(email, password, userName, confirmPassword);
+	fbSignUp({ email, password, userName });
 }
 
 //login function

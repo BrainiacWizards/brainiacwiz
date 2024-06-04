@@ -23,6 +23,7 @@ const fbSignUp = async ({ email, password, userName }) => {
 			console.log('offline');
 			fbSignUp({ email, password, userName });
 		} else {
+			alert(error.code);
 			throw new Error(`could not create user\n\n ${error}`);
 		}
 	}
@@ -63,6 +64,7 @@ async function googleLogin() {
 		const errorMessage = error.message;
 		const email = error.email;
 		const credential = fb.GoogleAuthProvider.credentialFromError(error);
+		alert(errorCode);
 		throw new Error(
 			`could not login user!\n\n ${errorCode}\n\n ${errorMessage}\n\n ${email}\n\n ${credential}`,
 		);
@@ -102,7 +104,7 @@ const fbLogin = async ({ email, password }) => {
 		if (error.message.includes('offline')) {
 			fbLogin({ email, password });
 		} else {
-			alert('Invalid email or password');
+			alert(error.code);
 			throw new Error(`could not login user\n\n ${error}`);
 		}
 	}
@@ -142,6 +144,8 @@ async function githubLogin() {
 		const errorMessage = error.message;
 		const email = error.email;
 		const credential = fb.GithubAuthProvider.credentialFromError(error);
+		alert(errorCode);
+
 		throw new Error(
 			`could not login user!\n\n ${errorCode}\n\n ${errorMessage}\n\n ${email}\n\n ${credential}`,
 		);
