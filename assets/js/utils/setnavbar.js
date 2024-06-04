@@ -15,21 +15,6 @@ class Navbar {
 	checkInternetConnection() {
 		const offlineMessage = document.createElement('div');
 		offlineMessage.classList.add('offline-div');
-		offlineMessage.style.cssText = `
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100vh;
-				background-color: #000;
-				color: #fff;
-				display: none;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-				font-size: 2rem;
-				text-align: center;
-			`;
 		document.body.appendChild(offlineMessage);
 
 		window.addEventListener('offline', () => {

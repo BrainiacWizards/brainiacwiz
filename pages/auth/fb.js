@@ -20,7 +20,8 @@ const fbSignUp = async ({ email, password, userName }) => {
 		window.location.href = './login.html';
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			fbSignUp(email, password, userName);
+			console.log('offline');
+			fbSignUp({ email, password, userName });
 		} else {
 			throw new Error(`could not create user\n\n ${error}`);
 		}
@@ -58,10 +59,14 @@ const fbLogin = async ({ email, password }) => {
 		window.location.href = '../../index.html?login=success&username=' + username;
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			fbLogin(email, password);
+			fbLogin({ email, password });
 		} else {
-			alert(error.message);
-			throw new Error(`could not login user\n\n ${error}`);
+			if (error.message.includes('There is no user record corresponding to this identifier')) {
+				alert('Invalid email or password');
+			} else {
+				alert('Invalid email or password');
+				throw new Error(`could not login user\n\n ${error}`);
+			}
 		}
 	}
 };
@@ -156,8 +161,8 @@ async function getPlayerNames({ gamePin, topicID }) {
 	}
 
 	if (!playerNamesSnapshot) {
-
-	return playerNamesSnapshot.val();
+		return playerNamesSnapshot.val();
+	}
 }
 
 async function setPlayers({ gamePin, topicID, playerNames }) {

@@ -17,12 +17,12 @@ import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-
 const firebaseConfig = {
 	apiKey: 'AIzaSyCeL875YW20dLfoeNxfR-EU4TeIPqkWc1Q',
 	authDomain: 'brainiacwiz.firebaseapp.com',
+	databaseURL: 'https://brainiacwiz-default-rtdb.firebaseio.com',
 	projectId: 'brainiacwiz',
 	storageBucket: 'brainiacwiz.appspot.com',
 	messagingSenderId: '267854852662',
 	appId: '1:267854852662:web:029b05fe4aa7abd0eb5e97',
 	measurementId: 'G-SZ59WLGCXV',
-	databaseURL: 'https://brainiacwiz-default-rtdb.firebaseio.com/',
 };
 
 // Initialize Firebase

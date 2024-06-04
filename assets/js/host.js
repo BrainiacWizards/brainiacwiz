@@ -1,7 +1,8 @@
 import { endGame, getPlayerNames, startGame } from '../../pages/auth/fb.js';
 import { checkLoginStatus } from './main.js';
 import { topics } from './utils/questions.js';
-checkLoginStatus({ path: '../../auth/' });
+import { run } from './utils/openai.mjs';
+// checkLoginStatus({ path: '../../auth/' });
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');
 const playerCount = document.getElementById('player-count');
@@ -77,8 +78,9 @@ startBtn?.addEventListener('click', async () => {
 cancelBtn?.addEventListener('click', async () => {
 	const confirmEnd = confirm('Are you sure you want to end the game?');
 	if (!confirmEnd) {
-	await endGame({ gamePin, topicID });
-	alert('Game has ended');
+		await endGame({ gamePin, topicID });
+		alert('Game has ended');
+	}
 });
 
 setQuizDetails();
