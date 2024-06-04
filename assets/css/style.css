@@ -376,6 +376,8 @@ footer {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
 	color: var(--font-color);
 	text-decoration: none;
 }
@@ -432,7 +434,7 @@ footer {
 	background-color: transparent;
 	margin: 0;
 	padding: 50px 0;
-	min-height: 80vh;
+	min-height: 85vh;
 }
 
 .no-background {
