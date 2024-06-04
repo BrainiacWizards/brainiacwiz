@@ -244,6 +244,8 @@ async function getPlayerNames({ gamePin, topicID }) {
 	if (!playerNamesSnapshot) {
 		return playerNamesSnapshot.val();
 	}
+	
+  return [{ username: 'No players yet', score: 0 }];
 }
 
 async function setPlayers({ gamePin, topicID, playerNames }) {
