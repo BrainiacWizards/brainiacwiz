@@ -116,7 +116,7 @@ async function githubLogin() {
 		const result = await fb.signInWithPopup(fb.auth, fb.githubProvider);
 		const credential = fb.GithubAuthProvider.credentialFromResult(result);
 		const token = credential.accessToken;
-		const user = result.user;
+		const {user} = result;
 
 		// get user data
 		const userRef = fb.ref(fb.database, `users/${user.uid}`);
