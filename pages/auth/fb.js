@@ -36,7 +36,7 @@ async function googleLogin() {
 		const result = await fb.signInWithPopup(fb.auth, fb.provider);
 		const credential = fb.GoogleAuthProvider.credentialFromResult(result);
 		const token = credential.accessToken;
-		const user = result.user;
+		const {user} = result;
 
 		// get user data
 		const userRef = fb.ref(fb.database, `users/${user.uid}`);
