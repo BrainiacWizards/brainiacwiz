@@ -8,8 +8,7 @@ class Navbar {
 		this.injectTrackingData();
 		this.initDOMElements();
 		this.injectCopyToClipboard();
-		this.url =
-			'https://api.studio.thegraph.com/query/72281/celo-subgraph-box/version/latest';
+		this.url = 'https://api.studio.thegraph.com/query/72281/celo-subgraph-box/version/latest';
 		this.sentryUrl = ``;
 	}
 
@@ -144,20 +143,10 @@ class Navbar {
 			this.transactionBtn.classList.remove('btn-active');
 		});
 		this.collectionBtn?.addEventListener('click', () =>
-			toggleDisplay(
-				this.walletContent,
-				this.txContent,
-				this.collectionBtn,
-				this.transactionBtn,
-			),
+			toggleDisplay(this.walletContent, this.txContent, this.collectionBtn, this.transactionBtn),
 		);
 		this.transactionBtn?.addEventListener('click', () =>
-			toggleDisplay(
-				this.txContent,
-				this.walletContent,
-				this.transactionBtn,
-				this.collectionBtn,
-			),
+			toggleDisplay(this.txContent, this.walletContent, this.transactionBtn, this.collectionBtn),
 		);
 	}
 

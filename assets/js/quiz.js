@@ -1,8 +1,8 @@
 import { createScoreBoard } from '../../pages/auth/fb.js';
-import { checkLoginStatus } from './main.js';
 import { run } from './utils/openai.mjs';
 import { topics } from './utils/questions.js';
-// checkLoginStatus({ path: '../auth/' });
+import { checkLoginStatus } from './main.js';
+checkLoginStatus({ path: '../auth/' });
 
 let questionsAI = [];
 
@@ -161,7 +161,7 @@ await createScoreBoard({
 async function setCheckScore(question) {
 	quizOptBtns.forEach((btn) => {
 		btn.addEventListener('click', async () => {
-			const {correctAnswer} = questionsAI[question];
+			const { correctAnswer } = questionsAI[question];
 			if (btn.textContent.includes(correctAnswer)) {
 				score++;
 				// set button color to green

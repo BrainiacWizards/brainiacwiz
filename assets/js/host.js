@@ -1,8 +1,7 @@
 import { endGame, getPlayerNames, startGame } from '../../pages/auth/fb.js';
 import { checkLoginStatus } from './main.js';
 import { topics } from './utils/questions.js';
-import { run } from './utils/openai.mjs';
-// checkLoginStatus({ path: '../../auth/' });
+checkLoginStatus({ path: '../../auth/' });
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');
 const playerCount = document.getElementById('player-count');
