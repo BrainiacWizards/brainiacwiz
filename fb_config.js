@@ -3,6 +3,11 @@ import {
 	getAuth,
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
+	GoogleAuthProvider,
+	signInWithPopup,
+	signInWithRedirect,
+	getRedirectResult,
+	GithubAuthProvider,
 } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
 import { getDatabase } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
 import {
@@ -28,6 +33,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+const githubProvider = new GithubAuthProvider();
 const database = getDatabase(app);
 const perf = getPerformance(app);
 const analytics = getAnalytics(app);
@@ -42,6 +49,13 @@ export {
 	ref,
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
+	provider,
+	signInWithPopup,
+	signInWithRedirect,
+	getRedirectResult,
+	GoogleAuthProvider,
+	GithubAuthProvider,
+	githubProvider,
 	perf,
 	analytics,
 };

@@ -28,6 +28,47 @@ const fbSignUp = async ({ email, password, userName }) => {
 	}
 };
 
+// google login
+async function googleLogin() {
+	try {
+		fb.auth.useDeviceLanguage();
+		const result = await fb.signInWithPopup(fb.auth, fb.provider);
+		const credential = fb.GoogleAuthProvider.credentialFromResult(result);
+		const token = credential.accessToken;
+		const user = result.user;
+
+		// get user data
+		const userRef = fb.ref(fb.database, `users/${user.uid}`);
+		const userData = {
+			email: user.email,
+			username: user.displayName,
+			lastLogin: Date.now(),
+		};
+
+		await fb.set(userRef, userData);
+		alert('Login successful!, Enjoy');
+		// set session storage for login object
+		const loginObject = {
+			loggedIn: true,
+			username: user.displayName,
+			lastLogin: Date.now(),
+		};
+
+		sessionStorage.setItem('login', JSON.stringify(loginObject));
+		// redirect to the home page
+		const { origin } = window.location;
+		window.location.href = `${origin}/index.html?login=success&username=${user.displayName}`;
+	} catch (error) {
+		const errorCode = error.code;
+		const errorMessage = error.message;
+		const email = error.email;
+		const credential = fb.GoogleAuthProvider.credentialFromError(error);
+		throw new Error(
+			`could not login user!\n\n ${errorCode}\n\n ${errorMessage}\n\n ${email}\n\n ${credential}`,
+		);
+	}
+}
+
 const fbLogin = async ({ email, password }) => {
 	try {
 		const userCredential = await fb.signInWithEmailAndPassword(fb.auth, email, password);
@@ -61,15 +102,51 @@ const fbLogin = async ({ email, password }) => {
 		if (error.message.includes('offline')) {
 			fbLogin({ email, password });
 		} else {
-			if (error.message.includes('There is no user record corresponding to this identifier')) {
-				alert('Invalid email or password');
-			} else {
-				alert('Invalid email or password');
-				throw new Error(`could not login user\n\n ${error}`);
-			}
+			alert('Invalid email or password');
+			throw new Error(`could not login user\n\n ${error}`);
 		}
 	}
 };
+
+// github login
+async function githubLogin() {
+	try {
+		const result = await fb.signInWithPopup(fb.auth, fb.githubProvider);
+		const credential = fb.GithubAuthProvider.credentialFromResult(result);
+		const token = credential.accessToken;
+		const user = result.user;
+
+		// get user data
+		const userRef = fb.ref(fb.database, `users/${user.uid}`);
+		const userData = {
+			email: user.email,
+			username: user.displayName,
+			lastLogin: Date.now(),
+		};
+
+		await fb.set(userRef, userData);
+		alert('Login successful!, Enjoy');
+		// set session storage for login object
+		const loginObject = {
+			loggedIn: true,
+			username: user.displayName,
+			lastLogin: Date.now(),
+		};
+
+		sessionStorage.setItem('login', JSON.stringify(loginObject));
+		// redirect to the home page
+		const { origin } = window.location;
+		window.location.href = `${origin}/index.html?login=success&username=${user.displayName}`;
+	} catch (error) {
+		const errorCode = error.code;
+		const errorMessage = error.message;
+		const email = error.email;
+		const credential = fb.GithubAuthProvider.credentialFromError(error);
+		throw new Error(
+			`could not login user!\n\n ${errorCode}\n\n ${errorMessage}\n\n ${email}\n\n ${credential}`,
+		);
+	}
+}
 
 async function createGamePinTable({ gamePin, topicID }) {
 	try {
@@ -376,4 +453,6 @@ export {
 	startGame,
 	endGame,
 	getGameStatus,
+	googleLogin,
+	githubLogin,
 };

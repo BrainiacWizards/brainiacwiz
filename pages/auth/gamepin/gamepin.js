@@ -8,19 +8,26 @@ const nextB = document.getElementById('nextB');
 const inputGamePin = document.getElementById('input-gamepin-form');
 const gamePin = document.getElementById('gamepin');
 const error = document.getElementById('error-message');
+const logUserInput = document.getElementById('log-user');
 
 if (generateBtn) {
 	generateBtn.addEventListener('click', generatePIN);
 }
 
 if (window.location.pathname.includes('gamepinUI')) {
-	// checkLoginStatus({ path: '../../' });
+	checkLoginStatus({ path: '../../' });
 } else {
-	// checkLoginStatus({ path: '../' });
+	checkLoginStatus({ path: '../' });
 }
 
 let pin = '',
 	generated = false;
+
+if (logUserInput) {
+	// set	gamePin value to the login	object
+	const loginObject = sessionStorage.getItem('login');
+	logUserInput.value = loginObject ? JSON.parse(loginObject).username : '';
+}
 
 function generatePIN() {
 	if (!generated) {
@@ -65,48 +72,49 @@ if (nextB) {
 }
 
 async function gamePinFormHandling() {
-	if (inputGamePin) {
-		inputGamePin.addEventListener('submit', async (e) => {
-			e.preventDefault();
+	inputGamePin?.addEventListener('submit', async (e) => {
+		e.preventDefault();
+		const check = await validateInputs(gamePin);
 
-			const check = await validateInputs(gamePin);
+		if (!check) {
+			console.log('check failed');
+			return;
+		}
 
-			if (!check) {
-				console.log('check failed');
-				return;
-			}
-
-			setLogin();
-
-			// redirect to lobby page
-			window.location.href = `../../../play/lobby.html?gamePin=${gamePin.value}&topic=${topic}`;
-		});
-	}
+		setLogin();
+		// redirect to lobby page
+		window.location.href = `../../../play/lobby.html?gamePin=${gamePin.value}&topic=${topic}`;
+	});
 }
 
 gamePinFormHandling();
 
 async function validateInputs(gamePin) {
 	let check = false;
+	error.textContent = 'Checking	Game PIN...';
+	error.style.color = 'blue';
 	// check if game pin exists in the database
 	const data = await queryGamePin({ gamePin: gamePin.value, topicID: topic });
 
 	if (data) {
 		error.style.display = 'block';
-		error.innerHTML = 'Game PIN exists';
+		error.textContent = 'Game PIN exists';
+		error.style.color = 'green';
 		console.log('Game PIN exists');
 		check = true;
 	} else {
 		error.style.display = 'block';
-		error.innerHTML = 'Game PIN does not exist';
+		error.textContent = 'Game PIN does not exist';
+		error.style.color = 'red';
 		console.log('Game PIN does not exist');
 		check = false;
 	}
 
 	gamePin = gamePin.value;
 	if (gamePin.length !== 7) {
-		error.innerHTML = 'Invalid Game PIN';
+		error.textContent = 'Invalid Game PIN';
 		error.style.display = 'block';
+		error.style.color = 'red';
 		check = false;
 		console.log('setting check to false length:', gamePin.length);
 	}

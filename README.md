@@ -77,7 +77,7 @@ Welcome to the BraniacWiz Quiz Game, a decentralized application built on the Et
 
 ### - **Creating a Quiz**:
 
-- use this [link](https://devpost-hackathon.pages.dev/) to access the game from your browser.
+- use this [link](https://brainiacwiz.web.app) to access the game from your browser.
 - pick a topic that you would like to play
 - Choose a role of a `host` and generate a game pin, and click next to host the quiz
 - You will see a list of players as they join.
@@ -85,7 +85,7 @@ Welcome to the BraniacWiz Quiz Game, a decentralized application built on the Et
 
 ### - **Taking/Joining a Quiz**:
 
-- Browse available quizzes [here](https://devpost-hackathon.pages.dev/), then click the topic hosted by the host,
+- Browse available quizzes [here](https://brainiacwiz.web.app), then click the topic hosted by the host,
 - click on `join` then enter the game pin sent to you by the host.
 - Once started, pick the correct answers, you will have about 10 sec to answer each question
 - at the end of the quiz, a scoreboard comparing you to other players will show.
@@ -118,5 +118,5 @@ Enjoy a decentralized quiz experience like never before! Feel free to contribute
 
 ## ⚠️ Issues reporting and Feature request
 
-- use this [link](https://github.com/CPUT-DEVS/devpost-hackathon/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=) to report an issue to the game
-- use this [link](https://github.com/CPUT-DEVS/devpost-hackathon/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=) to request a feature to the game
+- use this [link](https://github.com/BrainiacWizards/brainiacwiz/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=) to report an issue to the game
+- use this [link](https://github.com/BrainiacWizards/brainiacwiz/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=) to request a feature to the game
