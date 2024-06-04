@@ -722,6 +722,43 @@ footer .navbar ul li a:hover {
 	font-size: 90px;
 }
 
+.social-login {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: -10px;
+	gap: 10px;
+	width: 100%;
+}
+
+.social-login .social-icons {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	width: 100%;
+}
+
+.recover {
+	padding-left: 15px;
+	width: 100%;
+}
+
+.social-login button {
+	background-color: transparent;
+	color: var(--prim-color);
+	border: none;
+	border-radius: 10px;
+	padding: 5px !important;
+	box-shadow: 2px 2px 5px 0 var(--shadow-color);
+	min-width: 40px;
+	min-height: 40px;
+	max-width: 40px;
+	margin: 0;
+}
+
 /* responsive css */
 @media (max-width: 1800px) {
 	.container {

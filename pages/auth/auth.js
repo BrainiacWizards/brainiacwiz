@@ -1,4 +1,4 @@
-import { fbLogin, fbSignUp } from './fb.js';
+import { fbLogin, fbSignUp, githubLogin, googleLogin } from './fb.js';
 
 const emailDOM = document.getElementById('email');
 const userNameDOM = document.getElementById('username');
@@ -6,20 +6,26 @@ const passwordDOM = document.getElementById('password');
 const confirmPasswordDOM = document.getElementById('confirmPassword');
 const signUpForm = document.getElementById('signup-form');
 const loginForm = document.getElementById('login-form');
+const googleLoginBtn = document.getElementById('google-login-btn');
+const githubLoginBtn = document.getElementById('github-login-btn');
 
-if (signUpForm) {
-	signUpForm.addEventListener('submit', (event) => {
-		event.preventDefault();
-		register();
-	});
-}
+signUpForm?.addEventListener('submit', (event) => {
+	event.preventDefault();
+	register();
+});
 
-if (loginForm) {
-	loginForm.addEventListener('submit', (event) => {
-		event.preventDefault();
-		login(emailDOM.value, passwordDOM.value);
-	});
-}
+loginForm?.addEventListener('submit', (event) => {
+	event.preventDefault();
+	login(emailDOM.value, passwordDOM.value);
+});
+
+googleLoginBtn?.addEventListener('click', () => {
+	googleLogin();
+});
+
+githubLoginBtn?.addEventListener('click', () => {
+	githubLogin();
+});
 
 function register() {
 	//get all input fields
@@ -62,7 +68,7 @@ function login(email, password) {
 	}
 
 	console.log('All fields are valid');
-	fbLogin(email, password);
+	fbLogin({ email, password });
 }
 
 //validate email
