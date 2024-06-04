@@ -36,7 +36,7 @@ async function googleLogin() {
 		const result = await fb.signInWithPopup(fb.auth, fb.provider);
 		const credential = fb.GoogleAuthProvider.credentialFromResult(result);
 		const token = credential.accessToken;
-		const {user} = result;
+		const { user } = result;
 
 		// get user data
 		const userRef = fb.ref(fb.database, `users/${user.uid}`);
@@ -62,7 +62,7 @@ async function googleLogin() {
 	} catch (error) {
 		const errorCode = error.code;
 		const errorMessage = error.message;
-		const {email} = error;
+		const { email } = error;
 		const credential = fb.GoogleAuthProvider.credentialFromError(error);
 		alert(errorCode);
 		throw new Error(
@@ -116,7 +116,7 @@ async function githubLogin() {
 		const result = await fb.signInWithPopup(fb.auth, fb.githubProvider);
 		const credential = fb.GithubAuthProvider.credentialFromResult(result);
 		const token = credential.accessToken;
-		const {user} = result;
+		const { user } = result;
 
 		// get user data
 		const userRef = fb.ref(fb.database, `users/${user.uid}`);
@@ -142,7 +142,7 @@ async function githubLogin() {
 	} catch (error) {
 		const errorCode = error.code;
 		const errorMessage = error.message;
-		const {email} = error;
+		const { email } = error;
 		const credential = fb.GithubAuthProvider.credentialFromError(error);
 		alert(errorCode);
 
@@ -241,11 +241,7 @@ async function getPlayerNames({ gamePin, topicID }) {
 		}
 	}
 
-	if (!playerNamesSnapshot) {
-		return playerNamesSnapshot.val();
-	}
-	
-  return [{ username: 'No players yet', score: 0 }];
+	return playerNamesSnapshot.val();
 }
 
 async function setPlayers({ gamePin, topicID, playerNames }) {

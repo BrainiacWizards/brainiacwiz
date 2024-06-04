@@ -1,7 +1,5 @@
 import { createScoreBoard, getGameStatus } from '../../pages/auth/fb.js';
 import { topics } from './utils/questions.js';
-import { checkLoginStatus } from './main.js';
-checkLoginStatus({ path: '../auth/' });
 
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');

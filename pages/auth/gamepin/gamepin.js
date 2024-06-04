@@ -127,12 +127,11 @@ async function validateInputs(gamePin) {
 function setLogin() {
 	const usernameValue = document.getElementById('log-user');
 	if (usernameValue) {
-		const loginObject = {
-			username: usernameValue.value,
-			lastLogin: new Date().toLocaleString(),
-			gamePin: gamePin.value,
-		};
-
+		const login = sessionStorage.getItem('login');
+		const loginObject = login ? JSON.parse(login) : {};
+		loginObject.username = usernameValue.value;
+		loginObject.lastLogin = new Date().toLocaleDateString();
+		loginObject.gamePin = gamePin.value;
 		sessionStorage.setItem('login', JSON.stringify(loginObject));
 
 		// set usernameValue input field to readonly
