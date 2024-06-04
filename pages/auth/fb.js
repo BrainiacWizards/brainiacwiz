@@ -142,7 +142,7 @@ async function githubLogin() {
 	} catch (error) {
 		const errorCode = error.code;
 		const errorMessage = error.message;
-		const email = error.email;
+		const {email} = error;
 		const credential = fb.GithubAuthProvider.credentialFromError(error);
 		alert(errorCode);
 
