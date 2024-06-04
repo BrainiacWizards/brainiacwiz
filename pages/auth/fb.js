@@ -62,7 +62,7 @@ async function googleLogin() {
 	} catch (error) {
 		const errorCode = error.code;
 		const errorMessage = error.message;
-		const email = error.email;
+		const {email} = error;
 		const credential = fb.GoogleAuthProvider.credentialFromError(error);
 		alert(errorCode);
 		throw new Error(
