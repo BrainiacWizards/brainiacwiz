@@ -61,7 +61,7 @@ async function metaConnection(walletAddress) {
 			await window.ethereum.request({ method: 'eth_requestAccounts' });
 			console.log('metamask connected');
 		} catch (error) {
-			alert('You need to connect to MetaMask for this dApp to work!');
+			alert('You need to connect to MetaMask for this dApp to work!!');
 			window.location.href = '../../../pages/walletAuth/walletDirect.html';
 			throw new Error('User denied account access, metamask not connected');
 		}
