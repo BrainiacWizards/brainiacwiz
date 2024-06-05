@@ -6,10 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "type": "module",
+  "author": "BrainiacWizards",
   "license": "ISC",
   "dependencies": {
     "@celo/contractkit": "^8.0.0",
+    "@google/generative-ai": "^0.11.3",
     "@openzeppelin/contracts": "^2.3.0",
     "@sentry/browser": "^7.109.0",
     "babel-polyfill": "6.26.0",
@@ -23,10 +25,15 @@
     "chai-as-promised": "7.1.1",
     "chai-bignumber": "3.0.0",
     "dotenv": "^16.4.5",
+    "esm": "^3.2.25",
     "firebase": "^10.11.0",
     "fs": "^0.0.1-security",
+<<<<<<< sam
     "https": "^1.0.0",
     "node-fetch": "^3.3.2",
+=======
+    "openai": "^4.47.1",
+>>>>>>> beta
     "truffle": "5.0.5",
     "truffle-flattener": "^1.4.2",
     "web3": "^1.10.4"

@@ -6,17 +6,11 @@
 		<title>BrainiacWiz | Create Account</title>
 		<link rel="stylesheet" href="styleAuth.css" />
 		<link rel="stylesheet" href="../../assets/css/style.css" />
-		<link
-			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-			rel="stylesheet"
-		/>
+		<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../assets/fontawesome-6.5.2/css/all.css" />
-		<link rel="stylesheet" href="./assets/fontawesome-6.5.2/css/all.css" />
+		<link rel="stylesheet" href="../../assets/fontawesome-6.5.2/css/all.css" />
 		<!-- Google tag (gtag.js) -->
-		<script
-			async
-			src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"
-		></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag() {
@@ -73,20 +67,13 @@
 
 					<div class="form-group">
 						<label for="confirmPassword">Confirm Password:</label>
-						<input
-							type="password"
-							id="confirmPassword"
-							name="confirmPassword"
-							required
-						/>
+						<input type="password" id="confirmPassword" name="confirmPassword" required />
 					</div>
 
 					<div class="form-group">
 						<div class="terms">
 							<input type="checkbox" id="terms" name="terms" required />
-							<label for="terms"
-								>I agree to these <a href="#">Terms & Conditions </a>
-							</label>
+							<label for="terms">I agree to these <a href="#">Terms & Conditions </a> </label>
 						</div>
 					</div>
 
@@ -94,6 +81,22 @@
 						<button type="submit">Sign Up</button>
 					</div>
 				</form>
+
+				<!-- social login opiton -->
+				<div class="social-login">
+					<p>Or log in with</p>
+					<div class="social-icons">
+						<button class="social-login-btn" id="google-login-btn">
+							<i class="fab fa-google"></i>
+						</button>
+						<button class="social-login-btn" id="facebook-login-btn">
+							<i class="fab fa-facebook"></i>
+						</button>
+						<button class="social-login-btn" id="github-login-btn">
+							<i class="fab fa-github"></i>
+						</button>
+					</div>
+				</div>
 
 				<div class="login">
 					<p>Already have an account? <a href="login.html">Login</a></p>

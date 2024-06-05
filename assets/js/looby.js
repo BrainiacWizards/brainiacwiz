@@ -1,5 +1,5 @@
 import { createScoreBoard, getGameStatus } from '../../pages/auth/fb.js';
-import { questions, topics } from './utils/questions.js';
+import { topics } from './utils/questions.js';
 
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');
@@ -29,8 +29,7 @@ async function setQuizDetails() {
 		name: 'Unknown',
 	};
 	title.innerHTML = 'Title: ' + topic.name;
-	questionsCount.innerHTML = 'Questions: ';
-	questionsCount.innerHTML += questions[`Q${topicID}`].length;
+	questionsCount.innerHTML = 'Questions: 6';
 
 	await createScoreBoard({
 		gamePin: gamePin,

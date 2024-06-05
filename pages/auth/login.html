@@ -6,16 +6,10 @@
 		<title>BrainiacWiz | Login</title>
 		<link rel="stylesheet" href="styleAuth.css" />
 		<link rel="stylesheet" href="../../assets/css/style.css" />
-		<link
-			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-			rel="stylesheet"
-		/>
+		<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../assets/fontawesome-6.5.2/css/all.css" />
 		<!-- Google tag (gtag.js) -->
-		<script
-			async
-			src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"
-		></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag() {
@@ -74,6 +68,22 @@
 						<button type="submit">Log in</button>
 					</div>
 				</form>
+
+				<!-- social login opiton -->
+				<div class="social-login">
+					<p>Or log in with</p>
+					<div class="social-icons">
+						<button class="social-login-btn" id="google-login-btn">
+							<i class="fab fa-google"></i>
+						</button>
+						<button class="social-login-btn" id="facebook-login-btn">
+							<i class="fab fa-facebook"></i>
+						</button>
+						<button class="social-login-btn" id="github-login-btn">
+							<i class="fab fa-github"></i>
+						</button>
+					</div>
+				</div>
 
 				<div class="login">
 					<p>No account? <a href="./auth.html">Sign Up</a></p>

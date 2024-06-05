@@ -8,29 +8,13 @@ class Navbar {
 		this.injectTrackingData();
 		this.initDOMElements();
 		this.injectCopyToClipboard();
-		this.url =
-			'https://api.studio.thegraph.com/query/72281/celo-subgraph-box/version/latest';
+		this.url = 'https://api.studio.thegraph.com/query/72281/celo-subgraph-box/version/latest';
 		this.sentryUrl = ``;
 	}
 
 	checkInternetConnection() {
 		const offlineMessage = document.createElement('div');
 		offlineMessage.classList.add('offline-div');
-		offlineMessage.style.cssText = `
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100vh;
-				background-color: #000;
-				color: #fff;
-				display: none;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-				font-size: 2rem;
-				text-align: center;
-			`;
 		document.body.appendChild(offlineMessage);
 
 		window.addEventListener('offline', () => {
@@ -144,20 +128,10 @@ class Navbar {
 			this.transactionBtn.classList.remove('btn-active');
 		});
 		this.collectionBtn?.addEventListener('click', () =>
-			toggleDisplay(
-				this.walletContent,
-				this.txContent,
-				this.collectionBtn,
-				this.transactionBtn,
-			),
+			toggleDisplay(this.walletContent, this.txContent, this.collectionBtn, this.transactionBtn),
 		);
 		this.transactionBtn?.addEventListener('click', () =>
-			toggleDisplay(
-				this.txContent,
-				this.walletContent,
-				this.transactionBtn,
-				this.collectionBtn,
-			),
+			toggleDisplay(this.txContent, this.walletContent, this.transactionBtn, this.collectionBtn),
 		);
 	}
 

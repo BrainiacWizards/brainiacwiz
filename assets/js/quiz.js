@@ -1,7 +1,10 @@
 import { createScoreBoard } from '../../pages/auth/fb.js';
+import { run } from './utils/openai.mjs';
+import { topics } from './utils/questions.js';
 import { checkLoginStatus } from './main.js';
-import { questions, topics } from './utils/questions.js';
-// checkLoginStatus({ path: '../auth/' });
+checkLoginStatus({ path: '../auth/' });
+
+let questionsAI = [];
 
 const quizOptBtns = document.querySelectorAll('.quiz-opt-btn');
 const quizTimer = document.querySelector('.quiz-timer > #timer');
@@ -16,7 +19,7 @@ let T, Q, A, CA;
 let question = 0;
 const colors = ['var(--prim-color)', 'var(--sec-color)', 'var(--tert-color)', 'var(--quart-color)'];
 
-const setQuizDetails = () => {
+const setQuizDetails = async () => {
 	if (!topicID) {
 		alert('Please select a topic to continue');
 		window.location.href = '../../index.html';
@@ -35,6 +38,8 @@ const setQuizDetails = () => {
 	Q = `Q${T}`;
 	A = `A${T}`;
 	CA = `CA${T}`;
+
+	return topic;
 };
 
 const setTranslateAnimation = ({ element, translation }) => {
@@ -46,19 +51,19 @@ const setQuestions = (question) => {
 	const translation = window.innerWidth;
 	setTranslateAnimation({ element: quizBody, translation: -translation });
 
-	if (question >= questions[Q].length) {
+	if (question >= questionsAI.length - 1) {
 		moveToPostQuiz();
 		return;
 	}
-	questions[A][question] = questions[A][question].sort(() => Math.random() - 0.5);
 
-	quizQuestion.innerHTML = questions[Q][question];
+	quizQuestion.innerHTML = questionsAI[question].question;
 
 	quizOptBtns.forEach((btn, index) => {
-		btn.innerHTML = questions[A][question][index];
+		btn.innerHTML = questionsAI[question].answers[index];
 	});
 
 	setQuizBtns();
+	setCheckScore(question);
 
 	setTimeout(() => {
 		setTranslateAnimation({ element: quizBody, translation: 0 });
@@ -90,18 +95,14 @@ function setQuizBtns() {
 	});
 }
 
-setQuizDetails();
-setQuizBtns();
-setQuestions(0);
-
 const setQuizTImer = ({ duration = 30 }) => {
 	quizTimer.style.color = 'white';
 	let time = duration;
 
 	let intervalId = setInterval(() => {
 		if (time <= 0) {
-			if (question >= questions[Q].length - 1) {
-				moveToPostQuiz(intervalId);
+			if (question >= questionsAI.length - 1) {
+				return;
 			}
 
 			question++;
@@ -114,17 +115,17 @@ const setQuizTImer = ({ duration = 30 }) => {
 			});
 		}
 
-		time--;
-		let min = Math.floor(time / 60);
-		let sec = time % 60;
-		quizTimer.innerHTML = `${min}:${sec}`;
+		if (quizTimer.style.width < '50%') {
+			quizTimer.style.backgroundColor = 'white';
+		} else {
+			quizTimer.style.backgroundColor = 'var(--quart-color)';
+		}
 
 		// change the with of the timer with respect to the time
 		quizTimer.style.width = `${(time / duration) * 100}%`;
+		time--;
 	}, 200);
 };
-
-setQuizTImer({ duration: 25 });
 
 function moveToPostQuiz(intervalId) {
 	clearInterval(intervalId); // stop the interval
@@ -132,50 +133,61 @@ function moveToPostQuiz(intervalId) {
 	window.location.href = `./post-quiz.html?gamePin=${gamePin}&topic=${topicID}&retry=${retry}`;
 }
 
+// set quiz details [1st function to be called]
+setQuizDetails().then(async (topic) => {
+	questionsAI = await run({ topic: topic.name, topicID: topic.id });
+
+	setQuestions(0);
+	setQuizTImer({ duration: 40 });
+});
+
 // check answers and set score
 const loginObj = JSON.parse(sessionStorage.getItem('login'));
 const username = loginObj.username;
-const userScore = 0;
+let score = 0;
 let sessionUser = {
 	username: username,
-	score: userScore,
+	score: score,
 };
 sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
-
-let score = 0;
-const scoreData = await createScoreBoard({
+// initial score
+await createScoreBoard({
 	gamePin: gamePin,
 	username: username,
 	score: sessionUser.score,
 	topicID: topicID,
 });
 
-quizOptBtns.forEach((btn) => {
-	btn.addEventListener('click', async () => {
-		const correctAnswer = questions[CA][question];
-		if (btn.innerHTML === correctAnswer) {
-			score++;
-			// set button color to green
-			btn.style.backgroundColor = 'green';
-			// disable button
-			btn.disabled = true;
-		} else {
-			// set button color to red
-			btn.style.backgroundColor = 'red';
-		}
+async function setCheckScore(question) {
+	quizOptBtns.forEach((btn) => {
+		btn.addEventListener('click', async () => {
+			const { correctAnswer } = questionsAI[question];
+			if (btn.textContent.includes(correctAnswer)) {
+				score++;
+				// set button color to green
+				btn.style.backgroundColor = 'green';
+				// disable all button
+				quizOptBtns.forEach((btn) => {
+					btn.disabled = true;
+				});
+			} else {
+				// set button color to red
+				btn.style.backgroundColor = 'red';
+			}
 
-		// set a object with score and username
-		sessionUser.score = score;
-		sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
+			// set a object with score and username
+			sessionUser.score = score;
+			sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
 
-		sessionUser = JSON.parse(sessionStorage.getItem('sessionUser'));
-		console.log(sessionUser);
+			sessionUser = JSON.parse(sessionStorage.getItem('sessionUser'));
+			console.log(sessionUser);
 
-		await createScoreBoard({
-			gamePin: gamePin,
-			username: username,
-			score: sessionUser.score,
-			topicID: topicID,
+			await createScoreBoard({
+				gamePin: gamePin,
+				username: sessionUser.username,
+				score: sessionUser.score,
+				topicID: topicID,
+			});
 		});
 	});
-});
+}

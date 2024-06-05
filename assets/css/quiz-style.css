@@ -34,7 +34,7 @@
 	padding: 0 10px;
 	max-height: 12px;
 	min-height: 12px;
-	margin-left: -5px;
+	margin-left: 5px;
 }
 
 .quiz-container .quiz-header .quiz-timer span:hover {
@@ -65,7 +65,7 @@
 	width: 90%;
 	text-align: center;
 	justify-content: center;
-	font-size: 30px;
+	font-size: 25px;
 	z-index: 0;
 }
 

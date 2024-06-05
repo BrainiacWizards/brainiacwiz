@@ -1,7 +1,9 @@
 import { createScoreBoard, overallRanking } from '../../pages/auth/fb.js';
 import { fundAccount } from './utils/metamask.js';
-import { topics, questions } from './utils/questions.js';
-// checkLoginStatus({ path: '../auth/' });
+import { topics } from './utils/questions.js';
+import { checkLoginStatus } from './main.js';
+checkLoginStatus({ path: '../auth/' });
+
 const searchParams = new URLSearchParams(window.location.search);
 const topicID = searchParams.get('topic') || undefined;
 const gamePin = searchParams.get('gamePin') || undefined;
@@ -28,11 +30,8 @@ const setQuizDetails = (playerNames) => {
 	}
 
 	const topic = topics.find((topic) => topic.id === parseInt(topicID));
-	const question = questions[`Q${topic.id}`];
-
 	title.innerHTML = 'Title: ' + topic.name;
-	questionCount.innerHTML = 'Questions: ';
-	questionCount.innerHTML += question.length;
+	questionCount.innerHTML = 'Questions: 6';
 	playerCount.innerHTML = `Players: ${playerNames.length}`;
 };
 
@@ -158,13 +157,11 @@ async function setOverallRanking({ username, score, retry, gamePin }) {
 	const currentTime = new Date().getTime();
 
 	// set overall ranking
-	const ranking = await overallRanking({
+	return await overallRanking({
 		username,
 		points: score,
 		time: currentTime,
 		retry: retry,
 		gamePin: gamePin,
 	});
-
-	return ranking;
 }
