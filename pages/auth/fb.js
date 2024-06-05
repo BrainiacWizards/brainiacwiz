@@ -20,12 +20,56 @@ const fbSignUp = async ({ email, password, userName }) => {
 		window.location.href = './login.html';
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			fbSignUp(email, password, userName);
+			console.log('offline');
+			fbSignUp({ email, password, userName });
 		} else {
+			alert(error.code);
 			throw new Error(`could not create user\n\n ${error}`);
 		}
 	}
 };
+
+// google login
+async function googleLogin() {
+	try {
+		fb.auth.useDeviceLanguage();
+		const result = await fb.signInWithPopup(fb.auth, fb.provider);
+		const credential = fb.GoogleAuthProvider.credentialFromResult(result);
+		const token = credential.accessToken;
+		const { user } = result;
+
+		// get user data
+		const userRef = fb.ref(fb.database, `users/${user.uid}`);
+		const userData = {
+			email: user.email,
+			username: user.displayName,
+			lastLogin: Date.now(),
+		};
+
+		await fb.set(userRef, userData);
+		alert('Login successful!, Enjoy');
+		// set session storage for login object
+		const loginObject = {
+			loggedIn: true,
+			username: user.displayName,
+			lastLogin: Date.now(),
+		};
+
+		sessionStorage.setItem('login', JSON.stringify(loginObject));
+		// redirect to the home page
+		const { origin } = window.location;
+		window.location.href = `${origin}/index.html?login=success&username=${user.displayName}`;
+	} catch (error) {
+		const errorCode = error.code;
+		const errorMessage = error.message;
+		const { email } = error;
+		const credential = fb.GoogleAuthProvider.credentialFromError(error);
+		alert(errorCode);
+		throw new Error(
+			`could not login user!\n\n ${errorCode}\n\n ${errorMessage}\n\n ${email}\n\n ${credential}`,
+		);
+	}
+}
 
 const fbLogin = async ({ email, password }) => {
 	try {
@@ -58,13 +102,55 @@ const fbLogin = async ({ email, password }) => {
 		window.location.href = '../../index.html?login=success&username=' + username;
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			fbLogin(email, password);
+			fbLogin({ email, password });
 		} else {
-			alert(error.message);
+			alert(error.code);
 			throw new Error(`could not login user\n\n ${error}`);
 		}
 	}
 };
+
+// github login
+async function githubLogin() {
+	try {
+		const result = await fb.signInWithPopup(fb.auth, fb.githubProvider);
+		const credential = fb.GithubAuthProvider.credentialFromResult(result);
+		const token = credential.accessToken;
+		const { user } = result;
+
+		// get user data
+		const userRef = fb.ref(fb.database, `users/${user.uid}`);
+		const userData = {
+			email: user.email,
+			username: user.displayName,
+			lastLogin: Date.now(),
+		};
+
+		await fb.set(userRef, userData);
+		alert('Login successful!, Enjoy');
+		// set session storage for login object
+		const loginObject = {
+			loggedIn: true,
+			username: user.displayName,
+			lastLogin: Date.now(),
+		};
+
+		sessionStorage.setItem('login', JSON.stringify(loginObject));
+		// redirect to the home page
+		const { origin } = window.location;
+		window.location.href = `${origin}/index.html?login=success&username=${user.displayName}`;
+	} catch (error) {
+		const errorCode = error.code;
+		const errorMessage = error.message;
+		const { email } = error;
+		const credential = fb.GithubAuthProvider.credentialFromError(error);
+		alert(errorCode);
+
+		throw new Error(
+			`could not login user!\n\n ${errorCode}\n\n ${errorMessage}\n\n ${email}\n\n ${credential}`,
+		);
+	}
+}
 
 async function createGamePinTable({ gamePin, topicID }) {
 	try {
@@ -154,8 +240,6 @@ async function getPlayerNames({ gamePin, topicID }) {
 			console.error(`could not get player names\n\n ${error}`);
 		}
 	}
-
-	if (!playerNamesSnapshot) return [{ username: 'No players yet' }];
 
 	return playerNamesSnapshot.val();
 }
@@ -371,4 +455,6 @@ export {
 	startGame,
 	endGame,
 	getGameStatus,
+	googleLogin,
+	githubLogin,
 };

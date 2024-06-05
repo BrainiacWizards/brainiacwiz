@@ -1,3 +1,5 @@
+// import { query } from "../api/api.js";
+
 const state = {
 	account: '0x0',
 	token: null,
@@ -18,8 +20,11 @@ async function loadContract(web3) {
 
 	if (!network) {
 		alert(
-			'Contract not deployed to the current network. Please select another network with Metamask.',
+			//'Contract not deployed to the current network. Please select another network with Metamask.',
+			'Almost there!!......Add Celo Testnet to your Metamask and also add free tokens.'
 		);
+		//window.location.href = 'https://faucet.celo.org/alfajores';
+		window.open('https://faucet.celo.org/alfajores', '_blank');
 		return;
 	}
 
@@ -69,7 +74,8 @@ async function metaConnection(walletAddress) {
 		}
 	} else {
 		alert('No Web3 Provider detected. Please install Metamask.');
-		throw new Error('No Web3 Provider detected. Please install Metamask.');
+		window.location.href = '../../../pages/walletAuth/walletDirect.html';
+		throw new Error('No Web3 Provider detected. Please install Metamask.');	
 	}
 }
 
@@ -79,6 +85,8 @@ async function fundAccount() {
 	const nft = nfts[randomIndex];
 	const { origin } = window.location;
 	const nftLink = `${origin}/assets/nft/${nft}`;
+	// const nftLink = await query({ "inputs": "nft programming" })
+	console.log('nftLink', nftLink);
 
 	await state.token.methods
 		.mint(state.account, nftLink)

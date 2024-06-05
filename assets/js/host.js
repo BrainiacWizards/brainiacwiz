@@ -1,11 +1,7 @@
-import {
-	createGamePinTable,
-	endGame,
-	getPlayerNames,
-	startGame,
-} from '../../pages/auth/fb.js';
+import { endGame, getPlayerNames, startGame } from '../../pages/auth/fb.js';
 import { checkLoginStatus } from './main.js';
-import { topics, questions } from './utils/questions.js';
+import { topics } from './utils/questions.js';
+import { run } from './utils/openai.mjs';
 // checkLoginStatus({ path: '../../auth/' });
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');
@@ -15,12 +11,7 @@ const players = document.querySelector('.players');
 const startBtn = document.getElementById('host-start-btn');
 const cancelBtn = document.getElementById('host-cancel-btn');
 
-const colors = [
-	'var(--prim-color)',
-	'var(--sec-color)',
-	'var(--tert-color)',
-	'var(--quart-color)',
-];
+const colors = ['var(--prim-color)', 'var(--sec-color)', 'var(--tert-color)', 'var(--quart-color)'];
 
 // check gamePin in url
 const urlParams = new URLSearchParams(window.location.search);
@@ -35,11 +26,11 @@ if (!gamePin || !topicID) {
 }
 
 async function setPlayerNames() {
-	playerNames = [];
-	playerNames = await getPlayerNames({
-		gamePin: gamePin,
-		topicID: topicID,
-	});
+	playerNames =
+		(await getPlayerNames({
+			gamePin: gamePin,
+			topicID: topicID,
+		})) || [];
 
 	playerNames = playerNames.filter((player) => player.username != 'dummy');
 	setQuizDetails(playerNames);
@@ -50,10 +41,13 @@ async function setPlayerNames() {
 	}
 
 	playerNames.forEach((playerName) => {
-		const player = `<li class="player">${playerName.username || '?'} (${
-			playerName.score
-		})</li>`;
-		players.innerHTML += player;
+		const player = document.createElement('li');
+		player.classList.add('player');
+		player.textContent = `${playerName.username || '?'} (${playerName.score})`;
+		const color = colors[playerNames.indexOf(playerName) % 4];
+		player.style.backgroundColor = color;
+		// console.log(player);
+		players.appendChild(player);
 	});
 
 	window.requestAnimationFrame(setPlayerNames);
@@ -66,11 +60,9 @@ function setQuizDetails(playerNames = []) {
 	} else {
 		codeView.innerHTML = '?';
 	}
-
 	const topic = topics.find((topic) => topic.id === parseInt(topicID));
 	title.innerHTML = 'Title: ' + topic.name;
-	questionsCount.innerHTML = 'Questions: ';
-	questionsCount.innerHTML += questions[`Q${topicID}`].length;
+	questionsCount.innerHTML = 'Questions: 6';
 	playerCount.innerHTML = 'Players: ' + playerNames.length;
 }
 
@@ -85,9 +77,10 @@ startBtn?.addEventListener('click', async () => {
 
 cancelBtn?.addEventListener('click', async () => {
 	const confirmEnd = confirm('Are you sure you want to end the game?');
-	if (!confirmEnd) return;
-	await endGame({ gamePin, topicID });
-	alert('Game has ended');
+	if (!confirmEnd) {
+		await endGame({ gamePin, topicID });
+		alert('Game has ended');
+	}
 });
 
 setQuizDetails();
