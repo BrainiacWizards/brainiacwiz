@@ -25,21 +25,26 @@ body {
     width: 50%;
     margin: 5% auto;
     background: #535c91;
+    animation: slideLeft 2s ease;
 }
+
 
 .about h1 {
     font-size: 2.5rem;
     margin-bottom: 20px;
+    color: whitesmoke;
 }
 
 .about h2 {
     font-size: 2.5rem;
     margin-bottom: 20px;
+    color: aliceblue;
 }
 
 .about p {
     font-size: 1.2rem;
     margin-bottom: 20px;
+    color: rgb(207, 193, 193);
 }
 
 .bts {
@@ -60,7 +65,8 @@ body {
     height: 100%;
     background: #1b1a55;
     border: 2px solid #1b1a55;
-    border-radius: 8px;
+    border-radius: 20px;
+    margin-left: 15px;
     font-size: 20px;
     color: #535c91;
     text-decoration: none;
@@ -68,9 +74,25 @@ body {
     letter-spacing: 1px;
     z-index: 1;
     overflow: hidden;
+    box-shadow: 0 0 15px 15px rgba(0, 0, 0, 0.1);
 }
 
 .bts a:hover {
     color: #bfc4dd;
     background-color: #1b1a55;
+}
+.about img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+}
+
+@keyframes slideLeft {
+    100% {
+        transform: translateY(0);
+    }
+    0% {
+        transform: translateY(-100%);
+    }
 }
