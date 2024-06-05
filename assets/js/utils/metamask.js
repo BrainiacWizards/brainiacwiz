@@ -81,8 +81,8 @@ async function fundAccount() {
 	const randomIndex = Math.floor(Math.random() * nfts.length);
 	const nft = nfts[randomIndex];
 	const { origin } = window.location;
-	// const nftLink = `${origin}/assets/nft/${nft}`;
-	const nftLink = await query({ "inputs": "nft programming" })
+	const nftLink = `${origin}/assets/nft/${nft}`;
+	// const nftLink = await query({ "inputs": "nft programming" })
 	console.log('nftLink', nftLink);
 
 	await state.token.methods
