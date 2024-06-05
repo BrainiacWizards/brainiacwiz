@@ -23,8 +23,8 @@ async function host(url){
 		body: JSON.stringify({ image: url, key: "YOUR_IMGBB_API_KEY" }),
 	});
 
-	const result = await response.json();
-	return result;
+	return await response.json();
+
 }
 
 // export { query };
