@@ -42,5 +42,8 @@
 		"Git Bash": {
 			"source": "Git Bash"
 		}
-	}
+	},
+	"githubPullRequests.ignoredPullRequestBranches": [
+		"main"
+	]
 }
