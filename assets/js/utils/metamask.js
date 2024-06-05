@@ -20,8 +20,11 @@ async function loadContract(web3) {
 
 	if (!network) {
 		alert(
-			'Contract not deployed to the current network. Please select another network with Metamask.',
+			//'Contract not deployed to the current network. Please select another network with Metamask.',
+			'Almost there!!......Add Celo Testnet to your Metamask and also add free tokens.'
 		);
+		//window.location.href = 'https://faucet.celo.org/alfajores';
+		window.open('https://faucet.celo.org/alfajores', '_blank');
 		return;
 	}
 
