@@ -62,7 +62,7 @@ async function metaConnection(walletAddress) {
 			console.log('metamask connected');
 		} catch (error) {
 			alert('You need to connect to MetaMask for this dApp to work!!');
-			window.location.href = '../../../pages/walletAuth/walletDirect.html';
+			window.location.href = '../../../pages/walletAuth/walletDirect.html'; // about the game
 			throw new Error('User denied account access, metamask not connected');
 		}
 
