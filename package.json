@@ -28,7 +28,12 @@
     "esm": "^3.2.25",
     "firebase": "^10.11.0",
     "fs": "^0.0.1-security",
+<<<<<<< sam
+    "https": "^1.0.0",
+    "node-fetch": "^3.3.2",
+=======
     "openai": "^4.47.1",
+>>>>>>> beta
     "truffle": "5.0.5",
     "truffle-flattener": "^1.4.2",
     "web3": "^1.10.4"
