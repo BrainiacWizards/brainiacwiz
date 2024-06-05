@@ -1,5 +1,16 @@
 import { topics } from './utils/questions.js';
 
+// check login status from login object in session storage
+const signInBtn = document.getElementById('sign-in-btn');
+
+const loginObj = sessionStorage.getItem('login');
+if (loginObj) {
+	const loginObject = JSON.parse(loginObj);
+	if (loginObject.loggedIn) {
+		signInBtn.style.display = 'none';
+	}
+}
+
 const exploreBtn = document.getElementById('explore-btn');
 const landingOverlay = document.querySelector('.landing-overlay');
 const quizContainer = document.querySelector('.container');
