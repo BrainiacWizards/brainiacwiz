@@ -26,11 +26,11 @@ if (!gamePin || !topicID) {
 }
 
 async function setPlayerNames() {
-	playerNames = [];
-	playerNames = await getPlayerNames({
-		gamePin: gamePin,
-		topicID: topicID,
-	});
+	playerNames =
+		(await getPlayerNames({
+			gamePin: gamePin,
+			topicID: topicID,
+		})) || [];
 
 	playerNames = playerNames.filter((player) => player.username != 'dummy');
 	setQuizDetails(playerNames);
@@ -78,8 +78,9 @@ startBtn?.addEventListener('click', async () => {
 cancelBtn?.addEventListener('click', async () => {
 	const confirmEnd = confirm('Are you sure you want to end the game?');
 	if (!confirmEnd) {
-	await endGame({ gamePin, topicID });
-	alert('Game has ended');
+		await endGame({ gamePin, topicID });
+		alert('Game has ended');
+	}
 });
 
 setQuizDetails();

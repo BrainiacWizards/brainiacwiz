@@ -174,6 +174,40 @@ const questions = [
 		},
 	],
 
+	// entertainment
+	[
+		{
+			question: 'What is the most popular form of entertainment?',
+			answers: ['Movies', 'Music', 'Television', 'Video Games'],
+			correctAnswer: 'Movies',
+		},
+		{
+			question: 'What is the most influential form of entertainment?',
+			answers: ['Movies', 'Music', 'Television', 'Video Games'],
+			correctAnswer: 'Television',
+		},
+		{
+			question: 'What is the most powerful form of entertainment?',
+			answers: ['Movies', 'Music', 'Television', 'Video Games'],
+			correctAnswer: 'Music',
+		},
+		{
+			question: 'What is the most enduring form of entertainment?',
+			answers: ['Movies', 'Music', 'Television', 'Video Games'],
+			correctAnswer: 'Movies',
+		},
+		{
+			question: 'What is the most exciting form of entertainment?',
+			answers: ['Movies', 'Music', 'Television', 'Video Games'],
+			correctAnswer: 'Video Games',
+		},
+		{
+			question: 'What is the most engaging form of entertainment?',
+			answers: ['Movies', 'Music', 'Television', 'Video Games'],
+			correctAnswer: 'Television',
+		},
+	],
+
 	// english
 	[
 		{
@@ -276,40 +310,6 @@ const questions = [
 		},
 	],
 
-	// entertainment
-	[
-		{
-			question: 'What is the most popular form of entertainment?',
-			answers: ['Movies', 'Music', 'Television', 'Video Games'],
-			correctAnswer: 'Movies',
-		},
-		{
-			question: 'What is the most influential form of entertainment?',
-			answers: ['Movies', 'Music', 'Television', 'Video Games'],
-			correctAnswer: 'Television',
-		},
-		{
-			question: 'What is the most powerful form of entertainment?',
-			answers: ['Movies', 'Music', 'Television', 'Video Games'],
-			correctAnswer: 'Music',
-		},
-		{
-			question: 'What is the most enduring form of entertainment?',
-			answers: ['Movies', 'Music', 'Television', 'Video Games'],
-			correctAnswer: 'Movies',
-		},
-		{
-			question: 'What is the most exciting form of entertainment?',
-			answers: ['Movies', 'Music', 'Television', 'Video Games'],
-			correctAnswer: 'Video Games',
-		},
-		{
-			question: 'What is the most engaging form of entertainment?',
-			answers: ['Movies', 'Music', 'Television', 'Video Games'],
-			correctAnswer: 'Television',
-		},
-	],
-
 	// movies
 	[
 		{
@@ -378,28 +378,8 @@ const topics = [
 	},
 	{
 		id: 5,
-		name: 'English',
-		image: 'english.webp',
-	},
-	{
-		id: 6,
-		name: 'Engineering',
-		image: 'engineering.webp',
-	},
-	{
-		id: 7,
-		name: 'Science',
-		image: 'science.jpeg',
-	},
-	{
-		id: 10,
 		name: 'Entertainment',
 		image: 'entertainment.jpg',
-	},
-	{
-		id: 12,
-		name: 'Movies',
-		image: 'movies.jpeg',
 	},
 ];
 

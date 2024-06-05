@@ -1,5 +1,7 @@
 import { getOverallRanking } from '../../pages/auth/fb.js';
 const rankingTableBody = document.querySelector('#ranking-body');
+import { checkLoginStatus } from './main.js';
+checkLoginStatus({ path: '../auth/' });
 
 // get the overall ranking
 async function getRanking() {
