@@ -30,6 +30,8 @@ async function host(url){
 
 // export { query };
 
-query({ text: "Hello, I am a software developer" }).then((url) => {
+query({ text: "Fetch latest user data" }).then((data) => {
+	console.log(data);
+});
 	console.log(url);
 });
