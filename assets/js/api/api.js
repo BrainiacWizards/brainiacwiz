@@ -12,9 +12,8 @@ async function query(data) {
 	const url = URL.createObjectURL(result);
 
 	// host the link online and return the hostel url
-	const hostUrl = await host(url);
+	return await host(url);
 
-	return hostUrl;
 }
 
 async function host(url){
