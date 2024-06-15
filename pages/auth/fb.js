@@ -1,6 +1,6 @@
 import * as fb from '../../fb_config.js';
 
-const fbSignUp = async ({ email, password, userName }) => {
+const fbSignUp = async ({ email, password, userName, errorMessage }) => {
 	try {
 		const userCredential = await fb.createUserWithEmailAndPassword(fb.auth, email, password);
 		const { user } = userCredential;
@@ -14,7 +14,8 @@ const fbSignUp = async ({ email, password, userName }) => {
 
 		await fb.set(userRef, userData);
 		console.log('Data written successfully');
-		alert('Registration successful!, Please login to continue');
+		errorMessage.textContent = 'Account created!';
+		errorMessage.style.color = 'green';
 
 		// redirect to the login page
 		window.location.href = './login.html';
@@ -23,19 +24,17 @@ const fbSignUp = async ({ email, password, userName }) => {
 			console.log('offline');
 			fbSignUp({ email, password, userName });
 		} else {
-			alert(error.code);
+			errorMessage.textContent = error.code.split('/')[1];
 			throw new Error(`could not create user\n\n ${error}`);
 		}
 	}
 };
 
 // google login
-async function googleLogin() {
+async function googleLogin(errorMessage) {
 	try {
 		fb.auth.useDeviceLanguage();
 		const result = await fb.signInWithPopup(fb.auth, fb.provider);
-		const credential = fb.GoogleAuthProvider.credentialFromResult(result);
-		const token = credential.accessToken;
 		const { user } = result;
 
 		// get user data
@@ -47,7 +46,7 @@ async function googleLogin() {
 		};
 
 		await fb.set(userRef, userData);
-		alert('Login successful!, Enjoy');
+		errorMessage.textContent = 'Login successful!';
 		// set session storage for login object
 		const loginObject = {
 			loggedIn: true,
@@ -60,18 +59,18 @@ async function googleLogin() {
 		const { origin } = window.location;
 		window.location.href = `${origin}/index.html?login=success&username=${user.displayName}`;
 	} catch (error) {
-		const errorCode = error.code;
+		const errorCode = error.code.split('/')[1];
 		const errorMessage = error.message;
 		const { email } = error;
 		const credential = fb.GoogleAuthProvider.credentialFromError(error);
-		alert(errorCode);
+		errorMessage.textContent = errorCode;
 		throw new Error(
 			`could not login user!\n\n ${errorCode}\n\n ${errorMessage}\n\n ${email}\n\n ${credential}`,
 		);
 	}
 }
 
-const fbLogin = async ({ email, password }) => {
+const fbLogin = async ({ email, password, errorMessage }) => {
 	try {
 		const userCredential = await fb.signInWithEmailAndPassword(fb.auth, email, password);
 		const { user } = userCredential;
@@ -83,7 +82,8 @@ const fbLogin = async ({ email, password }) => {
 		const userRef = fb.ref(fb.database, `users/${user.uid}`);
 
 		await fb.update(userRef, userData);
-		alert('Login successful!, Enjoy');
+		errorMessage.textContent = 'Login successful!';
+		errorMessage.style.color = 'green';
 
 		// query for username
 		const usernameRef = fb.ref(fb.database, `users/${user.uid}/username`);
@@ -104,8 +104,8 @@ const fbLogin = async ({ email, password }) => {
 		if (error.message.includes('offline')) {
 			fbLogin({ email, password });
 		} else {
-			alert(error.code);
-			throw new Error(`could not login user\n\n ${error}`);
+			errorMessage.textContent = error.code.split('/')[1];
+			// throw new Error(`could not login user\n\n ${error}`);
 		}
 	}
 };
@@ -140,7 +140,7 @@ async function githubLogin() {
 		const { origin } = window.location;
 		window.location.href = `${origin}/index.html?login=success&username=${user.displayName}`;
 	} catch (error) {
-		const errorCode = error.code;
+		const errorCode = error.code.split('/')[1];
 		const errorMessage = error.message;
 		const { email } = error;
 		const credential = fb.GithubAuthProvider.credentialFromError(error);

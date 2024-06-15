@@ -48,59 +48,66 @@
 		</header>
 		<main class="body-content">
 			<div class="wrapper">
-				<h1>Sign Up</h1>
 				<form action="#" id="signup-form">
-					<div class="form-group">
-						<label for="username">Username:</label>
-						<input type="text" id="username" name="username" required />
-					</div>
+					<div class="left-group">
+						<h1>Sign Up</h1>
+						<div class="form-group">
+							<p class="error-message"></p>
+						</div>
+						<div class="form-group">
+							<label for="username">Username:</label>
+							<input type="text" id="username" name="username" required />
+						</div>
 
-					<div class="form-group">
-						<label for="email">Email:</label>
-						<input type="email" id="email" name="email" required />
-					</div>
+						<div class="form-group">
+							<label for="email">Email:</label>
+							<input type="email" id="email" name="email" required />
+						</div>
 
-					<div class="form-group">
-						<label for="password">Password:</label>
-						<input type="password" id="password" name="password" required />
-					</div>
+						<div class="form-group">
+							<label for="password">Password:</label>
+							<input type="password" id="password" name="password" required />
+						</div>
 
-					<div class="form-group">
-						<label for="confirmPassword">Confirm Password:</label>
-						<input type="password" id="confirmPassword" name="confirmPassword" required />
-					</div>
+						<div class="form-group">
+							<label for="confirmPassword">Confirm Password:</label>
+							<input type="password" id="confirmPassword" name="confirmPassword" required />
+						</div>
 
-					<div class="form-group">
-						<div class="terms">
-							<input type="checkbox" id="terms" name="terms" required />
-							<label for="terms">I agree to these <a href="#">Terms & Conditions </a> </label>
+						<div class="form-group">
+							<div class="terms">
+								<input type="checkbox" id="terms" name="terms" required />
+								<label for="terms">I agree to these <a href="#">Terms & Conditions </a> </label>
+							</div>
 						</div>
 					</div>
 
-					<div class="form-group">
-						<button type="submit">Sign Up</button>
+					<div class="right-group">
+						<div class="form-group">
+							<button type="submit">Sign Up</button>
+						</div>
+
+						<!-- social login option -->
+						<div class="social-login">
+							<p>Or log in with</p>
+							<div class="social-icons">
+								<button class="social-login-btn" id="google-login-btn">
+									<i class="fab fa-google"></i>
+								</button>
+								<button class="social-login-btn" id="facebook-login-btn">
+									<i class="fab fa-facebook"></i>
+								</button>
+								<button class="social-login-btn" id="github-login-btn">
+									<i class="fab fa-github"></i>
+								</button>
+							</div>
+						</div>
+
+						<div class="login">
+							<p>Already have an account? <a href="login.html">Login</a></p>
+						</div>
 					</div>
 				</form>
-
-				<!-- social login opiton -->
-				<div class="social-login">
-					<p>Or log in with</p>
-					<div class="social-icons">
-						<button class="social-login-btn" id="google-login-btn">
-							<i class="fab fa-google"></i>
-						</button>
-						<button class="social-login-btn" id="facebook-login-btn">
-							<i class="fab fa-facebook"></i>
-						</button>
-						<button class="social-login-btn" id="github-login-btn">
-							<i class="fab fa-github"></i>
-						</button>
-					</div>
-				</div>
-
-				<div class="login">
-					<p>Already have an account? <a href="login.html">Login</a></p>
-				</div>
 			</div>
 		</main>
 		<footer>

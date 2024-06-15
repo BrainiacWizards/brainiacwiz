@@ -60,6 +60,20 @@ button:active {
 	margin: 0 5px;
 }
 
+.error-message {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	color: red;
+	width: 100%;
+	text-align: center;
+	min-height: 20px;
+	background-color: transparent;
+	max-width: 250px;
+	min-width: 250px;
+}
+
 /***********************************************/
 .offline-div {
 	position: fixed;
@@ -755,8 +769,9 @@ footer .navbar ul li a:hover {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	gap: 10px;
+	gap: 15px;
 	width: 100%;
+	margin-top: 10px;
 }
 
 .recover {
@@ -765,7 +780,7 @@ footer .navbar ul li a:hover {
 }
 
 .social-login button {
-	background-color: transparent;
+	background-color: var(--font-color);
 	color: var(--prim-color);
 	border: none;
 	border-radius: 10px;
