@@ -443,6 +443,38 @@ async function getGameStatus({ gamePin, topicID }) {
 	return response;
 }
 
+// use firebase storage to store images
+async function uploadImage({ file, fileName, imageURL, folder }) {
+	const storageRef = fb.ref(fb.storage, `${folder}/${fileName}`);
+	let uploadTask, downloadURL;
+
+	if (imageURL) {
+		uploadTask = fb.uploadBytes(
+			storageRef,
+			await fetch(imageURL).then((response) => response.blob()),
+		);
+	} else {
+		uploadTask = fb.uploadBytes(storageRef, file);
+	}
+
+	uploadTask.on(
+		'state_changed',
+		(snapshot) => {
+			const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+			console.log(`Upload is ${progress}% done`);
+		},
+		(error) => {
+			console.error(error);
+		},
+		async () => {
+			downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+			console.log('File available at', downloadURL);
+		},
+	);
+
+	return downloadURL;
+}
+
 export {
 	fbSignUp,
 	fbLogin,
@@ -457,4 +489,5 @@ export {
 	getGameStatus,
 	googleLogin,
 	githubLogin,
+	uploadImage,
 };
