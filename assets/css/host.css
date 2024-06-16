@@ -1,3 +1,4 @@
+/* Styles for the host view container */
 .host-view {
 	display: flex;
 	flex-direction: column;
