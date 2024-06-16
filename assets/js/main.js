@@ -7,12 +7,12 @@ function checkLoginStatus({ path = './' }) {
 	if (loginObj) {
 		const loginObject = JSON.parse(loginObj);
 		if (!loginObject.loggedIn) {
-			window.location.href = `${origin}/pages/auth/login.html`;
-		} else {
-			if (signInBtn) {
-				signInBtn.style.display = 'none';
-			}
-		}
+  			window.location.href = `${origin}/pages/auth/login.html`;
+  		}
+  else if (signInBtn) {
+  				signInBtn.style.display = 'none';
+  			}
+
 	} else {
 		window.location.href = `${origin}/pages/auth/login.html`;
 	}
