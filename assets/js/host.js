@@ -21,64 +21,69 @@ const topicID = urlParams.get('topic');
 let playerNames = [],
 	dummyObject = {};
 
+const details = {
+	gamePin,
+	topicID,
+	nftImage,
+	rewardAmount,
+	questionsCount,
+	title,
+	codeView,
+	playerCount,
+	players,
+	playerNames,
+};
+
 if (!gamePin || !topicID) {
 	alert('Invalid game pin or topic');
 	window.location.href = window.location.origin;
 	throw new Error('Invalid game pin or topic');
 }
 
-async function setPlayerNames({
-	playerNames = [],
-	players,
-	gamePin,
-	topicID,
-	nftImage,
-	rewardAmount,
-}) {
-	playerNames =
-		(await getPlayerNames({
-			gamePin: gamePin,
-			topicID: topicID,
-		})) || [];
+async function setPlayerNames(details) {
+	details.playerNames = await getPlayerNames({
+		gamePin: details.gamePin,
+		topicID: details.topicID,
+	});
 
-	dummyObject = playerNames.find((player) => player.username === 'dummy');
-	playerNames = playerNames.filter((player) => player.username != 'dummy') || [];
-	setQuizDetails();
-	players.innerHTML = '';
+	details.playerNames = details.playerNames.filter((player) => player.username != 'dummy');
+	dummyObject = details.playerNames.find((player) => player.username == 'dummy');
+	details.players.innerHTML = '';
 
-	if (playerNames.length === 0) {
-		players.innerHTML = 'No players yet!';
+	if (details.playerNames.length === 0) {
+		details.players.innerHTML = 'No players yet!';
 	}
 
-	playerNames.forEach((playerName) => {
+	details.playerNames.forEach((playerName) => {
 		const player = document.createElement('div');
 		player.classList.add('player');
 		player.innerHTML = `
 				<span class="player-name">${playerName.username}</span>
 				<span class="player-score">${playerName.score}</span>`;
 
-		const color = colors[playerNames.indexOf(playerName) % 4];
+		const color = colors[details.playerNames.indexOf(playerName) % 4];
 		player.style.backgroundColor = color;
-		players.appendChild(player);
+		details.players.appendChild(player);
 	});
-	const requestObject = { playerNames, players, gamePin, topicID, nftImage, rewardAmount };
-	window.requestAnimationFrame(setPlayerNames.bind(null, requestObject));
+
+	await setQuizDetails(details);
+	window.requestAnimationFrame(setPlayerNames.bind(null, details));
 }
 
 // set topic
-function setQuizDetails() {
+async function setQuizDetails(details) {
 	const { origin } = window.location;
-	codeView.innerHTML = gamePin || 'xxxxxx';
-	rewardAmount.textContent = `$${dummyObject?.reward || '$0'}`;
-	nftImage.src = `${origin}/assets/nft/${dummyObject?.nft || '1.jpg'}`;
+	details.codeView.innerHTML = details.gamePin || 'xxxxxx';
+	details.rewardAmount.textContent = `$${dummyObject?.reward || '0'}`;
+	details.nftImage.src = `${origin}/assets/nft/${dummyObject?.nft || '1.jpg'}`;
 
-	const topic = topics.find((topic) => topic.id === parseInt(topicID));
-	title.innerHTML = 'Title: ' + topic.name;
-	questionsCount.innerHTML = 'Questions: 6';
-	playerCount.innerHTML = 'Players: ' + playerNames.length;
+	const topic = topics.find((topic) => topic.id === parseInt(details.topicID));
+	details.title.innerHTML = 'Title: ' + topic.name;
+	details.questionsCount.innerHTML = 'Questions: 6';
+	details.playerCount.innerHTML = 'Players: ' + details.playerNames.length;
 }
 
-await setPlayerNames({ playerNames, players, gamePin, topicID, nftImage, rewardAmount });
+await setPlayerNames(details);
 
 // start and cancel game
 startBtn?.addEventListener('click', async () => {
@@ -94,7 +99,5 @@ cancelBtn?.addEventListener('click', async () => {
 		alert('Game has ended');
 	}
 });
-
-setQuizDetails();
 
 export { setPlayerNames, setQuizDetails };

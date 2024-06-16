@@ -162,7 +162,7 @@ async function createGamePinTable({ gamePin, topicID }) {
 		const randomIndex = Math.floor(Math.random() * nfts.length);
 		const nft = nfts[randomIndex];
 		const dummyObject = [
-			{ username: 'dummy', score: 0, nft: nft, reward: '$0', gameStarted: false, gameEnded: false },
+			{ username: 'dummy', score: 0, nft: nft, reward: 0, gameStarted: false, gameEnded: false },
 		];
 
 		await fb.set(gamePinRef, dummyObject);
@@ -237,9 +237,7 @@ async function getPlayerNames({ gamePin, topicID }) {
 
 	try {
 		playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
-		playerNamesSnapshot = (await fb.get(playerNamesRef)) || {
-			val: [{ username: 'dummy', score: 0 }],
-		};
+		playerNamesSnapshot = await fb.get(playerNamesRef);
 	} catch (error) {
 		if (error.message.includes('offline')) {
 			getPlayerNames({ gamePin, topicID });
@@ -248,6 +246,7 @@ async function getPlayerNames({ gamePin, topicID }) {
 		}
 	}
 
+	// console.log('Player names Val:', playerNamesSnapshot.val());
 	return playerNamesSnapshot.val();
 }
 
@@ -414,7 +413,7 @@ async function endGame({ gamePin, topicID }) {
 async function getGameStatus({ gamePin, topicID }) {
 	const response = {
 		status: false,
-		msg: 'Waiting for game status',
+		msg: 'loading...',
 	};
 
 	try {

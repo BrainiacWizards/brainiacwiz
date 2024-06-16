@@ -1,5 +1,5 @@
 import { createScoreBoard, getGameStatus } from '../../pages/auth/fb.js';
-import { setPlayerNames } from './host.js';
+import { setPlayerNames, setQuizDetails } from './host.js';
 import { topics } from './utils/questions.js';
 
 const codeView = document.getElementById('code-view');
@@ -7,6 +7,7 @@ const title = document.getElementById('title');
 const questionsCount = document.getElementById('questions-count');
 const statusText = document.getElementById('status-text');
 const players = document.querySelector('.players-list');
+const playerCount = document.getElementById('player-count');
 
 // check gamePin in url
 const urlParams = new URLSearchParams(window.location.search);
@@ -15,6 +16,7 @@ const topicID = urlParams.get('topic');
 const login = JSON.parse(sessionStorage.getItem('login'));
 const rewardAmount = document.querySelector('.reward-amount');
 const nftImage = document.querySelector('.nft-image');
+const playerNames = [];
 
 if (!gamePin || !topicID) {
 	alert('Invalid game pin or topic');
@@ -22,27 +24,26 @@ if (!gamePin || !topicID) {
 	throw new Error('Invalid game pin or topic');
 }
 
-async function setQuizDetails() {
-	if (gamePin) {
-		codeView.innerHTML = gamePin;
-	} else {
-		codeView.innerHTML = '?';
-	}
+async function setDetails() {
+	// create player record
+	await createScoreBoard({ gamePin, topicID, username: login.username, score: 0 });
 
-	const topic = topics.find((topic) => topic.id === parseInt(topicID)) || {
-		name: 'Unknown',
+	// set quiz details
+	const details = {
+		gamePin,
+		topicID,
+		nftImage,
+		rewardAmount,
+		questionsCount,
+		title,
+		codeView,
+		playerCount,
+		players,
+		playerNames,
 	};
-	title.innerHTML = 'Title: ' + topic.name;
-	questionsCount.innerHTML = 'Questions: 6';
 
-	await createScoreBoard({
-		gamePin: gamePin,
-		username: login.username,
-		score: 0,
-		topicID: topicID,
-	});
-
-	// await setPlayerNames();
+	await setPlayerNames(details);
+	await checkGameStatus();
 }
 
 async function checkGameStatus() {
@@ -62,5 +63,4 @@ async function checkGameStatus() {
 	}, 2000);
 }
 
-setQuizDetails();
-checkGameStatus();
+setDetails();
