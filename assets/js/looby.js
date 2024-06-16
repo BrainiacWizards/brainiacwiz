@@ -13,6 +13,8 @@ const urlParams = new URLSearchParams(window.location.search);
 const gamePin = urlParams.get('gamePin');
 const topicID = urlParams.get('topic');
 const login = JSON.parse(sessionStorage.getItem('login'));
+const rewardAmount = document.querySelector('.reward-amount');
+const nftImage = document.querySelector('.nft-image');
 
 if (!gamePin || !topicID) {
 	alert('Invalid game pin or topic');
@@ -40,7 +42,7 @@ async function setQuizDetails() {
 		topicID: topicID,
 	});
 
-	await setPlayerNames({ players, gamePin, topicID });
+	// await setPlayerNames();
 }
 
 async function checkGameStatus() {

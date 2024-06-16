@@ -1,3 +1,4 @@
+import { questions } from '../../assets/js/utils/questions.js';
 import * as fb from '../../fb_config.js';
 
 const fbSignUp = async ({ email, password, userName, errorMessage }) => {
@@ -157,10 +158,14 @@ async function createGamePinTable({ gamePin, topicID }) {
 		console.log('Creating gamepin table', gamePin, topicID);
 		const gamePinRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
 		await fb.set(gamePinRef, {});
-		const dummyObject = [{ username: 'dummy', score: 0 }];
+		const nfts = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg'];
+		const randomIndex = Math.floor(Math.random() * nfts.length);
+		const nft = nfts[randomIndex];
+		const dummyObject = [
+			{ username: 'dummy', score: 0, nft: nft, reward: '$0', gameStarted: false, gameEnded: false },
+		];
 
 		await fb.set(gamePinRef, dummyObject);
-
 		alert('Game created! share your pin with others');
 	} catch (error) {
 		if (error.message.includes('offline')) {

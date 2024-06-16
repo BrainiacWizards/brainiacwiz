@@ -14,7 +14,7 @@
 	);
 	color: var(--font-color);
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	flex-wrap: wrap;
 	margin: 0;
 	padding: 10px 40px;
@@ -64,10 +64,12 @@
 	position: relative;
 	bottom: 0px;
 	justify-content: center;
+	align-items: center;
 	margin: 0;
 	gap: 0;
 	width: 100%;
 	background-color: var(--tert-color);
+	background-color: red;
 }
 
 .host-view .players-block {
