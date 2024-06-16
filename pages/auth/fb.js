@@ -25,7 +25,16 @@ const fbSignUp = async ({ email, password, userName, errorMessage }) => {
 			console.log('offline');
 			fbSignUp({ email, password, userName });
 		} else {
-			errorMessage.textContent = error.code.split('/')[1];
+const errorMessages = {
+  'auth/invalid-email': 'Invalid email address.',
+  'auth/user-disabled': 'User account is disabled.',
+  'auth/user-not-found': 'User not found.',
+  'auth/wrong-password': 'Incorrect password.',
+  // Add more error codes and messages as needed
+};
+
+const userFriendlyMessage = errorMessages[error.code] || 'An unexpected error occurred.';
+errorMessage.textContent = userFriendlyMessage;
 			throw new Error(`could not create user\n\n ${error}`);
 		}
 	}
