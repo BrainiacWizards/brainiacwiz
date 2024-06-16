@@ -5,17 +5,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="../../assets/css/style.css" />
 		<link rel="stylesheet" href="../../assets/css/host.css" />
-		<link
-			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-			rel="stylesheet"
-		/>
+		<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../assets/fontawesome-6.5.2/css/all.css" />
 		<title>Host Vew | BrainiacWiz</title>
 		<!-- Google tag (gtag.js) -->
-		<script
-			async
-			src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"
-		></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag() {
@@ -60,14 +54,39 @@
 						<h2>Game Code</h2>
 						<p id="code-view"><span></span></p>
 					</div>
+					<div class="status">
+						<h2>Status</h2>
+						<p id="status-text">N/A</p>
+					</div>
 				</div>
 			</section>
 
 			<!-- game status section -->
-			<section class="game-status">
-				<div class="status">
-					<h2>Game Status</h2>
-					<p id="status-text">N/A</p>
+			<section class="game-details">
+				<div class="players">
+					<h2>Players</h2>
+					<div class="players-list" id="players-list"> </div>
+				</div>
+				<div class="game-info">
+					<!-- rewards -->
+					<div class="rewards">
+						<h2>Rewards</h2>
+						<div class="rewards-list">
+							<div class="reward">
+								<i class="gold fas fa-trophy"></i>
+								<span class="reward-name">1st Place</span>
+								<span class="reward-amount">$50</span>
+							</div>
+
+							<div class="nft-block">
+								<h4>+ NFT Reward</h4>
+								<div class="nft">
+									<img src="../../assets/nft/2.jpg" alt="NFT" />
+									<p>1 NFT</p>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</section>
 		</main>
@@ -78,14 +97,10 @@
 						<a href="../../index.html"><i class="bx bx-home"></i><p>Home</p></a>
 					</li>
 					<li>
-						<a href="../../ranking.html"
-							><i class="bx bx-book"></i><p>Leaderboard</p></a
-						>
+						<a href="../../ranking.html"><i class="bx bx-book"></i><p>Leaderboard</p></a>
 					</li>
 					<li>
-						<a href="../../auth/login.html"
-							><i class="bx bx-user-circle"></i><p>Login</p></a
-						>
+						<a href="../../auth/login.html"><i class="bx bx-user-circle"></i><p>Login</p></a>
 					</li>
 					<li>
 						<a href="#"><i class="bx bx-envelope"></i><p>Contact</p></a>

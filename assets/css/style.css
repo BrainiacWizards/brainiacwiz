@@ -3,9 +3,12 @@
 	--sec-color: #070f2b; /* Secondary color - darker shade of primary */
 	--tert-color: #535c91; /* Tertiary color - lighter shade of primary */
 	--quart-color: #9290c3; /* Quaternary color - tint of primary */
-	--font-color: rgb(231, 231, 231);
+	--font-color: white;
 	--fady-back-color: rgb(36, 1, 82, 0.2); /* Faded background color */
 	--shadow-color: rgba(7, 15, 43, 0.7);
+	--gold-color: #ffd700;
+	--silver-color: #dddddd;
+	--bronze-color: #a7631f;
 }
 
 /********************Default styles******************/

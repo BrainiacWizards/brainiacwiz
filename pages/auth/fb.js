@@ -232,7 +232,9 @@ async function getPlayerNames({ gamePin, topicID }) {
 
 	try {
 		playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
-		playerNamesSnapshot = await fb.get(playerNamesRef);
+		playerNamesSnapshot = (await fb.get(playerNamesRef)) || {
+			val: [{ username: 'dummy', score: 0 }],
+		};
 	} catch (error) {
 		if (error.message.includes('offline')) {
 			getPlayerNames({ gamePin, topicID });
@@ -418,13 +420,13 @@ async function getGameStatus({ gamePin, topicID }) {
 			if (player.username === 'dummy') {
 				if (player.gameStarted && !player.gameEnded) {
 					response.status = true;
-					response.msg = 'Game has started';
+					response.msg = 'On	going game!';
 				} else if (player.gameEnded) {
 					response.status = false;
-					response.msg = 'Game has ended, try another one';
+					response.msg = 'Game has ended!';
 				} else {
 					response.status = false;
-					response.msg = `Game hasn't started yet`;
+					response.msg = `Waiting...`;
 				}
 
 				return player;
@@ -436,7 +438,7 @@ async function getGameStatus({ gamePin, topicID }) {
 		if (error.message.includes('offline')) {
 			getGameStatus({ gamePin, topicID });
 		} else {
-			throw new Error(`could not get game status\n\n ${error}`);
+			throw new Error(`could not get game status\n ${error}`);
 		}
 	}
 

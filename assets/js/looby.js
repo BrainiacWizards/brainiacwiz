@@ -1,10 +1,12 @@
 import { createScoreBoard, getGameStatus } from '../../pages/auth/fb.js';
+import { setPlayerNames } from './host.js';
 import { topics } from './utils/questions.js';
 
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');
 const questionsCount = document.getElementById('questions-count');
 const statusText = document.getElementById('status-text');
+const players = document.querySelector('.players-list');
 
 // check gamePin in url
 const urlParams = new URLSearchParams(window.location.search);
@@ -37,6 +39,8 @@ async function setQuizDetails() {
 		score: 0,
 		topicID: topicID,
 	});
+
+	await setPlayerNames({ players, gamePin, topicID });
 }
 
 async function checkGameStatus() {

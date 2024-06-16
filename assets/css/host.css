@@ -19,18 +19,23 @@
 	margin: 0;
 	padding: 10px 40px;
 	gap: 20px;
-	border-radius: 0 0 20px 20px;
+	border-radius: 0 0 0px 5px;
+	box-shadow: 3px 3px 4px 0 var(--sec-color);
 }
 
 .host-view .header .quiz-details {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	background-color: var(--quart-color);
 	border-radius: 20px;
 	padding: 10px;
 	color: var(--prim-color);
 	text-align: center;
 	box-shadow: 2px 2px 5px 0 var(--sec-color);
+	max-width: 250px;
+	flex-wrap: wrap;
+	gap: 5px;
+	justify-content: space-evenly;
 }
 
 .host-view .header .quiz-details #title {
@@ -117,7 +122,48 @@
 	color: var(--font-color);
 }
 
-.game-status {
+.game-details {
+	display: grid;
+	grid-template-columns: 1fr 300px;
+	width: 100%;
+	justify-items: center;
+	align-items: start;
+	margin: 0;
+	padding: 0px;
+	gap: 0px;
+	color: var(--prim-color);
+	font-size: 30px;
+	max-width: 100%;
+	min-height: 100%;
+	min-height: 75vh;
+}
+
+.status {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--font-color);
+	font-size: 18px;
+	gap: 5px;
+}
+
+.status #status-text {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 5px 10px;
+	color: var(--prim-color);
+	font-size: 18px;
+	background-color: var(--quart-color);
+	border-radius: 10px;
+}
+
+.players {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -125,27 +171,220 @@
 	margin: 0;
 	padding: 20px;
 	color: var(--prim-color);
+	font-size: 30px;
+	padding: 0 40px;
+	width: 90%;
+	max-width: 800px;
+	margin-top: 20px;
+	margin-right: 10px;
+	gap: 30px;
+}
+
+.players .players-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 20px;
+	color: var(--prim-color);
+	font-size: 30px;
+	flex-wrap: wrap;
+	gap: 20px;
+	width: 100%;
+	max-height: 400px;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	&::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--sec-color);
+		border-radius: 10px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background-color: var(--quart-color);
+	}
+}
+
+.players .players-list .player {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 10px;
+	justify-content: center;
+	margin: 0;
+	padding: 5px;
+	color: var(--font-color);
+	font-size: 30px;
+	background-color: var(--tert-color);
+	box-shadow: 2px 2px 5px 0 var(--sec-color);
+	border-radius: 10px;
+	min-width: 200px;
+}
+
+.players .players-list .player .player-name {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--font-color);
 	font-size: 30px;
 }
 
-.game-status .status {
+.players .players-list .player .player-score {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	margin: 0;
-	padding: 20px;
-	color: var(--prim-color);
+	padding: 0px;
+	color: var(--quart-color);
 	font-size: 30px;
 }
 
-.game-status .status #status-text {
+.players .players-list .player:hover {
+	background-color: var(--quart-color);
+	color: var(--font-color) !important;
+}
+
+.players .players-list .player:hover,
+.players .players-list .player:hover .player-name,
+.players .players-list .player:hover .player-score {
+	color: var(--font-color) !important;
+}
+
+.game-details .game-info {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	margin: 0;
+	padding: 20px 0px;
+	color: var(--font-color);
+	font-size: 30px;
+	background-color: var(--tert-color);
+	min-height: 100%;
+	max-width: 400px;
+	min-width: 300px;
+	box-shadow: -2px -2px 3px 0 var(--sec-color);
+}
+
+.game-details .game-info h2 {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	margin: 0;
-	padding: 20px;
-	color: var(--prim-color);
+	padding: 0px;
+	color: var(--sec-color);
+}
+
+.game-details .game-info .rewards {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--font-color);
 	font-size: 30px;
+	width: 85%;
+}
+
+.game-details .game-info .rewards-list {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--font-color);
+	font-size: 30px;
+	gap: 10px;
+	margin-top: 20px;
+	width: 100%;
+	max-width: none;
+}
+
+.game-details .game-info .rewards-list .reward {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	margin: 0;
+	padding: 10px;
+	color: var(--font-color);
+	font-size: 24px;
+	background-color: var(--quart-color);
+	border-radius: 10px;
+	width: 100%;
+	gap: 10px;
+	box-shadow: 2px 2px 5px 0 var(--sec-color);
+}
+
+.game-details .game-info .rewards-list .reward .gold {
+	color: var(--gold-color);
+}
+
+.silver {
+	color: var(--silver-color);
+}
+
+.bronze {
+	color: var(--bronze-color);
+}
+
+.game-details .game-info .rewards-list .nft-block {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--font-color);
+	font-size: 30px;
+	margin-top: 20px;
+	gap: 20px;
+}
+
+.game-details .game-info .rewards-list .nft-block h4 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--prim-color);
+	font-size: 25px;
+}
+
+.game-details .game-info .rewards-list .nft-block .nft {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	margin: 0;
+	padding: 10px;
+	color: var(--font-color);
+	font-size: 20px;
+	background-color: var(--quart-color);
+	border-radius: 10px;
+	width: 100%;
+	gap: 10px;
+	box-shadow: 2px 2px 5px 0 var(--sec-color);
+}
+
+.game-details .game-info .rewards-list .nft-block .nft img {
+	width: 100%;
+	max-width: 250px;
 }

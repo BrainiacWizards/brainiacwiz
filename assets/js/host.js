@@ -1,13 +1,12 @@
 import { endGame, getPlayerNames, startGame } from '../../pages/auth/fb.js';
 import { checkLoginStatus } from './main.js';
 import { topics } from './utils/questions.js';
-import { run } from './utils/openai.mjs';
-// checkLoginStatus({ path: '../../auth/' });
+checkLoginStatus({ path: '../../auth/' });
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');
 const playerCount = document.getElementById('player-count');
 const questionsCount = document.getElementById('questions-count');
-const players = document.querySelector('.players');
+const players = document.querySelector('.players-list');
 const startBtn = document.getElementById('host-start-btn');
 const cancelBtn = document.getElementById('host-cancel-btn');
 
@@ -25,7 +24,7 @@ if (!gamePin || !topicID) {
 	throw new Error('Invalid game pin or topic');
 }
 
-async function setPlayerNames() {
+async function setPlayerNames({ playerNames = [], players, gamePin, topicID }) {
 	playerNames =
 		(await getPlayerNames({
 			gamePin: gamePin,
@@ -41,16 +40,18 @@ async function setPlayerNames() {
 	}
 
 	playerNames.forEach((playerName) => {
-		const player = document.createElement('li');
+		const player = document.createElement('div');
 		player.classList.add('player');
-		player.textContent = `${playerName.username || '?'} (${playerName.score})`;
+		player.innerHTML = `
+				<span class="player-name">${playerName.username}</span>
+				<span class="player-score">${playerName.score}</span>`;
+
 		const color = colors[playerNames.indexOf(playerName) % 4];
 		player.style.backgroundColor = color;
-		// console.log(player);
 		players.appendChild(player);
 	});
-
-	window.requestAnimationFrame(setPlayerNames);
+	const requestObject = { playerNames, players, gamePin, topicID };
+	window.requestAnimationFrame(setPlayerNames.bind(null, requestObject));
 }
 
 // set topic
@@ -66,7 +67,7 @@ function setQuizDetails(playerNames = []) {
 	playerCount.innerHTML = 'Players: ' + playerNames.length;
 }
 
-await setPlayerNames();
+await setPlayerNames({ playerNames, players, gamePin, topicID });
 
 // start and cancel game
 startBtn?.addEventListener('click', async () => {
@@ -84,3 +85,5 @@ cancelBtn?.addEventListener('click', async () => {
 });
 
 setQuizDetails();
+
+export { setPlayerNames, setQuizDetails };
