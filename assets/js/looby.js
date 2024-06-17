@@ -46,7 +46,7 @@ async function setDetails() {
 	await checkGameStatus();
 }
 
-async function checkGameStatus() {
+async function checkGameStatus(statusText) {
 	const gameStatus = await getGameStatus({ gamePin, topicID });
 	statusText.innerHTML = gameStatus.msg;
 
@@ -59,8 +59,10 @@ async function checkGameStatus() {
 	}
 
 	setTimeout(() => {
-		checkGameStatus();
+		checkGameStatus(statusText);
 	}, 2000);
 }
 
-setDetails();
+setDetails(statusText);
+
+export { checkGameStatus };

@@ -6,29 +6,25 @@
 }
 
 .host-view .header {
-	background: linear-gradient(
-		90deg,
-		var(--tert-color),
-		var(--tert-color),
-		var(--prim-color),
-		var(--sec-color)
-	);
 	color: var(--font-color);
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: space-around;
+	align-items: center;
 	flex-wrap: wrap;
 	margin: 0;
 	padding: 10px 40px;
 	gap: 20px;
 	border-radius: 0 0 0px 5px;
 	box-shadow: 3px 3px 4px 0 var(--sec-color);
+	background-color: var(--prim-color);
+	width: calc(100% - 80px);
 }
 
 .host-view .header .quiz-details {
 	display: flex;
 	flex-direction: row;
 	background-color: var(--quart-color);
-	border-radius: 20px;
+	border-radius: 10px;
 	padding: 10px;
 	color: var(--prim-color);
 	text-align: center;
@@ -40,7 +36,7 @@
 }
 
 .host-view .header .quiz-details #title {
-	font-size: 30px;
+	font-size: 25px;
 	font-weight: bold;
 }
 
@@ -48,7 +44,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: auto;
+	margin: 0;
 }
 
 .host-view .header .game-code #code-view {
@@ -56,7 +52,7 @@
 	font-weight: bold;
 	font-size: 25px;
 	background-color: var(--quart-color);
-	border-radius: 20px;
+	border-radius: 10px;
 	padding: 5px;
 }
 
@@ -64,12 +60,20 @@
 	display: flex;
 	position: relative;
 	bottom: 0px;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 	margin: 0;
-	gap: 0;
-	width: 100%;
+	gap: 20px;
+	width: fit-content;
+	padding-inline: 40px;
 	background-color: var(--tert-color);
+	margin: auto;
+	border-radius: 20px 20px 0 0;
+}
+
+.host-view .controls button {
+	margin: 10px 0;
+	padding: 5px 10px;
 }
 
 .host-view .players-block {
@@ -278,7 +282,8 @@
 	min-height: 100%;
 	max-width: 400px;
 	min-width: 300px;
-	box-shadow: -2px -2px 3px 0 var(--sec-color);
+	box-shadow: -2px 0px 3px 0 var(--sec-color);
+	z-index: 0;
 }
 
 .game-details .game-info h2 {
@@ -376,7 +381,7 @@
 	align-items: center;
 	justify-content: space-between;
 	margin: 0;
-	padding: 10px;
+	padding: 3px 2px;
 	color: var(--font-color);
 	font-size: 20px;
 	background-color: var(--quart-color);
@@ -384,9 +389,108 @@
 	width: 100%;
 	gap: 10px;
 	box-shadow: 2px 2px 5px 0 var(--sec-color);
+	overflow: hidden;
 }
 
 .game-details .game-info .rewards-list .nft-block .nft img {
 	width: 100%;
-	max-width: 250px;
+	max-width: 200px;
+	border-radius: 10px;
+}
+
+.game-details .game-info .rewards-list .nft-block .nft p {
+	display: none;
+}
+
+.game-details .game-info .click-open {
+	display: none;
+}
+
+/* mobile responsiveness */
+@media screen and (max-width: 600px) {
+	.game-details {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	.game-details .players-list {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.game-details .players-list .player {
+		max-width: 80%;
+		min-width: 80%;
+	}
+	.game-details .game-info {
+		position: absolute;
+		right: 0;
+		z-index: 1;
+		min-height: 67vh;
+		max-height: fit-content;
+		max-width: 200px;
+		min-width: 250px;
+		border-radius: 10px 0 0 10px;
+		transform: translate(100%, 0);
+	}
+
+	.game-details .game-info .rewards {
+		width: 80%;
+	}
+
+	.game-details .game-info .click-open {
+		display: flex;
+		flex-direction: row;
+		position: absolute;
+		left: -70px;
+		top: 35%;
+		color: var(--tert-color);
+		font-size: 30px;
+		gap: 5px;
+		width: fit-content;
+		height: 200px;
+		justify-content: flex-start;
+		align-items: center;
+		padding: 10px 0;
+	}
+
+	.game-details .game-info .click-open i {
+		margin: 0;
+	}
+
+	.game-details .game-info .click-open p {
+		margin: 0;
+		text-wrap: nowrap;
+		width: fit-content;
+		height: fit-content;
+		padding: 0;
+		writing-mode: vertical-rl;
+		transform: rotate(180deg);
+		color: var(--font-color);
+		background-color: var(--tert-color);
+		border-radius: 0 10px 10px 0;
+		padding: 10px 0;
+	}
+
+	/* hover to open */
+	.game-info:hover,
+	.game-info:focus-within,
+	.click-open:hover,
+	.click-open:focus-within .game-info:focus {
+		transform: translate(0, 0);
+	}
+
+	.host-view .header .game-code {
+		font-size: 16px;
+	}
+
+	.host-view .header .game-code #code-view {
+		font-size: 20px;
+		min-width: 100px;
+		text-align: center;
+	}
 }

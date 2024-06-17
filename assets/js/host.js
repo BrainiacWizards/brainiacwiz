@@ -1,4 +1,5 @@
 import { endGame, getPlayerNames, startGame } from '../../pages/auth/fb.js';
+import { checkGameStatus } from './looby.js';
 import { checkLoginStatus } from './main.js';
 import { topics } from './utils/questions.js';
 checkLoginStatus({ path: '../../auth/' });
@@ -11,6 +12,7 @@ const startBtn = document.getElementById('host-start-btn');
 const cancelBtn = document.getElementById('host-cancel-btn');
 const rewardAmount = document.querySelector('.reward-amount');
 const nftImage = document.querySelector('.nft-image');
+const statusText = document.getElementById('status-text');
 
 const colors = ['var(--prim-color)', 'var(--sec-color)', 'var(--tert-color)', 'var(--quart-color)'];
 
@@ -78,9 +80,11 @@ async function setQuizDetails(details) {
 	details.nftImage.src = `${origin}/assets/nft/${dummyObject?.nft || '1.jpg'}`;
 
 	const topic = topics.find((topic) => topic.id === parseInt(details.topicID));
-	details.title.innerHTML = 'Title: ' + topic.name;
+	details.title.innerHTML = topic.name;
 	details.questionsCount.innerHTML = 'Questions: 6';
 	details.playerCount.innerHTML = 'Players: ' + details.playerNames.length;
+
+	await checkGameStatus(statusText);
 }
 
 await setPlayerNames(details);

@@ -15,11 +15,16 @@
 * {
 	padding: 0;
 	margin: 0;
+
+	/* customize scroll */
+	scrollbar-width: thin;
+	scrollbar-color: var(--sec-color) var(--tert-color);
 }
 
 body {
 	background-color: var(--tert-color);
 	color: var(--font-color);
+	overflow-x: hidden;
 }
 
 a {
