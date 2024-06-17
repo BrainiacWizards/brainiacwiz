@@ -97,6 +97,7 @@ button:active {
 	align-items: center;
 	font-size: 2rem;
 	text-align: center;
+	z-index: 100;
 }
 .wallet-address {
 	display: flex;

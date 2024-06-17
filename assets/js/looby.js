@@ -40,14 +40,15 @@ async function setDetails() {
 		playerCount,
 		players,
 		playerNames,
+		statusText,
 	};
 
 	await setPlayerNames(details);
-	await checkGameStatus();
 }
 
-async function checkGameStatus(statusText) {
+async function checkGameStatus({ statusText, gamePin, topicID }) {
 	const gameStatus = await getGameStatus({ gamePin, topicID });
+	if (!statusText) statusText = document.getElementById('status-text');
 	statusText.innerHTML = gameStatus.msg;
 
 	if (gameStatus.status) {
@@ -63,6 +64,6 @@ async function checkGameStatus(statusText) {
 	}, 2000);
 }
 
-setDetails(statusText);
+setDetails({ statusText, gamePin, topicID });
 
 export { checkGameStatus };

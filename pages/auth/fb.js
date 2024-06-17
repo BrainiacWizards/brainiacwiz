@@ -25,16 +25,16 @@ const fbSignUp = async ({ email, password, userName, errorMessage }) => {
 			console.log('offline');
 			fbSignUp({ email, password, userName });
 		} else {
-const errorMessages = {
-  'auth/invalid-email': 'Invalid email address.',
-  'auth/user-disabled': 'User account is disabled.',
-  'auth/user-not-found': 'User not found.',
-  'auth/wrong-password': 'Incorrect password.',
-  // Add more error codes and messages as needed
-};
+			const errorMessages = {
+				'auth/invalid-email': 'Invalid email address.',
+				'auth/user-disabled': 'User account is disabled.',
+				'auth/user-not-found': 'User not found.',
+				'auth/wrong-password': 'Incorrect password.',
+				// Add more error codes and messages as needed
+			};
 
-const userFriendlyMessage = errorMessages[error.code] || 'An unexpected error occurred.';
-errorMessage.textContent = userFriendlyMessage;
+			const userFriendlyMessage = errorMessages[error.code] || 'An unexpected error occurred.';
+			errorMessage.textContent = userFriendlyMessage;
 			throw new Error(`could not create user\n\n ${error}`);
 		}
 	}
@@ -243,10 +243,24 @@ async function queryGamePin({ gamePin, topicID }) {
 async function getPlayerNames({ gamePin, topicID }) {
 	let playerNamesRef = null;
 	let playerNamesSnapshot = null;
+	const dummySnapshot = {
+		val: () => {
+			return [
+				{
+					username: 'dummy',
+					score: 0,
+					nft: '1.jpg',
+					reward: 0,
+					gameStarted: false,
+					gameEnded: false,
+				},
+			];
+		},
+	};
 
 	try {
 		playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
-		playerNamesSnapshot = await fb.get(playerNamesRef);
+		playerNamesSnapshot = (await fb.get(playerNamesRef)) || dummySnapshot;
 	} catch (error) {
 		if (error.message.includes('offline')) {
 			getPlayerNames({ gamePin, topicID });
@@ -422,11 +436,11 @@ async function endGame({ gamePin, topicID }) {
 async function getGameStatus({ gamePin, topicID }) {
 	const response = {
 		status: false,
-		msg: 'loading...',
+		msg: 'Pending...',
 	};
 
 	try {
-		const playerName = await getPlayerNames({ gamePin, topicID });
+		const playerName = (await getPlayerNames({ gamePin, topicID })) || [];
 
 		// check on dummy
 		playerName.map((player) => {
@@ -439,7 +453,7 @@ async function getGameStatus({ gamePin, topicID }) {
 					response.msg = 'Game has ended!';
 				} else {
 					response.status = false;
-					response.msg = `Waiting...`;
+					response.msg = `Pending...`;
 				}
 
 				return player;

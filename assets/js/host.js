@@ -84,7 +84,7 @@ async function setQuizDetails(details) {
 	details.questionsCount.innerHTML = 'Questions: 6';
 	details.playerCount.innerHTML = 'Players: ' + details.playerNames.length;
 
-	await checkGameStatus(statusText);
+	await checkGameStatus(details);
 }
 
 await setPlayerNames(details);

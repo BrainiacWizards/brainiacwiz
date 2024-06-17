@@ -236,6 +236,10 @@
 	min-width: 200px;
 }
 
+.players .players-list .player:hover {
+	transform: scale(0.9);
+}
+
 .players .players-list .player .player-name {
 	display: flex;
 	flex-direction: column;
@@ -432,10 +436,10 @@
 		z-index: 1;
 		min-height: 67vh;
 		max-height: fit-content;
-		max-width: 200px;
+		max-width: 250px;
 		min-width: 250px;
 		border-radius: 10px 0 0 10px;
-		transform: translate(100%, 0);
+		transform: translate(250px, 0);
 	}
 
 	.game-details .game-info .rewards {
