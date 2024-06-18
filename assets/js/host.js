@@ -69,7 +69,9 @@ async function setPlayerNames(details) {
 	});
 
 	await setQuizDetails(details);
-	window.requestAnimationFrame(setPlayerNames.bind(null, details));
+	setTimeout(() => {
+		setPlayerNames(details);
+	}, 2000);
 }
 
 // set topic

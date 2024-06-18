@@ -282,7 +282,6 @@ async function getPlayerNames({ gamePin, topicID }) {
 		}
 	}
 
-	// console.log('Player names Val:', playerNamesSnapshot.val());
 	let players = playerNamesSnapshot.val() || [
 		{
 			username: 'dummy',
@@ -293,7 +292,7 @@ async function getPlayerNames({ gamePin, topicID }) {
 			gameEnded: false,
 		},
 	];
-	console.log(players);
+	// console.log(players);
 	players = players.sort((a, b) => b.score - a.score);
 	return players;
 }
