@@ -283,7 +283,19 @@ async function getPlayerNames({ gamePin, topicID }) {
 	}
 
 	// console.log('Player names Val:', playerNamesSnapshot.val());
-	return playerNamesSnapshot.val();
+	let players = playerNamesSnapshot.val() || [
+		{
+			username: 'dummy',
+			score: 0,
+			nft: '1.jpg',
+			reward: 0,
+			gameStarted: false,
+			gameEnded: false,
+		},
+	];
+	console.log(players);
+	players = players.sort((a, b) => b.score - a.score);
+	return players;
 }
 
 async function setPlayers({ gamePin, topicID, playerNames }) {

@@ -258,18 +258,12 @@
 	justify-content: center;
 	margin: 0;
 	padding: 0px;
-	color: var(--quart-color);
+	color: var(--font-color);
 	font-size: 30px;
 }
 
 .players .players-list .player:hover {
 	background-color: var(--quart-color);
-	color: var(--font-color) !important;
-}
-
-.players .players-list .player:hover,
-.players .players-list .player:hover .player-name,
-.players .players-list .player:hover .player-score {
 	color: var(--font-color) !important;
 }
 

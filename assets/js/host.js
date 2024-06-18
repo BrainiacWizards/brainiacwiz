@@ -56,12 +56,12 @@ async function setPlayerNames(details) {
 		details.players.innerHTML = 'No players yet!';
 	}
 
-	details.playerNames.forEach((playerName) => {
+	details.playerNames.forEach((playerName, index) => {
 		const player = document.createElement('div');
 		player.classList.add('player');
 		player.innerHTML = `
-				<span class="player-name">${playerName.username}</span>
-				<span class="player-score">${playerName.score}</span>`;
+				<span class="player-name">${index + 1}. ${playerName.username}</span>
+				<span class="player-score">(${playerName.score})</span>`;
 
 		const color = colors[details.playerNames.indexOf(playerName) % 4];
 		player.style.backgroundColor = color;
