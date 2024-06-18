@@ -7,16 +7,10 @@
 		<script type="module" src="./gamepin.js" defer></script>
 		<link rel="stylesheet" href="gamepin.css" />
 		<link rel="stylesheet" href="../../../assets/css/style.css" />
-		<link
-			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-			rel="stylesheet"
-		/>
+		<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../../assets/fontawesome-6.5.2/css/all.css" />
 		<!-- Google tag (gtag.js) -->
-		<script
-			async
-			src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"
-		></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag() {
@@ -52,13 +46,19 @@
 		</div>
 		<main class="body-content">
 			<div class="generatePIN">
-				<button id="nextB" class="button2"
-					><i class="fa-regular fa-circle-right"></i
-				></button>
+				<!-- <button id="nextB" class="button2"><i class="fa-regular fa-circle-right"></i></button> -->
+				<h1 class="gamepin-heading">Create Game:</h1>
 				<img class="logo-image" src="gamepinUI/logo.jpeg" />
-				<h1 class="gamepin-heading">Generate a gamepin:</h1>
+
 				<form id="pinForm">
-					<input type="text" id="pinDisplay" class="text" readonly />
+					<div class="form-group">
+						<label for="campaign">Campaign name:</label>
+						<input type="text" id="campaign" placeholder="optional" />
+					</div>
+					<div class="form-group">
+						<label for="pinDisplay">Game Pin: (auto generated)</label>
+						<input type="text" id="pinDisplay" class="text" readonly required />
+					</div>
 					<button type="button" id="generateBtn" class="button">Generate PIN</button>
 				</form>
 			</div>

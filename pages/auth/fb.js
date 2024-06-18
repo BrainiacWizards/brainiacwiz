@@ -162,7 +162,7 @@ async function githubLogin() {
 	}
 }
 
-async function createGamePinTable({ gamePin, topicID }) {
+async function createGamePinTable({ gamePin, topicID, campaign, host }) {
 	try {
 		console.log('Creating gamepin table', gamePin, topicID);
 		const gamePinRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
@@ -170,9 +170,22 @@ async function createGamePinTable({ gamePin, topicID }) {
 		const nfts = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg'];
 		const randomIndex = Math.floor(Math.random() * nfts.length);
 		const nft = nfts[randomIndex];
+		const { origin } = window.location;
+		const nftURL = `${origin}/assets/nft/${nft}`;
 		const dummyObject = [
-			{ username: 'dummy', score: 0, nft: nft, reward: 0, gameStarted: false, gameEnded: false },
+			{
+				username: 'dummy',
+				score: 0,
+				reward: 0,
+				gameStarted: false,
+				gameEnded: false,
+				campaign: campaign,
+				host: host,
+				nft: nftURL,
+			},
 		];
+
+		console.log(dummyObject);
 
 		await fb.set(gamePinRef, dummyObject);
 		alert('Game created! share your pin with others');
