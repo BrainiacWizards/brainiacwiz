@@ -48,8 +48,8 @@ async function setPlayerNames(details) {
 		topicID: details.topicID,
 	});
 
-	details.playerNames = details.playerNames.filter((player) => player.username != 'dummy');
 	dummyObject = details.playerNames.find((player) => player.username == 'dummy');
+	details.playerNames = details.playerNames.filter((player) => player.username != 'dummy');
 	details.players.innerHTML = '';
 
 	if (details.playerNames.length === 0) {
@@ -77,7 +77,7 @@ async function setQuizDetails(details) {
 	const { origin } = window.location;
 	details.codeView.innerHTML = details.gamePin || 'xxxxxx';
 	details.rewardAmount.textContent = `$${dummyObject?.reward || '0'}`;
-	details.nftImage.src = `${origin}/assets/nft/${dummyObject?.nft || '1.jpg'}`;
+	details.nftImage.src = dummyObject.nft || `${origin}/assets/nft/4.jpg`;
 
 	const topic = topics.find((topic) => topic.id === parseInt(details.topicID));
 	details.title.innerHTML = topic.name;
