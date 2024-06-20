@@ -1,4 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+import { getStorage } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js';
 import {
 	getAuth,
 	createUserWithEmailAndPassword,
@@ -28,6 +29,7 @@ const firebaseConfig = {
 	messagingSenderId: '267854852662',
 	appId: '1:267854852662:web:029b05fe4aa7abd0eb5e97',
 	measurementId: 'G-SZ59WLGCXV',
+	storageBucket: 'brainiacwiz.appspot.com',
 };
 
 // Initialize Firebase
@@ -38,6 +40,7 @@ const githubProvider = new GithubAuthProvider();
 const database = getDatabase(app);
 const perf = getPerformance(app);
 const analytics = getAnalytics(app);
+const storage = getStorage(app);
 
 export {
 	auth,
@@ -58,4 +61,5 @@ export {
 	githubProvider,
 	perf,
 	analytics,
+	storage,
 };

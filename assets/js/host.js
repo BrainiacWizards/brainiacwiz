@@ -1,15 +1,18 @@
 import { endGame, getPlayerNames, startGame } from '../../pages/auth/fb.js';
+import { checkGameStatus } from './looby.js';
 import { checkLoginStatus } from './main.js';
 import { topics } from './utils/questions.js';
-import { run } from './utils/openai.mjs';
-// checkLoginStatus({ path: '../../auth/' });
+checkLoginStatus({ path: '../../auth/' });
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');
 const playerCount = document.getElementById('player-count');
 const questionsCount = document.getElementById('questions-count');
-const players = document.querySelector('.players');
+const players = document.querySelector('.players-list');
 const startBtn = document.getElementById('host-start-btn');
 const cancelBtn = document.getElementById('host-cancel-btn');
+const rewardAmount = document.querySelector('.reward-amount');
+const nftImage = document.querySelector('.nft-image');
+const statusText = document.getElementById('status-text');
 
 const colors = ['var(--prim-color)', 'var(--sec-color)', 'var(--tert-color)', 'var(--quart-color)'];
 
@@ -17,7 +20,21 @@ const colors = ['var(--prim-color)', 'var(--sec-color)', 'var(--tert-color)', 'v
 const urlParams = new URLSearchParams(window.location.search);
 const gamePin = urlParams.get('gamePin');
 const topicID = urlParams.get('topic');
-let playerNames = [];
+let playerNames = [],
+	dummyObject = {};
+
+const details = {
+	gamePin,
+	topicID,
+	nftImage,
+	rewardAmount,
+	questionsCount,
+	title,
+	codeView,
+	playerCount,
+	players,
+	playerNames,
+};
 
 if (!gamePin || !topicID) {
 	alert('Invalid game pin or topic');
@@ -25,48 +42,54 @@ if (!gamePin || !topicID) {
 	throw new Error('Invalid game pin or topic');
 }
 
-async function setPlayerNames() {
-	playerNames =
-		(await getPlayerNames({
-			gamePin: gamePin,
-			topicID: topicID,
-		})) || [];
-
-	playerNames = playerNames.filter((player) => player.username != 'dummy');
-	setQuizDetails(playerNames);
-	players.innerHTML = '';
-
-	if (playerNames.length === 0) {
-		players.innerHTML = 'No players yet!';
-	}
-
-	playerNames.forEach((playerName) => {
-		const player = document.createElement('li');
-		player.classList.add('player');
-		player.textContent = `${playerName.username || '?'} (${playerName.score})`;
-		const color = colors[playerNames.indexOf(playerName) % 4];
-		player.style.backgroundColor = color;
-		// console.log(player);
-		players.appendChild(player);
+async function setPlayerNames(details) {
+	details.playerNames = await getPlayerNames({
+		gamePin: details.gamePin,
+		topicID: details.topicID,
 	});
 
-	window.requestAnimationFrame(setPlayerNames);
+	dummyObject = details.playerNames.find((player) => player.username == 'dummy');
+	details.playerNames = details.playerNames.filter((player) => player.username != 'dummy');
+	details.players.innerHTML = '';
+
+	if (details.playerNames.length === 0) {
+		details.players.innerHTML = 'No players yet!';
+	}
+
+	details.playerNames.forEach((playerName, index) => {
+		const player = document.createElement('div');
+		player.classList.add('player');
+		player.innerHTML = `
+				<span class="player-name">${index + 1}. ${playerName.username}</span>
+				<span class="player-score">(${playerName.score})</span>`;
+
+		const color = colors[details.playerNames.indexOf(playerName) % 4];
+		player.style.backgroundColor = color;
+		details.players.appendChild(player);
+	});
+
+	await setQuizDetails(details);
+	setTimeout(() => {
+		setPlayerNames(details);
+	}, 2000);
 }
 
 // set topic
-function setQuizDetails(playerNames = []) {
-	if (gamePin) {
-		codeView.innerHTML = gamePin;
-	} else {
-		codeView.innerHTML = '?';
-	}
-	const topic = topics.find((topic) => topic.id === parseInt(topicID));
-	title.innerHTML = 'Title: ' + topic.name;
-	questionsCount.innerHTML = 'Questions: 6';
-	playerCount.innerHTML = 'Players: ' + playerNames.length;
+async function setQuizDetails(details) {
+	const { origin } = window.location;
+	details.codeView.innerHTML = details.gamePin || 'xxxxxx';
+	details.rewardAmount.textContent = `$${dummyObject?.reward || '0'}`;
+	details.nftImage.src = dummyObject.nft || `${origin}/assets/nft/4.jpg`;
+
+	const topic = topics.find((topic) => topic.id === parseInt(details.topicID));
+	details.title.innerHTML = topic.name;
+	details.questionsCount.innerHTML = 'Questions: 6';
+	details.playerCount.innerHTML = 'Players: ' + details.playerNames.length;
+
+	await checkGameStatus(details);
 }
 
-await setPlayerNames();
+await setPlayerNames(details);
 
 // start and cancel game
 startBtn?.addEventListener('click', async () => {
@@ -83,4 +106,4 @@ cancelBtn?.addEventListener('click', async () => {
 	}
 });
 
-setQuizDetails();
+export { setPlayerNames, setQuizDetails };

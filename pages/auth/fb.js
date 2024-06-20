@@ -1,6 +1,7 @@
+import { questions } from '../../assets/js/utils/questions.js';
 import * as fb from '../../fb_config.js';
 
-const fbSignUp = async ({ email, password, userName }) => {
+const fbSignUp = async ({ email, password, userName, errorMessage }) => {
 	try {
 		const userCredential = await fb.createUserWithEmailAndPassword(fb.auth, email, password);
 		const { user } = userCredential;
@@ -14,7 +15,8 @@ const fbSignUp = async ({ email, password, userName }) => {
 
 		await fb.set(userRef, userData);
 		console.log('Data written successfully');
-		alert('Registration successful!, Please login to continue');
+		errorMessage.textContent = 'Account created!';
+		errorMessage.style.color = 'green';
 
 		// redirect to the login page
 		window.location.href = './login.html';
@@ -23,19 +25,26 @@ const fbSignUp = async ({ email, password, userName }) => {
 			console.log('offline');
 			fbSignUp({ email, password, userName });
 		} else {
-			alert(error.code);
+			const errorMessages = {
+				'auth/invalid-email': 'Invalid email address.',
+				'auth/user-disabled': 'User account is disabled.',
+				'auth/user-not-found': 'User not found.',
+				'auth/wrong-password': 'Incorrect password.',
+				// Add more error codes and messages as needed
+			};
+
+			const userFriendlyMessage = errorMessages[error.code] || 'An unexpected error occurred.';
+			errorMessage.textContent = userFriendlyMessage;
 			throw new Error(`could not create user\n\n ${error}`);
 		}
 	}
 };
 
 // google login
-async function googleLogin() {
+async function googleLogin(errorMessage) {
 	try {
 		fb.auth.useDeviceLanguage();
 		const result = await fb.signInWithPopup(fb.auth, fb.provider);
-		const credential = fb.GoogleAuthProvider.credentialFromResult(result);
-		const token = credential.accessToken;
 		const { user } = result;
 
 		// get user data
@@ -47,7 +56,7 @@ async function googleLogin() {
 		};
 
 		await fb.set(userRef, userData);
-		alert('Login successful!, Enjoy');
+		errorMessage.textContent = 'Login successful!';
 		// set session storage for login object
 		const loginObject = {
 			loggedIn: true,
@@ -60,18 +69,18 @@ async function googleLogin() {
 		const { origin } = window.location;
 		window.location.href = `${origin}/index.html?login=success&username=${user.displayName}`;
 	} catch (error) {
-		const errorCode = error.code;
+		const errorCode = error.code.split('/')[1];
 		const errorMessage = error.message;
 		const { email } = error;
 		const credential = fb.GoogleAuthProvider.credentialFromError(error);
-		alert(errorCode);
+		errorMessage.textContent = errorCode;
 		throw new Error(
 			`could not login user!\n\n ${errorCode}\n\n ${errorMessage}\n\n ${email}\n\n ${credential}`,
 		);
 	}
 }
 
-const fbLogin = async ({ email, password }) => {
+const fbLogin = async ({ email, password, errorMessage }) => {
 	try {
 		const userCredential = await fb.signInWithEmailAndPassword(fb.auth, email, password);
 		const { user } = userCredential;
@@ -83,7 +92,8 @@ const fbLogin = async ({ email, password }) => {
 		const userRef = fb.ref(fb.database, `users/${user.uid}`);
 
 		await fb.update(userRef, userData);
-		alert('Login successful!, Enjoy');
+		errorMessage.textContent = 'Login successful!';
+		errorMessage.style.color = 'green';
 
 		// query for username
 		const usernameRef = fb.ref(fb.database, `users/${user.uid}/username`);
@@ -104,8 +114,8 @@ const fbLogin = async ({ email, password }) => {
 		if (error.message.includes('offline')) {
 			fbLogin({ email, password });
 		} else {
-			alert(error.code);
-			throw new Error(`could not login user\n\n ${error}`);
+			errorMessage.textContent = error.code.split('/')[1];
+			// throw new Error(`could not login user\n\n ${error}`);
 		}
 	}
 };
@@ -140,7 +150,7 @@ async function githubLogin() {
 		const { origin } = window.location;
 		window.location.href = `${origin}/index.html?login=success&username=${user.displayName}`;
 	} catch (error) {
-		const errorCode = error.code;
+		const errorCode = error.code.split('/')[1];
 		const errorMessage = error.message;
 		const { email } = error;
 		const credential = fb.GithubAuthProvider.credentialFromError(error);
@@ -152,15 +162,32 @@ async function githubLogin() {
 	}
 }
 
-async function createGamePinTable({ gamePin, topicID }) {
+async function createGamePinTable({ gamePin, topicID, campaign, host }) {
 	try {
 		console.log('Creating gamepin table', gamePin, topicID);
 		const gamePinRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
 		await fb.set(gamePinRef, {});
-		const dummyObject = [{ username: 'dummy', score: 0 }];
+		const nfts = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg'];
+		const randomIndex = Math.floor(Math.random() * nfts.length);
+		const nft = nfts[randomIndex];
+		const { origin } = window.location;
+		const nftURL = `${origin}/assets/nft/${nft}`;
+		const dummyObject = [
+			{
+				username: 'dummy',
+				score: 0,
+				reward: 0,
+				gameStarted: false,
+				gameEnded: false,
+				campaign: campaign,
+				host: host,
+				nft: nftURL,
+			},
+		];
+
+		console.log(dummyObject);
 
 		await fb.set(gamePinRef, dummyObject);
-
 		alert('Game created! share your pin with others');
 	} catch (error) {
 		if (error.message.includes('offline')) {
@@ -229,10 +256,24 @@ async function queryGamePin({ gamePin, topicID }) {
 async function getPlayerNames({ gamePin, topicID }) {
 	let playerNamesRef = null;
 	let playerNamesSnapshot = null;
+	const dummySnapshot = {
+		val: () => {
+			return [
+				{
+					username: 'dummy',
+					score: 0,
+					nft: '1.jpg',
+					reward: 0,
+					gameStarted: false,
+					gameEnded: false,
+				},
+			];
+		},
+	};
 
 	try {
 		playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
-		playerNamesSnapshot = await fb.get(playerNamesRef);
+		playerNamesSnapshot = (await fb.get(playerNamesRef)) || dummySnapshot;
 	} catch (error) {
 		if (error.message.includes('offline')) {
 			getPlayerNames({ gamePin, topicID });
@@ -241,7 +282,19 @@ async function getPlayerNames({ gamePin, topicID }) {
 		}
 	}
 
-	return playerNamesSnapshot.val();
+	let players = playerNamesSnapshot.val() || [
+		{
+			username: 'dummy',
+			score: 0,
+			nft: '1.jpg',
+			reward: 0,
+			gameStarted: false,
+			gameEnded: false,
+		},
+	];
+	// console.log(players);
+	players = players.sort((a, b) => b.score - a.score);
+	return players;
 }
 
 async function setPlayers({ gamePin, topicID, playerNames }) {
@@ -407,24 +460,24 @@ async function endGame({ gamePin, topicID }) {
 async function getGameStatus({ gamePin, topicID }) {
 	const response = {
 		status: false,
-		msg: 'Waiting for game status',
+		msg: 'Pending...',
 	};
 
 	try {
-		const playerName = await getPlayerNames({ gamePin, topicID });
+		const playerName = (await getPlayerNames({ gamePin, topicID })) || [];
 
 		// check on dummy
 		playerName.map((player) => {
 			if (player.username === 'dummy') {
 				if (player.gameStarted && !player.gameEnded) {
 					response.status = true;
-					response.msg = 'Game has started';
+					response.msg = 'On	going game!';
 				} else if (player.gameEnded) {
 					response.status = false;
-					response.msg = 'Game has ended, try another one';
+					response.msg = 'Game has ended!';
 				} else {
 					response.status = false;
-					response.msg = `Game hasn't started yet`;
+					response.msg = `Pending...`;
 				}
 
 				return player;
@@ -436,11 +489,43 @@ async function getGameStatus({ gamePin, topicID }) {
 		if (error.message.includes('offline')) {
 			getGameStatus({ gamePin, topicID });
 		} else {
-			throw new Error(`could not get game status\n\n ${error}`);
+			throw new Error(`could not get game status\n ${error}`);
 		}
 	}
 
 	return response;
+}
+
+// use firebase storage to store images
+async function uploadImage({ file, fileName, imageURL, folder }) {
+	const storageRef = fb.ref(fb.storage, `${folder}/${fileName}`);
+	let uploadTask, downloadURL;
+
+	if (imageURL) {
+		uploadTask = fb.uploadBytes(
+			storageRef,
+			await fetch(imageURL).then((response) => response.blob()),
+		);
+	} else {
+		uploadTask = fb.uploadBytes(storageRef, file);
+	}
+
+	uploadTask.on(
+		'state_changed',
+		(snapshot) => {
+			const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+			console.log(`Upload is ${progress}% done`);
+		},
+		(error) => {
+			console.error(error);
+		},
+		async () => {
+			downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+			console.log('File available at', downloadURL);
+		},
+	);
+
+	return downloadURL;
 }
 
 export {
@@ -457,4 +542,5 @@ export {
 	getGameStatus,
 	googleLogin,
 	githubLogin,
+	uploadImage,
 };

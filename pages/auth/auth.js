@@ -8,6 +8,7 @@ const signUpForm = document.getElementById('signup-form');
 const loginForm = document.getElementById('login-form');
 const googleLoginBtn = document.getElementById('google-login-btn');
 const githubLoginBtn = document.getElementById('github-login-btn');
+const errorMessage = document.querySelector('.error-message');
 
 signUpForm?.addEventListener('submit', (event) => {
 	event.preventDefault();
@@ -20,11 +21,11 @@ loginForm?.addEventListener('submit', (event) => {
 });
 
 googleLoginBtn?.addEventListener('click', () => {
-	googleLogin();
+	googleLogin(errorMessage);
 });
 
 githubLoginBtn?.addEventListener('click', () => {
-	githubLogin();
+	githubLogin(errorMessage);
 });
 
 function register() {
@@ -54,7 +55,7 @@ function register() {
 	}
 
 	console.log('All fields are valid');
-	fbSignUp({ email, password, userName });
+	fbSignUp({ email, password, userName, errorMessage });
 }
 
 //login function
@@ -68,50 +69,51 @@ function login(email, password) {
 	}
 
 	console.log('All fields are valid');
-	fbLogin({ email, password });
+	errorMessage.textContent = 'Logging in...';
+	fbLogin({ email, password, errorMessage });
 }
 
 //validate email
 function validateEmail(email) {
 	var expression = /\S+@\S+\.\S+/;
 	if (expression.test(email)) {
-		//email is valid
 		return true;
 	}
 
 	//email is invalid
-	alert('Email is invalid');
+	errorMessage.textContent = 'Invalid	email';
 	return false;
 }
 
 //validate password
 function validatePassword(password, confirmPassword) {
 	if (password.length < 6) {
-		//password is too short
-		alert('Password is too short');
+		errorMessage.textContent = 'Password must be at least 6 characters';
 		return false;
 	}
 
 	//password length meets requirements
 	if (password != confirmPassword) {
-		//confirm passwords match
-		alert('Passwords do not match');
+		errorMessage.textContent = 'Passwords do not match';
 		return false;
 	}
 
-	// Passwords match
 	return true;
 }
 
 function validateFields(field) {
-	if (!field || field.trim() == '') {
-		alert('Field is required');
-		return false;
-	}
-	if (field.length <= 0) {
-		alert('Field is required');
+	if (!field || field.trim() == '' || field.length <= 0) {
+		errorMessage.textContent = 'All fields are required';
 		return false;
 	}
 
 	return true;
 }
+
+const formGroups = document.querySelectorAll('.form-group');
+formGroups.forEach((formGroup) => {
+	formGroup?.addEventListener('click', () => {
+		errorMessage.textContent = '';
+		errorMessage.style.color = 'red';
+	});
+});

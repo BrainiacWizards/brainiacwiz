@@ -3,20 +3,28 @@
 	--sec-color: #070f2b; /* Secondary color - darker shade of primary */
 	--tert-color: #535c91; /* Tertiary color - lighter shade of primary */
 	--quart-color: #9290c3; /* Quaternary color - tint of primary */
-	--font-color: rgb(231, 231, 231);
+	--font-color: white;
 	--fady-back-color: rgb(36, 1, 82, 0.2); /* Faded background color */
 	--shadow-color: rgba(7, 15, 43, 0.7);
+	--gold-color: #ffd700;
+	--silver-color: #dddddd;
+	--bronze-color: #a7631f;
 }
 
 /********************Default styles******************/
 * {
 	padding: 0;
 	margin: 0;
+
+	/* customize scroll */
+	scrollbar-width: thin;
+	scrollbar-color: var(--sec-color) var(--tert-color);
 }
 
 body {
 	background-color: var(--tert-color);
 	color: var(--font-color);
+	overflow-x: hidden;
 }
 
 a {
@@ -60,6 +68,20 @@ button:active {
 	margin: 0 5px;
 }
 
+.error-message {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	color: red;
+	width: 100%;
+	text-align: center;
+	min-height: 20px;
+	background-color: transparent;
+	max-width: 250px;
+	min-width: 250px;
+}
+
 /***********************************************/
 .offline-div {
 	position: fixed;
@@ -75,6 +97,7 @@ button:active {
 	align-items: center;
 	font-size: 2rem;
 	text-align: center;
+	z-index: 100;
 }
 .wallet-address {
 	display: flex;
@@ -755,8 +778,9 @@ footer .navbar ul li a:hover {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	gap: 10px;
+	gap: 15px;
 	width: 100%;
+	margin-top: 10px;
 }
 
 .recover {
@@ -765,7 +789,7 @@ footer .navbar ul li a:hover {
 }
 
 .social-login button {
-	background-color: transparent;
+	background-color: var(--font-color);
 	color: var(--prim-color);
 	border: none;
 	border-radius: 10px;
