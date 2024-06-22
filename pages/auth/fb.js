@@ -1,4 +1,3 @@
-import { questions } from '../../assets/js/utils/questions.js';
 import * as fb from '../../fb_config.js';
 
 const fbSignUp = async ({ email, password, userName, errorMessage }) => {
@@ -41,7 +40,7 @@ const fbSignUp = async ({ email, password, userName, errorMessage }) => {
 };
 
 // google login
-async function googleLogin(errorMessage) {
+async function googleLogin({ errorMessage, prevURL }) {
 	try {
 		fb.auth.useDeviceLanguage();
 		const result = await fb.signInWithPopup(fb.auth, fb.provider);
@@ -65,9 +64,7 @@ async function googleLogin(errorMessage) {
 		};
 
 		sessionStorage.setItem('login', JSON.stringify(loginObject));
-		// redirect to the home page
-		const { origin } = window.location;
-		window.location.href = `${origin}/index.html?login=success&username=${user.displayName}`;
+		window.location.href = `${prevURL}?login=success&username=${user.displayName}`;
 	} catch (error) {
 		const errorCode = error.code.split('/')[1];
 		const errorMessage = error.message;
@@ -80,7 +77,7 @@ async function googleLogin(errorMessage) {
 	}
 }
 
-const fbLogin = async ({ email, password, errorMessage }) => {
+const fbLogin = async ({ email, password, errorMessage, prevURL }) => {
 	try {
 		const userCredential = await fb.signInWithEmailAndPassword(fb.auth, email, password);
 		const { user } = userCredential;
@@ -109,7 +106,7 @@ const fbLogin = async ({ email, password, errorMessage }) => {
 
 		sessionStorage.setItem('login', JSON.stringify(loginObject));
 		// redirect to the home page
-		window.location.href = '../../index.html?login=success&username=' + username;
+		window.location.href = `${prevURL}?login=success&username=${username}`;
 	} catch (error) {
 		if (error.message.includes('offline')) {
 			fbLogin({ email, password });
@@ -121,11 +118,10 @@ const fbLogin = async ({ email, password, errorMessage }) => {
 };
 
 // github login
-async function githubLogin() {
+async function githubLogin({ prevURL }) {
 	try {
 		const result = await fb.signInWithPopup(fb.auth, fb.githubProvider);
 		const credential = fb.GithubAuthProvider.credentialFromResult(result);
-		const token = credential.accessToken;
 		const { user } = result;
 
 		// get user data
@@ -146,9 +142,8 @@ async function githubLogin() {
 		};
 
 		sessionStorage.setItem('login', JSON.stringify(loginObject));
-		// redirect to the home page
-		const { origin } = window.location;
-		window.location.href = `${origin}/index.html?login=success&username=${user.displayName}`;
+		// redirect to the previous page
+		window.location.href = `${prevURL}?login=success&username=${user.displayName}`;
 	} catch (error) {
 		const errorCode = error.code.split('/')[1];
 		const errorMessage = error.message;
