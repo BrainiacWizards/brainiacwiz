@@ -129,6 +129,7 @@ button:active {
 	max-width: 120px;
 	overflow-x: auto;
 	overflow-y: hidden;
+	padding: 0 5px;
 
 	/* Add scrollbar styles */
 	&::-webkit-scrollbar {
