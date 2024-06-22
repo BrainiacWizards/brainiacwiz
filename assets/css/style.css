@@ -267,6 +267,27 @@ button:active {
 	object-fit: cover;
 }
 
+.profile-link {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--prim-color);
+	color: var(--font-color);
+	border-radius: 50%;
+	min-width: 50px;
+	aspect-ratio: 1/1;
+}
+
+.profile-link i {
+	color: inherit;
+	font-size: 30px;
+}
+
+.profile-link:hover {
+	background-color: var(--font-color);
+	color: var(--prim-color);
+}
+
 .main-heading {
 	display: block;
 	position: relative;
