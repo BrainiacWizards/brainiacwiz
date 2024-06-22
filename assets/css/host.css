@@ -434,6 +434,7 @@
 		min-width: 250px;
 		border-radius: 10px 0 0 10px;
 		transform: translate(250px, 0);
+		transition: all 0.5s ease-in-out;
 	}
 
 	.game-details .game-info .rewards {
