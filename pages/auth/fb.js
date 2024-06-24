@@ -199,7 +199,7 @@ async function createGamePinTable({ gamePin, topicID, campaign, host }) {
 }
 
 // set scoreboard in fb.database in table named gamepin
-async function createScoreBoard({ gamePin, username, score, topicID }) {
+async function createScoreBoard({ gamePin, username, score, topicID, wallet }) {
 	console.log('Creating gamepin table', gamePin, topicID);
 	let scoreRef = null;
 
@@ -210,11 +210,11 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 
 		// Initialize scoreData if it's null
 		if (!scoreData) {
-			scoreData = [{ username: username, score: score }];
+			scoreData = [{ username: username, score: score, wallet: wallet }];
 		}
 		// add the new score to the existing data if the username doesn't already exist
 		if (!scoreData.some((obj) => obj.username === username)) {
-			scoreData.push({ username: username, score: score });
+			scoreData.push({ username: username, score: score, wallet: wallet });
 		} else {
 			// update the score if the username already exists
 			scoreData = scoreData.map((obj) => {

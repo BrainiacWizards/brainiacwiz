@@ -1,3 +1,4 @@
+import { set } from '../../fb_config.js';
 import { endGame, getPlayerNames, startGame } from '../../pages/auth/fb.js';
 import { checkGameStatus } from './looby.js';
 import { checkLoginStatus } from './main.js';
@@ -60,8 +61,12 @@ async function setPlayerNames(details) {
 		const player = document.createElement('div');
 		player.classList.add('player');
 		player.innerHTML = `
-				<span class="player-name">${index + 1}. ${playerName.username}</span>
-				<span class="player-score">(${playerName.score})</span>`;
+			<span class="player-name">${index + 1}. ${playerName.username}</span>
+			<span class="player-score">(${playerName.score})</span>
+			<button class="player-address" id="${
+				playerName.wallet || '0x00'
+			}"><i class="fas fa-copy"></i></button>
+		`;
 
 		const color = colors[details.playerNames.indexOf(playerName) % 4];
 		player.style.backgroundColor = color;
@@ -69,9 +74,36 @@ async function setPlayerNames(details) {
 	});
 
 	await setQuizDetails(details);
+	copyAddress();
 	setTimeout(() => {
 		setPlayerNames(details);
 	}, 2000);
+}
+
+// copy player address from players
+async function copyAddress() {
+	const playerAddress = document.querySelectorAll('.player-address');
+
+	playerAddress.forEach((address) => {
+		address.addEventListener('click', async () => {
+			const addressValue = address.id;
+			console.log(addressValue);
+			console.log(playerAddress);
+
+			try {
+				navigator.clipboard.writeText(addressValue);
+				address.innerHTML = '<i class="fas fa-check"></i>';
+				await new Promise((resolve) => {
+					setTimeout(() => {
+						resolve();
+					}, 100);
+				});
+			} catch (err) {
+				console.error('Failed to copy: ', err);
+				address.innerHTML = '<i class="fas fa-times"></i>';
+			}
+		});
+	});
 }
 
 // set topic
@@ -85,6 +117,7 @@ async function setQuizDetails(details) {
 	details.title.innerHTML = topic.name;
 	details.questionsCount.innerHTML = 'Questions: 6';
 	details.playerCount.innerHTML = 'Players: ' + details.playerNames.length;
+	details.redirect = false;
 
 	await checkGameStatus(details);
 }

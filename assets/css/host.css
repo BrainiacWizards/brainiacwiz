@@ -123,6 +123,18 @@
 	align-items: center;
 }
 
+.host-view .players-block .players .player .player-address {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--quart-color);
+	font-size: 30px;
+	gap: 10px;
+}
+
 .host-view .players-block .players .player:hover {
 	background-color: var(--tert-color);
 	color: var(--font-color);
@@ -225,7 +237,7 @@
 	flex-direction: row;
 	align-items: center;
 	gap: 10px;
-	justify-content: center;
+	justify-content: space-evenly;
 	margin: 0;
 	padding: 5px;
 	color: var(--font-color);
@@ -260,6 +272,24 @@
 	padding: 0px;
 	color: var(--font-color);
 	font-size: 30px;
+}
+
+.players .players-list .player .player-address {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--quart-color);
+	font-size: 23px;
+	background-color: transparent;
+	border-radius: 0px;
+	box-shadow: none;
+}
+
+.players .players-list .player .player-address:hover {
+	color: var(--font-color);
 }
 
 .players .players-list .player:hover {
