@@ -88,7 +88,6 @@ async function copyAddress() {
 		address.addEventListener('click', async () => {
 			const addressValue = address.id;
 			console.log(addressValue);
-			console.log(playerAddress);
 
 			try {
 				navigator.clipboard.writeText(addressValue);

@@ -235,6 +235,7 @@
 .players .players-list .player {
 	display: flex;
 	flex-direction: row;
+	flex-wrap: nowrap;
 	align-items: center;
 	gap: 10px;
 	justify-content: space-evenly;
@@ -261,6 +262,8 @@
 	padding: 0px;
 	color: var(--font-color);
 	font-size: 30px;
+	flex-wrap: nowrap;
+	text-wrap: nowrap;
 }
 
 .players .players-list .player .player-score {
@@ -272,6 +275,7 @@
 	padding: 0px;
 	color: var(--font-color);
 	font-size: 30px;
+	flex-wrap: nowrap;
 }
 
 .players .players-list .player .player-address {
