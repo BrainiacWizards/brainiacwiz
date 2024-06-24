@@ -21,7 +21,7 @@ async function loadContract(web3) {
 	if (!network) {
 		alert(
 			//'Contract not deployed to the current network. Please select another network with Metamask.',
-			'Almost there!!......Add Celo Testnet to your Metamask and also add free tokens.'
+			'Almost there!!......Add Celo Testnet to your Metamask and also add free tokens.',
 		);
 		//window.location.href = 'https://faucet.celo.org/alfajores';
 		window.open('https://faucet.celo.org/alfajores', '_blank');
@@ -76,10 +76,8 @@ async function metaConnection(walletAddress) {
 	} else {
 		alert('No Web3 Provider detected. Please install Metamask.');
 		window.location.href = '../../../pages/walletAuth/walletDirect.html';
-		throw new Error('No Web3 Provider detected. Please install Metamask.');	
+		throw new Error('No Web3 Provider detected. Please install Metamask.');
 	}
-
-	return state.account;
 }
 
 async function fundAccount() {

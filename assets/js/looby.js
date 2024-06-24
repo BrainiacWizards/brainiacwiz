@@ -1,6 +1,5 @@
 import { createScoreBoard, getGameStatus } from '../../pages/auth/fb.js';
-import { setPlayerNames, setQuizDetails } from './host.js';
-import { topics } from './utils/questions.js';
+import { setPlayerNames } from './host.js';
 
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');
@@ -26,7 +25,14 @@ if (!gamePin || !topicID) {
 
 async function setDetails() {
 	// create player record
-	await createScoreBoard({ gamePin, topicID, username: login.username, score: 0 });
+	console.log('login:', login);
+	await createScoreBoard({
+		gamePin,
+		topicID,
+		username: login.username,
+		score: 0,
+		wallet: login.wallet,
+	});
 
 	// set quiz details
 	const details = {
@@ -46,12 +52,12 @@ async function setDetails() {
 	await setPlayerNames(details);
 }
 
-async function checkGameStatus({ statusText, gamePin, topicID }) {
+async function checkGameStatus({ statusText, gamePin, topicID, redirect = true }) {
 	const gameStatus = await getGameStatus({ gamePin, topicID });
 	if (!statusText) statusText = document.getElementById('status-text');
 	statusText.innerHTML = gameStatus.msg;
 
-	if (gameStatus.status) {
+	if (gameStatus.status && redirect) {
 		setTimeout(() => {
 			const { origin } = window.location;
 			window.location.href = `${origin}/pages/play/quiz.html?gamePin=${gamePin}&topic=${topicID}`;
