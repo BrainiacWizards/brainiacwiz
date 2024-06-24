@@ -38,6 +38,7 @@
 .host-view .header .quiz-details #title {
 	font-size: 25px;
 	font-weight: bold;
+	width: 100%;
 }
 
 .host-view .header .game-code {

@@ -144,8 +144,10 @@ async function fundFromForm() {
 	if (fundAmount) {
 		response = await fundGame({ gamePin, topicID, amount: fundAmount });
 		errorMessage.textContent = response.message;
+		response.status ? (errorMessage.style.color = 'green') : (errorMessage.style.color = 'red');
 	} else {
 		errorMessage.textContent = 'Please enter amount';
+		errorMessage.style.color = 'red';
 	}
 
 	return response;
