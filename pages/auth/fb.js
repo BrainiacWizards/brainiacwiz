@@ -528,6 +528,31 @@ async function uploadImage({ file, fileName, imageURL, folder }) {
 	return downloadURL;
 }
 
+async function fundGame({ gamePin, topicID, amount }) {
+	let playerNames = await getPlayerNames({ gamePin, topicID });
+
+	try {
+		// change only dummy
+		if (playerNames) {
+			playerNames = playerNames.map((player) => {
+				if (player.username == 'dummy') {
+					player.reward = amount;
+				}
+				return player;
+			});
+		}
+
+		await setPlayers({ gamePin, topicID, playerNames });
+		return { status: true, message: 'Game has been funded!' };
+	} catch (error) {
+		if (error.message.includes('offline')) {
+			fundGame({ gamePin, topicID, amount });
+		} else {
+			throw new Error(`could not fund the game\n\n ${error}`);
+		}
+	}
+}
+
 export {
 	fbSignUp,
 	fbLogin,
@@ -543,4 +568,5 @@ export {
 	googleLogin,
 	githubLogin,
 	uploadImage,
+	fundGame,
 };

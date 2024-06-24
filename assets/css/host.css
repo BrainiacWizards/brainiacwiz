@@ -439,7 +439,7 @@
 }
 
 #fund-game {
-	display: flex;
+	display: none;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
@@ -492,13 +492,15 @@
 	justify-content: center;
 	margin: 0;
 	padding: 0px;
-	color: var(--font-color);
+	color: var(--sec-color);
 	font-size: 30px;
 	width: 100%;
 	max-width: 300px;
 	background-color: var(--quart-color);
 	border-radius: 10px;
 	padding: 5px;
+	border: none;
+	box-shadow: 2px 2px 5px 0 var(--sec-color);
 }
 
 #fund-game #fund-form input:focus {

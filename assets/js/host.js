@@ -1,5 +1,5 @@
 import { set } from '../../fb_config.js';
-import { endGame, getPlayerNames, startGame } from '../../pages/auth/fb.js';
+import { endGame, fundGame, getPlayerNames, startGame } from '../../pages/auth/fb.js';
 import { checkGameStatus } from './looby.js';
 import { checkLoginStatus } from './main.js';
 import { topics } from './utils/questions.js';
@@ -14,6 +14,10 @@ const cancelBtn = document.getElementById('host-cancel-btn');
 const rewardAmount = document.querySelector('.reward-amount');
 const nftImage = document.querySelector('.nft-image');
 const statusText = document.getElementById('status-text');
+const fundForm = document.getElementById('fund-form');
+const closeBtn = document.querySelector('.close-btn');
+const hostDeposit = document.getElementById('host-deposit');
+const errorMessage = document.querySelector('.error-message');
 
 const colors = ['var(--prim-color)', 'var(--sec-color)', 'var(--tert-color)', 'var(--quart-color)'];
 
@@ -75,6 +79,7 @@ async function setPlayerNames(details) {
 
 	await setQuizDetails(details);
 	copyAddress();
+	openForm();
 	setTimeout(() => {
 		setPlayerNames(details);
 	}, 2000);
@@ -103,6 +108,47 @@ async function copyAddress() {
 			}
 		});
 	});
+}
+
+// open	fund form
+async function openForm() {
+	const fundDiv = document.querySelector('#fund-game');
+
+	hostDeposit?.addEventListener('click', () => {
+		fundDiv.style.display = 'flex';
+	});
+
+	closeBtn?.addEventListener('click', () => {
+		fundDiv.style.display = 'none';
+	});
+}
+
+fundForm?.addEventListener('submit', async (e) => {
+	e.preventDefault();
+	await fundFromForm();
+});
+
+// fund	game
+async function fundFromForm() {
+	const fundAmount = document.querySelector('#amount').value;
+	let response;
+
+	errorMessage.textContent = 'processing...';
+
+	// validate fund	amount
+	if (isNaN(fundAmount)) {
+		errorMessage.tetContent = 'Invalid amount';
+		return;
+	}
+
+	if (fundAmount) {
+		response = await fundGame({ gamePin, topicID, amount: fundAmount });
+		errorMessage.textContent = response.message;
+	} else {
+		errorMessage.textContent = 'Please enter amount';
+	}
+
+	return response;
 }
 
 // set topic
