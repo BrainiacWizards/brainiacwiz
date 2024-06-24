@@ -78,6 +78,8 @@ async function metaConnection(walletAddress) {
 		window.location.href = '../../../pages/walletAuth/walletDirect.html';
 		throw new Error('No Web3 Provider detected. Please install Metamask.');	
 	}
+
+	return state.account;
 }
 
 async function fundAccount() {
