@@ -438,6 +438,122 @@
 	display: none;
 }
 
+#fund-game {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--font-color);
+	font-size: 30px;
+	background: linear-gradient(360deg, var(--sec-color), var(--tert-color));
+	border-radius: 10px;
+	box-shadow: 2px 2px 5px 0 var(--sec-color);
+	width: 100%;
+	max-width: 400px;
+	min-width: 300px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 1;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+}
+
+#fund-game h2 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--sec-color);
+	margin-bottom: 10px;
+}
+
+#fund-game #fund-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--font-color);
+	font-size: 30px;
+	width: 90%;
+	max-width: 300px;
+}
+
+#fund-game #fund-form input {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--font-color);
+	font-size: 30px;
+	width: 100%;
+	max-width: 300px;
+	background-color: var(--quart-color);
+	border-radius: 10px;
+	padding: 5px;
+}
+
+#fund-game #fund-form input:focus {
+	outline: none;
+}
+
+#fund-game #fund-form button {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 0px;
+	color: var(--font-color);
+	font-size: 30px;
+	background-color: var(--sec-color);
+	border-radius: 10px;
+	padding: 5px;
+	min-width: 200px;
+}
+
+#fund-game #fund-form .error-message {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	font-size: 20px;
+	background-color: transparent;
+	border-radius: 10px;
+	padding: 5px;
+	width: 100%;
+	max-width: 300px;
+	min-height: 20px;
+}
+
+#fund-game .close-btn {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--font-color);
+	font-size: 30px;
+	background-color: var(--sec-color);
+	border-radius: 0px 10px 0px 10px;
+	padding: 5px;
+	width: 100%;
+	max-width: 50px;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
 /* mobile responsiveness */
 @media screen and (max-width: 600px) {
 	.game-details {

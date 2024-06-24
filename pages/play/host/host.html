@@ -105,6 +105,28 @@
 					<button id="host-cancel-btn"><i class="fas fa-stop"></i> Cancel</button>
 				</div>
 			</section>
+			<!-- fund  -->
+			<section id="fund-game">
+				<!-- fund account form -->
+				<h2>Fund Game</h2>
+				<button id="fund-close-btn" class="close-btn"><i class="fa fa-times"></i></button>
+				<form id="fund-form">
+					<div class="form-group">
+						<label for="amount"></label>
+						<p class="error-message"></p>
+						<input
+							min="1"
+							type="number"
+							max="100"
+							id="amount"
+							name="amount"
+							placeholder="Enter amount (cUSD)"
+							required
+						/>
+					</div>
+					<button type="submit">Fund</button>
+				</form>
+			</section>
 		</main>
 		<footer class="">
 			<nav class="navbar">

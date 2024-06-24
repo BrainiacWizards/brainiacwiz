@@ -9,6 +9,7 @@ body {
 	overflow: visible;
 	border-radius: 20px;
 	box-shadow: 2px 2px 5px var(--sec-color);
+	max-width: 300px;
 }
 
 .profile-container .profile-header .profile-image {
