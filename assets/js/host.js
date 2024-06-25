@@ -18,8 +18,14 @@ const fundForm = document.getElementById('fund-form');
 const closeBtn = document.querySelector('.close-btn');
 const hostDeposit = document.getElementById('host-deposit');
 const errorMessage = document.querySelector('.error-message');
-
+const transferPopup = document.getElementById('transfer-popup');
+const transferClose = document.getElementById('transfer-close');
 const colors = ['var(--prim-color)', 'var(--sec-color)', 'var(--tert-color)', 'var(--quart-color)'];
+
+transferClose.addEventListener('click', () => {
+	console.log(transferClose);
+	transferPopup.style.display = 'none';
+});
 
 // check gamePin in url
 const urlParams = new URLSearchParams(window.location.search);
@@ -80,9 +86,20 @@ async function setPlayerNames(details) {
 	await setQuizDetails(details);
 	copyAddress();
 	openForm();
+	clickEventOnPlayer();
 	setTimeout(() => {
 		setPlayerNames(details);
 	}, 2000);
+}
+
+async function clickEventOnPlayer() {
+	//
+	const allPlayer = document.querySelectorAll('.player');
+	allPlayer.forEach((player) => {
+		player.addEventListener('click', () => {
+			transferPopup.style.display = 'flex';
+		});
+	});
 }
 
 // copy player address from players
