@@ -19,11 +19,7 @@ async function loadContract(web3) {
 	const network = data.networks[networkId];
 
 	if (!network) {
-		alert(
-			//'Contract not deployed to the current network. Please select another network with Metamask.',
-			'Almost there!!......Add Celo Testnet to your Metamask and also add free tokens.',
-		);
-		//window.location.href = 'https://faucet.celo.org/alfajores';
+		alert('Contract not deployed to the current network. Please select CELO Testnet.');
 		window.open('https://faucet.celo.org/alfajores', '_blank');
 		return;
 	}
@@ -42,11 +38,10 @@ async function loadContract(web3) {
 	for (let i = 0; i < balanceOf; i++) {
 		const id = await token.methods.tokenOfOwnerByIndex(state.account, i).call();
 		let tokenURI = await token.methods.tokenURI(id).call();
-		state.tokenURI.push(tokenURI); // Simplified
+		state.tokenURI.push(tokenURI);
 	}
 
 	console.log('state: ', state);
-
 	return token;
 }
 
@@ -62,7 +57,7 @@ async function metaConnection(walletAddress) {
 			console.log('metamask connected');
 		} catch (error) {
 			alert('You need to connect to MetaMask for this dApp to work!!');
-			window.location.href = '../../../pages/walletAuth/walletDirect.html'; // Redirecting to wallet authentication page for game access
+			window.location.href = '../../../pages/walletAuth/walletDirect.html';
 			throw new Error('User denied account access, metamask not connected');
 		}
 
@@ -88,7 +83,6 @@ async function fundAccount() {
 	const nft = nfts[randomIndex];
 	const { origin } = window.location;
 	const nftLink = `${origin}/assets/nft/${nft}`;
-	// const nftLink = await query({ "inputs": "nft programming" })
 	console.log('nftLink', nftLink);
 
 	await state.token.methods
@@ -96,7 +90,7 @@ async function fundAccount() {
 		.send({ from: state.account })
 		.on('receipt', (receipt) => {
 			console.log('receipt', receipt);
-			state.tokenURI.push(nftLink); // Simplified
+			state.tokenURI.push(nftLink);
 			transferStatus = true;
 		})
 		.on('error', (error, receipt) => {

@@ -7,10 +7,18 @@
 	margin: 0;
 }
 
+#transfer-popup .close-btn {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	margin-top: 0px;
+	padding: 5px;
+}
+
 .landing-content {
 	padding: 20px;
 	border-radius: 10px;
-	box-shadow: 0 0 10px rgba(4, 62, 250, 0.9);
+	box-shadow: 0 0 10px var(--sec-color);
 	width: 200px;
 	text-align: center;
 	margin-right: 0;
@@ -37,14 +45,14 @@ input {
 button {
 	padding: 10px 20px;
 	border: none;
-	background-color: #007bff;
+	/* background-color: var(); */
 	color: white;
 	border-radius: 5px;
 	cursor: pointer;
 }
 
 button:hover {
-	background-color: #0056b3;
+	background-color: var(--quart-color);
 }
 
 .nft-wallet ul {
@@ -52,7 +60,7 @@ button:hover {
 	margin: 5px 0;
 	padding: 10px;
 	border-radius: 5px;
-	border: 1px solid #07010110;
+	border: 1px solid var(--sec-color);
 	word-wrap: break-word;
 	color: black;
 }
@@ -73,6 +81,18 @@ button:hover {
 }
 
 #hostBalance {
-	color: black;
+	color: var(--sec-color);
 	text-align: center;
+}
+
+#transfer-text {
+	max-width: 0% !important;
+	min-width: 100%;
+	text-align: flex-start;
+	background-color: transparent;
+	color: var(--quart-color);
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 16px;
+	margin: 0;
+	margin-top: 10px;
 }
