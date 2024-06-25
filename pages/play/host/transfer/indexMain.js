@@ -1,6 +1,13 @@
 import { metaConnection } from '../../../../assets/js/utils/metamask.js';
 
 const transfertext = document.getElementById('transfer-text');
+const transferPop = document.getElementById('transfer-pop');
+const closeBtn = document.querySelector('.close-btn');
+
+// Event listener for the close button
+closeBtn.addEventListener('click', () => {
+	transferPop.style.display = 'none';
+});
 
 // Function to send a transaction
 async function sendTransaction() {
