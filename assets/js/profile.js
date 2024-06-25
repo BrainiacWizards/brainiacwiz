@@ -1,27 +1,5 @@
-<<<<<<< HEAD
-//import { metaConnection } from '../../assets/js/utils/metamask.js';
-
-const depositBtn = document.querySelector('#profile-deposit');
-const transferBtn = document.querySelector('#profile-transfer');
-const transactBtn = document.querySelector('#profile-Transactions');
-const NftsBtn = document.querySelector('#profile-NFTs');
-console.log(transactBtn);
-depositBtn.addEventListener('click', function() {
-    console.log('Deposit button clicked!');
-});
-
-transferBtn.addEventListener('click', function() {
-    console.log('Transfer button clicked!');
-});
-
-transactBtn.addEventListener('click', function() {
-    console.log('Transact button clicked!');
-});
-
-NftsBtn.addEventListener('click', function() {
-    console.log('NFTs button clicked!');
-=======
 import { navbar } from './utils/setnavbar.js';
+import { metaConnection } from '../../../../assets/js/utils/metamask.js';
 
 const walletContent = document.querySelector('.wallet-content');
 const walletContainer = document.querySelector('.wallet-container');
@@ -49,5 +27,23 @@ profileTxs.addEventListener('click', () => {
 	navbar.showTransfers();
 	console.log(walletContent.style.display);
 	console.log(txContent.style.display);
->>>>>>> 17d38aa94c484bf87833e3ef93b51d1b45120b7d
 });
+
+// Function to get and display the user's MetaMask address and balance
+async function getAddress() {
+	const address = await metaConnection();
+	// Get the balance of the user's MetaMask account
+	const balance = await ethereum.request({
+		method: 'eth_getBalance',
+		params: [address, 'latest'],
+	});
+
+	const balanceElement = document.getElementById('profile-balance');
+	const balanceInDecimal = (balance / 10 ** 18).toFixed(8);
+	balanceElement.value = balanceInDecimal;
+	console.log('User balance:', balanceElement.value);
+}
+
+// Call getAddress to display balance
+getAddress();
+
