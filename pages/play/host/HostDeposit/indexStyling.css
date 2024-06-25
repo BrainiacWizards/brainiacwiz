@@ -68,3 +68,14 @@ button:hover {
     overflow-y: auto;
     margin-bottom: 20px;
 }
+
+.deposit h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 25px;
+}
+
+#hostBalance {
+    color: black;
+    text-align: center;
+}
