@@ -38,6 +38,7 @@
 .host-view .header .quiz-details #title {
 	font-size: 25px;
 	font-weight: bold;
+	width: 100%;
 }
 
 .host-view .header .game-code {
@@ -121,6 +122,18 @@
 	min-height: 50px;
 	justify-content: center;
 	align-items: center;
+}
+
+.host-view .players-block .players .player .player-address {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--quart-color);
+	font-size: 30px;
+	gap: 10px;
 }
 
 .host-view .players-block .players .player:hover {
@@ -223,9 +236,10 @@
 .players .players-list .player {
 	display: flex;
 	flex-direction: row;
+	flex-wrap: nowrap;
 	align-items: center;
 	gap: 10px;
-	justify-content: center;
+	justify-content: space-evenly;
 	margin: 0;
 	padding: 5px;
 	color: var(--font-color);
@@ -249,6 +263,8 @@
 	padding: 0px;
 	color: var(--font-color);
 	font-size: 30px;
+	flex-wrap: nowrap;
+	text-wrap: nowrap;
 }
 
 .players .players-list .player .player-score {
@@ -260,6 +276,25 @@
 	padding: 0px;
 	color: var(--font-color);
 	font-size: 30px;
+	flex-wrap: nowrap;
+}
+
+.players .players-list .player .player-address {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--quart-color);
+	font-size: 23px;
+	background-color: transparent;
+	border-radius: 0px;
+	box-shadow: none;
+}
+
+.players .players-list .player .player-address:hover {
+	color: var(--font-color);
 }
 
 .players .players-list .player:hover {
@@ -404,6 +439,124 @@
 	display: none;
 }
 
+#fund-game {
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--font-color);
+	font-size: 30px;
+	background: linear-gradient(360deg, var(--sec-color), var(--tert-color));
+	border-radius: 10px;
+	box-shadow: 2px 2px 5px 0 var(--sec-color);
+	width: 100%;
+	max-width: 400px;
+	min-width: 300px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 1;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+}
+
+#fund-game h2 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--sec-color);
+	margin-bottom: 10px;
+}
+
+#fund-game #fund-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--font-color);
+	font-size: 30px;
+	width: 90%;
+	max-width: 300px;
+}
+
+#fund-game #fund-form input {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--sec-color);
+	font-size: 30px;
+	width: 100%;
+	max-width: 300px;
+	background-color: var(--quart-color);
+	border-radius: 10px;
+	padding: 5px;
+	border: none;
+	box-shadow: 2px 2px 5px 0 var(--sec-color);
+}
+
+#fund-game #fund-form input:focus {
+	outline: none;
+}
+
+#fund-game #fund-form button {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 0px;
+	color: var(--font-color);
+	font-size: 30px;
+	background-color: var(--sec-color);
+	border-radius: 10px;
+	padding: 5px;
+	min-width: 200px;
+}
+
+#fund-game #fund-form .error-message {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	font-size: 20px;
+	background-color: transparent;
+	border-radius: 10px;
+	padding: 5px;
+	width: 100%;
+	max-width: 300px;
+	min-height: 20px;
+}
+
+#fund-game .close-btn {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	color: var(--font-color);
+	font-size: 30px;
+	background-color: var(--sec-color);
+	border-radius: 0px 10px 0px 10px;
+	padding: 5px;
+	width: 100%;
+	max-width: 50px;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
 /* mobile responsiveness */
 @media screen and (max-width: 600px) {
 	.game-details {
@@ -434,6 +587,7 @@
 		min-width: 250px;
 		border-radius: 10px 0 0 10px;
 		transform: translate(250px, 0);
+		transition: all 0.5s ease-in-out;
 	}
 
 	.game-details .game-info .rewards {

@@ -3,13 +3,26 @@ import { getState, metaConnection } from './metamask.js';
 
 class Navbar {
 	constructor() {
+		const { origin } = window.location;
+		this.origin = origin;
 		this.checkInternetConnection();
 		this.injectWalletContainer();
 		this.injectTrackingData();
 		this.initDOMElements();
 		this.injectCopyToClipboard();
+		this.injectProfileLink();
 		this.url = 'https://api.studio.thegraph.com/query/72281/celo-subgraph-box/version/latest';
 		this.sentryUrl = ``;
+	}
+
+	// inject profile link page next to wallet-btn
+	injectProfileLink() {
+		const profileLink = document.createElement('a');
+		profileLink.href = `${this.origin}/pages/user/profile.html`;
+		profileLink.classList.add('profile-link');
+		profileLink.innerHTML = `<i class="fas fa-user"></i>`;
+		this.walletBtn.insertAdjacentElement('afterend', profileLink);
+		this.walletBtn.style.display = 'none';
 	}
 
 	checkInternetConnection() {

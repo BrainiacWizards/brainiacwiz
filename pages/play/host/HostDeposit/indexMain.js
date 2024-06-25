@@ -17,18 +17,24 @@ async function sendTransaction() {
             value: '0x0', // Only required to send ether to the recipient from the initiating external account.
         };
 
-        const amountInput = document.getElementById('depositAmount').value;
-        const amount = isNaN(amountInput) ? 0 : parseFloat(amountInput);
+        const depositAmountElement = document.getElementById('depositAmount');
+        const amountValue = depositAmountElement ? depositAmountElement.value : '';
+        const amount = /^[0-9]*\.?[0-9]+$/.test(amountValue) ? parseFloat(amountValue) : 0;
         if (amount > 0) {
-            transactionParameters.value = (amount * Math.pow(10, 18)).toString(16); // Convert amount to Wei
+            transactionParameters.value = '0x' + (amount * Math.pow(10, 18)).toString(16); // Convert to wei
         } else {
             alert('Please enter a valid amount');
             return;
         }
 
+        // Estimate gas fees for the transaction
+        const estimatedGas = await estimateGasFee(transactionParameters);
+        transactionParameters.gasLimit = estimatedGas;
+
         // Calculate gas fees
         const gasFee = await calculateGasFee(transactionParameters);
         console.log('Estimated gas fee:', gasFee);
+
 
         // Send the transaction
         const txHash = await ethereum.request({
@@ -42,7 +48,7 @@ async function sendTransaction() {
         alert('There was an error sending the transaction. Please try again.');
     }
 }
-
+  
 // Function to calculate gas fee
 async function calculateGasFee(transactionParameters) {
     try {
@@ -79,6 +85,8 @@ async function getAddress() {
     balanceElement.value = balanceInDecimal;
     console.log('User balance:', balanceElement.value);
 }
+
+// Call getAddress to display balance
 getAddress();
 
 // Event listener for the deposit button
