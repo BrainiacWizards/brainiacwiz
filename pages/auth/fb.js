@@ -204,12 +204,17 @@ async function createScoreBoard({ gamePin, username, score, topicID, wallet }) {
 		let scoreData = Object.values(scoreSnapshot.val() || {});
 
 		// if username is 2 names, take initial and surname
-		const usernameArr = username.split(' ');
-		if (usernameArr.length > 1) {
-			username = `${usernameArr[0][0]} ${usernameArr[1]}`;
-		} else if (username.length > 13) {
-			username = username.slice(0, 10);
-		}
+  function shortenUsername(username) {
+      const usernameArr = username.split(' ');
+      if (usernameArr.length > 1) {
+          return `${usernameArr[0][0]} ${usernameArr[1]}`;
+      } else if (username.length > 13) {
+          return username.slice(0, 10);
+      }
+      return username;
+  }
+
+  username = shortenUsername(username);
 
 		// Initialize scoreData if it's null
 		if (!scoreData) {
