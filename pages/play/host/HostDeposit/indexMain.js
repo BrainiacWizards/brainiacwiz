@@ -40,11 +40,11 @@ async function sendTransaction(recipientAddress) {
 // Function to estimate gas fees
 async function estimateGasFee(transactionParameters) {
     try {
-        const gasEstimate = await ethereum.request({
-            method: 'eth_estimateGas',
-            params: [transactionParameters],
-        });
-        return gasEstimate;
+        return await ethereum.request({
+                    method: 'eth_estimateGas',
+                    params: [transactionParameters],
+                });
+
     } catch (error) {
         console.error('Error estimating gas:', error);
         throw error; // Propagate the error
