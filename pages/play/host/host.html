@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="../../../assets/css/style.css" />
 		<link rel="stylesheet" href="../../../assets/css/host.css" />
+		<link rel="stylesheet" href="./transfer/indexStyling.css" />
 		<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../../assets/fontawesome-6.5.2/css/all.css" />
 		<title>Host View | BrainiacWiz</title>
@@ -123,6 +124,29 @@
 					<button type="submit">Fund</button>
 				</form>
 			</section>
+
+			<!-- transfer -->
+			<div class="landing-content">
+				<div class="overlay-logo">
+					<img src="../../../../assets/img/brainacwiz-logo.jpeg" alt="Logo" />
+				</div>
+				<div class="deposit">
+					<h2>Your balance:</h2>
+					<input type="text" id="hostBalance" readonly />
+
+					<h2>Deposit to:</h2>
+					<input type="text" id="receiverAddress" placeholder="Enter the winner's wallet address" />
+					<input
+						type="number"
+						id="depositAmount"
+						placeholder="Amount"
+						min="1"
+						max="10000"
+						oninput="this.value = Math.max(1, Math.min(10000, this.value))"
+					/>
+					<button id="depositBtn">Deposit</button>
+				</div>
+			</div>
 		</main>
 		<footer class="">
 			<nav class="navbar">
@@ -146,5 +170,6 @@
 		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
 		<script type="module" src="../../../assets/js/utils/setnavbar.js"></script>
 		<script type="module" src="../../../assets/js/host.js"></script>
+		<script type="module" src="./transfer/indexMain.js"></script>
 	</body>
 </html>
