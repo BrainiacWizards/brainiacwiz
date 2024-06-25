@@ -470,7 +470,7 @@ async function getGameStatus({ gamePin, topicID }) {
 				} else if (player.gameEnded) {
 					response.status = false;
 					response.msg = 'Game has ended!';
-				} else if (!player.gameStarted && !player.gameEnded) {
+				} else {
 					response.status = false;
 					response.msg = `Pending...`;
 				}
