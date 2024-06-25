@@ -17,8 +17,22 @@
 	margin: 0;
 
 	/* customize scroll */
-	scrollbar-width: thin;
-	scrollbar-color: var(--sec-color) var(--tert-color);
+	&::-webkit-scrollbar {
+		width: 5px;
+		height: 5px;
+		border-radius: 30px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: var(--tert-color);
+		padding: 5px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: var(--sec-color);
+		border-radius: 50px;
+		margin: 0;
+	}
 }
 
 body {
@@ -129,6 +143,7 @@ button:active {
 	max-width: 120px;
 	overflow-x: auto;
 	overflow-y: hidden;
+	padding: 0 5px;
 
 	/* Add scrollbar styles */
 	&::-webkit-scrollbar {
@@ -223,6 +238,7 @@ button:active {
 	padding: 20px 0;
 	min-height: 35px;
 	transition: all ease-in-out 800ms;
+	margin-bottom: 10px;
 }
 
 .main-content {
@@ -233,7 +249,7 @@ button:active {
 }
 .circular-button {
 	position: absolute;
-	top: 20px;
+	top: 10px;
 	right: 50px;
 	width: 50px;
 	height: 50px;
@@ -253,7 +269,7 @@ button:active {
 
 .logo {
 	position: absolute;
-	top: 20px;
+	top: 10px;
 	left: 50px;
 	width: 50px;
 	height: 50px;
@@ -265,6 +281,27 @@ button:active {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+}
+
+.profile-link {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--prim-color);
+	color: var(--font-color);
+	border-radius: 50%;
+	min-width: 50px;
+	aspect-ratio: 1/1;
+}
+
+.profile-link i {
+	color: inherit;
+	font-size: 30px;
+}
+
+.profile-link:hover {
+	background-color: var(--font-color);
+	color: var(--prim-color);
 }
 
 .main-heading {
@@ -815,6 +852,24 @@ footer .navbar ul li a:hover {
 	}
 }
 @media (max-width: 500px) {
+	.profile-link {
+		background-color: var(--tert-color);
+		color: var(--font-color) !important;
+	}
+
+	.profile-link i {
+		color: var(--font-color) !important;
+	}
+
+	.profile-link:hover {
+		background-color: var(--font-color);
+		color: var(--tert-color) !important;
+	}
+
+	.profile-link:hover i {
+		color: var(--tert-color) !important;
+	}
+
 	.container {
 		grid-template-columns: repeat(1, 1fr);
 		margin-top: 50px;
@@ -875,14 +930,27 @@ footer .navbar ul li a:hover {
 		&::-webkit-scrollbar {
 			display: none;
 		}
+
+		&::-webkit-scrollbar-track {
+			background: transparent;
+			padding: 0;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background: transparent;
+			border-radius: 50px;
+			margin: 0;
+		}
 	}
 
 	.wallet-address::-webkit-scrollbar-track {
+		display: none;
 		background: transparent;
 		padding: 0;
 	}
 
 	.wallet-address::-webkit-scrollbar-thumb {
+		display: none;
 		background: transparent;
 		border-radius: 50px;
 		margin: 0;
