@@ -1,5 +1,6 @@
 import { createScoreBoard, getGameStatus } from '../../pages/auth/fb.js';
 import { setPlayerNames } from './host.js';
+import { metaConnection } from './utils/metamask.js';
 
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');
@@ -13,6 +14,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const gamePin = urlParams.get('gamePin');
 const topicID = urlParams.get('topic');
 const login = JSON.parse(sessionStorage.getItem('login'));
+login.wallet = await metaConnection();
 const rewardAmount = document.querySelector('.reward-amount');
 const nftImage = document.querySelector('.nft-image');
 const playerNames = [];
