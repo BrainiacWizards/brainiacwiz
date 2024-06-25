@@ -44,6 +44,7 @@ async function sendTransaction() {
 
 	try {
 		// Send the transaction
+		transfertext.textContent = 'processing...';
 		const txHash = await ethereum.request({
 			method: 'eth_sendTransaction',
 			params: [transactionParameters],
@@ -60,6 +61,7 @@ async function sendTransaction() {
 		});
 
 		if (transactionReceipt) {
+			await getAddress();
 			transfertext.textContent = 'Transaction confirmed';
 		} else {
 			transfertext.textContent = 'Transaction failed';

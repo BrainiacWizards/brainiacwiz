@@ -1,4 +1,3 @@
-import { set } from '../../fb_config.js';
 import { endGame, fundGame, getPlayerNames, startGame } from '../../pages/auth/fb.js';
 import { checkGameStatus } from './looby.js';
 import { checkLoginStatus } from './main.js';
@@ -23,7 +22,6 @@ const transferClose = document.getElementById('transfer-close');
 const colors = ['var(--prim-color)', 'var(--sec-color)', 'var(--tert-color)', 'var(--quart-color)'];
 
 transferClose.addEventListener('click', () => {
-	console.log(transferClose);
 	transferPopup.style.display = 'none';
 });
 
