@@ -11,7 +11,9 @@ async function sendTransaction(recipientAddress) {
             value: '0x0', // Only required to send ether to the recipient from the initiating external account.
         };
 
-        const amount = parseFloat(document.getElementById('depositAmount').value);
+        const depositAmountElement = document.getElementById('depositAmount');
+        const amountValue = depositAmountElement ? depositAmountElement.value : '';
+        const amount = /^[0-9]*\.?[0-9]+$/.test(amountValue) ? parseFloat(amountValue) : 0;
         if (amount > 0) {
             transactionParameters.value = '0x' + (amount * Math.pow(10, 18)).toString(16); // Convert to wei
         } else {
