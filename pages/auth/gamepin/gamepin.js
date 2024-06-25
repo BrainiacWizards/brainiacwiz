@@ -9,10 +9,9 @@ const inputGamePin = document.getElementById('input-gamepin-form');
 const gamePin = document.getElementById('gamepin');
 const error = document.getElementById('error-message');
 const logUserInput = document.getElementById('log-user');
+const campaign = document.getElementById('campaign');
 
-if (generateBtn) {
-	generateBtn.addEventListener('click', generatePIN);
-}
+generateBtn?.addEventListener('click', generatePIN);
 
 if (window.location.pathname.includes('gamepinUI')) {
 	checkLoginStatus({ path: '../../' });
@@ -29,8 +28,13 @@ if (logUserInput) {
 	logUserInput.value = loginObject ? JSON.parse(loginObject).username : '';
 }
 
-function generatePIN() {
+async function generatePIN() {
 	if (!generated) {
+		let campaignValue = campaign.value;
+		if (campaignValue == '') {
+			campaignValue = pin;
+		}
+
 		let digits = Math.floor(1000 + Math.random() * 9000);
 
 		let letters = '';
@@ -44,32 +48,33 @@ function generatePIN() {
 		document.getElementById('pinDisplay').value = pin;
 		sessionStorage.setItem('gamePin', pin);
 
-		createGamePinTable({ gamePin: pin, topicID: topic });
+		let login = sessionStorage.getItem('login');
+		login = JSON.parse(login);
+		const host = login.username;
+
+		const gameObject = { gamePin: pin, topicID: topic, campaign: campaignValue, host };
+		console.log(gameObject);
+
+		generateBtn.textContent = 'creating...';
 		generated = true;
+		generateBtn.disabled = true;
+		await createGamePinTable(gameObject);
+		generateBtn.textContent = 'Next';
+		generateBtn.disabled = false;
 	} else {
-		alert('You have already generated a PIN, use that one');
+		window.location.href = `../../play/host/host.html?gamePin=${pin}&topic=${topic}`;
 	}
 }
-
-window.addEventListener('load', function () {
-	let storedPin = sessionStorage.getItem('gamePIN');
-	if (storedPin) {
-		document.getElementById('pinDisplay').value = storedPin;
-	}
-});
 
 // LISTEN FOR BACK AND FORWARD CLICKS
-if (backB) {
-	backB.addEventListener('click', () => {
-		window.history.back();
-	});
-}
 
-if (nextB) {
-	nextB.addEventListener('click', () => {
-		window.location.href = `../../play/host/host.html?gamePin=${pin}&topic=${topic}`;
-	});
-}
+backB?.addEventListener('click', () => {
+	window.history.back();
+});
+
+nextB?.addEventListener('click', () => {
+	window.location.href = `../../play/host/host.html?gamePin=${pin}&topic=${topic}`;
+});
 
 async function gamePinFormHandling() {
 	inputGamePin?.addEventListener('submit', async (e) => {
@@ -127,12 +132,12 @@ async function validateInputs(gamePin) {
 function setLogin() {
 	const usernameValue = document.getElementById('log-user');
 	if (usernameValue) {
-		const loginObject = {
-			username: usernameValue.value,
-			lastLogin: new Date().toLocaleString(),
-			gamePin: gamePin.value,
-		};
-
+		const login = sessionStorage.getItem('login');
+		const loginObject = login ? JSON.parse(login) : {};
+		loginObject.username = usernameValue.value;
+		loginObject.lastLogin = new Date().toLocaleDateString();
+		loginObject.gamePin = gamePin.value;
+		loginObject.topic = topic;
 		sessionStorage.setItem('login', JSON.stringify(loginObject));
 
 		// set usernameValue input field to readonly

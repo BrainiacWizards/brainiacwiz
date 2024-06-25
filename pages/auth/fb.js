@@ -1,6 +1,6 @@
 import * as fb from '../../fb_config.js';
 
-const fbSignUp = async ({ email, password, userName }) => {
+const fbSignUp = async ({ email, password, userName, errorMessage }) => {
 	try {
 		const userCredential = await fb.createUserWithEmailAndPassword(fb.auth, email, password);
 		const { user } = userCredential;
@@ -14,27 +14,37 @@ const fbSignUp = async ({ email, password, userName }) => {
 
 		await fb.set(userRef, userData);
 		console.log('Data written successfully');
-		alert('Registration successful!, Please login to continue');
+		errorMessage.textContent = 'Account created!';
+		errorMessage.style.color = 'green';
 
 		// redirect to the login page
 		window.location.href = './login.html';
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			fbSignUp(email, password, userName);
+			console.log('offline');
+			fbSignUp({ email, password, userName });
 		} else {
+			const errorMessages = {
+				'auth/invalid-email': 'Invalid email address.',
+				'auth/user-disabled': 'User account is disabled.',
+				'auth/user-not-found': 'User not found.',
+				'auth/wrong-password': 'Incorrect password.',
+				// Add more error codes and messages as needed
+			};
+
+			const userFriendlyMessage = errorMessages[error.code] || 'An unexpected error occurred.';
+			errorMessage.textContent = userFriendlyMessage;
 			throw new Error(`could not create user\n\n ${error}`);
 		}
 	}
 };
 
 // google login
-async function googleLogin() {
+async function googleLogin({ errorMessage, prevURL }) {
 	try {
 		fb.auth.useDeviceLanguage();
 		const result = await fb.signInWithPopup(fb.auth, fb.provider);
-		const credential = fb.GoogleAuthProvider.credentialFromResult(result);
-		const token = credential.accessToken;
-		const user = result.user;
+		const { user } = result;
 
 		// get user data
 		const userRef = fb.ref(fb.database, `users/${user.uid}`);
@@ -45,7 +55,7 @@ async function googleLogin() {
 		};
 
 		await fb.set(userRef, userData);
-		alert('Login successful!, Enjoy');
+		errorMessage.textContent = 'Login successful!';
 		// set session storage for login object
 		const loginObject = {
 			loggedIn: true,
@@ -54,21 +64,20 @@ async function googleLogin() {
 		};
 
 		sessionStorage.setItem('login', JSON.stringify(loginObject));
-		// redirect to the home page
-		const { origin } = window.location;
-		window.location.href = `${origin}/index.html?login=success&username=${user.displayName}`;
+		window.location.href = `${prevURL}?login=success&username=${user.displayName}`;
 	} catch (error) {
-		const errorCode = error.code;
+		const errorCode = error.code.split('/')[1];
 		const errorMessage = error.message;
-		const email = error.email;
+		const { email } = error;
 		const credential = fb.GoogleAuthProvider.credentialFromError(error);
+		errorMessage.textContent = errorCode;
 		throw new Error(
 			`could not login user!\n\n ${errorCode}\n\n ${errorMessage}\n\n ${email}\n\n ${credential}`,
 		);
 	}
 }
 
-const fbLogin = async ({ email, password }) => {
+const fbLogin = async ({ email, password, errorMessage, prevURL }) => {
 	try {
 		const userCredential = await fb.signInWithEmailAndPassword(fb.auth, email, password);
 		const { user } = userCredential;
@@ -80,7 +89,8 @@ const fbLogin = async ({ email, password }) => {
 		const userRef = fb.ref(fb.database, `users/${user.uid}`);
 
 		await fb.update(userRef, userData);
-		alert('Login successful!, Enjoy');
+		errorMessage.textContent = 'Login successful!';
+		errorMessage.style.color = 'green';
 
 		// query for username
 		const usernameRef = fb.ref(fb.database, `users/${user.uid}/username`);
@@ -96,24 +106,23 @@ const fbLogin = async ({ email, password }) => {
 
 		sessionStorage.setItem('login', JSON.stringify(loginObject));
 		// redirect to the home page
-		window.location.href = '../../index.html?login=success&username=' + username;
+		window.location.href = `${prevURL}?login=success&username=${username}`;
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			fbLogin(email, password);
+			fbLogin({ email, password });
 		} else {
-			alert('Invalid email or password');
-			throw new Error(`could not login user\n\n ${error}`);
+			errorMessage.textContent = error.code.split('/')[1];
+			// throw new Error(`could not login user\n\n ${error}`);
 		}
 	}
 };
 
 // github login
-async function githubLogin() {
+async function githubLogin({ prevURL }) {
 	try {
 		const result = await fb.signInWithPopup(fb.auth, fb.githubProvider);
 		const credential = fb.GithubAuthProvider.credentialFromResult(result);
-		const token = credential.accessToken;
-		const user = result.user;
+		const { user } = result;
 
 		// get user data
 		const userRef = fb.ref(fb.database, `users/${user.uid}`);
@@ -133,29 +142,47 @@ async function githubLogin() {
 		};
 
 		sessionStorage.setItem('login', JSON.stringify(loginObject));
-		// redirect to the home page
-		const { origin } = window.location;
-		window.location.href = `${origin}/index.html?login=success&username=${user.displayName}`;
+		// redirect to the previous page
+		window.location.href = `${prevURL}?login=success&username=${user.displayName}`;
 	} catch (error) {
-		const errorCode = error.code;
+		const errorCode = error.code.split('/')[1];
 		const errorMessage = error.message;
-		const email = error.email;
+		const { email } = error;
 		const credential = fb.GithubAuthProvider.credentialFromError(error);
+		alert(errorCode);
+
 		throw new Error(
 			`could not login user!\n\n ${errorCode}\n\n ${errorMessage}\n\n ${email}\n\n ${credential}`,
 		);
 	}
 }
 
-async function createGamePinTable({ gamePin, topicID }) {
+async function createGamePinTable({ gamePin, topicID, campaign, host }) {
 	try {
 		console.log('Creating gamepin table', gamePin, topicID);
 		const gamePinRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
 		await fb.set(gamePinRef, {});
-		const dummyObject = [{ username: 'dummy', score: 0 }];
+		const nfts = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg'];
+		const randomIndex = Math.floor(Math.random() * nfts.length);
+		const nft = nfts[randomIndex];
+		const { origin } = window.location;
+		const nftURL = `${origin}/assets/nft/${nft}`;
+		const dummyObject = [
+			{
+				username: 'dummy',
+				score: 0,
+				reward: 0,
+				gameStarted: false,
+				gameEnded: false,
+				campaign: campaign,
+				host: host,
+				nft: nftURL,
+			},
+		];
+
+		console.log(dummyObject);
 
 		await fb.set(gamePinRef, dummyObject);
-
 		alert('Game created! share your pin with others');
 	} catch (error) {
 		if (error.message.includes('offline')) {
@@ -167,7 +194,7 @@ async function createGamePinTable({ gamePin, topicID }) {
 }
 
 // set scoreboard in fb.database in table named gamepin
-async function createScoreBoard({ gamePin, username, score, topicID }) {
+async function createScoreBoard({ gamePin, username, score, topicID, wallet }) {
 	console.log('Creating gamepin table', gamePin, topicID);
 	let scoreRef = null;
 
@@ -178,11 +205,11 @@ async function createScoreBoard({ gamePin, username, score, topicID }) {
 
 		// Initialize scoreData if it's null
 		if (!scoreData) {
-			scoreData = [{ username: username, score: score }];
+			scoreData = [{ username: username, score: score, wallet: wallet }];
 		}
 		// add the new score to the existing data if the username doesn't already exist
 		if (!scoreData.some((obj) => obj.username === username)) {
-			scoreData.push({ username: username, score: score });
+			scoreData.push({ username: username, score: score, wallet: wallet });
 		} else {
 			// update the score if the username already exists
 			scoreData = scoreData.map((obj) => {
@@ -224,10 +251,24 @@ async function queryGamePin({ gamePin, topicID }) {
 async function getPlayerNames({ gamePin, topicID }) {
 	let playerNamesRef = null;
 	let playerNamesSnapshot = null;
+	const dummySnapshot = {
+		val: () => {
+			return [
+				{
+					username: 'dummy',
+					score: 0,
+					nft: '1.jpg',
+					reward: 0,
+					gameStarted: false,
+					gameEnded: false,
+				},
+			];
+		},
+	};
 
 	try {
 		playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
-		playerNamesSnapshot = await fb.get(playerNamesRef);
+		playerNamesSnapshot = (await fb.get(playerNamesRef)) || dummySnapshot;
 	} catch (error) {
 		if (error.message.includes('offline')) {
 			getPlayerNames({ gamePin, topicID });
@@ -236,9 +277,19 @@ async function getPlayerNames({ gamePin, topicID }) {
 		}
 	}
 
-	if (!playerNamesSnapshot) return [{ username: 'No players yet' }];
-
-	return playerNamesSnapshot.val();
+	let players = playerNamesSnapshot.val() || [
+		{
+			username: 'dummy',
+			score: 0,
+			nft: '1.jpg',
+			reward: 0,
+			gameStarted: false,
+			gameEnded: false,
+		},
+	];
+	// console.log(players);
+	players = players.sort((a, b) => b.score - a.score);
+	return players;
 }
 
 async function setPlayers({ gamePin, topicID, playerNames }) {
@@ -404,24 +455,24 @@ async function endGame({ gamePin, topicID }) {
 async function getGameStatus({ gamePin, topicID }) {
 	const response = {
 		status: false,
-		msg: 'Waiting for game status',
+		msg: 'pending...',
 	};
 
 	try {
-		const playerName = await getPlayerNames({ gamePin, topicID });
+		const playerName = (await getPlayerNames({ gamePin, topicID })) || [];
 
 		// check on dummy
 		playerName.map((player) => {
 			if (player.username === 'dummy') {
 				if (player.gameStarted && !player.gameEnded) {
 					response.status = true;
-					response.msg = 'Game has started';
+					response.msg = 'On	going game!';
 				} else if (player.gameEnded) {
 					response.status = false;
-					response.msg = 'Game has ended, try another one';
-				} else {
+					response.msg = 'Game has ended!';
+				} else if (!player.gameStarted && !player.gameEnded) {
 					response.status = false;
-					response.msg = `Game hasn't started yet`;
+					response.msg = `Pending...`;
 				}
 
 				return player;
@@ -433,11 +484,68 @@ async function getGameStatus({ gamePin, topicID }) {
 		if (error.message.includes('offline')) {
 			getGameStatus({ gamePin, topicID });
 		} else {
-			throw new Error(`could not get game status\n\n ${error}`);
+			throw new Error(`could not get game status\n ${error}`);
 		}
 	}
 
 	return response;
+}
+
+// use firebase storage to store images
+async function uploadImage({ file, fileName, imageURL, folder }) {
+	const storageRef = fb.ref(fb.storage, `${folder}/${fileName}`);
+	let uploadTask, downloadURL;
+
+	if (imageURL) {
+		uploadTask = fb.uploadBytes(
+			storageRef,
+			await fetch(imageURL).then((response) => response.blob()),
+		);
+	} else {
+		uploadTask = fb.uploadBytes(storageRef, file);
+	}
+
+	uploadTask.on(
+		'state_changed',
+		(snapshot) => {
+			const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+			console.log(`Upload is ${progress}% done`);
+		},
+		(error) => {
+			console.error(error);
+		},
+		async () => {
+			downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+			console.log('File available at', downloadURL);
+		},
+	);
+
+	return downloadURL;
+}
+
+async function fundGame({ gamePin, topicID, amount }) {
+	let playerNames = await getPlayerNames({ gamePin, topicID });
+
+	try {
+		// change only dummy
+		if (playerNames) {
+			playerNames = playerNames.map((player) => {
+				if (player.username == 'dummy') {
+					player.reward = amount;
+				}
+				return player;
+			});
+		}
+
+		await setPlayers({ gamePin, topicID, playerNames });
+		return { status: true, message: 'Game has been funded!' };
+	} catch (error) {
+		if (error.message.includes('offline')) {
+			fundGame({ gamePin, topicID, amount });
+		} else {
+			throw new Error(`could not fund the game\n\n ${error}`);
+		}
+	}
 }
 
 export {
@@ -454,4 +562,6 @@ export {
 	getGameStatus,
 	googleLogin,
 	githubLogin,
+	uploadImage,
+	fundGame,
 };

@@ -6,17 +6,11 @@
 		<title>BrainiacWiz | Create Account</title>
 		<link rel="stylesheet" href="styleAuth.css" />
 		<link rel="stylesheet" href="../../assets/css/style.css" />
-		<link
-			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-			rel="stylesheet"
-		/>
+		<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../assets/fontawesome-6.5.2/css/all.css" />
-		<link rel="stylesheet" href="./assets/fontawesome-6.5.2/css/all.css" />
+		<link rel="stylesheet" href="../../assets/fontawesome-6.5.2/css/all.css" />
 		<!-- Google tag (gtag.js) -->
-		<script
-			async
-			src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"
-		></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag() {
@@ -54,50 +48,66 @@
 		</header>
 		<main class="body-content">
 			<div class="wrapper">
-				<h1>Sign Up</h1>
 				<form action="#" id="signup-form">
-					<div class="form-group">
-						<label for="username">Username:</label>
-						<input type="text" id="username" name="username" required />
-					</div>
+					<div class="left-group">
+						<h1>Sign Up</h1>
+						<div class="form-group">
+							<p class="error-message"></p>
+						</div>
+						<div class="form-group">
+							<label for="username">Username:</label>
+							<input type="text" id="username" name="username" required />
+						</div>
 
-					<div class="form-group">
-						<label for="email">Email:</label>
-						<input type="email" id="email" name="email" required />
-					</div>
+						<div class="form-group">
+							<label for="email">Email:</label>
+							<input type="email" id="email" name="email" required />
+						</div>
 
-					<div class="form-group">
-						<label for="password">Password:</label>
-						<input type="password" id="password" name="password" required />
-					</div>
+						<div class="form-group">
+							<label for="password">Password:</label>
+							<input type="password" id="password" name="password" required />
+						</div>
 
-					<div class="form-group">
-						<label for="confirmPassword">Confirm Password:</label>
-						<input
-							type="password"
-							id="confirmPassword"
-							name="confirmPassword"
-							required
-						/>
-					</div>
+						<div class="form-group">
+							<label for="confirmPassword">Confirm Password:</label>
+							<input type="password" id="confirmPassword" name="confirmPassword" required />
+						</div>
 
-					<div class="form-group">
-						<div class="terms">
-							<input type="checkbox" id="terms" name="terms" required />
-							<label for="terms"
-								>I agree to these <a href="#">Terms & Conditions </a>
-							</label>
+						<div class="form-group">
+							<div class="terms">
+								<input type="checkbox" id="terms" name="terms" required />
+								<label for="terms">I agree to these <a href="#">Terms & Conditions </a> </label>
+							</div>
 						</div>
 					</div>
 
-					<div class="form-group">
-						<button type="submit">Sign Up</button>
+					<div class="right-group">
+						<div class="form-group">
+							<button type="submit">Sign Up</button>
+						</div>
+
+						<!-- social login option -->
+						<div class="social-login">
+							<p>Or log in with</p>
+							<div class="social-icons">
+								<button class="social-login-btn" id="google-login-btn">
+									<i class="fab fa-google"></i>
+								</button>
+								<button class="social-login-btn" id="facebook-login-btn">
+									<i class="fab fa-facebook"></i>
+								</button>
+								<button class="social-login-btn" id="github-login-btn">
+									<i class="fab fa-github"></i>
+								</button>
+							</div>
+						</div>
+
+						<div class="login">
+							<p>Already have an account? <a href="login.html">Login</a></p>
+						</div>
 					</div>
 				</form>
-
-				<div class="login">
-					<p>Already have an account? <a href="login.html">Login</a></p>
-				</div>
 			</div>
 		</main>
 		<footer>

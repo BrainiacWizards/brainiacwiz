@@ -5,17 +5,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="../../../assets/css/style.css" />
 		<link rel="stylesheet" href="../../../assets/css/host.css" />
-		<link
-			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-			rel="stylesheet"
-		/>
+		<link rel="stylesheet" href="./transfer/indexStyling.css" />
+		<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../../assets/fontawesome-6.5.2/css/all.css" />
-		<title>Host Vew | BrainiacWiz</title>
+		<title>Host View | BrainiacWiz</title>
 		<!-- Google tag (gtag.js) -->
-		<script
-			async
-			src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"
-		></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag() {
@@ -60,18 +55,100 @@
 						<h2>Game Code</h2>
 						<p id="code-view"><span></span></p>
 					</div>
+
+					<div class="status">
+						<h2>Status</h2>
+						<p id="status-text">N/A</p>
+					</div>
 				</div>
-				<div class="players-block">
-					<h2>Players</h2>
-					<ul class="players"
-						>"No players yet!"</ul
-					>
-				</div>
+				<!-- game status section -->
+				<section class="game-details">
+					<div class="players">
+						<h2>Players</h2>
+						<div class="players-list" id="players-list">
+							<div class="player"> </div>
+						</div>
+					</div>
+					<div class="game-info">
+						<!-- click open icon -->
+						<div class="click-open">
+							<i class="fas fa-reply-all"></i>
+							<p>Game details</p>
+						</div>
+						<!-- rewards -->
+						<div class="rewards">
+							<h2>Rewards</h2>
+							<div class="rewards-list">
+								<div class="reward">
+									<i class="gold fas fa-trophy"></i>
+									<span class="reward-name">1st Place</span>
+									<span class="reward-amount">$0</span>
+								</div>
+
+								<div class="nft-block">
+									<h4>+ NFT Reward</h4>
+									<div class="nft">
+										<img class="nft-image" draggable="false" src="../../../assets/nft/2.jpg" alt="NFT" />
+										<p>1 NFT</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
 				<div class="controls">
-					<button id="host-start-btn">Start Game</button>
-					<button id="host-cancel-btn">Cancel Game</button>
+					<button id="host-start-btn"><i class="fas fa-play"></i> Start</button>
+					<button id="host-deposit"><i class="fas fa-money-bill"></i> Deposit</button>
+					<button id="host-cancel-btn"><i class="fas fa-stop"></i> Cancel</button>
 				</div>
 			</section>
+			<!-- fund  -->
+			<section id="fund-game">
+				<!-- fund account form -->
+				<h2>Fund Game</h2>
+				<button id="fund-close-btn" class="close-btn"><i class="fa fa-times"></i></button>
+				<form id="fund-form">
+					<div class="form-group">
+						<label for="amount"></label>
+						<p class="error-message"></p>
+						<input
+							min="1"
+							type="number"
+							max="100"
+							id="amount"
+							name="amount"
+							placeholder="Amount (cUSD)"
+							required
+						/>
+					</div>
+					<button type="submit">Fund</button>
+				</form>
+			</section>
+
+			<!-- transfer -->
+			<div class="landing-content" id="transfer-popup">
+				<button class="close-btn" id="transfer-close">X</button>
+				<div class="overlay-logo">
+					<img src="../../../../assets/img/brainacwiz-logo.jpeg" alt="Logo" />
+				</div>
+				<div class="deposit">
+					<h2>Your balance:</h2>
+					<input type="text" id="hostBalance" readonly />
+
+					<h2>Deposit to:</h2>
+					<input type="text" id="receiverAddress" placeholder="Enter the winner's wallet address" />
+					<input
+						type="number"
+						id="depositAmount"
+						placeholder="Amount"
+						min="1"
+						max="10000"
+						oninput="this.value = Math.max(1, Math.min(10000, this.value))"
+					/>
+					<p class="error-message" id="transfer-text">error</p>
+					<button id="depositBtn">Deposit</button>
+				</div>
+			</div>
 		</main>
 		<footer class="">
 			<nav class="navbar">
@@ -80,14 +157,10 @@
 						<a href="../../../index.html"><i class="bx bx-home"></i><p>Home</p></a>
 					</li>
 					<li>
-						<a href="../../ranking.html"
-							><i class="bx bx-book"></i><p>Leaderboard</p></a
-						>
+						<a href="../../ranking.html"><i class="bx bx-book"></i><p>Leaderboard</p></a>
 					</li>
 					<li>
-						<a href="../../auth/login.html"
-							><i class="bx bx-user-circle"></i><p>Login</p></a
-						>
+						<a href="../../auth/login.html"><i class="bx bx-user-circle"></i><p>Login</p></a>
 					</li>
 					<li>
 						<a href="#"><i class="bx bx-envelope"></i><p>Contact</p></a>
@@ -99,5 +172,6 @@
 		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
 		<script type="module" src="../../../assets/js/utils/setnavbar.js"></script>
 		<script type="module" src="../../../assets/js/host.js"></script>
+		<script type="module" src="./transfer/indexMain.js"></script>
 	</body>
 </html>

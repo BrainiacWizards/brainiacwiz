@@ -3,20 +3,42 @@
 	--sec-color: #070f2b; /* Secondary color - darker shade of primary */
 	--tert-color: #535c91; /* Tertiary color - lighter shade of primary */
 	--quart-color: #9290c3; /* Quaternary color - tint of primary */
-	--font-color: rgb(231, 231, 231);
+	--font-color: white;
 	--fady-back-color: rgb(36, 1, 82, 0.2); /* Faded background color */
 	--shadow-color: rgba(7, 15, 43, 0.7);
+	--gold-color: #ffd700;
+	--silver-color: #dddddd;
+	--bronze-color: #a7631f;
 }
 
 /********************Default styles******************/
 * {
 	padding: 0;
 	margin: 0;
+
+	/* customize scroll */
+	&::-webkit-scrollbar {
+		width: 5px;
+		height: 5px;
+		border-radius: 30px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: var(--tert-color);
+		padding: 5px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: var(--sec-color);
+		border-radius: 50px;
+		margin: 0;
+	}
 }
 
 body {
 	background-color: var(--tert-color);
 	color: var(--font-color);
+	overflow-x: hidden;
 }
 
 a {
@@ -59,7 +81,38 @@ button:active {
 .bx {
 	margin: 0 5px;
 }
+
+.error-message {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	color: red;
+	width: 100%;
+	text-align: center;
+	min-height: 20px;
+	background-color: transparent;
+	max-width: 250px;
+	min-width: 250px;
+}
+
 /***********************************************/
+.offline-div {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background-color: #000;
+	color: #fff;
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-size: 2rem;
+	text-align: center;
+	z-index: 100;
+}
 .wallet-address {
 	display: flex;
 	flex-direction: row;
@@ -90,6 +143,7 @@ button:active {
 	max-width: 120px;
 	overflow-x: auto;
 	overflow-y: hidden;
+	padding: 0 5px;
 
 	/* Add scrollbar styles */
 	&::-webkit-scrollbar {
@@ -184,6 +238,7 @@ button:active {
 	padding: 20px 0;
 	min-height: 35px;
 	transition: all ease-in-out 800ms;
+	margin-bottom: 10px;
 }
 
 .main-content {
@@ -194,7 +249,7 @@ button:active {
 }
 .circular-button {
 	position: absolute;
-	top: 20px;
+	top: 10px;
 	right: 50px;
 	width: 50px;
 	height: 50px;
@@ -214,7 +269,7 @@ button:active {
 
 .logo {
 	position: absolute;
-	top: 20px;
+	top: 10px;
 	left: 50px;
 	width: 50px;
 	height: 50px;
@@ -226,6 +281,27 @@ button:active {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+}
+
+.profile-link {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--prim-color);
+	color: var(--font-color);
+	border-radius: 50%;
+	min-width: 50px;
+	aspect-ratio: 1/1;
+}
+
+.profile-link i {
+	color: inherit;
+	font-size: 30px;
+}
+
+.profile-link:hover {
+	background-color: var(--font-color);
+	color: var(--prim-color);
 }
 
 .main-heading {
@@ -360,6 +436,8 @@ footer {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
 	color: var(--font-color);
 	text-decoration: none;
 }
@@ -416,7 +494,7 @@ footer {
 	background-color: transparent;
 	margin: 0;
 	padding: 50px 0;
-	min-height: 80vh;
+	min-height: 85vh;
 }
 
 .no-background {
@@ -737,8 +815,9 @@ footer .navbar ul li a:hover {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	gap: 10px;
+	gap: 15px;
 	width: 100%;
+	margin-top: 10px;
 }
 
 .recover {
@@ -747,7 +826,7 @@ footer .navbar ul li a:hover {
 }
 
 .social-login button {
-	background-color: transparent;
+	background-color: var(--font-color);
 	color: var(--prim-color);
 	border: none;
 	border-radius: 10px;
@@ -773,6 +852,24 @@ footer .navbar ul li a:hover {
 	}
 }
 @media (max-width: 500px) {
+	.profile-link {
+		background-color: var(--tert-color);
+		color: var(--font-color) !important;
+	}
+
+	.profile-link i {
+		color: var(--font-color) !important;
+	}
+
+	.profile-link:hover {
+		background-color: var(--font-color);
+		color: var(--tert-color) !important;
+	}
+
+	.profile-link:hover i {
+		color: var(--tert-color) !important;
+	}
+
 	.container {
 		grid-template-columns: repeat(1, 1fr);
 		margin-top: 50px;
@@ -833,14 +930,27 @@ footer .navbar ul li a:hover {
 		&::-webkit-scrollbar {
 			display: none;
 		}
+
+		&::-webkit-scrollbar-track {
+			background: transparent;
+			padding: 0;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background: transparent;
+			border-radius: 50px;
+			margin: 0;
+		}
 	}
 
 	.wallet-address::-webkit-scrollbar-track {
+		display: none;
 		background: transparent;
 		padding: 0;
 	}
 
 	.wallet-address::-webkit-scrollbar-thumb {
+		display: none;
 		background: transparent;
 		border-radius: 50px;
 		margin: 0;

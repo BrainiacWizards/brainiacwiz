@@ -1,17 +1,17 @@
 .generatePIN {
 	display: flex;
 	flex-direction: column;
-	position: absolute;
+	position: relative;
 	background-color: var(--quart-color);
 	padding: 20px;
-	border: 1px solid var(--quart-color);
 	border-radius: 30px;
-	top: 45%;
-	left: 50%;
-	transform: translate(-50%, -50%);
 	z-index: 1;
 	height: fit-content;
-	max-width: 90%;
+	max-width: 80%;
+	width: 250px;
+	margin: auto;
+
+	box-shadow: 4px 4px 6px 0 var(--prim-color);
 }
 
 .header {
@@ -21,13 +21,18 @@
 
 .gamepin-heading {
 	text-align: center;
-	font-size: 25px;
+	font-size: 30px;
+	color: var();
+	width: 100%;
+	margin-bottom: 20px;
+	color: var(--sec-color);
 }
 
 .button {
 	background-color: var(--prim-color);
 	border-radius: 10px;
 	font-size: 15px;
+	margin: 0 auto;
 }
 
 .button:hover {
@@ -38,6 +43,8 @@
 .logo-image {
 	border-radius: 50%;
 	margin: 0 auto;
+	max-width: 150px;
+	margin-bottom: 20px;
 }
 
 .text {
@@ -73,6 +80,17 @@
 	padding: 10px;
 	border-radius: 30px;
 	height: fit-content;
+	max-width: 100%;
+	overflow: hidden;
+	gap: 15px;
+	color: var(--sec-color);
+	font-weight: bold;
+}
+
+#pinForm .form-group {
+	display: flex;
+	flex-direction: column;
+	gap: 7px;
 }
 
 #pinForm input {
@@ -83,4 +101,5 @@
 	font-size: 20px;
 	text-align: center;
 	outline: none;
+	width: calc(100% - 10px);
 }
