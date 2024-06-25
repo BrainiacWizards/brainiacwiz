@@ -69,7 +69,7 @@ async function checkGameStatus({ statusText, gamePin, topicID, redirect = true }
 
 	setTimeout(() => {
 		checkGameStatus(statusText);
-	}, 2000);
+	}, 500);
 }
 
 setDetails({ statusText, gamePin, topicID });

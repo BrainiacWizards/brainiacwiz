@@ -455,7 +455,7 @@ async function endGame({ gamePin, topicID }) {
 async function getGameStatus({ gamePin, topicID }) {
 	const response = {
 		status: false,
-		msg: 'Pending...',
+		msg: 'pending...',
 	};
 
 	try {
@@ -470,7 +470,7 @@ async function getGameStatus({ gamePin, topicID }) {
 				} else if (player.gameEnded) {
 					response.status = false;
 					response.msg = 'Game has ended!';
-				} else {
+				} else if (!player.gameStarted && !player.gameEnded) {
 					response.status = false;
 					response.msg = `Pending...`;
 				}
