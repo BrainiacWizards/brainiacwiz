@@ -39,6 +39,7 @@ async function sendTransaction() {
         console.log('Transaction sent:', txHash);
     } catch (error) {
         console.error('Error sending transaction:', error);
+        alert('There was an error sending the transaction. Please try again.');
     }
 }
 
