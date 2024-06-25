@@ -1,0 +1,102 @@
+.landing-overlay {
+	font-family: Arial, sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 600px;
+	margin: 0;
+}
+
+#transfer-popup .close-btn {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	margin-top: 0px;
+	padding: 5px;
+}
+
+.landing-content {
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 0 10px var(--sec-color);
+	width: 200px;
+	text-align: center;
+	margin-right: 0;
+	max-height: fit-content !important;
+	margin-right: 0;
+	max-height: fit-content !important;
+	height: fit-content !important;
+}
+
+.overlay-logo img {
+	width: 100px;
+	height: 100px;
+	border-radius: 50% !important;
+}
+
+input {
+	width: calc(100% - 22px);
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+
+button {
+	padding: 10px 20px;
+	border: none;
+	/* background-color: var(); */
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: var(--quart-color);
+}
+
+.nft-wallet ul {
+	background-color: #f9f9f9;
+	margin: 5px 0;
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid var(--sec-color);
+	word-wrap: break-word;
+	color: black;
+}
+
+.nft-wallet #nftList {
+	max-height: 100px;
+	display: flex;
+	flex-direction: column;
+	height: fit-content;
+	overflow-y: auto;
+	margin-bottom: 20px;
+}
+
+.deposit h2 {
+	margin: 0;
+	padding: 0;
+	font-size: 25px;
+}
+
+#hostBalance {
+	color: var(--sec-color);
+	text-align: center;
+}
+
+#transfer-popup {
+	display: none;
+}
+
+#transfer-text {
+	max-width: 0% !important;
+	min-width: 100%;
+	text-align: flex-start;
+	background-color: transparent;
+	color: var(--quart-color);
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 16px;
+	margin: 0;
+	margin-top: 10px;
+}
