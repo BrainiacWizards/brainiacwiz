@@ -21,7 +21,7 @@ const transferPopup = document.getElementById('transfer-popup');
 const transferClose = document.getElementById('transfer-close');
 const colors = ['var(--prim-color)', 'var(--sec-color)', 'var(--tert-color)', 'var(--quart-color)'];
 
-transferClose.addEventListener('click', () => {
+transferClose?.addEventListener('click', () => {
 	transferPopup.style.display = 'none';
 });
 
@@ -94,8 +94,8 @@ async function clickEventOnPlayer() {
 	//
 	const allPlayer = document.querySelectorAll('.player');
 	allPlayer.forEach((player) => {
-		player.addEventListener('click', () => {
-			transferPopup.style.display = 'flex';
+		player?.addEventListener('click', () => {
+			if (transferPopup) transferPopup.style.display = 'flex';
 		});
 	});
 }
@@ -105,7 +105,7 @@ async function copyAddress() {
 	const playerAddress = document.querySelectorAll('.player-address');
 
 	playerAddress.forEach((address) => {
-		address.addEventListener('click', async () => {
+		address?.addEventListener('click', async () => {
 			const addressValue = address.id;
 			console.log(addressValue);
 
