@@ -27,7 +27,6 @@ if (!gamePin || !topicID) {
 
 async function setDetails() {
 	// create player record
-	console.log('login:', login);
 	await createScoreBoard({
 		gamePin,
 		topicID,
@@ -58,7 +57,6 @@ async function checkGameStatus({ statusText, gamePin, topicID, redirect = true }
 	const gameStatus = await getGameStatus({ gamePin, topicID });
 	if (!statusText) statusText = document.getElementById('status-text');
 	statusText.innerHTML = gameStatus.msg;
-	console.log(gameStatus, redirect);
 
 	if (gameStatus.status && window.location.href.includes('lobby')) {
 		console.log('started');

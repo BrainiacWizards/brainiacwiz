@@ -247,7 +247,8 @@
 	background-color: var(--tert-color);
 	box-shadow: 2px 2px 5px 0 var(--sec-color);
 	border-radius: 10px;
-	min-width: 200px;
+	min-width: 260px;
+	max-width: none;
 }
 
 .players .players-list .player:hover {
