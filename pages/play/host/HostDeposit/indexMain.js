@@ -55,8 +55,8 @@ async function calculateGasFee(transactionParameters) {
             params: [transactionParameters],
         });
 
-        const gasFee = (parseInt(gasPrice, 16) * parseInt(gasLimit, 16)) / Math.pow(10, 18); // Convert gas fee to Ether
-        return gasFee;
+        return (parseInt(gasPrice, 16) * parseInt(gasLimit, 16)) / Math.pow(10, 18);
+
     } catch (error) {
         console.error('Error calculating gas fee:', error);
         return null;
