@@ -9,18 +9,18 @@ body {
 	overflow: visible;
 	border-radius: 20px;
 	box-shadow: 2px 2px 5px var(--sec-color);
-	max-width: 300px;
+	max-width: 330px;
 }
 
 .profile-container .profile-header .profile-image {
-	width: 150px;
+	width: 100px;
 	aspect-ratio: 1/1;
 	border-radius: 50%;
 	margin: 0 auto;
-	margin-top: -40px;
+	margin-top: 10px;
 	z-index: 1;
 	position: absolute;
-	left: 50%;
+	left: 58%;
 	transform: translateX(-50%);
 	background-color: var(--prim-color);
 }
@@ -33,10 +33,12 @@ body {
 
 .profile-container .profile-header .profile-configs {
 	display: flex;
-	justify-content: space-between;
+	flex-direction: column;
+	align-items: left;	
 	margin-top: 0px;
 	background-color: var(--tert-color);
 	border-radius: 20px 20px 0 0;
+	padding: 0px 0px;
 }
 
 .profile-container .profile-header .profile-configs button {
@@ -60,7 +62,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-top: 70px;
+	margin-top: 20px;
 	font-size: 20px;
 	gap: 10px;
 }
@@ -87,7 +89,7 @@ body {
 	display: flex;
 	justify-content: center;
 	width: calc(300px - 50px);
-	padding: 10px 20px;
+	padding: 5px 10px;
 	max-width: calc(100% - 40px);
 	gap: 20px;
 }
@@ -103,16 +105,59 @@ body {
 	font: 500 20px 'Roboto', sans-serif;
 }
 
-.profile-container .profile-actions {
-	display: flex;
-	justify-content: center;
-	width: calc(100% - 50px);
+.profile-container .profile-actions button{
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(50px, 150px));
+	align-items: center;
 	padding: 10px 20px;
-	max-width: calc(100% - 40px);
-	gap: 20px;
+	grid-gap: 100px; 
+	text-align: center;
 }
 
 .profile-container .profile-actions button {
 	width: fit-content;
-	margin: 0;
+	margin: 10px;
+}
+/********************Rotation*******************/
+
+#scroll-container {
+    border: none;
+    background-color: var(--shadow-color-light);
+    border-radius: 5px;
+    overflow: hidden;
+}
+#scroll-text {
+    /* animation properties */
+    -moz-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+
+    -moz-animation: my-animation 15s linear infinite;
+    -webkit-animation: my-animation 15s linear infinite;
+    animation: my-animation 10s linear infinite;
+}
+
+@keyframes my-animation {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+
+
+
+@media (max-width: 400px) {
+	.container {
+		grid-template-columns: repeat(1, 1fr);
+	}
+
+	footer .navbar ul li i {
+		font-size: 25px;
+	}
+	footer .navbar ul li p {
+		display: none;
+	}
 }

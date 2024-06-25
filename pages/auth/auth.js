@@ -10,6 +10,9 @@ const googleLoginBtn = document.getElementById('google-login-btn');
 const githubLoginBtn = document.getElementById('github-login-btn');
 const errorMessage = document.querySelector('.error-message');
 
+// get the prev url before the current one
+const prevURL = document.referrer;
+
 signUpForm?.addEventListener('submit', (event) => {
 	event.preventDefault();
 	register();
@@ -21,11 +24,11 @@ loginForm?.addEventListener('submit', (event) => {
 });
 
 googleLoginBtn?.addEventListener('click', () => {
-	googleLogin(errorMessage);
+	googleLogin({ errorMessage, prevURL });
 });
 
 githubLoginBtn?.addEventListener('click', () => {
-	githubLogin(errorMessage);
+	githubLogin({ errorMessage, prevURL });
 });
 
 function register() {
@@ -55,7 +58,7 @@ function register() {
 	}
 
 	console.log('All fields are valid');
-	fbSignUp({ email, password, userName, errorMessage });
+	fbSignUp({ email, password, userName, errorMessage, prevURL });
 }
 
 //login function
@@ -70,7 +73,7 @@ function login(email, password) {
 
 	console.log('All fields are valid');
 	errorMessage.textContent = 'Logging in...';
-	fbLogin({ email, password, errorMessage });
+	fbLogin({ email, password, errorMessage, prevURL });
 }
 
 //validate email
