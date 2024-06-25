@@ -45,8 +45,15 @@ async function sendTransaction() {
 	try {
 		// Send the transaction
 		transfertext.textContent = 'processing...';
-		const txHash = await ethereum.request({
-			method: 'eth_sendTransaction',
+  try {
+      const txHash = await ethereum.request({
+          method: 'eth_sendTransaction',
+          params: [transactionParameters],
+      });
+  } catch (error) {
+      console.error('Transaction failed', error);
+      transfertext.textContent = 'Transaction failed';
+  }
 			params: [transactionParameters],
 		});
 
