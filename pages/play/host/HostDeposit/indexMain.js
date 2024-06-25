@@ -75,7 +75,7 @@ async function getAddress() {
     });
 
     const balanceElement = document.getElementById('hostBalance');
-    const balanceInDecimal = parseInt(balance) / Math.pow(10, 18);
+    const balanceInDecimal = BigInt(balance) / BigInt(10 ** 18);
     balanceElement.value = balanceInDecimal;
     console.log('User balance:', balanceElement.value);
 }
