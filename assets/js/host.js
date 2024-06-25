@@ -1,4 +1,3 @@
-import { set } from '../../fb_config.js';
 import { endGame, fundGame, getPlayerNames, startGame } from '../../pages/auth/fb.js';
 import { checkGameStatus } from './looby.js';
 import { checkLoginStatus } from './main.js';
@@ -18,8 +17,13 @@ const fundForm = document.getElementById('fund-form');
 const closeBtn = document.querySelector('.close-btn');
 const hostDeposit = document.getElementById('host-deposit');
 const errorMessage = document.querySelector('.error-message');
-
+const transferPopup = document.getElementById('transfer-popup');
+const transferClose = document.getElementById('transfer-close');
 const colors = ['var(--prim-color)', 'var(--sec-color)', 'var(--tert-color)', 'var(--quart-color)'];
+
+transferClose?.addEventListener('click', () => {
+	transferPopup.style.display = 'none';
+});
 
 // check gamePin in url
 const urlParams = new URLSearchParams(window.location.search);
@@ -64,6 +68,7 @@ async function setPlayerNames(details) {
 	details.playerNames.forEach((playerName, index) => {
 		const player = document.createElement('div');
 		player.classList.add('player');
+		player.id = playerName.wallet || '0x00';
 		player.innerHTML = `
 			<span class="player-name">${index + 1}. ${playerName.username}</span>
 			<span class="player-score">(${playerName.score})</span>
@@ -80,9 +85,22 @@ async function setPlayerNames(details) {
 	await setQuizDetails(details);
 	copyAddress();
 	openForm();
+	clickEventOnPlayer();
 	setTimeout(() => {
 		setPlayerNames(details);
 	}, 2000);
+}
+
+async function clickEventOnPlayer() {
+	const receiverAddress = document.querySelector('#receiverAddress');
+	//
+	const allPlayer = document.querySelectorAll('.player');
+	allPlayer.forEach((player) => {
+		player?.addEventListener('click', () => {
+			if (transferPopup) transferPopup.style.display = 'flex';
+			if (receiverAddress) receiverAddress.value = player.id;
+		});
+	});
 }
 
 // copy player address from players
@@ -90,7 +108,7 @@ async function copyAddress() {
 	const playerAddress = document.querySelectorAll('.player-address');
 
 	playerAddress.forEach((address) => {
-		address.addEventListener('click', async () => {
+		address?.addEventListener('click', async () => {
 			const addressValue = address.id;
 			console.log(addressValue);
 
@@ -180,9 +198,8 @@ startBtn?.addEventListener('click', async () => {
 
 cancelBtn?.addEventListener('click', async () => {
 	const confirmEnd = confirm('Are you sure you want to end the game?');
-	if (!confirmEnd) {
+	if (confirmEnd) {
 		await endGame({ gamePin, topicID });
-		alert('Game has ended');
 	}
 });
 

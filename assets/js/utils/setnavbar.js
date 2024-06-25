@@ -156,6 +156,8 @@ class Navbar {
 		const state = getState();
 		const { tokenURI } = state;
 
+		console.log('show nfssss');
+
 		if (tokenURI.length === 0) {
 			this.walletNfts.innerHTML = `<h2>No NFTs collected yet</h2>`;
 			return this.walletNfts;
@@ -185,6 +187,7 @@ class Navbar {
 		const state = getState();
 		let transfers = await getTransfers({ state, url: this.url });
 		this.txItems.innerHTML = '';
+		console.log('showing transactions');
 
 		transfers.forEach((transfer) => {
 			if (transfer.to.toLowerCase() == state.account.toLowerCase()) {
@@ -273,3 +276,4 @@ navbar.setNavbar();
 navbar.showTransfers();
 
 export default Navbar;
+export { navbar };

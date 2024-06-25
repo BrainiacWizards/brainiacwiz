@@ -44,8 +44,16 @@ async function sendTransaction() {
 
 	try {
 		// Send the transaction
-		const txHash = await ethereum.request({
-			method: 'eth_sendTransaction',
+		transfertext.textContent = 'processing...';
+  try {
+      const txHash = await ethereum.request({
+          method: 'eth_sendTransaction',
+          params: [transactionParameters],
+      });
+  } catch (error) {
+      console.error('Transaction failed', error);
+      transfertext.textContent = 'Transaction failed';
+  }
 			params: [transactionParameters],
 		});
 
@@ -60,6 +68,7 @@ async function sendTransaction() {
 		});
 
 		if (transactionReceipt) {
+			await getAddress();
 			transfertext.textContent = 'Transaction confirmed';
 		} else {
 			transfertext.textContent = 'Transaction failed';

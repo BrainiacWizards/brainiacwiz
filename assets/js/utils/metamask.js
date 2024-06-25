@@ -74,15 +74,6 @@ async function metaConnection(walletAddress) {
 		throw new Error('No Web3 Provider detected. Please install Metamask.');
 	}
 
-	// get login from session	storage if available create it
-	if (sessionStorage.getItem('login')) {
-		const login = JSON.parse(sessionStorage.getItem('login'));
-		login.wallet = state.account;
-		sessionStorage.setItem('login', JSON.stringify(login));
-	} else {
-		sessionStorage.setItem('login', JSON.stringify({ wallet: state.account }));
-	}
-
 	return state.account;
 }
 
