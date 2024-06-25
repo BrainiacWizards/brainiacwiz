@@ -465,6 +465,7 @@ async function startGame({ gamePin, topicID }) {
 // end hosted game
 async function endGame({ gamePin, topicID }) {
 	let playerNames = await getPlayerNames({ gamePin, topicID });
+	console.log('ending game');
 
 	try {
 		// change only dummy
@@ -480,10 +481,11 @@ async function endGame({ gamePin, topicID }) {
 		}
 
 		await setPlayers({ gamePin, topicID, playerNames });
+		alert('Game has ended');
 		return { status: true, msg: 'Game ended!' };
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			endGame({ gamePin, topicID });
+			await endGame({ gamePin, topicID });
 		} else {
 			throw new Error(`could not end the game\n\n ${error}`);
 		}
