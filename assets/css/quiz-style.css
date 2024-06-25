@@ -261,7 +261,7 @@
 	}
 
 	.quiz-container .quiz-body .quiz-options-block button {
-		width: fit-content !important;
+		width: 100% !important;
 		margin: 10px auto;
 	}
 }

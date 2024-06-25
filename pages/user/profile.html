@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="../../assets/css/style.css" />
+		<link rel="stylesheet" href="../../assets/css/host.css" />
+		<link rel="stylesheet" href="../../assets/css/user.css" />
+		<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../assets/fontawesome-6.5.2/css/all.css" />
+		<title>Profile | BrainiacWiz</title>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
+
+			gtag('config', 'G-SZ59WLGCXV');
+		</script>
+		<!-- sentry error tracking script -->
+		<script
+			async
+			src="https://js.sentry-cdn.com/28e0779f6d4ee26fe0de02fcc3239280.min.js"
+			crossorigin="anonymous"
+		></script>
+	</head>
+	<body>
+		<header class="main-header">
+			<div class="logo">
+				<img src="../../assets/img/brainacwiz-logo.jpeg" alt="Logo" />
+			</div>
+
+			<div class="wallet-details">
+				<div class="wallet-address">
+					<p id="wallet-address-val"></p>
+				</div>
+
+				<div class="circular-button">
+					<button class="wallet-btn"><i class="bx bx-wallet"></i></button>
+				</div>
+			</div>
+		</header>
+
+		<main class="body-content no-background">
+			<div class="profile-container">
+				<div class="profile-header">
+					<div class="profile-image">
+						<img src="../../assets/img/brainacwiz-logo.jpeg" alt="User Image" />
+					</div>
+					<div class="profile-configs">
+						<button class="btn" id="edit-profile">Edit Profile</button>
+						<button class="btn" id="change-password">Change Password</button>
+					</div>
+					<div id="scroll-container">
+						<div id="scroll-text">
+							<!--div class="wallet-details">
+								<div class="wallet-address">
+									<p id="wallet-address-val"></p>
+								</div>
+							</div-->
+						</div>
+					</div>
+					<div class="profile-details">
+						
+						<div class="details">
+							<h2 id="profile-name">Manelisi Mpotulo</h2>
+
+							<p id="profile-email">
+								<i class="fas fa-envelope"></i>
+								<span>someone@gmail.com</span>
+							</p>
+							<p id="profile-username">
+								<i class="fas fa-user"></i>
+								<span>mmpotulo</span>
+							</p>
+							<p id="profile-joined">
+								<i class="fa fa-calendar"></i>
+								<span>02/02/2024</span>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="profile-body">
+					<div class="profile-stats">
+						<div class="stat">
+							<h2 id="profile-balance">0</h2>
+							<p>Balance</p>
+						</div>
+						<div class="stat">
+							<h2 id="profile-nfts">0</h2>
+							<p>NFTs</p>
+						</div>
+						<div class="stat">
+							<h2 id="profile-transactions">0</h2>
+							<p>Tx</p>
+						</div>
+					</div>
+					<div class="profile-actions">
+						<div>
+							<button class="btn" id="profile-deposit">Deposit</button>
+							<button class="btn" id="profile-transfer">Transfer</button>
+						</div>
+						<div>
+							<button class="btn" id="profile-deposit">Transactions</button>
+							<button class="btn" id="profile-transfer">My NFTs</button>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</main>
+		<footer class="">
+			<nav class="navbar">
+				<ul>
+					<li>
+						<a href="../../index.html"><i class="bx bx-home"></i><p>Home</p></a>
+					</li>
+					<li>
+						<a href="../ranking.html"><i class="bx bx-book"></i><p>Leaderboard</p></a>
+					</li>
+					<li>
+						<a href="../auth/login.html"><i class="bx bx-user-circle"></i><p>Login</p></a>
+					</li>
+					<li>
+						<a href="#"><i class="bx bx-envelope"></i><p>Help</p></a>
+					</li>
+				</ul>
+			</nav>
+		</footer>
+
+		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+		<script type="module" src="../../assets/js/utils/setnavbar.js"></script>
+		<script type="module" src="../../assets/js/profile.js"></script>
+	</body>
+</html>

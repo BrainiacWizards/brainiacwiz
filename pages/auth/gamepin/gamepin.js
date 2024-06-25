@@ -137,6 +137,7 @@ function setLogin() {
 		loginObject.username = usernameValue.value;
 		loginObject.lastLogin = new Date().toLocaleDateString();
 		loginObject.gamePin = gamePin.value;
+		loginObject.topic = topic;
 		sessionStorage.setItem('login', JSON.stringify(loginObject));
 
 		// set usernameValue input field to readonly
