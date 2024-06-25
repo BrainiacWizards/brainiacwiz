@@ -11,22 +11,25 @@ async function getRanking() {
 	// sort the ranking by time latest to oldest
 	let sortedRanking = overallRanking.sort((a, b) => b.points - a.points);
 
-	// groud the rankings by gamePin
+	// group the rankings by gamePin
 	const rankingByGamePin = {};
 	sortedRanking.forEach((player) => {
 		// if player does	not have a gamePin, add NA
-		if (!player.gamePin) {
-			player.gamePin = 'NA';
+		if (player.campaign) {
+			player.gamePin = player.campaign;
+			console.log(player.campaign);
 		}
 		if (!rankingByGamePin[player.gamePin]) {
 			rankingByGamePin[player.gamePin] = [];
 		}
 		rankingByGamePin[player.gamePin].push(player);
+		// console.log(player);
 	});
 
 	// create the ranking table for each gamePin
 	Object.keys(rankingByGamePin).forEach(async (gamePin) => {
 		const players = rankingByGamePin[gamePin];
+		if (players.length < 2) return;
 		const gamePinRow = document.createElement('tr');
 		gamePinRow.innerHTML = `
 			<td colspan="6" class="game-pin-col">${gamePin}</td>

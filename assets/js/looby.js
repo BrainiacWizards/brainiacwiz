@@ -58,18 +58,19 @@ async function checkGameStatus({ statusText, gamePin, topicID, redirect = true }
 	const gameStatus = await getGameStatus({ gamePin, topicID });
 	if (!statusText) statusText = document.getElementById('status-text');
 	statusText.innerHTML = gameStatus.msg;
+	console.log(gameStatus, redirect);
 
-	if (gameStatus.status && redirect) {
-		setTimeout(() => {
-			const { origin } = window.location;
-			window.location.href = `${origin}/pages/play/quiz.html?gamePin=${gamePin}&topic=${topicID}`;
-			return;
-		}, 1000);
+	if (gameStatus.status && window.location.href.includes('lobby')) {
+		console.log('started');
+
+		const { origin } = window.location;
+		window.location.href = `${origin}/pages/play/quiz.html?gamePin=${gamePin}&topic=${topicID}`;
+		return;
 	}
 
-	setTimeout(() => {
-		checkGameStatus(statusText);
-	}, 500);
+	setTimeout(async () => {
+		await checkGameStatus(statusText);
+	}, 2000);
 }
 
 setDetails({ statusText, gamePin, topicID });
