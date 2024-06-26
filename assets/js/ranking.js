@@ -14,10 +14,8 @@ async function getRanking() {
 	// group the rankings by gamePin
 	const rankingByGamePin = {};
 	sortedRanking.forEach((player) => {
-		// if player does	not have a gamePin, add NA
 		if (player.campaign) {
 			player.gamePin = player.campaign;
-			console.log(player.campaign);
 		}
 		if (!rankingByGamePin[player.gamePin]) {
 			rankingByGamePin[player.gamePin] = [];
@@ -29,7 +27,7 @@ async function getRanking() {
 	// create the ranking table for each gamePin
 	Object.keys(rankingByGamePin).forEach(async (gamePin) => {
 		const players = rankingByGamePin[gamePin];
-		if (players.length < 2) return;
+  // Code removed
 		const gamePinRow = document.createElement('tr');
 		gamePinRow.innerHTML = `
 			<td colspan="6" class="game-pin-col">${gamePin}</td>

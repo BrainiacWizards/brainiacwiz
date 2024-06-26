@@ -204,17 +204,17 @@ async function createScoreBoard({ gamePin, username, score, topicID, wallet }) {
 		let scoreData = Object.values(scoreSnapshot.val() || {});
 
 		// if username is 2 names, take initial and surname
-  function shortenUsername(username) {
-      const usernameArr = username.split(' ');
-      if (usernameArr.length > 1) {
-          return `${usernameArr[0][0]} ${usernameArr[1]}`;
-      } else if (username.length > 13) {
-          return username.slice(0, 10);
-      }
-      return username;
-  }
+		function shortenUsername(username) {
+			const usernameArr = username.split(' ');
+			if (usernameArr.length > 1) {
+				return `${usernameArr[0][0]} ${usernameArr[1]}`;
+			} else if (username.length > 13) {
+				return username.slice(0, 10);
+			}
+			return username;
+		}
 
-  username = shortenUsername(username);
+		username = shortenUsername(username);
 
 		// Initialize scoreData if it's null
 		if (!scoreData) {
@@ -345,7 +345,7 @@ async function setPlayers({ gamePin, topicID, playerNames }) {
 }
 
 // set overall ranking
-async function overallRanking({ username, points, time, retry, gamePin }) {
+async function overallRanking({ username, points, time, retry, gamePin, campaign }) {
 	let overallRankingSnapshot = null;
 	let overallRankingRef = null;
 	try {
@@ -375,6 +375,7 @@ async function overallRanking({ username, points, time, retry, gamePin }) {
 			startTime: Date.now(),
 			duration: time,
 			gamePin: gamePin,
+			campaign: campaign,
 		});
 	} else {
 		// update the score if the username already exists
@@ -391,6 +392,7 @@ async function overallRanking({ username, points, time, retry, gamePin }) {
 				obj.time = time;
 				obj.duration = time - obj.startTime;
 				obj.gamePin = gamePin;
+				obj.campaign = campaign;
 			}
 			return obj;
 		});
