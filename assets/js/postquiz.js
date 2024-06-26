@@ -44,7 +44,7 @@ playBtn?.addEventListener('click', () => {
 let tokenTransferred = false;
 let reload = true;
 let time = 5;
-let campaign = '';
+let campaign = 'defaultCampaign';
 
 async function setScoreBoard() {
 	// get username from login
