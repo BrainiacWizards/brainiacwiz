@@ -597,19 +597,20 @@ async function getUsers(username) {
 		const userSnapshot = await fb.get(userRef);
 		users = userSnapshot.val();
 
-		if (username) {
-			user = Object.values(users).filter((user) => user.username === username);
-			user = user.map((user) => {
-				delete user.password;
-				return user;
-			});
+		user = Object.values(users).filter((user) => user.username === username);
+		user = user.map((user) => {
+			delete user.password;
+			return user;
+		});
 
-			// format date into readable format
-			user = user.map((user) => {
-				user.lastLogin = new Date(user.lastLogin).toLocaleString();
-				return user;
-			});
-		}
+		// format date into readable format
+		user = user.map((user) => {
+			user.lastLogin = new Date(user.lastLogin).toLocaleString();
+			return user;
+		});
+
+		console.log(user);
+		return user || { username: 'No users found', email: 'N/A', lastLogin: 'N/A' };
 	} catch (error) {
 		if (error.message.includes('offline')) {
 			getUsers();
@@ -617,8 +618,6 @@ async function getUsers(username) {
 			throw new Error(`could not get all users\n\n ${error}`);
 		}
 	}
-
-	return user || { username: 'No users found', email: 'N/A', lastLogin: 'N/A' };
 }
 
 export {

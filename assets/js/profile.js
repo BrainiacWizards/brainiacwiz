@@ -27,6 +27,7 @@ let cachedAddress = null;
 let cachedBalance = null;
 
 async function fetchAndDisplayMetaMaskBalance() {
+	fetchAndDisplayUser();
 	if (cachedAddress && cachedBalance) {
 		updateBalanceElement(cachedBalance);
 		return;
@@ -48,7 +49,14 @@ async function fetchAndDisplayMetaMaskBalance() {
 function updateBalanceElement(balance) {
 	const balanceElement = document.getElementById('profile-balance');
 	const balanceInDecimal = (balance / 10 ** 18).toFixed(2);
-	balanceElement.textContent = balanceInDecimal;
+	balanceElement.textContent = `${balanceInDecimal} CELO`;
+}
+
+async function fetchAndDisplayUser() {
+	const login = JSON.parse(sessionStorage.getItem('login'));
+	const user = await getUsers(login.username);
+	const userElement = document.getElementById('profile-name');
+	userElement.textContent = user.username || 'username not set';
 }
 
 // Call getAddress to display balance
