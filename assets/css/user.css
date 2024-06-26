@@ -34,7 +34,7 @@ body {
 .profile-container .profile-header .profile-configs {
 	display: flex;
 	flex-direction: column;
-	align-items: left;	
+ align-items: flex-start;
 	margin-top: 0px;
 	background-color: var(--tert-color);
 	border-radius: 20px 20px 0 0;
@@ -105,12 +105,16 @@ body {
 	font: 500 20px 'Roboto', sans-serif;
 }
 
-.profile-container .profile-actions button{
+.profile-container .profile-body .profile-stats .stat h2 {
+	color: var(--prim-color);
+}
+
+.profile-container .profile-actions button {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(50px, 150px));
 	align-items: center;
 	padding: 10px 20px;
-	grid-gap: 100px; 
+	grid-gap: 100px;
 	text-align: center;
 }
 
@@ -121,33 +125,30 @@ body {
 /********************Rotation*******************/
 
 #scroll-container {
-    border: none;
-    background-color: var(--shadow-color-light);
-    border-radius: 5px;
-    overflow: hidden;
+	border: none;
+	background-color: var(--shadow-color-light);
+	border-radius: 5px;
+	overflow: hidden;
 }
 #scroll-text {
-    /* animation properties */
-    -moz-transform: translateX(100%);
-    -webkit-transform: translateX(100%);
-    transform: translateX(100%);
+	/* animation properties */
+	-moz-transform: translateX(100%);
+	-webkit-transform: translateX(100%);
+	transform: translateX(100%);
 
-    -moz-animation: my-animation 15s linear infinite;
-    -webkit-animation: my-animation 15s linear infinite;
-    animation: my-animation 10s linear infinite;
+	-moz-animation: my-animation 15s linear infinite;
+	-webkit-animation: my-animation 15s linear infinite;
+	animation: my-animation 10s linear infinite;
 }
 
 @keyframes my-animation {
-    0% {
-        transform: translateX(100%);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
+	0% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(-100%);
+	}
 }
-
-
-
 
 @media (max-width: 400px) {
 	.container {

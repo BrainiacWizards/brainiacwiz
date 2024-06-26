@@ -1,67 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile page</title>
-    <link rel="stylesheet" href="ProfileStyle.css">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="stylesheet" href="../../assets/fontawesome-6.5.2/css/all.css" />
-    <link
-			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-			rel="stylesheet"
-		/>
-    <script src="ProfileMain.js"></script>
-</head>
-<body>
-    <header>
-        <div class="logo">
-            <img src="../../assets/img/brainacwiz-logo.jpeg" alt="Logo">
-        </div>
-        <div class="wallet-details">
-            <div class="wallet-address">
-                <p id="wallet-address-val">Profile</p>
-            </div>
-            
-            <div class="circular-button">
-                <img class="profilePic-btn" src="avatar.jpg" alt="Avatar" onclick="changeName()">
-            </div>
-        </div>
-    </header>
-    <div id="scroll-container">
-        <div id="scroll-text">Your Address is displayed here</div>
-      </div>
-      <div class="balance">
-        <h2>Balance: R<span id="balance">0.00</span></h2>
-    </div>
-    <div>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Profile page</title>
+		<link rel="stylesheet" href="ProfileStyle.css" />
+		<link rel="stylesheet" href="../../assets/css/style.css" />
+		<link rel="stylesheet" href="../../assets/fontawesome-6.5.2/css/all.css" />
+		<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+		<script src="ProfileMain.js"></script>
+	</head>
+	<body>
+		<header>
+			<div class="logo">
+				<img src="../../assets/img/brainacwiz-logo.jpeg" alt="Logo" />
+			</div>
+			<div class="wallet-details">
+				<div class="wallet-address">
+					<p id="wallet-address-val">Profile</p>
+				</div>
 
-    </div>
-    <div>
-
-    </div>
-    <footer class="">
-        <nav class="navbar">
-            <ul>
-                <li>
-                    <a href="#"><i class="bx bx-home"></i><p>Home</p></a>
-                </li>
-                <li>
-                    <a href="./pages/ranking.html"
-                        ><i class="bx bx-book"></i><p>Leaderboard</p></a
-                    >
-                </li>
-                <li>
-                    <a href="./pages/auth/login.html"
-                        ><i class="bx bx-user-circle"></i><p>Login</p></a
-                    >
-                </li>
-                <li>
-                    <a href="../walletAuth/walletDirect.html"><i class="bx bx-help-circle"></i><p>Help</p></a>
-                </li>
-            </ul>
-        </nav>
-    </footer>
-
-</body>
+				<div class="circular-button">
+					<img class="profilePic-btn" src="avatar.jpg" alt="Avatar" onclick="changeName()" />
+				</div>
+			</div>
+		</header>
+		<div id="scroll-container">
+			<div id="scroll-text">Your Address is displayed here</div>
+		</div>
+		<div class="balance">
+			<h2>Balance: R<span id="balance">0.00</span></h2>
+		</div>
+		<div> </div>
+		<div> </div>
+		<footer class="">
+			<nav class="navbar">
+				<ul>
+					<li>
+						<a href="#"><i class="bx bx-home"></i><p>Home</p></a>
+					</li>
+					<li>
+						<a href="./pages/ranking.html"><i class="bx bx-book"></i><p>Leaderboard</p></a>
+					</li>
+					<li>
+						<a href="./pages/auth/login.html"><i class="bx bx-user-circle"></i><p>Login</p></a>
+					</li>
+					<li>
+						<a href="../walletAuth/walletDirect.html"><i class="bx bx-help-circle"></i><p>Help</p></a>
+					</li>
+				</ul>
+			</nav>
+		</footer>
+	</body>
 </html>
