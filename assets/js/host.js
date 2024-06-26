@@ -184,9 +184,10 @@ async function setQuizDetails(details) {
 	details.redirect = false;
 
 	// set campaign
-	const login = JSON.parse(sessionStorage.getItem('login'));
-	login.campaign = dummyObject.campaign;
-	details.campaign = dummyObject.campaign;
+ const login = JSON.parse(sessionStorage.getItem('login')) || {};
+ const dummyObject = dummyObject || {};
+ login.campaign = dummyObject.campaign || '';
+ details.campaign = dummyObject.campaign || '';
 	sessionStorage.setItem('login', JSON.stringify(login));
 
 	await checkGameStatus(details);
