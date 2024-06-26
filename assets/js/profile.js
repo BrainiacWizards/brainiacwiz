@@ -1,15 +1,6 @@
 import { navbar } from './utils/setnavbar.js';
 import { metaConnection } from '../../../../assets/js/utils/metamask.js';
 
-const userInfo = {
-    loggedIn: true,
-    username: "Palesa Hope",
-    email: "palesa@example.com",
-    joinedDate: "2024-06-25",
-    lastLogin: Date.now()
-};
-
-sessionStorage.setItem('login', JSON.stringify(userInfo));
 
 const walletContent = document.querySelector('.wallet-content');
 const walletContainer = document.querySelector('.wallet-container');
