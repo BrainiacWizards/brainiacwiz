@@ -34,7 +34,7 @@ body {
 .profile-container .profile-header .profile-configs {
 	display: flex;
 	flex-direction: column;
-	align-items: left;
+ align-items: flex-start;
 	margin-top: 0px;
 	background-color: var(--tert-color);
 	border-radius: 20px 20px 0 0;
