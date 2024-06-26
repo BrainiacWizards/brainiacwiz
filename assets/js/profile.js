@@ -30,14 +30,29 @@ profileTxs.addEventListener('click', () => {
 });
 
 // Function to get and display the user's MetaMask address and balance
-async function getAddress() {
-	const address = await metaConnection();
-	// Get the balance of the user's MetaMask account
-	const balance = await ethereum.request({
-		method: 'eth_getBalance',
-		params: [address, 'latest'],
-	});
+let cachedAddress = null;
+let cachedBalance = null;
 
+async function getAddress() {
+	if (cachedAddress && cachedBalance) {
+		updateBalanceElement(cachedBalance);
+		return;
+	}
+	try {
+		const address = await metaConnection();
+		const balance = await ethereum.request({
+			method: 'eth_getBalance',
+			params: [address, 'latest'],
+		});
+		cachedAddress = address;
+		cachedBalance = balance;
+		updateBalanceElement(balance);
+	} catch (error) {
+		console.error('Error fetching MetaMask address or balance:', error);
+	}
+}
+
+function updateBalanceElement(balance) {
 	const balanceElement = document.getElementById('profile-balance');
 	const balanceInDecimal = (balance / 10 ** 18).toFixed(8);
 	balanceElement.value = balanceInDecimal;
