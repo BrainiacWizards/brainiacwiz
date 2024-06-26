@@ -1,6 +1,5 @@
 import { navbar } from './utils/setnavbar.js';
 import { metaConnection } from '../../../../assets/js/utils/metamask.js';
-import { getUsers } from '../../pages/auth/fb.js';
 import { checkLoginStatus } from './main.js';
 
 checkLoginStatus();
