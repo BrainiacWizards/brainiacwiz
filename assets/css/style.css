@@ -96,6 +96,25 @@ button:active {
 	min-width: 250px;
 }
 
+.social-login-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: linear-gradient(var(--tert-color), var(--silver-color));
+	border-radius: 10px;
+	color: var(--prim-color);
+	font-size: 23px;
+	min-width: 50px;
+	aspect-ratio: 1/1;
+	box-shadow: 2px 2px 4px 0 var(--prim-color);
+	padding: 0;
+}
+
+.social-login-btn:hover {
+	background: linear-gradient(var(--font-color), var(--tert-color));
+	font-size: 20px;
+}
+
 /***********************************************/
 .offline-div {
 	position: fixed;

@@ -54,6 +54,7 @@ const fbSignUp = async ({ email, password, userName, errorMessage }) => {
 async function googleLogin({ errorMessage, prevURL }) {
 	try {
 		fb.auth.useDeviceLanguage();
+		errorMessage.textContent = 'Logging in...';
 		const result = await fb.signInWithPopup(fb.auth, fb.provider);
 		const { user } = result;
 
@@ -78,18 +79,19 @@ async function googleLogin({ errorMessage, prevURL }) {
 		window.location.href = `${prevURL}?login=success&username=${user.displayName}`;
 	} catch (error) {
 		const errorCode = error.code.split('/')[1];
-		const errorMessage = error.message;
+		const errorMsg = error.message;
 		const { email } = error;
 		const credential = fb.GoogleAuthProvider.credentialFromError(error);
 		errorMessage.textContent = errorCode;
 		throw new Error(
-			`could not login user!\n\n ${errorCode}\n\n ${errorMessage}\n\n ${email}\n\n ${credential}`,
+			`could not login user!\n\n ${errorCode}\n\n ${errorMsg}\n\n ${email}\n\n ${credential}`,
 		);
 	}
 }
 
 const fbLogin = async ({ email, password, errorMessage, prevURL }) => {
 	try {
+		errorMessage.textContent = 'Logging in...';
 		const userCredential = await fb.signInWithEmailAndPassword(fb.auth, email, password);
 		const { user } = userCredential;
 
@@ -123,7 +125,7 @@ const fbLogin = async ({ email, password, errorMessage, prevURL }) => {
 			fbLogin({ email, password });
 		} else {
 			errorMessage.textContent = error.code.split('/')[1];
-			// throw new Error(`could not login user\n\n ${error}`);
+			console.error(`could not login user\n\n ${error}`);
 		}
 	}
 };

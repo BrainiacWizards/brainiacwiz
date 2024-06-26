@@ -15,6 +15,7 @@ form {
 	width: 100%;
 	text-align: center;
 	color: var(--sec-color);
+	/* background: linear-gradient(180deg, var(--tert-color), var(--font-color)); */
 }
 
 form .left-group {
