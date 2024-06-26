@@ -76,6 +76,7 @@ async function googleLogin({ errorMessage, prevURL }) {
 		};
 
 		sessionStorage.setItem('login', JSON.stringify(loginObject));
+		await getUsers(loginObject.username);
 		window.location.href = `${prevURL}?login=success&username=${user.displayName}`;
 	} catch (error) {
 		const errorCode = error.code.split('/')[1];
@@ -118,6 +119,7 @@ const fbLogin = async ({ email, password, errorMessage, prevURL }) => {
 		};
 
 		sessionStorage.setItem('login', JSON.stringify(loginObject));
+		await getUsers(loginObject.username);
 		// redirect to the home page
 		window.location.href = `${prevURL}?login=success&username=${username}`;
 	} catch (error) {
@@ -155,6 +157,7 @@ async function githubLogin({ prevURL }) {
 		};
 
 		sessionStorage.setItem('login', JSON.stringify(loginObject));
+		await getUsers(loginObject.user);
 		// redirect to the previous page
 		window.location.href = `${prevURL}?login=success&username=${user.displayName}`;
 	} catch (error) {
@@ -609,7 +612,7 @@ async function getUsers(username) {
 			return user;
 		});
 
-		console.log(user);
+		updateLogin(user);
 		return user || { username: 'No users found', email: 'N/A', lastLogin: 'N/A' };
 	} catch (error) {
 		if (error.message.includes('offline')) {
@@ -618,6 +621,14 @@ async function getUsers(username) {
 			throw new Error(`could not get all users\n\n ${error}`);
 		}
 	}
+}
+
+function updateLogin(user) {
+	const login = JSON.parse(sessionStorage.getItem('login'));
+	login.username = user[0].username || login.username;
+	login.email = user[0].email;
+	login.lastLogin = user[0].lastLogin;
+	sessionStorage.setItem('login', JSON.stringify(login));
 }
 
 export {
