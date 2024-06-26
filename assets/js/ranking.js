@@ -27,7 +27,7 @@ async function getRanking() {
 	// create the ranking table for each gamePin
 	Object.keys(rankingByGamePin).forEach(async (gamePin) => {
 		const players = rankingByGamePin[gamePin];
-		// if (players.length < 1) return;
+  // Code removed
 		const gamePinRow = document.createElement('tr');
 		gamePinRow.innerHTML = `
 			<td colspan="6" class="game-pin-col">${gamePin}</td>
