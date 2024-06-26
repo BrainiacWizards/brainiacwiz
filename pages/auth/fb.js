@@ -588,6 +588,39 @@ async function fundGame({ gamePin, topicID, amount }) {
 	}
 }
 
+// get all users from database
+async function getUsers(username) {
+	let users = null,
+		user = null;
+	try {
+		const userRef = fb.ref(fb.database, `users`);
+		const userSnapshot = await fb.get(userRef);
+		users = userSnapshot.val();
+
+		if (username) {
+			user = Object.values(users).filter((user) => user.username === username);
+			user = user.map((user) => {
+				delete user.password;
+				return user;
+			});
+
+			// format date into readable format
+			user = user.map((user) => {
+				user.lastLogin = new Date(user.lastLogin).toLocaleString();
+				return user;
+			});
+		}
+	} catch (error) {
+		if (error.message.includes('offline')) {
+			getUsers();
+		} else {
+			throw new Error(`could not get all users\n\n ${error}`);
+		}
+	}
+
+	return user || { username: 'No users found', email: 'N/A', lastLogin: 'N/A' };
+}
+
 export {
 	fbSignUp,
 	fbLogin,
@@ -604,4 +637,5 @@ export {
 	githubLogin,
 	uploadImage,
 	fundGame,
+	getUsers,
 };
