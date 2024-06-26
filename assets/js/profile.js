@@ -25,7 +25,7 @@ profileTxs.addEventListener('click', () => {
 let cachedAddress = null;
 let cachedBalance = null;
 
-async function getAddress() {
+async function fetchAndDisplayMetaMaskBalance() {
 	if (cachedAddress && cachedBalance) {
 		updateBalanceElement(cachedBalance);
 		return;
