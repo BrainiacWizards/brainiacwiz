@@ -51,4 +51,4 @@ function updateBalanceElement(balance) {
 }
 
 // Call getAddress to display balance
-getAddress();
+fetchAndDisplayMetaMaskBalance();
