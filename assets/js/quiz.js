@@ -2,6 +2,7 @@ import { createScoreBoard } from '../../pages/auth/fb.js';
 import { run } from './utils/openai.mjs';
 import { topics } from './utils/questions.js';
 import { checkLoginStatus } from './main.js';
+import { metaConnection } from './utils/metamask.js';
 checkLoginStatus({ path: '../auth/' });
 
 let questionsAI = [];
@@ -72,7 +73,7 @@ const setQuestions = (question) => {
 
 function setQuizBtns() {
 	const chosen = [];
-	quizOptBtns.forEach((btn, index) => {
+	quizOptBtns.forEach((btn) => {
 		while (true) {
 			const ran = Math.floor(Math.random() * colors.length);
 			if (!chosen.includes(ran)) {
@@ -143,6 +144,7 @@ setQuizDetails().then(async (topic) => {
 
 // check answers and set score
 const loginObj = JSON.parse(sessionStorage.getItem('login'));
+loginObj.wallet = await metaConnection();
 const username = loginObj.username;
 let score = 0;
 let sessionUser = {
@@ -156,6 +158,7 @@ await createScoreBoard({
 	username: username,
 	score: sessionUser.score,
 	topicID: topicID,
+	wallet: loginObj.wallet,
 });
 
 async function setCheckScore(question) {
@@ -187,6 +190,7 @@ async function setCheckScore(question) {
 				username: sessionUser.username,
 				score: sessionUser.score,
 				topicID: topicID,
+				wallet: loginObj.wallet,
 			});
 		});
 	});

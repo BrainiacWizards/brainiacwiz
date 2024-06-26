@@ -1,5 +1,16 @@
 import * as fb from '../../fb_config.js';
 
+// Utility function to shorten usernames
+function shortenUsername(username) {
+	const usernameArr = username.split(' ');
+	if (usernameArr.length > 1) {
+		return `${usernameArr[0][0]} ${usernameArr[1]}`;
+	} else if (username.length > 13) {
+		return username.slice(0, 10);
+	}
+	return username;
+}
+
 const fbSignUp = async ({ email, password, userName, errorMessage }) => {
 	try {
 		const userCredential = await fb.createUserWithEmailAndPassword(fb.auth, email, password);
@@ -43,6 +54,7 @@ const fbSignUp = async ({ email, password, userName, errorMessage }) => {
 async function googleLogin({ errorMessage, prevURL }) {
 	try {
 		fb.auth.useDeviceLanguage();
+		errorMessage.textContent = 'Logging in...';
 		const result = await fb.signInWithPopup(fb.auth, fb.provider);
 		const { user } = result;
 
@@ -67,18 +79,19 @@ async function googleLogin({ errorMessage, prevURL }) {
 		window.location.href = `${prevURL}?login=success&username=${user.displayName}`;
 	} catch (error) {
 		const errorCode = error.code.split('/')[1];
-		const errorMessage = error.message;
+		const errorMsg = error.message;
 		const { email } = error;
 		const credential = fb.GoogleAuthProvider.credentialFromError(error);
 		errorMessage.textContent = errorCode;
 		throw new Error(
-			`could not login user!\n\n ${errorCode}\n\n ${errorMessage}\n\n ${email}\n\n ${credential}`,
+			`could not login user!\n\n ${errorCode}\n\n ${errorMsg}\n\n ${email}\n\n ${credential}`,
 		);
 	}
 }
 
 const fbLogin = async ({ email, password, errorMessage, prevURL }) => {
 	try {
+		errorMessage.textContent = 'Logging in...';
 		const userCredential = await fb.signInWithEmailAndPassword(fb.auth, email, password);
 		const { user } = userCredential;
 
@@ -112,7 +125,7 @@ const fbLogin = async ({ email, password, errorMessage, prevURL }) => {
 			fbLogin({ email, password });
 		} else {
 			errorMessage.textContent = error.code.split('/')[1];
-			// throw new Error(`could not login user\n\n ${error}`);
+			console.error(`could not login user\n\n ${error}`);
 		}
 	}
 };
@@ -180,7 +193,7 @@ async function createGamePinTable({ gamePin, topicID, campaign, host }) {
 			},
 		];
 
-		console.log(dummyObject);
+		// console.log(dummyObject);
 
 		await fb.set(gamePinRef, dummyObject);
 		alert('Game created! share your pin with others');
@@ -202,6 +215,8 @@ async function createScoreBoard({ gamePin, username, score, topicID, wallet }) {
 		scoreRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
 		const scoreSnapshot = await fb.get(scoreRef);
 		let scoreData = Object.values(scoreSnapshot.val() || {});
+
+		username = shortenUsername(username);
 
 		// Initialize scoreData if it's null
 		if (!scoreData) {
@@ -289,6 +304,13 @@ async function getPlayerNames({ gamePin, topicID }) {
 	];
 	// console.log(players);
 	players = players.sort((a, b) => b.score - a.score);
+
+	// for each player if username is 2 words take initial and surname
+	players = players.map((player) => {
+		player.username = shortenUsername(player.username);
+		return player;
+	});
+
 	return players;
 }
 
@@ -297,6 +319,13 @@ async function setPlayers({ gamePin, topicID, playerNames }) {
 
 	try {
 		playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
+
+		// for each player if username is 2 words take initial and surname
+		playerNames = playerNames.map((player) => {
+			player.username = shortenUsername(player.username);
+			return player;
+		});
+
 		await fb.set(playerNamesRef, playerNames);
 	} catch (error) {
 		if (error.message.includes('offline')) {
@@ -308,7 +337,7 @@ async function setPlayers({ gamePin, topicID, playerNames }) {
 }
 
 // set overall ranking
-async function overallRanking({ username, points, time, retry, gamePin }) {
+async function overallRanking({ username, points, time, retry, gamePin, campaign }) {
 	let overallRankingSnapshot = null;
 	let overallRankingRef = null;
 	try {
@@ -338,15 +367,24 @@ async function overallRanking({ username, points, time, retry, gamePin }) {
 			startTime: Date.now(),
 			duration: time,
 			gamePin: gamePin,
+			campaign: campaign,
 		});
 	} else {
 		// update the score if the username already exists
 		overallRanking = overallRanking.map((obj) => {
 			if (obj.username === username) {
-				retry ? (obj.points += points - retry) : (obj.points += points);
+				// if game pin is the same, update the points
+				if (obj.gamePin === gamePin) {
+					retry ? (obj.points += points - retry) : (obj.points += points);
+				} else {
+					// if game pin is different, create a new entry
+					obj.points = points;
+				}
+
 				obj.time = time;
 				obj.duration = time - obj.startTime;
 				obj.gamePin = gamePin;
+				obj.campaign = campaign;
 			}
 			return obj;
 		});
@@ -426,6 +464,7 @@ async function startGame({ gamePin, topicID }) {
 // end hosted game
 async function endGame({ gamePin, topicID }) {
 	let playerNames = await getPlayerNames({ gamePin, topicID });
+	console.log('ending game');
 
 	try {
 		// change only dummy
@@ -441,10 +480,11 @@ async function endGame({ gamePin, topicID }) {
 		}
 
 		await setPlayers({ gamePin, topicID, playerNames });
+		alert('Game has ended');
 		return { status: true, msg: 'Game ended!' };
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			endGame({ gamePin, topicID });
+			await endGame({ gamePin, topicID });
 		} else {
 			throw new Error(`could not end the game\n\n ${error}`);
 		}
@@ -548,6 +588,38 @@ async function fundGame({ gamePin, topicID, amount }) {
 	}
 }
 
+// get all users from database
+async function getUsers(username) {
+	let users = null,
+		user = null;
+	try {
+		const userRef = fb.ref(fb.database, `users`);
+		const userSnapshot = await fb.get(userRef);
+		users = userSnapshot.val();
+
+		user = Object.values(users).filter((user) => user.username === username);
+		user = user.map((user) => {
+			delete user.password;
+			return user;
+		});
+
+		// format date into readable format
+		user = user.map((user) => {
+			user.lastLogin = new Date(user.lastLogin).toLocaleString();
+			return user;
+		});
+
+		console.log(user);
+		return user || { username: 'No users found', email: 'N/A', lastLogin: 'N/A' };
+	} catch (error) {
+		if (error.message.includes('offline')) {
+			getUsers();
+		} else {
+			throw new Error(`could not get all users\n\n ${error}`);
+		}
+	}
+}
+
 export {
 	fbSignUp,
 	fbLogin,
@@ -564,4 +636,5 @@ export {
 	githubLogin,
 	uploadImage,
 	fundGame,
+	getUsers,
 };

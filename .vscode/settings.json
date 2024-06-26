@@ -18,6 +18,7 @@
 		"MRVV",
 		"Mydoom",
 		"Neumann",
+		"setnavbar",
 		"Stuxnet",
 		"tert",
 		"Vint",
@@ -32,10 +33,7 @@
 			"icon": "terminal-powershell"
 		},
 		"Command Prompt": {
-			"path": [
-				"${env:windir}\\Sysnative\\cmd.exe",
-				"${env:windir}\\System32\\cmd.exe"
-			],
+			"path": ["${env:windir}\\Sysnative\\cmd.exe", "${env:windir}\\System32\\cmd.exe"],
 			"args": [],
 			"icon": "terminal-cmd"
 		},
