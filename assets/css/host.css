@@ -193,7 +193,7 @@
 	font-size: 30px;
 	padding: 0 40px;
 	width: 90%;
-	max-width: 800px;
+	max-width: 90%;
 	margin-top: 20px;
 	margin-right: 10px;
 	gap: 30px;
@@ -201,7 +201,7 @@
 
 .players .players-list {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 	align-items: center;
 	justify-content: center;
 	margin: 0;
@@ -247,8 +247,10 @@
 	background-color: var(--tert-color);
 	box-shadow: 2px 2px 5px 0 var(--sec-color);
 	border-radius: 10px;
-	min-width: 260px;
-	max-width: none;
+	min-width: 250px;
+	max-width: 290px;
+	width: 90%;
+	margin: 0 auto;
 }
 
 .players .players-list .player:hover {

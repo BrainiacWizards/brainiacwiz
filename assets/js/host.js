@@ -68,6 +68,7 @@ async function setPlayerNames(details) {
 	details.playerNames.forEach((playerName, index) => {
 		const player = document.createElement('div');
 		player.classList.add('player');
+		player.id = playerName.wallet || '0x00';
 		player.innerHTML = `
 			<span class="player-name">${index + 1}. ${playerName.username}</span>
 			<span class="player-score">(${playerName.score})</span>
@@ -91,11 +92,13 @@ async function setPlayerNames(details) {
 }
 
 async function clickEventOnPlayer() {
+	const receiverAddress = document.querySelector('#receiverAddress');
 	//
 	const allPlayer = document.querySelectorAll('.player');
 	allPlayer.forEach((player) => {
 		player?.addEventListener('click', () => {
 			if (transferPopup) transferPopup.style.display = 'flex';
+			if (receiverAddress) receiverAddress.value = player.id;
 		});
 	});
 }
@@ -195,9 +198,8 @@ startBtn?.addEventListener('click', async () => {
 
 cancelBtn?.addEventListener('click', async () => {
 	const confirmEnd = confirm('Are you sure you want to end the game?');
-	if (!confirmEnd) {
+	if (confirmEnd) {
 		await endGame({ gamePin, topicID });
-		alert('Game has ended');
 	}
 });
 

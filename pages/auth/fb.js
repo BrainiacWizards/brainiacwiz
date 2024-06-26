@@ -204,12 +204,17 @@ async function createScoreBoard({ gamePin, username, score, topicID, wallet }) {
 		let scoreData = Object.values(scoreSnapshot.val() || {});
 
 		// if username is 2 names, take initial and surname
-		const usernameArr = username.split(' ');
-		if (usernameArr.length > 1) {
-			username = `${usernameArr[0][0]} ${usernameArr[1]}.`;
-		} else if (username.length > 13) {
-			username = username.slice(0, 10);
-		}
+  function shortenUsername(username) {
+      const usernameArr = username.split(' ');
+      if (usernameArr.length > 1) {
+          return `${usernameArr[0][0]} ${usernameArr[1]}`;
+      } else if (username.length > 13) {
+          return username.slice(0, 10);
+      }
+      return username;
+  }
+
+  username = shortenUsername(username);
 
 		// Initialize scoreData if it's null
 		if (!scoreData) {
@@ -302,7 +307,7 @@ async function getPlayerNames({ gamePin, topicID }) {
 	players = players.map((player) => {
 		const username = player.username.split(' ');
 		if (username.length > 1) {
-			player.username = `${username[0][0]} ${username[1]}.`;
+			player.username = `${username[0][0]} ${username[1]}`;
 		} else if (player.username.length > 13) {
 			player.username = player.username.slice(0, 10);
 		}
@@ -322,7 +327,7 @@ async function setPlayers({ gamePin, topicID, playerNames }) {
 		playerNames = playerNames.map((player) => {
 			const username = player.username.split(' ');
 			if (username.length > 1) {
-				player.username = `${username[0][0]} ${username[1]}.`;
+				player.username = `${username[0][0]} ${username[1]}`;
 			} else if (player.username.length > 13) {
 				player.username = player.username.slice(0, 10);
 			}
@@ -465,6 +470,7 @@ async function startGame({ gamePin, topicID }) {
 // end hosted game
 async function endGame({ gamePin, topicID }) {
 	let playerNames = await getPlayerNames({ gamePin, topicID });
+	console.log('ending game');
 
 	try {
 		// change only dummy
@@ -480,10 +486,11 @@ async function endGame({ gamePin, topicID }) {
 		}
 
 		await setPlayers({ gamePin, topicID, playerNames });
+		alert('Game has ended');
 		return { status: true, msg: 'Game ended!' };
 	} catch (error) {
 		if (error.message.includes('offline')) {
-			endGame({ gamePin, topicID });
+			await endGame({ gamePin, topicID });
 		} else {
 			throw new Error(`could not end the game\n\n ${error}`);
 		}
