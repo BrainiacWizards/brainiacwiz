@@ -1,5 +1,16 @@
 import * as fb from '../../fb_config.js';
 
+// Utility function to shorten usernames
+function shortenUsername(username) {
+	const usernameArr = username.split(' ');
+	if (usernameArr.length > 1) {
+		return `${usernameArr[0][0]} ${usernameArr[1]}`;
+	} else if (username.length > 13) {
+		return username.slice(0, 10);
+	}
+	return username;
+}
+
 const fbSignUp = async ({ email, password, userName, errorMessage }) => {
 	try {
 		const userCredential = await fb.createUserWithEmailAndPassword(fb.auth, email, password);
@@ -203,17 +214,6 @@ async function createScoreBoard({ gamePin, username, score, topicID, wallet }) {
 		const scoreSnapshot = await fb.get(scoreRef);
 		let scoreData = Object.values(scoreSnapshot.val() || {});
 
-		// if username is 2 names, take initial and surname
-		function shortenUsername(username) {
-			const usernameArr = username.split(' ');
-			if (usernameArr.length > 1) {
-				return `${usernameArr[0][0]} ${usernameArr[1]}`;
-			} else if (username.length > 13) {
-				return username.slice(0, 10);
-			}
-			return username;
-		}
-
 		username = shortenUsername(username);
 
 		// Initialize scoreData if it's null
@@ -305,12 +305,7 @@ async function getPlayerNames({ gamePin, topicID }) {
 
 	// for each player if username is 2 words take initial and surname
 	players = players.map((player) => {
-		const username = player.username.split(' ');
-		if (username.length > 1) {
-			player.username = `${username[0][0]} ${username[1]}`;
-		} else if (player.username.length > 13) {
-			player.username = player.username.slice(0, 10);
-		}
+		player.username = shortenUsername(player.username);
 		return player;
 	});
 
@@ -325,12 +320,7 @@ async function setPlayers({ gamePin, topicID, playerNames }) {
 
 		// for each player if username is 2 words take initial and surname
 		playerNames = playerNames.map((player) => {
-			const username = player.username.split(' ');
-			if (username.length > 1) {
-				player.username = `${username[0][0]} ${username[1]}`;
-			} else if (player.username.length > 13) {
-				player.username = player.username.slice(0, 10);
-			}
+			player.username = shortenUsername(player.username);
 			return player;
 		});
 
