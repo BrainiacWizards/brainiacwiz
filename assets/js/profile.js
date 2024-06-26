@@ -1,6 +1,15 @@
 import { navbar } from './utils/setnavbar.js';
 import { metaConnection } from '../../../../assets/js/utils/metamask.js';
-import { getUsers } from '../../pages/auth/fb.js';
+
+const userInfo = {
+    loggedIn: true,
+    username: "Palesa Hope",
+    email: "palesa@example.com",
+    joinedDate: "2024-06-25",
+    lastLogin: Date.now()
+};
+
+sessionStorage.setItem('login', JSON.stringify(userInfo));
 
 const walletContent = document.querySelector('.wallet-content');
 const walletContainer = document.querySelector('.wallet-container');
@@ -9,55 +18,71 @@ const profileTxs = document.getElementById('profile-tx-btn');
 const profileNfts = document.getElementById('profile-nft-btn');
 
 profileNfts.addEventListener('click', () => {
-	walletContainer.style.display = 'flex';
-	walletContent.style.display = 'flex';
-	txContent.style.display = 'none';
-	navbar.showCollectedTokens();
+    walletContainer.style.display = 'flex';
+    walletContent.style.display = 'flex';
+    txContent.style.display = 'none';
+    navbar.showCollectedTokens();
 });
 
 profileTxs.addEventListener('click', () => {
-	walletContainer.style.display = 'flex';
-	walletContent.style.display = 'none';
-	txContent.style.display = 'flex';
-	navbar.showTransfers();
+    walletContainer.style.display = 'flex';
+    walletContent.style.display = 'none';
+    txContent.style.display = 'flex';
+    navbar.showTransfers();
 });
 
-// Function to get and display the user's MetaMask address and balance
 let cachedAddress = null;
 let cachedBalance = null;
 
 async function fetchAndDisplayMetaMaskBalance() {
-	fetchAndDisplayUser();
-	if (cachedAddress && cachedBalance) {
-		updateBalanceElement(cachedBalance);
-		return;
-	}
-	try {
-		const address = await metaConnection();
-		const balance = await ethereum.request({
-			method: 'eth_getBalance',
-			params: [address, 'latest'],
-		});
-		cachedAddress = address;
-		cachedBalance = balance;
-		updateBalanceElement(balance);
-	} catch (error) {
-		console.error('Error fetching MetaMask address or balance:', error);
-	}
+    fetchAndDisplayUser();
+    if (cachedAddress && cachedBalance) {
+        updateBalanceElement(cachedBalance);
+        return;
+    }
+    try {
+        const address = await metaConnection();
+        
+        const balance = await ethereum.request({
+            method: 'eth_getBalance',
+            params: [address, 'latest'],
+        });
+        cachedAddress = address;
+        cachedBalance = balance;
+        updateBalanceElement(balance);
+    } catch (error) {
+        console.error('Error fetching MetaMask address or balance:', error);
+    }
 }
 
 function updateBalanceElement(balance) {
-	const balanceElement = document.getElementById('profile-balance');
-	const balanceInDecimal = (balance / 10 ** 18).toFixed(2);
-	balanceElement.textContent = `${balanceInDecimal} CELO`;
+    const balanceElement = document.getElementById('profile-balance');
+    const balanceInDecimal = (balance / 10 ** 18).toFixed(2);
+    balanceElement.textContent = `${balanceInDecimal} CELO`;
 }
 
-async function fetchAndDisplayUser() {
-	const login = JSON.parse(sessionStorage.getItem('login'));
-	const user = await getUsers(login.username);
-	const userElement = document.getElementById('profile-name');
-	userElement.textContent = user.username || 'username not set';
+function fetchAndDisplayUser() {
+    const login = JSON.parse(sessionStorage.getItem('login'));
+    if (!login || !login.username) {
+        console.error('No login information found in session storage.');
+        return;
+    }
+
+    try {
+        const userElement = document.getElementById('profile-name');
+        userElement.textContent = login.username || 'Username not set';
+
+        const emailElement = document.getElementById('profile-email').querySelector('span');
+        emailElement.textContent = login.email || 'Email not set';
+
+        const usernameElement = document.getElementById('profile-username').querySelector('span');
+        usernameElement.textContent = login.username || 'Username not set';
+
+        const joinedElement = document.getElementById('profile-joined').querySelector('span');
+        joinedElement.textContent = login.joinedDate || 'Joined date not set';
+    } catch (error) {
+        console.error('Error displaying user data:', error);
+    }
 }
 
-// Call getAddress to display balance
 fetchAndDisplayMetaMaskBalance();
