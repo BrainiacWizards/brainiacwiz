@@ -12,7 +12,6 @@ const startBtn = document.getElementById('host-start-btn');
 const cancelBtn = document.getElementById('host-cancel-btn');
 const rewardAmount = document.querySelector('.reward-amount');
 const nftImage = document.querySelector('.nft-image');
-const statusText = document.getElementById('status-text');
 const fundForm = document.getElementById('fund-form');
 const closeBtn = document.querySelector('.close-btn');
 const hostDeposit = document.getElementById('host-deposit');
@@ -183,6 +182,12 @@ async function setQuizDetails(details) {
 	details.questionsCount.innerHTML = 'Questions: 6';
 	details.playerCount.innerHTML = 'Players: ' + details.playerNames.length;
 	details.redirect = false;
+
+	// set campaign
+	const login = JSON.parse(sessionStorage.getItem('login'));
+	login.campaign = dummyObject.campaign;
+	details.campaign = dummyObject.campaign;
+	sessionStorage.setItem('login', JSON.stringify(login));
 
 	await checkGameStatus(details);
 }

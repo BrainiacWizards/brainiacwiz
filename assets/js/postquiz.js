@@ -44,12 +44,14 @@ playBtn?.addEventListener('click', () => {
 let tokenTransferred = false;
 let reload = true;
 let time = 5;
+let campaign = '';
 
 async function setScoreBoard() {
 	// get username from login
 	const login = JSON.parse(sessionStorage.getItem('login'));
 	const username = login.username;
 	const myPin = gamePin;
+	campaign = login.campaign;
 
 	// get score object from session storage
 	const sessionUser = JSON.parse(sessionStorage.getItem('sessionUser'));
@@ -109,20 +111,37 @@ setScoreBoard();
 async function checkWin(scoreData, username, gamePin, score) {
 	// check if score equals the number of questions
 	// if (score < questions[`Q${topicID}`].length / 2) {
-	// 	alert('You should get 50% of the questions correctly to win, try again!');
-	// 	// restart the game move the play.html
+	// !alert('You should get 50% of the questions correctly to win, try again!');
+	//  restart the game move the play.html
 	// 	window.location.href = `../play/quiz.html?topic=${topicID}&gamePin=${gamePin}&retry=${score}`;
 	// 	return;
 	// }
+
+	// get	the campaign from login object
+	const login = JSON.parse(sessionStorage.getItem('login'));
+	campaign = login.campaign;
 
 	const retry = new URLSearchParams(window.location.search).get('retry');
 
 	// set overall ranking
 	if (retry) {
-		await setOverallRanking({ username, score, retry: '2', gamePin });
+		await setOverallRanking({ username, score, retry: '2', gamePin, campaign });
 	} else {
-		await setOverallRanking({ username, score, gamePin });
+		await setOverallRanking({ username, score, gamePin, campaign });
 	}
+
+	// format username
+	function shortenUsername(username) {
+		const usernameArr = username.split(' ');
+		if (usernameArr.length > 1) {
+			return `${usernameArr[0][0]} ${usernameArr[1]}`;
+		} else if (username.length > 13) {
+			return username.slice(0, 10);
+		}
+		return username;
+	}
+
+	username = shortenUsername(username);
 
 	if (scoreData[0].username === username && !tokenTransferred) {
 		alert('Congratulations! You are the won, click OK to accept your NFT');
@@ -152,7 +171,7 @@ async function checkWin(scoreData, username, gamePin, score) {
 }
 
 // set overall ranking
-async function setOverallRanking({ username, score, retry, gamePin }) {
+async function setOverallRanking({ username, score, retry, gamePin, campaign }) {
 	console.log('setting overall ranking for', username, score, retry, gamePin);
 	const currentTime = new Date().getTime();
 
@@ -163,5 +182,6 @@ async function setOverallRanking({ username, score, retry, gamePin }) {
 		time: currentTime,
 		retry: retry,
 		gamePin: gamePin,
+		campaign: campaign,
 	});
 }
