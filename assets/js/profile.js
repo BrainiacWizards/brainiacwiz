@@ -1,6 +1,8 @@
 import { navbar } from './utils/setnavbar.js';
 import { metaConnection } from '../../../../assets/js/utils/metamask.js';
-import { getUsers } from '../../pages/auth/fb.js';
+import { checkLoginStatus } from './main.js';
+
+checkLoginStatus();
 
 const walletContent = document.querySelector('.wallet-content');
 const walletContainer = document.querySelector('.wallet-container');
@@ -22,7 +24,6 @@ profileTxs.addEventListener('click', () => {
 	navbar.showTransfers();
 });
 
-// Function to get and display the user's MetaMask address and balance
 let cachedAddress = null;
 let cachedBalance = null;
 
@@ -34,6 +35,7 @@ async function fetchAndDisplayMetaMaskBalance() {
 	}
 	try {
 		const address = await metaConnection();
+
 		const balance = await ethereum.request({
 			method: 'eth_getBalance',
 			params: [address, 'latest'],
@@ -53,11 +55,24 @@ function updateBalanceElement(balance) {
 }
 
 async function fetchAndDisplayUser() {
-	const login = JSON.parse(sessionStorage.getItem('login'));
-	const user = await getUsers(login.username);
-	const userElement = document.getElementById('profile-name');
-	userElement.textContent = user.username || 'username not set';
+	try {
+		const login = JSON.parse(sessionStorage.getItem('login'));
+		console.log('Login: ', login);
+
+		const userElement = document.getElementById('profile-name');
+		userElement.textContent = login.username || 'Username not set';
+
+		const emailElement = document.getElementById('profile-email').querySelector('span');
+		emailElement.textContent = login.email || 'Email not set';
+
+		const usernameElement = document.getElementById('profile-username').querySelector('span');
+		usernameElement.textContent = login.username || 'Username not set';
+
+		const joinedElement = document.getElementById('profile-joined').querySelector('span');
+		joinedElement.textContent = login.lastLogin || 'Joined date not set';
+	} catch (error) {
+		console.error('Error displaying user data:', error);
+	}
 }
 
-// Call getAddress to display balance
 fetchAndDisplayMetaMaskBalance();

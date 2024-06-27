@@ -1,7 +1,7 @@
 // check login status from login object in session storage
 const signInBtn = document.getElementById('sign-in-btn');
 
-function checkLoginStatus({ path = './' }) {
+function checkLoginStatus() {
 	const { origin } = window.location;
 	const loginObj = sessionStorage.getItem('login');
 	if (loginObj) {
