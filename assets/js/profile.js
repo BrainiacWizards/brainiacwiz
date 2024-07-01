@@ -45,6 +45,7 @@ async function fetchAndDisplayMetaMaskBalance() {
 		updateBalanceElement(balance);
 	} catch (error) {
 		console.error('Error fetching MetaMask address or balance:', error);
+		navbar.errorDetection.consoleError('Error fetching MetaMask address or balance');
 	}
 }
 
@@ -72,6 +73,7 @@ async function fetchAndDisplayUser() {
 		joinedElement.textContent = login.lastLogin || 'Joined date not set';
 	} catch (error) {
 		console.error('Error displaying user data:', error);
+		navbar.errorDetection.consoleError('Could not display user data');
 	}
 }
 

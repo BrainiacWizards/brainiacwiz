@@ -14,6 +14,7 @@
 		"gamepin",
 		"hackathon",
 		"ILOVEYOU",
+		"lenght",
 		"Lfoe",
 		"MRVV",
 		"Mydoom",
@@ -41,8 +42,6 @@
 			"source": "Git Bash"
 		}
 	},
-	"githubPullRequests.ignoredPullRequestBranches": [
-		"main"
-	],
+	"githubPullRequests.ignoredPullRequestBranches": ["main"],
 	"liveServer.settings.port": 5501
 }

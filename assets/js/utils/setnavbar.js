@@ -1,3 +1,4 @@
+import ErrorDetection from './error-detection.js';
 import { getTransfers } from './graph_query.js';
 import { getState, metaConnection } from './metamask.js';
 
@@ -13,6 +14,7 @@ class Navbar {
 		this.injectProfileLink();
 		this.url = 'https://api.studio.thegraph.com/query/72281/celo-subgraph-box/version/latest';
 		this.sentryUrl = ``;
+		this.errorDetection = new ErrorDetection();
 	}
 
 	// inject profile link page next to wallet-btn

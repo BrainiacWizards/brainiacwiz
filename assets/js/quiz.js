@@ -3,6 +3,7 @@ import { run } from './utils/openai.mjs';
 import { topics } from './utils/questions.js';
 import { checkLoginStatus } from './main.js';
 import { metaConnection } from './utils/metamask.js';
+import { navbar } from './utils/setnavbar.js';
 checkLoginStatus({ path: '../auth/' });
 
 let questionsAI = [];
@@ -27,7 +28,8 @@ const setQuizDetails = async () => {
 	} else {
 		const topic = topics.find((topic) => topic.id === parseInt(topicID));
 		if (!topic) {
-			alert('Invalid topic selected');
+			navbar.errorDetection.consoleError('Invalid topic selected, redirecting to home.');
+			await new Promise((resolve) => setTimeout(resolve, 2000));
 			window.location.href = '../../index.html';
 		}
 	}
@@ -42,6 +44,24 @@ const setQuizDetails = async () => {
 
 	return topic;
 };
+
+const loginObj = JSON.parse(sessionStorage.getItem('login'));
+loginObj.wallet = await metaConnection();
+const username = loginObj.username;
+let score = 0;
+let sessionUser = {
+	username: username,
+	score: score,
+};
+sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
+// initial score
+await createScoreBoard({
+	gamePin: gamePin,
+	username: username,
+	score: sessionUser.score,
+	topicID: topicID,
+	wallet: loginObj.wallet,
+});
 
 const setTranslateAnimation = ({ element, translation }) => {
 	element.style.transform = `translateX(${translation}px)`;
@@ -131,6 +151,7 @@ const setQuizTImer = ({ duration = 30 }) => {
 function moveToPostQuiz(intervalId) {
 	clearInterval(intervalId); // stop the interval
 	const retry = new URLSearchParams(window.location.search).get('retry') || false;
+	navbar.errorDetection.consoleInfo('Quiz completed...');
 	window.location.href = `./post-quiz.html?gamePin=${gamePin}&topic=${topicID}&retry=${retry}`;
 }
 
@@ -143,23 +164,6 @@ setQuizDetails().then(async (topic) => {
 });
 
 // check answers and set score
-const loginObj = JSON.parse(sessionStorage.getItem('login'));
-loginObj.wallet = await metaConnection();
-const username = loginObj.username;
-let score = 0;
-let sessionUser = {
-	username: username,
-	score: score,
-};
-sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
-// initial score
-await createScoreBoard({
-	gamePin: gamePin,
-	username: username,
-	score: sessionUser.score,
-	topicID: topicID,
-	wallet: loginObj.wallet,
-});
 
 async function setCheckScore(question) {
 	quizOptBtns.forEach((btn) => {

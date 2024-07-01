@@ -1,4 +1,5 @@
 import { checkLoginStatus } from '../../../assets/js/main.js';
+import { navbar } from '../../../assets/js/utils/setnavbar.js';
 import { createGamePinTable, queryGamePin } from '../fb.js';
 
 const generateBtn = document.getElementById('generateBtn');
@@ -56,6 +57,7 @@ async function generatePIN() {
 		console.log(gameObject);
 
 		generateBtn.textContent = 'creating...';
+		navbar.errorDetection.consoleInfo('Creating game pin...');
 		generated = true;
 		generateBtn.disabled = true;
 		await createGamePinTable(gameObject);
@@ -103,15 +105,15 @@ async function validateInputs(gamePin) {
 
 	if (data) {
 		error.style.display = 'block';
+		navbar.errorDetection.consoleInfo('Game PIN exists');
 		error.textContent = 'Game PIN exists';
 		error.style.color = 'green';
-		console.log('Game PIN exists');
 		check = true;
 	} else {
 		error.style.display = 'block';
 		error.textContent = 'Game PIN does not exist';
 		error.style.color = 'red';
-		console.log('Game PIN does not exist');
+		navbar.errorDetection.consoleWarn('Game PIN does not exist');
 		check = false;
 	}
 
@@ -121,10 +123,7 @@ async function validateInputs(gamePin) {
 		error.style.display = 'block';
 		error.style.color = 'red';
 		check = false;
-		console.log('setting check to false length:', gamePin.length);
 	}
-
-	console.log('check:', check);
 	return check;
 }
 

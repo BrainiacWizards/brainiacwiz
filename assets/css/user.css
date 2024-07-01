@@ -17,11 +17,10 @@ body {
 	aspect-ratio: 1/1;
 	border-radius: 50%;
 	margin: 0 auto;
-	margin-top: 10px;
+	margin-top: 5px;
 	z-index: 1;
 	position: absolute;
-	left: 58%;
-	transform: translateX(-50%);
+	left: 59%;
 	background-color: var(--prim-color);
 }
 
@@ -34,7 +33,7 @@ body {
 .profile-container .profile-header .profile-configs {
 	display: flex;
 	flex-direction: column;
- align-items: flex-start;
+	align-items: flex-start;
 	margin-top: 0px;
 	background-color: var(--tert-color);
 	border-radius: 20px 20px 0 0;
@@ -116,6 +115,17 @@ body {
 	padding: 10px 20px;
 	grid-gap: 100px;
 	text-align: center;
+}
+
+.profile-header .stat {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: var(--tert-color);
+	width: 50%;
+	min-height: 100px;
+	justify-content: center;
+	border-radius: 20px;
 }
 
 .profile-container .profile-actions button {

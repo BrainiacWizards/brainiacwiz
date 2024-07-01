@@ -1,3 +1,4 @@
+import { navbar } from '../../assets/js/utils/setnavbar.js';
 import { fbLogin, fbSignUp, githubLogin, googleLogin } from './fb.js';
 
 const emailDOM = document.getElementById('email');
@@ -57,7 +58,6 @@ function register() {
 		return;
 	}
 
-	console.log('All fields are valid');
 	fbSignUp({ email, password, userName, errorMessage, prevURL });
 }
 
@@ -71,7 +71,6 @@ function login(email, password) {
 		return;
 	}
 
-	console.log('All fields are valid');
 	errorMessage.textContent = 'Logging in...';
 	fbLogin({ email, password, errorMessage, prevURL });
 }
@@ -85,6 +84,7 @@ function validateEmail(email) {
 
 	//email is invalid
 	errorMessage.textContent = 'Invalid	email';
+	navbar.errorDetection.consoleError('Invalid email');
 	return false;
 }
 
@@ -92,12 +92,14 @@ function validateEmail(email) {
 function validatePassword(password, confirmPassword) {
 	if (password.length < 6) {
 		errorMessage.textContent = 'Password must be at least 6 characters';
+		navbar.errorDetection.consoleError('Password must be at least 6 characters');
 		return false;
 	}
 
 	//password length meets requirements
 	if (password != confirmPassword) {
 		errorMessage.textContent = 'Passwords do not match';
+		navbar.errorDetection.consoleError('Passwords do not match');
 		return false;
 	}
 
@@ -107,6 +109,7 @@ function validatePassword(password, confirmPassword) {
 function validateFields(field) {
 	if (!field || field.trim() == '' || field.length <= 0) {
 		errorMessage.textContent = 'All fields are required';
+		navbar.errorDetection.consoleError('All fields are required');
 		return false;
 	}
 

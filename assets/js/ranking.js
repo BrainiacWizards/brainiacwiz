@@ -21,7 +21,6 @@ async function getRanking() {
 			rankingByGamePin[player.gamePin] = [];
 		}
 		rankingByGamePin[player.gamePin].push(player);
-		// console.log(player);
 	});
 
 	// create the ranking table for each gamePin

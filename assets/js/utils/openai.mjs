@@ -11,19 +11,18 @@ async function run({ topic, topicID }) {
 
 	const prompt = `
   1. Generate 6 multiple choice questions with 4 possible answers for the following topic:"${topic}",
-  2. seperate the questions with a  only '--'.
+  2. separate the questions with a  only '--'.
   3. each question should be preceded by a number 1., 2., 3., or 4..
-	 4. the lenght of each question should be less than 20 words.
+	 4. the length of each question should be less than 20 words.
   5. each answer should be preceded by a only >>.
   6. the correct answer should be preceded by an equal sign (=) on a new line referencing to the correct answer.
   `;
 
 	const result = await model.generateContent(prompt);
-	const {response} = result;
+	const { response } = result;
 	const text = response.text();
-	// console.log(text);
 
-	// proccess response and add each question in a object with all the answers in an array
+	// process response and add each question in a object with all the answers in an array
 	let questionsAI = [];
 	const regex = {
 		question: /^\d/,
@@ -36,7 +35,6 @@ async function run({ topic, topicID }) {
 	qs = qs.filter((q) => q.trim() !== '');
 
 	for (let q of qs) {
-		//loop through each question
 		let question = {
 			question: '',
 			answers: [],
@@ -69,7 +67,7 @@ async function run({ topic, topicID }) {
 function validateResponse({ questionsAI, topicID }) {
 	let errors = [];
 	questionsAI.map((question) => {
-		// should haave 6	questions
+		// should have 6	questions
 		// should have 4 answers per question
 		// answers	should not be empty
 		// should have a correct answer for each question
@@ -87,6 +85,11 @@ function validateResponse({ questionsAI, topicID }) {
 
 		if (question.correctAnswer === '' || !question.correctAnswer) {
 			errors.push('There should be a correct answer for each question');
+		}
+
+		// make sure the correct answer is one of the answers
+		if (!question.answers.includes(question.correctAnswer)) {
+			errors.push('Correct answer should be one of the answers');
 		}
 	});
 

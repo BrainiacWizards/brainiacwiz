@@ -1,4 +1,4 @@
-// import { query } from "../api/api.js";
+import { navbar } from './setnavbar.js';
 
 const state = {
 	account: '0x0',
@@ -19,7 +19,9 @@ async function loadContract(web3) {
 	const network = data.networks[networkId];
 
 	if (!network) {
-		alert('Contract not deployed to the current network. Please select CELO Testnet.');
+		navbar.errorDetection.consoleError(
+			'Contract not deployed to the current network, switch to CELO Testnet',
+		);
 		window.open('https://faucet.celo.org/alfajores', '_blank');
 		return;
 	}
@@ -55,8 +57,10 @@ async function metaConnection(walletAddress) {
 		try {
 			await window.ethereum.request({ method: 'eth_requestAccounts' });
 			console.log('metamask connected');
+			navbar.errorDetection.consoleInfo('metamask connected');
 		} catch (error) {
-			alert('You need to connect to MetaMask for this dApp to work!!');
+			navbar.errorDetection.consoleError('metamask not connected');
+			await new Promise((resolve) => setTimeout(resolve, 2000));
 			window.location.href = '../../../pages/walletAuth/walletDirect.html';
 			throw new Error('User denied account access, metamask not connected');
 		}
@@ -69,7 +73,8 @@ async function metaConnection(walletAddress) {
 			walletAddress.innerHTML = state.account;
 		}
 	} else {
-		alert('No Web3 Provider detected. Please install Metamask.');
+		navbar.errorDetection.consoleError('No Web3 Provider detected. Please install Metamask.');
+		await new Promise((resolve) => setTimeout(resolve, 2000));
 		window.location.href = '../../../pages/walletAuth/walletDirect.html';
 		throw new Error('No Web3 Provider detected. Please install Metamask.');
 	}
@@ -95,6 +100,7 @@ async function fundAccount() {
 		})
 		.on('error', (error, receipt) => {
 			console.error('error', error, receipt);
+			navbar.errorDetection.consoleError('Transaction failed:', receipt.status);
 			transferStatus = false;
 		});
 

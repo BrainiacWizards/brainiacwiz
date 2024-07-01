@@ -2,6 +2,7 @@ import { endGame, fundGame, getPlayerNames, startGame } from '../../pages/auth/f
 import { checkGameStatus } from './looby.js';
 import { checkLoginStatus } from './main.js';
 import { topics } from './utils/questions.js';
+import { navbar } from './utils/setnavbar.js';
 checkLoginStatus({ path: '../../auth/' });
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');
@@ -46,8 +47,9 @@ const details = {
 
 if (!gamePin || !topicID) {
 	alert('Invalid game pin or topic');
+	navbar.errorDetection.consoleError('Invalid game pin or topic, redirecting to home.');
+	await new Promise((resolve) => setTimeout(resolve, 2000));
 	window.location.href = window.location.origin;
-	throw new Error('Invalid game pin or topic');
 }
 
 async function setPlayerNames(details) {
@@ -121,6 +123,7 @@ async function copyAddress() {
 				});
 			} catch (err) {
 				console.error('Failed to copy: ', err);
+				navbar.errorDetection.consoleError('Failed to copy address');
 				address.innerHTML = '<i class="fas fa-times"></i>';
 			}
 		});
@@ -155,12 +158,14 @@ async function fundFromForm() {
 	// validate fund	amount
 	if (isNaN(fundAmount)) {
 		errorMessage.tetContent = 'Invalid amount';
+		navbar.errorDetection.consoleError('Invalid amount');
 		return;
 	}
 
 	if (fundAmount) {
 		response = await fundGame({ gamePin, topicID, amount: fundAmount });
 		errorMessage.textContent = response.message;
+		navbar.errorDetection.consoleInfo(response.message);
 		response.status ? (errorMessage.style.color = 'green') : (errorMessage.style.color = 'red');
 	} else {
 		errorMessage.textContent = 'Please enter amount';
@@ -198,7 +203,7 @@ await setPlayerNames(details);
 startBtn?.addEventListener('click', async () => {
 	startBtn.disabled = true;
 	await startGame({ gamePin, topicID });
-	alert('Game has started, lets play!');
+	navbar.errorDetection.consoleError('Game started, lets play!');
 });
 
 cancelBtn?.addEventListener('click', async () => {
