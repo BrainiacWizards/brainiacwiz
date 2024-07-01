@@ -859,15 +859,15 @@ footer .navbar ul li a:hover {
 
 /* error detection */
 .error {
-	background-color: rgba(206, 1, 1, 0.671);
+	color: rgb(255, 2, 2);
 }
 
 .warning {
-	background-color: rgba(231, 158, 0, 0.671);
+	color: rgb(255, 174, 0);
 }
 
 .info {
-	background-color: rgba(30, 175, 1, 0.671);
+	color: rgb(30, 220, 30);
 }
 
 .error-container {
@@ -879,6 +879,7 @@ footer .navbar ul li a:hover {
 	border-radius: 5px;
 	box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
 	overflow: hidden;
+	background-color: var(--prim-color);
 }
 
 .error-block {
@@ -895,6 +896,7 @@ footer .navbar ul li a:hover {
 	transition: all 0.5s ease-in-out;
 	z-index: 5;
 	font-size: 18px;
+	color: inherit;
 }
 
 .error-block .error-element {
@@ -909,9 +911,9 @@ footer .navbar ul li a:hover {
 	justify-content: space-between;
 	align-items: center;
 	min-height: 50px;
-	color: white;
 	min-width: 200px;
 	width: 100%;
+	color: inherit;
 }
 
 .error-block .error-element i {
@@ -929,7 +931,7 @@ footer .navbar ul li a:hover {
 	text-align: left;
 	width: 100%;
 	height: 100%;
-	color: whitesmoke !important;
+	color: inherit;
 }
 
 .error-block .error-element button {
