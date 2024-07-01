@@ -163,10 +163,14 @@ async function fundFromForm() {
 	}
 
 	if (fundAmount) {
-		response = await fundGame({ gamePin, topicID, amount: fundAmount });
-		errorMessage.textContent = response.message;
-		navbar.errorDetection.consoleInfo(response.message);
-		response.status ? (errorMessage.style.color = 'green') : (errorMessage.style.color = 'red');
+		try {
+			response = await fundGame({ gamePin, topicID, amount: fundAmount });
+			errorMessage.textContent = response.message;
+			navbar.errorDetection.consoleInfo(response.message);
+			response.status ? (errorMessage.style.color = 'green') : (errorMessage.style.color = 'red');
+		} catch (error) {
+			navbar.errorDetection.consoleError(response.message);
+		}
 	} else {
 		errorMessage.textContent = 'Please enter amount';
 		errorMessage.style.color = 'red';
