@@ -1,9 +1,23 @@
-import { getState } from '../../../../assets/js/utils/metamask.js';
-import { navbar } from '../../../../assets/js/utils/setnavbar.js';
+import { getState } from '/assets/js/utils/metamask.js';
+import { navbar } from '/assets/js/utils/setnavbar.js';
 
 const transfertext = document.getElementById('transfer-text');
 const transferPop = document.getElementById('transfer-pop');
 const closeBtn = document.querySelector('.close-btn');
+let address = '0x0';
+
+// wait for metaCOnnection to finish and for state to be loaded
+async function checkState() {
+	address = getState().account;
+	if (address) {
+		navbar.errorDetection.consoleInfo('state 1 loaded...');
+		getAddress();
+		return;
+	}
+
+	window.requestAnimationFrame(checkState);
+}
+checkState();
 
 // Event listener for the close button
 closeBtn.addEventListener('click', () => {
@@ -23,9 +37,9 @@ async function sendTransaction() {
 
 	// Set the transaction parameters
 	const transactionParameters = {
-		from: address, // must match user's active address.
-		to: recipientAddress, // User-provided recipient address
-		value: '0x0', // Only required to send ether to the recipient from the initiating external account.
+		from: address,
+		to: recipientAddress,
+		value: '0x0',
 	};
 
 	const depositAmountElement = document.getElementById('depositAmount');
@@ -33,7 +47,7 @@ async function sendTransaction() {
 	const amount = /^[0-9]*\.?[0-9]+$/.test(amountValue) ? parseFloat(amountValue) : 0;
 
 	if (amount > 0) {
-		transactionParameters.value = '0x' + (amount * Math.pow(10, 18)).toString(16); // Convert to wei
+		transactionParameters.value = '0x' + (amount * Math.pow(10, 18)).toString(16);
 	} else {
 		navbar.errorDetection.consoleError('invalid amount!');
 		transfertext.textContent = 'invalid Amount';
@@ -103,13 +117,12 @@ async function calculateGasFee(transactionParameters) {
 		transfertext.textContent = 'Error calculating gas fee';
 		console.error('Error calculating gas fee:', error);
 		navbar.errorDetection.consoleError(error.message);
-		return null;
+		return;
 	}
 }
 
 // Function to get and display the user's MetaMask address and balance
 async function getAddress() {
-	const address = getState().account;
 	// Get the balance of the user's MetaMask account
 	try {
 		const balance = await ethereum.request({
@@ -123,11 +136,9 @@ async function getAddress() {
 		console.log('User balance:', balanceElement.value);
 	} catch (error) {
 		navbar.errorDetection.consoleError(error.message);
+		console.warn('get balance');
 	}
 }
-
-// Call getAddress to display balance
-getAddress();
 
 // Event listener for the deposit button
 document.getElementById('depositBtn').onclick = function () {

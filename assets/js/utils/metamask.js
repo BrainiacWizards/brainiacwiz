@@ -1,7 +1,7 @@
 import { navbar } from './setnavbar.js';
 
 const state = {
-	account: '0x0',
+	account: null,
 	token: null,
 	tokenURI: [],
 	address: null,
@@ -44,6 +44,7 @@ async function loadContract(web3) {
 	}
 
 	console.log('state: ', state);
+	navbar.errorDetection.consoleInfo('Contract Loaded...');
 	return token;
 }
 
@@ -56,8 +57,9 @@ async function metaConnection(walletAddress) {
 
 		try {
 			await window.ethereum.request({ method: 'eth_requestAccounts' });
-			console.log('metamask connected');
-			navbar.errorDetection.consoleInfo('metamask connected');
+			const accounts = await web3.eth.getAccounts();
+			state.account = accounts[0];
+			if (walletAddress) walletAddress.innerHTML = state.account;
 		} catch (error) {
 			navbar.errorDetection.consoleError('metamask not connected');
 			await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -65,13 +67,7 @@ async function metaConnection(walletAddress) {
 			throw new Error('User denied account access, metamask not connected');
 		}
 
-		const accounts = await web3.eth.getAccounts();
-		state.account = accounts[0];
 		await loadContract(web3);
-
-		if (walletAddress) {
-			walletAddress.innerHTML = state.account;
-		}
 	} else {
 		navbar.errorDetection.consoleError('No Web3 Provider detected. Please install Metamask.');
 		await new Promise((resolve) => setTimeout(resolve, 2000));

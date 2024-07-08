@@ -2,7 +2,7 @@ import { createScoreBoard } from '../../pages/auth/fb.js';
 import { run } from './utils/openai.mjs';
 import { topics } from './utils/questions.js';
 import { checkLoginStatus } from './main.js';
-import { metaConnection } from './utils/metamask.js';
+import { getState } from './utils/metamask.js';
 import { navbar } from './utils/setnavbar.js';
 checkLoginStatus({ path: '../auth/' });
 
@@ -17,7 +17,6 @@ const topicID = new URLSearchParams(window.location.search).get('topic');
 const quizBody = document.querySelector('.quiz-body');
 
 //topic questions and correct answer
-let T, Q, A, CA;
 let question = 0;
 const colors = ['var(--prim-color)', 'var(--sec-color)', 'var(--tert-color)', 'var(--quart-color)'];
 
@@ -37,24 +36,16 @@ const setQuizDetails = async () => {
 	const topic = topics.find((topic) => topic.id === parseInt(topicID));
 	quizTitle.innerHTML = 'Title: ' + topic.name;
 
-	T = topicID;
-	Q = `Q${T}`;
-	A = `A${T}`;
-	CA = `CA${T}`;
-
 	return topic;
 };
 
 const loginObj = JSON.parse(sessionStorage.getItem('login'));
-loginObj.wallet = await metaConnection();
+loginObj.wallet = getState().account || '0x00';
 const username = loginObj.username;
 let score = 0;
-let sessionUser = {
-	username: username,
-	score: score,
-};
+let sessionUser = { username: username, score: score };
 sessionStorage.setItem('sessionUser', JSON.stringify(sessionUser));
-// initial score
+
 await createScoreBoard({
 	gamePin: gamePin,
 	username: username,
@@ -158,27 +149,23 @@ function moveToPostQuiz(intervalId) {
 // set quiz details [1st function to be called]
 setQuizDetails().then(async (topic) => {
 	questionsAI = await run({ topic: topic.name, topicID: topic.id });
-
 	setQuestions(0);
 	setQuizTImer({ duration: 40 });
 });
 
 // check answers and set score
-
 async function setCheckScore(question) {
 	quizOptBtns.forEach((btn) => {
 		btn.addEventListener('click', async () => {
 			const { correctAnswer } = questionsAI[question];
 			if (btn.textContent.includes(correctAnswer)) {
 				score++;
-				// set button color to green
 				btn.style.backgroundColor = 'green';
-				// disable all button
+
 				quizOptBtns.forEach((btn) => {
 					btn.disabled = true;
 				});
 			} else {
-				// set button color to red
 				btn.style.backgroundColor = 'red';
 			}
 

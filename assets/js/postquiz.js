@@ -112,10 +112,10 @@ setScoreBoard();
 
 // check win and transfer token
 async function checkWin(scoreData, username, gamePin, score) {
-	// check if score equals the number of questions
+	// // check if score equals the number of questions
 	// if (score < questions[`Q${topicID}`].length / 2) {
-	// !alert('You should get 50% of the questions correctly to win, try again!');
-	//  restart the game move the play.html
+	// alert('You should get 50% of the questions correctly to win, try again!');
+	//  // restart the game move the play.html
 	// 	window.location.href = `../play/quiz.html?topic=${topicID}&gamePin=${gamePin}&retry=${score}`;
 	// 	return;
 	// }
@@ -161,11 +161,9 @@ async function checkWin(scoreData, username, gamePin, score) {
 			reload = false;
 			if (error.code === 4001) {
 				error.reason = prompt('Please state	the reason for cancelling the transaction?');
-				navbar.errorDetection.consoleWarn('Transaction cancelled');
-				console.error('Transaction cancelled', error.reason);
+				navbar.errorDetection.consoleWarn('Transaction cancelled', error.reason);
 			} else {
-				navbar.errorDetection.consoleError('Error funding account');
-				console.error('Error funding account', error);
+				navbar.errorDetection.consoleError('Error funding account', error);
 			}
 		}
 	} else {

@@ -1,6 +1,6 @@
 import { navbar } from './utils/setnavbar.js';
-import { metaConnection } from '../../../../assets/js/utils/metamask.js';
 import { checkLoginStatus } from './main.js';
+import { getState } from './utils/metamask.js';
 
 checkLoginStatus();
 
@@ -34,7 +34,7 @@ async function fetchAndDisplayMetaMaskBalance() {
 		return;
 	}
 	try {
-		const address = await metaConnection();
+		const address = (await getState()).account;
 
 		const balance = await ethereum.request({
 			method: 'eth_getBalance',

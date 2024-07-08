@@ -1,6 +1,6 @@
 import { createScoreBoard, getGameStatus } from '../../pages/auth/fb.js';
 import { setPlayerNames } from './host.js';
-import { metaConnection } from './utils/metamask.js';
+import { getState } from './utils/metamask.js';
 import { navbar } from './utils/setnavbar.js';
 
 const codeView = document.getElementById('code-view');
@@ -9,15 +9,14 @@ const questionsCount = document.getElementById('questions-count');
 const statusText = document.getElementById('status-text');
 const players = document.querySelector('.players-list');
 const playerCount = document.getElementById('player-count');
+const rewardAmount = document.querySelector('.reward-amount');
+const nftImage = document.querySelector('.nft-image');
 
 // check gamePin in url
 const urlParams = new URLSearchParams(window.location.search);
 const gamePin = urlParams.get('gamePin');
 const topicID = urlParams.get('topic');
 const login = JSON.parse(sessionStorage.getItem('login'));
-login.wallet = await metaConnection();
-const rewardAmount = document.querySelector('.reward-amount');
-const nftImage = document.querySelector('.nft-image');
 const playerNames = [];
 
 if (!gamePin || !topicID) {
@@ -27,6 +26,18 @@ if (!gamePin || !topicID) {
 	window.location.href = window.location.origin;
 	throw new Error('Invalid game pin or topic');
 }
+
+async function checkState() {
+	let address = getState().account;
+	if (address) {
+		navbar.errorDetection.consoleInfo('state 2 loaded...');
+		login.wallet = address;
+		return;
+	}
+
+	window.requestAnimationFrame(checkState);
+}
+checkState();
 
 async function setDetails() {
 	// create player record

@@ -3,7 +3,8 @@ import { checkGameStatus } from './looby.js';
 import { checkLoginStatus } from './main.js';
 import { topics } from './utils/questions.js';
 import { navbar } from './utils/setnavbar.js';
-checkLoginStatus({ path: '../../auth/' });
+checkLoginStatus();
+
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');
 const playerCount = document.getElementById('player-count');
@@ -53,10 +54,11 @@ if (!gamePin || !topicID) {
 }
 
 async function setPlayerNames(details) {
-	details.playerNames = await getPlayerNames({
-		gamePin: details.gamePin,
-		topicID: details.topicID,
-	});
+	details.playerNames =
+		(await getPlayerNames({
+			gamePin: details.gamePin,
+			topicID: details.topicID,
+		})) || [];
 
 	dummyObject = details.playerNames.find((player) => player.username == 'dummy');
 	details.playerNames = details.playerNames.filter((player) => player.username != 'dummy');
@@ -64,6 +66,7 @@ async function setPlayerNames(details) {
 
 	if (details.playerNames.length === 0) {
 		details.players.innerHTML = 'No players yet!';
+		navbar.errorDetection.consoleWarn('No Players yet.');
 	}
 
 	details.playerNames.forEach((playerName, index) => {
@@ -167,7 +170,9 @@ async function fundFromForm() {
 			response = await fundGame({ gamePin, topicID, amount: fundAmount });
 			errorMessage.textContent = response.message;
 			navbar.errorDetection.consoleInfo(response.message);
-			response.status ? (errorMessage.style.color = 'green') : (errorMessage.style.color = 'red');
+			response.status
+				? (errorMessage.style.color = 'green')
+				: (errorMessage.style.color = 'red');
 		} catch (error) {
 			navbar.errorDetection.consoleError(response.message);
 		}
@@ -184,7 +189,7 @@ async function setQuizDetails(details) {
 	const { origin } = window.location;
 	details.codeView.innerHTML = details.gamePin || 'xxxxxx';
 	details.rewardAmount.textContent = `$${dummyObject?.reward || '0'}`;
-	details.nftImage.src = dummyObject.nft || `${origin}/assets/nft/4.jpg`;
+	details.nftImage.src = dummyObject?.nft || `${origin}/assets/nft/4.jpg`;
 
 	const topic = topics.find((topic) => topic.id === parseInt(details.topicID));
 	details.title.innerHTML = topic.name;

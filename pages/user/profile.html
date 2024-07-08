@@ -3,11 +3,14 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="../../assets/css/style.css" />
-		<link rel="stylesheet" href="../../assets/css/host.css" />
-		<link rel="stylesheet" href="../../assets/css/user.css" />
+		<link rel="stylesheet" href="/assets/css/host.css" />
+		<link rel="stylesheet" href="/assets/css/user.css" />
 		<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-		<link rel="stylesheet" href="../../assets/fontawesome-6.5.2/css/all.css" />
+		<link rel="stylesheet" href="/assets/css/style.css" />
+		<link rel="stylesheet" href="/assets/fontawesome-6.5.2/css/all.css" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png" />
+		<link rel="manifest" href="/assets/img/site.webmanifest" />
 		<title>Profile | BrainiacWiz</title>
 		<!-- Google tag (gtag.js) -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"></script>
@@ -24,13 +27,12 @@
 		<script
 			async
 			src="https://js.sentry-cdn.com/28e0779f6d4ee26fe0de02fcc3239280.min.js"
-			crossorigin="anonymous"
-		></script>
+			crossorigin="anonymous"></script>
 	</head>
 	<body>
 		<header class="main-header">
 			<div class="logo">
-				<img src="../../assets/img/brainacwiz-logo.jpeg" alt="Logo" />
+				<img src="/assets/img/brainacwiz-logo.jpeg" alt="Logo" />
 			</div>
 
 			<div class="wallet-details">
@@ -48,7 +50,7 @@
 			<div class="profile-container">
 				<div class="profile-header">
 					<div class="profile-image">
-						<img src="../../assets/img/brainacwiz-logo.jpeg" alt="User Image" />
+						<img src="/assets/img/brainacwiz-logo.jpeg" alt="User Image" />
 					</div>
 					<div class="profile-configs">
 						<div class="stat">
@@ -102,23 +104,27 @@
 			<nav class="navbar">
 				<ul>
 					<li>
-						<a href="../../index.html"><i class="bx bx-home"></i><p>Home</p></a>
+						<a href="/index.html"><i class="bx bx-home"></i><p>Home</p></a>
 					</li>
 					<li>
 						<a href="../ranking.html"><i class="bx bx-book"></i><p>Leaderboard</p></a>
 					</li>
 					<li>
-						<a href="../auth/login.html"><i class="bx bx-user-circle"></i><p>Login</p></a>
+						<a href="../auth/login.html"
+							><i class="bx bx-user-circle"></i><p>Login</p></a
+						>
 					</li>
 					<li>
-						<a href="../walletAuth/walletDirect.html"><i class="bx bx-help-circle"></i><p>Help</p></a>
+						<a href="../walletAuth/walletDirect.html"
+							><i class="bx bx-help-circle"></i><p>Help</p></a
+						>
 					</li>
 				</ul>
 			</nav>
 		</footer>
 
 		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
-		<script type="module" src="../../assets/js/utils/setnavbar.js"></script>
-		<script type="module" src="../../assets/js/profile.js"></script>
+		<script type="module" src="/assets/js/utils/setnavbar.js"></script>
+		<script type="module" src="/assets/js/profile.js"></script>
 	</body>
 </html>

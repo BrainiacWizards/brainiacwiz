@@ -1,8 +1,5 @@
 import { navbar } from './setnavbar.js';
 
-// graphQL api url
-const url = 'https://api.studio.thegraph.com/query/72281/celo-subgraph-box/version/latest';
-
 // get the token transfers from the graph
 async function getTransfers({ state, url }) {
 	try {
@@ -13,21 +10,21 @@ async function getTransfers({ state, url }) {
 			},
 			body: JSON.stringify({
 				query: `
-                {
-                    transfers(
-						orderBy: tokenId
-						orderDirection: desc
-					)
-                        {
-                            tokenId
-                            from
-                            to
-                            transactionHash
-                            blockTimestamp
-                            blockNumber
-                        }
-                }
-            `,
+         {
+          transfers(
+										orderBy: tokenId
+										orderDirection: desc
+										)
+          {
+												tokenId
+												from
+												to
+												transactionHash
+												blockTimestamp
+												blockNumber
+          }
+         }
+         `,
 			}),
 		});
 
