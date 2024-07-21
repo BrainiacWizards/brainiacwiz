@@ -73,7 +73,7 @@ async function checkGameStatus({ statusText, gamePin, topicID, redirect = true }
 	statusText.innerHTML = gameStatus.msg;
 
 	if (gameStatus.status && window.location.href.includes('lobby')) {
-		navbar.errorDetection.consoleInfo('Game is has	started, redirecting to quiz.');
+  navbar.errorDetection.consoleInfo('Game has started, redirecting to quiz.');
 		await new Promise((resolve) => setTimeout(resolve, 1000));
 
 		const { origin } = window.location;
