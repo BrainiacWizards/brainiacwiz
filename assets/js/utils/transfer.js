@@ -46,7 +46,7 @@ async function sendTransaction() {
 	const amount = /^[0-9]*\.?[0-9]+$/.test(amountValue) ? parseFloat(amountValue) : 0;
 
 	if (amount > 0) {
-		transactionParameters.value = '0x' + (amount * Math.pow(10, 18)).toString(16);
+  transactionParameters.value = web3.utils.toWei(amount.toString(), 'ether');
 	} else {
 		navbar.errorDetection.consoleError('invalid amount!');
 		transfertext.textContent = 'invalid Amount';
