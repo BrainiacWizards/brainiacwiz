@@ -31,7 +31,7 @@ const fbSignUp = async ({ email, password, userName, errorMessage }) => {
 
 		// redirect to the login page
 		navbar.errorDetection.consoleInfo('Account created successfully! Redirecting to login page...');
-		await new Promise((resolve) => setTimeout(resolve, 1000));
+  await delay(1000);
 		window.location.href = './login.html';
 	} catch (error) {
 		if (error.message.includes('offline')) {
