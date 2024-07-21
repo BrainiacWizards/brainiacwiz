@@ -17,19 +17,20 @@ const topicID = new URLSearchParams(window.location.search).get('topic');
 const quizBody = document.querySelector('.quiz-body');
 
 //topic questions and correct answer
-let question = 0;
+let question = 0,
+	intervalId;
 const colors = ['var(--prim-color)', 'var(--sec-color)', 'var(--tert-color)', 'var(--quart-color)'];
 
 const setQuizDetails = async () => {
 	if (!topicID) {
 		alert('Please select a topic to continue');
-		window.location.href = '../../index.html';
+		window.location.href = window.location.origin;
 	} else {
 		const topic = topics.find((topic) => topic.id === parseInt(topicID));
 		if (!topic) {
 			navbar.errorDetection.consoleError('Invalid topic selected, redirecting to home.');
 			await new Promise((resolve) => setTimeout(resolve, 2000));
-			window.location.href = '../../index.html';
+			window.location.href = window.location.origin;
 		}
 	}
 
@@ -111,7 +112,7 @@ const setQuizTImer = ({ duration = 30 }) => {
 	quizTimer.style.color = 'white';
 	let time = duration;
 
-	let intervalId = setInterval(() => {
+	intervalId = setInterval(() => {
 		if (time <= 0) {
 			if (question >= questionsAI.length - 1) {
 				return;
@@ -139,7 +140,7 @@ const setQuizTImer = ({ duration = 30 }) => {
 	}, 200);
 };
 
-function moveToPostQuiz(intervalId) {
+function moveToPostQuiz() {
 	clearInterval(intervalId); // stop the interval
 	const retry = new URLSearchParams(window.location.search).get('retry') || false;
 	navbar.errorDetection.consoleInfo('Quiz completed...');
@@ -161,13 +162,13 @@ async function setCheckScore(question) {
 			if (btn.textContent.includes(correctAnswer)) {
 				score++;
 				btn.style.backgroundColor = 'green';
-
-				quizOptBtns.forEach((btn) => {
-					btn.disabled = true;
-				});
 			} else {
 				btn.style.backgroundColor = 'red';
 			}
+
+			quizOptBtns.forEach((btn) => {
+				btn.disabled = true;
+			});
 
 			// set a object with score and username
 			sessionUser.score = score;

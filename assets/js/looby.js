@@ -30,8 +30,8 @@ if (!gamePin || !topicID) {
 async function checkState() {
 	let address = getState().account;
 	if (address) {
-		navbar.errorDetection.consoleInfo('state 2 loaded...');
 		login.wallet = address;
+		setDetails({ statusText, gamePin, topicID });
 		return;
 	}
 
@@ -85,7 +85,5 @@ async function checkGameStatus({ statusText, gamePin, topicID, redirect = true }
 		await checkGameStatus(statusText);
 	}, 2000);
 }
-
-setDetails({ statusText, gamePin, topicID });
 
 export { checkGameStatus };

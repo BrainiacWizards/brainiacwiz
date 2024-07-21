@@ -86,12 +86,12 @@ async function setPlayerNames(details) {
 		details.players.appendChild(player);
 	});
 
-	await setQuizDetails(details);
 	copyAddress();
 	openForm();
 	clickEventOnPlayer();
-	setTimeout(() => {
-		setPlayerNames(details);
+	setTimeout(async () => {
+		await setPlayerNames(details);
+		await setQuizDetails(details);
 	}, 2000);
 }
 
@@ -114,7 +114,6 @@ async function copyAddress() {
 	playerAddress.forEach((address) => {
 		address?.addEventListener('click', async () => {
 			const addressValue = address.id;
-			console.log(addressValue);
 
 			try {
 				navigator.clipboard.writeText(addressValue);
@@ -212,7 +211,7 @@ await setPlayerNames(details);
 startBtn?.addEventListener('click', async () => {
 	startBtn.disabled = true;
 	await startGame({ gamePin, topicID });
-	navbar.errorDetection.consoleError('Game started, lets play!');
+	navbar.errorDetection.consoleInfo('Game started, lets play!');
 });
 
 cancelBtn?.addEventListener('click', async () => {

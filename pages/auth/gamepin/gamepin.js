@@ -12,13 +12,8 @@ const error = document.getElementById('error-message');
 const logUserInput = document.getElementById('log-user');
 const campaign = document.getElementById('campaign');
 
+checkLoginStatus();
 generateBtn?.addEventListener('click', generatePIN);
-
-if (window.location.pathname.includes('gamepinUI')) {
-	checkLoginStatus({ path: '../../' });
-} else {
-	checkLoginStatus({ path: '../' });
-}
 
 let pin = '',
 	generated = false;

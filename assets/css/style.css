@@ -880,10 +880,11 @@ footer .navbar ul li a:hover {
 	box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
 	overflow: hidden;
 	background-color: var(--prim-color);
+	height: fit-content;
 }
 
 .error-block {
-	display: grid;
+	display: none;
 	position: fixed;
 	grid-template-columns: 1fr;
 	padding: 100px 20px;

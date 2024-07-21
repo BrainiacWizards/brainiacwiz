@@ -10,7 +10,6 @@ let address = '0x0';
 async function checkState() {
 	address = getState().account;
 	if (address) {
-		navbar.errorDetection.consoleInfo('state 1 loaded...');
 		getAddress();
 		return;
 	}

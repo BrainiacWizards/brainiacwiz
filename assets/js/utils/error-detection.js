@@ -52,16 +52,19 @@ class ErrorDetection {
 	}
 
 	consoleError = (message) => {
+		this.errorBlock.style.display = 'grid';
 		this.errorBlock.appendChild(this.errorElementConstructor({ message, type: 'error' }));
 		console.error(message);
 	};
 
 	consoleWarn = (message) => {
+		this.errorBlock.style.display = 'grid';
 		this.errorBlock.appendChild(this.errorElementConstructor({ message, type: 'warning' }));
 		console.warn(message);
 	};
 
 	consoleInfo = (message) => {
+		this.errorBlock.style.display = 'grid';
 		this.errorBlock.appendChild(this.errorElementConstructor({ message, type: 'info' }));
 		console.info(message);
 	};
@@ -81,6 +84,10 @@ class ErrorDetection {
 				element.remove();
 			}
 		});
+
+		if (errorContainers.length === 0) {
+			this.errorBlock.style.display = 'none';
+		}
 
 		window.requestAnimationFrame(() => this.trackErrors());
 	}
