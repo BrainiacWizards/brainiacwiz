@@ -1,3 +1,4 @@
+import { delay } from '../../assets/js/utils/helpers.js';
 import { navbar } from '../../assets/js/utils/setnavbar.js';
 import * as fb from '../../fb_config.js';
 
@@ -30,8 +31,10 @@ const fbSignUp = async ({ email, password, userName, errorMessage }) => {
 		errorMessage.style.color = 'green';
 
 		// redirect to the login page
-		navbar.errorDetection.consoleInfo('Account created successfully! Redirecting to login page...');
-  await delay(1000);
+		navbar.errorDetection.consoleInfo(
+			'Account created successfully! Redirecting to login page...',
+		);
+		await delay(1000);
 		window.location.href = './login.html';
 	} catch (error) {
 		if (error.message.includes('offline')) {
@@ -46,7 +49,8 @@ const fbSignUp = async ({ email, password, userName, errorMessage }) => {
 				// Add more error codes and messages as needed
 			};
 
-			const userFriendlyMessage = errorMessages[error.code] || 'An unexpected error occurred.';
+			const userFriendlyMessage =
+				errorMessages[error.code] || 'An unexpected error occurred.';
 			navbar.errorDetection.consoleError(userFriendlyMessage);
 			errorMessage.textContent = userFriendlyMessage;
 			throw new Error(`could not create user\n\n ${error}`);
@@ -136,7 +140,9 @@ const fbLogin = async ({ email, password, errorMessage, prevURL }) => {
 			fbLogin({ email, password });
 		} else {
 			errorMessage.textContent = error.code.split('/')[1];
-			navbar.errorDetection.consoleError(`could not login user!\n${error.code.split('/')[1]}`);
+			navbar.errorDetection.consoleError(
+				`could not login user!\n${error.code.split('/')[1]}`,
+			);
 			console.error(`could not login user\n\n ${error}`);
 		}
 	}
@@ -159,8 +165,7 @@ async function githubLogin({ prevURL }) {
 
 		await fb.set(userRef, userData);
 		navbar.errorDetection.consoleInfo('Login successful!');
-		await new Promise((resolve) => setTimeout(resolve, 2000));
-
+		await delay(2000);
 		// set session storage for login object
 		const loginObject = {
 			loggedIn: true,
@@ -208,8 +213,6 @@ async function createGamePinTable({ gamePin, topicID, campaign, host }) {
 				nft: nftURL,
 			},
 		];
-
-		// console.log(dummyObject);
 
 		await fb.set(gamePinRef, dummyObject);
 		navbar.errorDetection.consoleInfo('Game created successfully, share pin	with players!');

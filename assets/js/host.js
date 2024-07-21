@@ -1,6 +1,7 @@
 import { endGame, fundGame, getPlayerNames, startGame } from '../../pages/auth/fb.js';
 import { checkGameStatus } from './looby.js';
 import { checkLoginStatus } from './main.js';
+import { delay } from './utils/helpers.js';
 import { topics } from './utils/questions.js';
 import { navbar } from './utils/setnavbar.js';
 checkLoginStatus();
@@ -46,10 +47,10 @@ const details = {
 	playerNames,
 };
 
-if (!gamePin || !topicID) {
+if (!gamePin || !topicID || topicID > topics.length) {
 	alert('Invalid game pin or topic');
 	navbar.errorDetection.consoleError('Invalid game pin or topic, redirecting to home.');
-	await new Promise((resolve) => setTimeout(resolve, 2000));
+	await delay(2000);
 	window.location.href = window.location.origin;
 }
 

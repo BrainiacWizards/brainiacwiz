@@ -80,14 +80,10 @@ class ErrorDetection {
 			let spanWidth = (timeDiff / 4000) * 100;
 			expirySpan.style.width = `${100 - spanWidth}%`;
 
-			if (timeDiff > 4000) {
-				element.remove();
-			}
+			if (timeDiff > 4000) element.remove();
 		});
 
-		if (errorContainers.length === 0) {
-			this.errorBlock.style.display = 'none';
-		}
+		if (errorContainers.length === 0) this.errorBlock.style.display = 'none';
 
 		window.requestAnimationFrame(() => this.trackErrors());
 	}

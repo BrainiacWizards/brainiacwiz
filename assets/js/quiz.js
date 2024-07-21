@@ -4,6 +4,7 @@ import { topics } from './utils/questions.js';
 import { checkLoginStatus } from './main.js';
 import { getState } from './utils/metamask.js';
 import { navbar } from './utils/setnavbar.js';
+import { delay } from './utils/helpers.js';
 checkLoginStatus({ path: '../auth/' });
 
 let questionsAI = [];
@@ -29,7 +30,7 @@ const setQuizDetails = async () => {
 		const topic = topics.find((topic) => topic.id === parseInt(topicID));
 		if (!topic) {
 			navbar.errorDetection.consoleError('Invalid topic selected, redirecting to home.');
-			await new Promise((resolve) => setTimeout(resolve, 2000));
+			await delay(2000);
 			window.location.href = window.location.origin;
 		}
 	}

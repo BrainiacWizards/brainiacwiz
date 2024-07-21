@@ -1,5 +1,6 @@
 import { createScoreBoard, getGameStatus } from '../../pages/auth/fb.js';
 import { setPlayerNames } from './host.js';
+import { delay } from './utils/helpers.js';
 import { getState } from './utils/metamask.js';
 import { navbar } from './utils/setnavbar.js';
 
@@ -22,7 +23,7 @@ const playerNames = [];
 if (!gamePin || !topicID) {
 	alert('Invalid game pin or topic');
 	navbar.errorDetection.consoleError('Invalid game pin or topic, redirecting to home.');
-	await new Promise((resolve) => setTimeout(resolve, 2000));
+	await delay(2000);
 	window.location.href = window.location.origin;
 	throw new Error('Invalid game pin or topic');
 }
@@ -73,8 +74,8 @@ async function checkGameStatus({ statusText, gamePin, topicID, redirect = true }
 	statusText.innerHTML = gameStatus.msg;
 
 	if (gameStatus.status && window.location.href.includes('lobby')) {
-  navbar.errorDetection.consoleInfo('Game has started, redirecting to quiz.');
-		await new Promise((resolve) => setTimeout(resolve, 1000));
+		navbar.errorDetection.consoleInfo('Game has started, redirecting to quiz.');
+		await delay(1000);
 
 		const { origin } = window.location;
 		window.location.href = `${origin}/pages/play/quiz.html?gamePin=${gamePin}&topic=${topicID}`;

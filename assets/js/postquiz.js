@@ -90,7 +90,7 @@ async function setScoreBoard() {
 	countdown.innerHTML = time;
 
 	// delay for 1 second
-	await new Promise((resolve) => setTimeout(resolve, 500));
+	await delay(500);
 	// decrement time
 	time--;
 
