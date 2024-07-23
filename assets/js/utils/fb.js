@@ -663,6 +663,48 @@ function updateLogin(user) {
 	sessionStorage.setItem('login', JSON.stringify(login));
 }
 
+// set NFT-reward on game as claimed
+async function setRewardAsClaimed({ gamePin, topicID, username, wallet }) {
+	let playerNames = await getPlayerNames({ gamePin, topicID });
+
+	try {
+		// change only dummy
+		if (playerNames) {
+			playerNames = playerNames.map((player) => {
+				if (player.username == 'dummy') {
+					player.nftClaim = true;
+					player.winner = { username, wallet };
+				}
+				return player;
+			});
+		}
+
+		await setPlayers({ gamePin, topicID, playerNames });
+		return { status: true, message: 'Reward Claimed!' };
+	} catch (error) {
+		throw new Error('Could not update game reward claim\\n', error);
+	}
+}
+
+// check if reward has been claimed
+async function checkRewardClaimed({ gamePin, topicID }) {
+	let playerNames = await getPlayerNames({ gamePin, topicID });
+	let status = true,
+		message = `Reward hasn't been claimed`;
+
+	try {
+		// change only dummy
+		const dummy = playerNames.filter((player) => player.username == 'dummy');
+		if (dummy[0].nftClaim || dummy[0].winner) {
+			return { status: false, message: 'Reward Already Claimed!!' };
+		}
+
+		return { status: true, message: 'Not Claimed' };
+	} catch (error) {
+		throw new Error(`Could not check game reward claim\n${error}`);
+	}
+}
+
 export {
 	fbSignUp,
 	fbLogin,
@@ -680,4 +722,6 @@ export {
 	uploadImage,
 	fundGame,
 	getUsers,
+	setRewardAsClaimed,
+	checkRewardClaimed,
 };

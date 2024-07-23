@@ -1,10 +1,17 @@
-import { createScoreBoard, overallRanking } from './utils/fb.js';
-import { fundAccount } from './utils/metamask.js';
+import {
+	checkRewardClaimed,
+	createScoreBoard,
+	overallRanking,
+	setRewardAsClaimed,
+} from './utils/fb.js';
+import { fundAccount, getState } from './utils/metamask.js';
 import { topics } from './utils/questions.js';
 import { checkLoginStatus } from './main.js';
 import { navbar } from './utils/setnavbar.js';
+import { delay } from './utils/helpers.js';
 checkLoginStatus({ path: '../auth/' });
 
+let login = null;
 const searchParams = new URLSearchParams(window.location.search);
 const topicID = searchParams.get('topic') || undefined;
 const gamePin = searchParams.get('gamePin') || undefined;
@@ -51,7 +58,7 @@ let campaign = 'defaultCampaign';
 
 async function setScoreBoard() {
 	// get username from login
-	const login = JSON.parse(sessionStorage.getItem('login'));
+	login = JSON.parse(sessionStorage.getItem('login'));
 	const username = login.username;
 	const myPin = gamePin;
 	campaign = login.campaign;
@@ -150,26 +157,51 @@ async function checkWin(scoreData, username, gamePin, score) {
 		navbar.errorDetection.consoleInfo(
 			'Congratulations! You are the winner! Token transfer in progress...',
 		);
-
-		try {
-			await fundAccount();
-			reload = false;
-			tokenTransferred = true;
-			navbar.errorDetection.consoleInfo('Token transfer successful');
-			return 'status: success';
-		} catch (error) {
-			reload = false;
-			if (error.code === 4001) {
-				error.reason = prompt('Please state	the reason for cancelling the transaction?');
-				navbar.errorDetection.consoleWarn('Transaction cancelled', error.reason);
-			} else {
-				navbar.errorDetection.consoleError('Error funding account', error);
-			}
-		}
+		await checkState();
 	} else {
 		navbar.errorDetection.consoleInfo('You did not win, better luck next time!');
 		reload = false;
 		return;
+	}
+}
+
+async function checkState() {
+	let address = getState().account;
+	if (address) {
+		login.wallet = address;
+		navbar.errorDetection.consoleInfo('Account connected... minting');
+		const { gamePin, username, wallet } = login;
+		const response = await checkRewardClaimed({ gamePin, topicID });
+		if (!response.status) {
+			navbar.errorDetection.consoleError(response.message);
+		} else {
+			await transactNFT({ gamePin, topicID, username, wallet });
+		}
+
+		return;
+	}
+
+	window.requestAnimationFrame(checkState);
+}
+
+// transact
+async function transactNFT({ gamePin, topicID, username, wallet }) {
+	try {
+		await fundAccount();
+		const response = await setRewardAsClaimed({ gamePin, topicID, username, wallet });
+		navbar.errorDetection.consoleInfo(response.message);
+		reload = false;
+		tokenTransferred = true;
+		navbar.errorDetection.consoleInfo('Token transfer successful');
+		return 'status: success';
+	} catch (error) {
+		reload = false;
+		if (error.code === 4001) {
+			error.reason = prompt('Please state	the reason for cancelling the transaction?');
+			navbar.errorDetection.consoleWarn('Transaction cancelled', error.reason);
+		} else {
+			navbar.errorDetection.consoleError('Error funding account', error);
+		}
 	}
 }
 

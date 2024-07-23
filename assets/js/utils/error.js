@@ -77,10 +77,10 @@ class ErrorDetection {
 			const timeDiff = currentDate - date;
 
 			const expirySpan = element.querySelector('.expiry-span');
-			let spanWidth = (timeDiff / 4000) * 100;
+			let spanWidth = (timeDiff / 6000) * 100;
 			expirySpan.style.width = `${100 - spanWidth}%`;
 
-			if (timeDiff > 4000) element.remove();
+			if (timeDiff > 6000) element.remove();
 		});
 
 		if (errorContainers.length === 0) this.errorBlock.style.display = 'none';
