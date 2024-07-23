@@ -1,6 +1,6 @@
 import { navbar } from './utils/setnavbar.js';
-import { metaConnection } from '../../../../assets/js/utils/metamask.js';
 import { checkLoginStatus } from './main.js';
+import { getState } from './utils/metamask.js';
 
 checkLoginStatus();
 
@@ -34,7 +34,7 @@ async function fetchAndDisplayMetaMaskBalance() {
 		return;
 	}
 	try {
-		const address = await metaConnection();
+		const address = (await getState()).account;
 
 		const balance = await ethereum.request({
 			method: 'eth_getBalance',
@@ -45,6 +45,7 @@ async function fetchAndDisplayMetaMaskBalance() {
 		updateBalanceElement(balance);
 	} catch (error) {
 		console.error('Error fetching MetaMask address or balance:', error);
+		navbar.errorDetection.consoleError('Error fetching MetaMask address or balance');
 	}
 }
 
@@ -72,6 +73,7 @@ async function fetchAndDisplayUser() {
 		joinedElement.textContent = login.lastLogin || 'Joined date not set';
 	} catch (error) {
 		console.error('Error displaying user data:', error);
+		navbar.errorDetection.consoleError('Could not display user data');
 	}
 }
 

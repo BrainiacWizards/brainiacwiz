@@ -1,3 +1,4 @@
+import ErrorDetection from './error-detection.js';
 import { getTransfers } from './graph_query.js';
 import { getState, metaConnection } from './metamask.js';
 
@@ -13,6 +14,7 @@ class Navbar {
 		this.injectProfileLink();
 		this.url = 'https://api.studio.thegraph.com/query/72281/celo-subgraph-box/version/latest';
 		this.sentryUrl = ``;
+		this.errorDetection = new ErrorDetection();
 	}
 
 	// inject profile link page next to wallet-btn
@@ -114,8 +116,8 @@ class Navbar {
 		document.body.insertAdjacentHTML('afterbegin', walletContainerHTML);
 	}
 
-	setNavbar() {
-		metaConnection(this.walletAddress, 1);
+	async setNavbar() {
+		await metaConnection(this.walletAddress, 1);
 		this.addEventListeners();
 	}
 
@@ -130,7 +132,7 @@ class Navbar {
 		this.walletBtn?.addEventListener('click', async () => {
 			this.walletContainer.style.display = 'flex';
 			this.showCollectedTokens();
-			await this.showTransfers();
+			this.showTransfers();
 		});
 
 		this.closeWalletBtn?.addEventListener('click', () => {
@@ -141,22 +143,29 @@ class Navbar {
 			this.transactionBtn.classList.remove('btn-active');
 		});
 		this.collectionBtn?.addEventListener('click', () =>
-			toggleDisplay(this.walletContent, this.txContent, this.collectionBtn, this.transactionBtn),
+			toggleDisplay(
+				this.walletContent,
+				this.txContent,
+				this.collectionBtn,
+				this.transactionBtn,
+			),
 		);
 		this.transactionBtn?.addEventListener('click', () =>
-			toggleDisplay(this.txContent, this.walletContent, this.transactionBtn, this.collectionBtn),
+			toggleDisplay(
+				this.txContent,
+				this.walletContent,
+				this.transactionBtn,
+				this.collectionBtn,
+			),
 		);
 	}
 
 	showCollectedTokens() {
 		this.collectionBtn.classList.add('btn-active');
 		this.transactionBtn.classList.remove('btn-active');
-		// display wallet container
 		this.walletContainer.style.display = 'flex';
 		const state = getState();
 		const { tokenURI } = state;
-
-		console.log('show nfssss');
 
 		if (tokenURI.length === 0) {
 			this.walletNfts.innerHTML = `<h2>No NFTs collected yet</h2>`;
@@ -166,7 +175,6 @@ class Navbar {
 		this.walletNfts.innerHTML = '';
 
 		tokenURI.forEach((uri) => {
-			// if url doesn't match the current url, replace it with the current url
 			const { origin } = window.location;
 			if (!uri.includes(origin)) {
 				const nft = uri.split('/assets/nft/')[1];
@@ -191,7 +199,6 @@ class Navbar {
 
 		transfers.forEach((transfer) => {
 			if (transfer.to.toLowerCase() == state.account.toLowerCase()) {
-				//get timestamp and convert to date and time
 				const date = new Date(transfer.blockTimestamp * 1000);
 				transfer.blockTimestamp = date.toLocaleString();
 
@@ -231,10 +238,10 @@ class Navbar {
 			Sentry.onLoad(function() {
 				Sentry.init({
 				// Performance Monitoring
-				tracesSampleRate: 1.0, // Capture 100% of the transactions
+				tracesSampleRate: 1.0,
 				// Session Replay
-				replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
-				replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
+				replaysSessionSampleRate: 0.1, 
+				replaysOnErrorSampleRate: 1.0, 
 				});
 			});
 		</script>`;
@@ -244,10 +251,8 @@ class Navbar {
 
 	// inject copy to clipboard functionality
 	injectCopyToClipboard() {
-		const copyBtn = `
-							<button id="copy-btn"><i class="fas fa-copy"></i></button>`;
+		const copyBtn = `<button id="copy-btn"><i class="fas fa-copy"></i></button>`;
 		this.walletAddressCont.insertAdjacentHTML('beforeend', copyBtn);
-
 		this.copyToClipboard();
 	}
 
@@ -263,6 +268,7 @@ class Navbar {
 			} catch (error) {
 				alert('Failed to copy to clipboard');
 				copyBtn.innerHTML = `<i class="fas fa-times"></i>`;
+				this.errorDetection.consoleError(error.message);
 				setTimeout(() => {
 					copyBtn.innerHTML = `<i class="fas fa-copy"></i>`;
 				}, 1000);
@@ -273,7 +279,6 @@ class Navbar {
 
 const navbar = new Navbar();
 navbar.setNavbar();
-navbar.showTransfers();
 
 export default Navbar;
 export { navbar };

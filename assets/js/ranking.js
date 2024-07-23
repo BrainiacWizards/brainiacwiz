@@ -1,7 +1,7 @@
 import { getOverallRanking } from '../../pages/auth/fb.js';
 const rankingTableBody = document.querySelector('#ranking-body');
 import { checkLoginStatus } from './main.js';
-checkLoginStatus({ path: '../auth/' });
+checkLoginStatus();
 
 // get the overall ranking
 async function getRanking() {
@@ -21,7 +21,6 @@ async function getRanking() {
 			rankingByGamePin[player.gamePin] = [];
 		}
 		rankingByGamePin[player.gamePin].push(player);
-		// console.log(player);
 	});
 
 	// create the ranking table for each gamePin

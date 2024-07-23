@@ -1,8 +1,11 @@
 import { endGame, fundGame, getPlayerNames, startGame } from '../../pages/auth/fb.js';
 import { checkGameStatus } from './looby.js';
 import { checkLoginStatus } from './main.js';
+import { delay } from './utils/helpers.js';
 import { topics } from './utils/questions.js';
-checkLoginStatus({ path: '../../auth/' });
+import { navbar } from './utils/setnavbar.js';
+checkLoginStatus();
+
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');
 const playerCount = document.getElementById('player-count');
@@ -44,17 +47,19 @@ const details = {
 	playerNames,
 };
 
-if (!gamePin || !topicID) {
+if (!gamePin || !topicID || topicID > topics.length) {
 	alert('Invalid game pin or topic');
+	navbar.errorDetection.consoleError('Invalid game pin or topic, redirecting to home.');
+	await delay(2000);
 	window.location.href = window.location.origin;
-	throw new Error('Invalid game pin or topic');
 }
 
 async function setPlayerNames(details) {
-	details.playerNames = await getPlayerNames({
-		gamePin: details.gamePin,
-		topicID: details.topicID,
-	});
+	details.playerNames =
+		(await getPlayerNames({
+			gamePin: details.gamePin,
+			topicID: details.topicID,
+		})) || [];
 
 	dummyObject = details.playerNames.find((player) => player.username == 'dummy');
 	details.playerNames = details.playerNames.filter((player) => player.username != 'dummy');
@@ -62,6 +67,7 @@ async function setPlayerNames(details) {
 
 	if (details.playerNames.length === 0) {
 		details.players.innerHTML = 'No players yet!';
+		navbar.errorDetection.consoleWarn('No Players yet.');
 	}
 
 	details.playerNames.forEach((playerName, index) => {
@@ -81,12 +87,12 @@ async function setPlayerNames(details) {
 		details.players.appendChild(player);
 	});
 
-	await setQuizDetails(details);
 	copyAddress();
 	openForm();
 	clickEventOnPlayer();
-	setTimeout(() => {
-		setPlayerNames(details);
+	setTimeout(async () => {
+		await setPlayerNames(details);
+		await setQuizDetails(details);
 	}, 2000);
 }
 
@@ -109,7 +115,6 @@ async function copyAddress() {
 	playerAddress.forEach((address) => {
 		address?.addEventListener('click', async () => {
 			const addressValue = address.id;
-			console.log(addressValue);
 
 			try {
 				navigator.clipboard.writeText(addressValue);
@@ -121,6 +126,7 @@ async function copyAddress() {
 				});
 			} catch (err) {
 				console.error('Failed to copy: ', err);
+				navbar.errorDetection.consoleError('Failed to copy address');
 				address.innerHTML = '<i class="fas fa-times"></i>';
 			}
 		});
@@ -155,13 +161,21 @@ async function fundFromForm() {
 	// validate fund	amount
 	if (isNaN(fundAmount)) {
 		errorMessage.tetContent = 'Invalid amount';
+		navbar.errorDetection.consoleError('Invalid amount');
 		return;
 	}
 
 	if (fundAmount) {
-		response = await fundGame({ gamePin, topicID, amount: fundAmount });
-		errorMessage.textContent = response.message;
-		response.status ? (errorMessage.style.color = 'green') : (errorMessage.style.color = 'red');
+		try {
+			response = await fundGame({ gamePin, topicID, amount: fundAmount });
+			errorMessage.textContent = response.message;
+			navbar.errorDetection.consoleInfo(response.message);
+			response.status
+				? (errorMessage.style.color = 'green')
+				: (errorMessage.style.color = 'red');
+		} catch (error) {
+			navbar.errorDetection.consoleError(response.message);
+		}
 	} else {
 		errorMessage.textContent = 'Please enter amount';
 		errorMessage.style.color = 'red';
@@ -175,7 +189,7 @@ async function setQuizDetails(details) {
 	const { origin } = window.location;
 	details.codeView.innerHTML = details.gamePin || 'xxxxxx';
 	details.rewardAmount.textContent = `$${dummyObject?.reward || '0'}`;
-	details.nftImage.src = dummyObject.nft || `${origin}/assets/nft/4.jpg`;
+	details.nftImage.src = dummyObject?.nft || `${origin}/assets/nft/4.jpg`;
 
 	const topic = topics.find((topic) => topic.id === parseInt(details.topicID));
 	details.title.innerHTML = topic.name;
@@ -198,7 +212,7 @@ await setPlayerNames(details);
 startBtn?.addEventListener('click', async () => {
 	startBtn.disabled = true;
 	await startGame({ gamePin, topicID });
-	alert('Game has started, lets play!');
+	navbar.errorDetection.consoleInfo('Game started, lets play!');
 });
 
 cancelBtn?.addEventListener('click', async () => {

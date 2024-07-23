@@ -2,6 +2,7 @@ import { createScoreBoard, overallRanking } from '../../pages/auth/fb.js';
 import { fundAccount } from './utils/metamask.js';
 import { topics } from './utils/questions.js';
 import { checkLoginStatus } from './main.js';
+import { navbar } from './utils/setnavbar.js';
 checkLoginStatus({ path: '../auth/' });
 
 const searchParams = new URLSearchParams(window.location.search);
@@ -18,13 +19,15 @@ const countdownContainer = document.querySelector('.countdown-container');
 const setQuizDetails = (playerNames) => {
 	if (topicID == undefined || topicID < 0) {
 		alert('Invalid topic selected');
-		window.location.href = '../../index.html';
+		navbar.errorDetection.consoleError('Invalid topic selected, redirecting to home.');
+		window.location.href = window.location.origin;
 		return;
 	} else {
 		const topic = topics.find((topic) => topic.id === parseInt(topicID));
 		if (!topic) {
 			alert('Invalid topic selected');
-			window.location.href = '../../index.html';
+			navbar.errorDetection.consoleError('Invalid topic selected, redirecting to home.');
+			window.location.href = window.location.origin;
 			return;
 		}
 	}
@@ -87,7 +90,7 @@ async function setScoreBoard() {
 	countdown.innerHTML = time;
 
 	// delay for 1 second
-	await new Promise((resolve) => setTimeout(resolve, 500));
+	await delay(500);
 	// decrement time
 	time--;
 
@@ -109,10 +112,10 @@ setScoreBoard();
 
 // check win and transfer token
 async function checkWin(scoreData, username, gamePin, score) {
-	// check if score equals the number of questions
+	// // check if score equals the number of questions
 	// if (score < questions[`Q${topicID}`].length / 2) {
-	// !alert('You should get 50% of the questions correctly to win, try again!');
-	//  restart the game move the play.html
+	// alert('You should get 50% of the questions correctly to win, try again!');
+	//  // restart the game move the play.html
 	// 	window.location.href = `../play/quiz.html?topic=${topicID}&gamePin=${gamePin}&retry=${score}`;
 	// 	return;
 	// }
@@ -144,27 +147,27 @@ async function checkWin(scoreData, username, gamePin, score) {
 	username = shortenUsername(username);
 
 	if (scoreData[0].username === username && !tokenTransferred) {
-		alert('Congratulations! You are the won, click OK to accept your NFT');
+		navbar.errorDetection.consoleInfo(
+			'Congratulations! You are the winner! Token transfer in progress...',
+		);
 
 		try {
 			await fundAccount();
 			reload = false;
 			tokenTransferred = true;
-			alert('Token transferred successfully');
+			navbar.errorDetection.consoleInfo('Token transfer successful');
 			return 'status: success';
 		} catch (error) {
 			reload = false;
 			if (error.code === 4001) {
 				error.reason = prompt('Please state	the reason for cancelling the transaction?');
-				alert('Transaction cancelled successfully');
-				console.error('Transaction cancelled', error.reason);
+				navbar.errorDetection.consoleWarn('Transaction cancelled', error.reason);
 			} else {
-				alert('Error funding account');
-				console.error('Error funding account', error);
+				navbar.errorDetection.consoleError('Error funding account', error);
 			}
 		}
 	} else {
-		alert('congratulations! you have completed the quiz, better luck next time');
+		navbar.errorDetection.consoleInfo('You did not win, better luck next time!');
 		reload = false;
 		return;
 	}

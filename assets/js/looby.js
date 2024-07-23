@@ -1,6 +1,8 @@
 import { createScoreBoard, getGameStatus } from '../../pages/auth/fb.js';
 import { setPlayerNames } from './host.js';
-import { metaConnection } from './utils/metamask.js';
+import { delay } from './utils/helpers.js';
+import { getState } from './utils/metamask.js';
+import { navbar } from './utils/setnavbar.js';
 
 const codeView = document.getElementById('code-view');
 const title = document.getElementById('title');
@@ -8,22 +10,35 @@ const questionsCount = document.getElementById('questions-count');
 const statusText = document.getElementById('status-text');
 const players = document.querySelector('.players-list');
 const playerCount = document.getElementById('player-count');
+const rewardAmount = document.querySelector('.reward-amount');
+const nftImage = document.querySelector('.nft-image');
 
 // check gamePin in url
 const urlParams = new URLSearchParams(window.location.search);
 const gamePin = urlParams.get('gamePin');
 const topicID = urlParams.get('topic');
 const login = JSON.parse(sessionStorage.getItem('login'));
-login.wallet = await metaConnection();
-const rewardAmount = document.querySelector('.reward-amount');
-const nftImage = document.querySelector('.nft-image');
 const playerNames = [];
 
 if (!gamePin || !topicID) {
 	alert('Invalid game pin or topic');
+	navbar.errorDetection.consoleError('Invalid game pin or topic, redirecting to home.');
+	await delay(2000);
 	window.location.href = window.location.origin;
 	throw new Error('Invalid game pin or topic');
 }
+
+async function checkState() {
+	let address = getState().account;
+	if (address) {
+		login.wallet = address;
+		setDetails({ statusText, gamePin, topicID });
+		return;
+	}
+
+	window.requestAnimationFrame(checkState);
+}
+checkState();
 
 async function setDetails() {
 	// create player record
@@ -59,7 +74,8 @@ async function checkGameStatus({ statusText, gamePin, topicID, redirect = true }
 	statusText.innerHTML = gameStatus.msg;
 
 	if (gameStatus.status && window.location.href.includes('lobby')) {
-		console.log('started');
+		navbar.errorDetection.consoleInfo('Game has started, redirecting to quiz.');
+		await delay(1000);
 
 		const { origin } = window.location;
 		window.location.href = `${origin}/pages/play/quiz.html?gamePin=${gamePin}&topic=${topicID}`;
@@ -70,7 +86,5 @@ async function checkGameStatus({ statusText, gamePin, topicID, redirect = true }
 		await checkGameStatus(statusText);
 	}, 2000);
 }
-
-setDetails({ statusText, gamePin, topicID });
 
 export { checkGameStatus };

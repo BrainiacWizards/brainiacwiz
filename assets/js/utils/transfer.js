@@ -1,38 +1,54 @@
-import { metaConnection } from '../../../../assets/js/utils/metamask.js';
+import { getState } from '/assets/js/utils/metamask.js';
+import { navbar } from '/assets/js/utils/setnavbar.js';
 
 const transfertext = document.getElementById('transfer-text');
 const transferPop = document.getElementById('transfer-pop');
 const closeBtn = document.querySelector('.close-btn');
+let address = '0x0';
+
+// wait for metaCOnnection to finish and for state to be loaded
+async function checkState() {
+	address = getState().account;
+	if (address) {
+		getAddress();
+		return;
+	}
+
+	window.requestAnimationFrame(checkState);
+}
+checkState();
 
 // Event listener for the close button
 closeBtn.addEventListener('click', () => {
-	transferPop.style.display = 'none';
+	if (transferPop) transferPop.style.display = 'none';
 });
 
 // Function to send a transaction
 async function sendTransaction() {
-	const address = await metaConnection();
+	const address = getState().account;
+	transfertext.textContent = 'processing...';
 
 	const recipientAddress = document.getElementById('receiverAddress').value;
-	if (!recipientAddress) {
-		alert('Please enter a valid recipient address');
+	if (!recipientAddress || recipientAddress.trim() === '') {
+		navbar.errorDetection.consoleError('Invalid recipient address!');
 		return;
 	}
 
 	// Set the transaction parameters
 	const transactionParameters = {
-		from: address, // must match user's active address.
-		to: recipientAddress, // User-provided recipient address
-		value: '0x0', // Only required to send ether to the recipient from the initiating external account.
+		from: address,
+		to: recipientAddress,
+		value: '0x0',
 	};
 
 	const depositAmountElement = document.getElementById('depositAmount');
 	const amountValue = depositAmountElement ? depositAmountElement.value : '';
 	const amount = /^[0-9]*\.?[0-9]+$/.test(amountValue) ? parseFloat(amountValue) : 0;
+
 	if (amount > 0) {
-		transactionParameters.value = '0x' + (amount * Math.pow(10, 18)).toString(16); // Convert to wei
+		transactionParameters.value = '0x' + (amount * Math.pow(10, 18)).toString(16);
 	} else {
-		alert('Please enter a valid amount');
+		navbar.errorDetection.consoleError('invalid amount!');
 		transfertext.textContent = 'invalid Amount';
 		return;
 	}
@@ -41,10 +57,12 @@ async function sendTransaction() {
 	const gasFee = await calculateGasFee(transactionParameters);
 	console.log('Estimated gas fee:', gasFee);
 	transfertext.textContent = `gasFee: ${gasFee}`;
+	navbar.errorDetection.consoleInfo(`gasFee: ${gasFee}`);
 
 	try {
 		// Send the transaction
 		transfertext.textContent = 'processing...';
+		navbar.errorDetection.consoleInfo('processing transaction...');
 		const txHash = await ethereum.request({
 			method: 'eth_sendTransaction',
 			params: [transactionParameters],
@@ -52,6 +70,7 @@ async function sendTransaction() {
 
 		// delay for 10s
 		transfertext.textContent = 'Waiting confirmation...';
+		navbar.errorDetection.consoleInfo('Waiting for confirmation...');
 		await new Promise((resolve) => setTimeout(resolve, 5000));
 
 		// Get the transaction receipt
@@ -63,15 +82,17 @@ async function sendTransaction() {
 		if (transactionReceipt) {
 			await getAddress();
 			transfertext.textContent = 'Transaction confirmed';
+			navbar.errorDetection.consoleInfo('Transaction confirmed');
 		} else {
 			transfertext.textContent = 'Transaction failed';
+			navbar.errorDetection.consoleInfo('Transaction failed');
 		}
 
 		console.log('Transaction sent:', txHash);
 	} catch (error) {
 		console.error('Error sending transaction:', error);
+		navbar.errorDetection.consoleError(error.data.message);
 		transfertext.textContent = 'Transaction failed';
-		// alert('There was an error sending the transaction. Please try again.');
 		return;
 	}
 }
@@ -94,27 +115,29 @@ async function calculateGasFee(transactionParameters) {
 	} catch (error) {
 		transfertext.textContent = 'Error calculating gas fee';
 		console.error('Error calculating gas fee:', error);
-		return null;
+		navbar.errorDetection.consoleError(error.message);
+		return;
 	}
 }
 
 // Function to get and display the user's MetaMask address and balance
 async function getAddress() {
-	const address = await metaConnection();
 	// Get the balance of the user's MetaMask account
-	const balance = await ethereum.request({
-		method: 'eth_getBalance',
-		params: [address, 'latest'],
-	});
+	try {
+		const balance = await ethereum.request({
+			method: 'eth_getBalance',
+			params: [address, 'latest'],
+		});
 
-	const balanceElement = document.getElementById('hostBalance');
-	const balanceInDecimal = (balance / 10 ** 18).toFixed(8);
-	balanceElement.value = balanceInDecimal;
-	console.log('User balance:', balanceElement.value);
+		const balanceElement = document.getElementById('hostBalance');
+		const balanceInDecimal = (balance / 10 ** 18).toFixed(8);
+		balanceElement.value = balanceInDecimal;
+		console.log('User balance:', balanceElement.value);
+	} catch (error) {
+		navbar.errorDetection.consoleError(error.message);
+		console.warn('get balance');
+	}
 }
-
-// Call getAddress to display balance
-getAddress();
 
 // Event listener for the deposit button
 document.getElementById('depositBtn').onclick = function () {

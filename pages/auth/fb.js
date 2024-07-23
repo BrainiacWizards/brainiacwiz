@@ -1,3 +1,5 @@
+import { delay } from '../../assets/js/utils/helpers.js';
+import { navbar } from '../../assets/js/utils/setnavbar.js';
 import * as fb from '../../fb_config.js';
 
 // Utility function to shorten usernames
@@ -29,6 +31,10 @@ const fbSignUp = async ({ email, password, userName, errorMessage }) => {
 		errorMessage.style.color = 'green';
 
 		// redirect to the login page
+		navbar.errorDetection.consoleInfo(
+			'Account created successfully! Redirecting to login page...',
+		);
+		await delay(1000);
 		window.location.href = './login.html';
 	} catch (error) {
 		if (error.message.includes('offline')) {
@@ -43,7 +49,9 @@ const fbSignUp = async ({ email, password, userName, errorMessage }) => {
 				// Add more error codes and messages as needed
 			};
 
-			const userFriendlyMessage = errorMessages[error.code] || 'An unexpected error occurred.';
+			const userFriendlyMessage =
+				errorMessages[error.code] || 'An unexpected error occurred.';
+			navbar.errorDetection.consoleError(userFriendlyMessage);
 			errorMessage.textContent = userFriendlyMessage;
 			throw new Error(`could not create user\n\n ${error}`);
 		}
@@ -55,6 +63,7 @@ async function googleLogin({ errorMessage, prevURL }) {
 	try {
 		fb.auth.useDeviceLanguage();
 		errorMessage.textContent = 'Logging in...';
+		navbar.errorDetection.consoleInfo('Logging in...');
 		const result = await fb.signInWithPopup(fb.auth, fb.provider);
 		const { user } = result;
 
@@ -68,6 +77,7 @@ async function googleLogin({ errorMessage, prevURL }) {
 
 		await fb.set(userRef, userData);
 		errorMessage.textContent = 'Login successful!';
+		navbar.errorDetection.consoleInfo('Login successful!');
 		// set session storage for login object
 		const loginObject = {
 			loggedIn: true,
@@ -84,6 +94,7 @@ async function googleLogin({ errorMessage, prevURL }) {
 		const { email } = error;
 		const credential = fb.GoogleAuthProvider.credentialFromError(error);
 		errorMessage.textContent = errorCode;
+		navbar.errorDetection.consoleError(`could not login user!\n${errorCode}`);
 		throw new Error(
 			`could not login user!\n\n ${errorCode}\n\n ${errorMsg}\n\n ${email}\n\n ${credential}`,
 		);
@@ -93,6 +104,7 @@ async function googleLogin({ errorMessage, prevURL }) {
 const fbLogin = async ({ email, password, errorMessage, prevURL }) => {
 	try {
 		errorMessage.textContent = 'Logging in...';
+		navbar.errorDetection.consoleInfo('Logging in...');
 		const userCredential = await fb.signInWithEmailAndPassword(fb.auth, email, password);
 		const { user } = userCredential;
 
@@ -105,6 +117,7 @@ const fbLogin = async ({ email, password, errorMessage, prevURL }) => {
 		await fb.update(userRef, userData);
 		errorMessage.textContent = 'Login successful!';
 		errorMessage.style.color = 'green';
+		navbar.errorDetection.consoleInfo('Login successful!');
 
 		// query for username
 		const usernameRef = fb.ref(fb.database, `users/${user.uid}/username`);
@@ -127,6 +140,9 @@ const fbLogin = async ({ email, password, errorMessage, prevURL }) => {
 			fbLogin({ email, password });
 		} else {
 			errorMessage.textContent = error.code.split('/')[1];
+			navbar.errorDetection.consoleError(
+				`could not login user!\n${error.code.split('/')[1]}`,
+			);
 			console.error(`could not login user\n\n ${error}`);
 		}
 	}
@@ -148,7 +164,8 @@ async function githubLogin({ prevURL }) {
 		};
 
 		await fb.set(userRef, userData);
-		alert('Login successful!, Enjoy');
+		navbar.errorDetection.consoleInfo('Login successful!');
+		await delay(2000);
 		// set session storage for login object
 		const loginObject = {
 			loggedIn: true,
@@ -167,6 +184,7 @@ async function githubLogin({ prevURL }) {
 		const credential = fb.GithubAuthProvider.credentialFromError(error);
 		alert(errorCode);
 
+		navbar.errorDetection.consoleError(`could not login user!\n${errorCode}`);
 		throw new Error(
 			`could not login user!\n\n ${errorCode}\n\n ${errorMessage}\n\n ${email}\n\n ${credential}`,
 		);
@@ -196,14 +214,13 @@ async function createGamePinTable({ gamePin, topicID, campaign, host }) {
 			},
 		];
 
-		// console.log(dummyObject);
-
 		await fb.set(gamePinRef, dummyObject);
-		alert('Game created! share your pin with others');
+		navbar.errorDetection.consoleInfo('Game created successfully, share pin	with players!');
 	} catch (error) {
 		if (error.message.includes('offline')) {
 			createGamePinTable({ gamePin, topicID });
 		} else {
+			navbar.errorDetection.consoleError(`could not create gamepin table, try again!`);
 			throw new Error(`could not create gamepin table\n\n ${error}`);
 		}
 	}
@@ -212,12 +229,13 @@ async function createGamePinTable({ gamePin, topicID, campaign, host }) {
 // set scoreboard in fb.database in table named gamepin
 async function createScoreBoard({ gamePin, username, score, topicID, wallet }) {
 	console.log('Creating gamepin table', gamePin, topicID);
-	let scoreRef = null;
+	let scoreRef = null,
+		scoreData = [];
 
 	try {
 		scoreRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
 		const scoreSnapshot = await fb.get(scoreRef);
-		let scoreData = Object.values(scoreSnapshot.val() || {});
+		scoreData = Object.values(scoreSnapshot.val() || {});
 
 		username = shortenUsername(username);
 
@@ -240,15 +258,16 @@ async function createScoreBoard({ gamePin, username, score, topicID, wallet }) {
 
 		await fb.set(scoreRef, scoreData);
 		console.log('Scoreboard updated successfully');
-
-		return scoreData;
 	} catch (error) {
 		if (error.message.includes('offline')) {
 			createScoreBoard({ gamePin, username, score, topicID });
 		} else {
+			navbar.errorDetection.consoleError(`could not update the scoreboard, try again!`);
 			throw new Error(`could not update the scoreboard\n\n ${error}`);
 		}
 	}
+
+	return scoreData || [{ username: 'No players yet', score: 0, wallet: 'N/A' }];
 }
 
 async function queryGamePin({ gamePin, topicID }) {
@@ -260,6 +279,7 @@ async function queryGamePin({ gamePin, topicID }) {
 		if (error.message.includes('offline')) {
 			queryGamePin({ gamePin, topicID });
 		} else {
+			navbar.errorDetection.consoleError(`could not get player names, try again!`);
 			throw new Error(`could not get player names\n\n ${error}`);
 		}
 	}
@@ -269,6 +289,7 @@ async function queryGamePin({ gamePin, topicID }) {
 async function getPlayerNames({ gamePin, topicID }) {
 	let playerNamesRef = null;
 	let playerNamesSnapshot = null;
+	let players = null;
 	const dummySnapshot = {
 		val: () => {
 			return [
@@ -287,32 +308,33 @@ async function getPlayerNames({ gamePin, topicID }) {
 	try {
 		playerNamesRef = fb.ref(fb.database, `gamepin/${gamePin}-${topicID}`);
 		playerNamesSnapshot = (await fb.get(playerNamesRef)) || dummySnapshot;
+		players = (await playerNamesSnapshot.val()) || [
+			{
+				username: 'dummy',
+				score: 0,
+				nft: '1.jpg',
+				reward: 0,
+				gameStarted: false,
+				gameEnded: false,
+			},
+		];
+
+		// console.log(players);
+		players = players.sort((a, b) => b.score - a.score);
+
+		// for each player if username is 2 words take initial and surname
+		players = players.map((player) => {
+			player.username = shortenUsername(player.username);
+			return player;
+		});
 	} catch (error) {
 		if (error.message.includes('offline')) {
 			getPlayerNames({ gamePin, topicID });
 		} else {
+			navbar.errorDetection.consoleError(`could not get player names, try again!`);
 			console.error(`could not get player names\n\n ${error}`);
 		}
 	}
-
-	let players = playerNamesSnapshot.val() || [
-		{
-			username: 'dummy',
-			score: 0,
-			nft: '1.jpg',
-			reward: 0,
-			gameStarted: false,
-			gameEnded: false,
-		},
-	];
-	// console.log(players);
-	players = players.sort((a, b) => b.score - a.score);
-
-	// for each player if username is 2 words take initial and surname
-	players = players.map((player) => {
-		player.username = shortenUsername(player.username);
-		return player;
-	});
 
 	return players;
 }
@@ -334,6 +356,7 @@ async function setPlayers({ gamePin, topicID, playerNames }) {
 		if (error.message.includes('offline')) {
 			setPlayers({ gamePin, topicID, playerNames });
 		} else {
+			navbar.errorDetection.consoleError(`could not set player names, try again!`);
 			console.error(`could not set player names\n\n ${error}`);
 		}
 	}
@@ -342,22 +365,24 @@ async function setPlayers({ gamePin, topicID, playerNames }) {
 // set overall ranking
 async function overallRanking({ username, points, time, retry, gamePin, campaign }) {
 	let overallRankingSnapshot = null;
-	let overallRankingRef = null;
+	let overallRankingRef = null,
+		overallRanking;
 	try {
 		overallRankingRef = fb.ref(fb.database, 'overallRanking');
 		overallRankingSnapshot = await fb.get(overallRankingRef);
+		overallRanking = Object.values(overallRankingSnapshot.val() || []);
 	} catch (error) {
 		if (error.message.includes('offline')) {
 			overallRanking({ username, points, time, retry });
 		} else {
+			navbar.errorDetection.consoleError(`could not get overall ranking, try again!`);
 			throw new Error(`could not get overall ranking\n\n ${error}`);
 		}
 	}
 
-	let overallRanking = Object.values(overallRankingSnapshot.val() || []);
-
 	// Initialize overallRanking if it's null
 	if (!overallRanking) {
+		navbar.errorDetection.consoleWarn('Initializing empty overall ranking');
 		overallRanking = [{ username: username, points: points, time: time }];
 	}
 
@@ -395,11 +420,12 @@ async function overallRanking({ username, points, time, retry, gamePin, campaign
 
 	try {
 		await fb.set(overallRankingRef, overallRanking);
-		console.log('Overall ranking updated successfully');
+		navbar.errorDetection.consoleInfo('Overall ranking updated successfully');
 	} catch (error) {
 		if (error.message.includes('offline')) {
 			overallRanking({ username, points, time, retry, gamePin });
 		} else {
+			navbar.errorDetection.consoleError(`could not update the overall ranking, try again!`);
 			console.error(`could not update the overall ranking\n\n ${error}`);
 		}
 	}
@@ -426,6 +452,7 @@ async function getOverallRanking() {
 			getOverallRanking();
 			console.error(error);
 		} else {
+			navbar.errorDetection.consoleError(`could not get overall ranking, try again!`);
 			throw new Error(`could not get overall ranking\n\n ${error}`);
 		}
 		return (
@@ -459,6 +486,7 @@ async function startGame({ gamePin, topicID }) {
 		if (error.message.includes('offline')) {
 			startGame({ gamePin, topicID });
 		} else {
+			navbar.errorDetection.consoleError(`could not start the game, try again!`);
 			throw new Error(`could not start the game\n\n ${error}`);
 		}
 	}
@@ -467,7 +495,7 @@ async function startGame({ gamePin, topicID }) {
 // end hosted game
 async function endGame({ gamePin, topicID }) {
 	let playerNames = await getPlayerNames({ gamePin, topicID });
-	console.log('ending game');
+	navbar.errorDetection.consoleWarn('Ending game...');
 
 	try {
 		// change only dummy
@@ -483,12 +511,13 @@ async function endGame({ gamePin, topicID }) {
 		}
 
 		await setPlayers({ gamePin, topicID, playerNames });
-		alert('Game has ended');
+		navbar.errorDetection.consoleInfo('Game ended!');
 		return { status: true, msg: 'Game ended!' };
 	} catch (error) {
 		if (error.message.includes('offline')) {
 			await endGame({ gamePin, topicID });
 		} else {
+			navbar.errorDetection.consoleError(`could not end the game, try again!`);
 			throw new Error(`could not end the game\n\n ${error}`);
 		}
 	}
@@ -527,6 +556,7 @@ async function getGameStatus({ gamePin, topicID }) {
 		if (error.message.includes('offline')) {
 			getGameStatus({ gamePin, topicID });
 		} else {
+			navbar.errorDetection.consoleError(`could not get game status, try again!`);
 			throw new Error(`could not get game status\n ${error}`);
 		}
 	}
@@ -586,6 +616,7 @@ async function fundGame({ gamePin, topicID, amount }) {
 		if (error.message.includes('offline')) {
 			fundGame({ gamePin, topicID, amount });
 		} else {
+			navbar.errorDetection.consoleError(`could not fund the game, try again!`);
 			throw new Error(`could not fund the game\n\n ${error}`);
 		}
 	}
@@ -618,6 +649,7 @@ async function getUsers(username) {
 		if (error.message.includes('offline')) {
 			getUsers();
 		} else {
+			navbar.errorDetection.consoleError(`could not get all users, try again!`);
 			throw new Error(`could not get all users\n\n ${error}`);
 		}
 	}
