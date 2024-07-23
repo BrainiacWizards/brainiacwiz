@@ -28,6 +28,7 @@
     "chai-bignumber": "3.0.0",
     "dotenv": "^16.4.5",
     "esm": "^3.2.25",
+    "express": "^4.19.2",
     "firebase": "^10.12.4",
     "fs": "^0.0.1-security",
     "glob": "^11.0.0",

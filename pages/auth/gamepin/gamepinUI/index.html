@@ -6,19 +6,10 @@
 		<title>Enter game pin | BrainiacWiz</title>
 		<link rel="stylesheet" href="style.css" />
 		<link rel="stylesheet" href="../../../../assets/css/style.css" />
-		<link
-			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-			rel="stylesheet"
-		/>
-		<link
-			rel="stylesheet"
-			href="../../../../assets/fontawesome-6.5.2/css/all.css"
-		/>
+		<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../../../assets/fontawesome-6.5.2/css/all.css" />
 		<!-- Google tag (gtag.js) -->
-		<script
-			async
-			src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"
-		></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-SZ59WLGCXV"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag() {
@@ -32,8 +23,7 @@
 		<script
 			async
 			src="https://js.sentry-cdn.com/28e0779f6d4ee26fe0de02fcc3239280.min.js"
-			crossorigin="anonymous"
-		></script>
+			crossorigin="anonymous"></script>
 	</head>
 	<body>
 		<!-- header  -->
@@ -55,10 +45,7 @@
 		<main class="body-content">
 			<div class="gamepin">
 				<form id="input-gamepin-form">
-					<img
-						src="../../../../assets/img/brainacwiz-logo.jpeg"
-						class="logo-image"
-					/>
+					<img src="../../../../assets/img/brainacwiz-logo.jpeg" class="logo-image" />
 					<br />
 					<label for="gamepin">Enter game pin</label>
 					<p id="error-message"></p>
@@ -86,14 +73,16 @@
 						<a href="#"><i class="bx bx-info-circle"></i><p>About</p></a>
 					</li>
 					<li>
-						<a href="/pages/walletAuth/walletDirect.html"><i class="bx bx-help-circle"></i><p>Help</p></a>
+						<a href="/pages/walletAuth/walletDirect.html"
+							><i class="bx bx-help-circle"></i><p>Help</p></a
+						>
 					</li>
 				</ul>
 			</nav>
 		</footer>
 
-		<script type="module" src="../gamepin.js"></script>
 		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
-		<script type="module" src="../../../../assets/js/utils/setnavbar.js"></script>
+		<script type="module" src="/dist/gamepin.bundle.js"></script>
+		<script type="module" src="/dist/setnavbar.bundle.js"></script>
 	</body>
 </html>
