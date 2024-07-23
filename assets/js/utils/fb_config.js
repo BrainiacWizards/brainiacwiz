@@ -1,5 +1,8 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
-import { getStorage } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js';
+import { initializeApp } from 'firebase/app';
+import { getStorage, uploadBytes } from 'firebase/storage';
+import { getDatabase, ref, set, update, get } from 'firebase/database';
+import { getPerformance } from 'firebase/performance';
+import { getAnalytics } from 'firebase/analytics';
 import {
 	getAuth,
 	createUserWithEmailAndPassword,
@@ -9,16 +12,7 @@ import {
 	signInWithRedirect,
 	getRedirectResult,
 	GithubAuthProvider,
-} from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
-import { getDatabase } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
-import {
-	ref,
-	set,
-	update,
-	get,
-} from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
-import { getPerformance } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-performance.js';
-import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js';
+} from 'firebase/auth';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyCeL875YW20dLfoeNxfR-EU4TeIPqkWc1Q',
@@ -62,4 +56,5 @@ export {
 	perf,
 	analytics,
 	storage,
+	uploadBytes,
 };

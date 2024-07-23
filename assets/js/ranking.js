@@ -1,4 +1,4 @@
-import { getOverallRanking } from '../../pages/auth/fb.js';
+import { getOverallRanking } from './utils/fb.js';
 const rankingTableBody = document.querySelector('#ranking-body');
 import { checkLoginStatus } from './main.js';
 checkLoginStatus();

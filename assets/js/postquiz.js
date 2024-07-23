@@ -1,4 +1,4 @@
-import { createScoreBoard, overallRanking } from '../../pages/auth/fb.js';
+import { createScoreBoard, overallRanking } from './utils/fb.js';
 import { fundAccount } from './utils/metamask.js';
 import { topics } from './utils/questions.js';
 import { checkLoginStatus } from './main.js';

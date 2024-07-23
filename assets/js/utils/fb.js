@@ -1,6 +1,6 @@
-import { delay } from '../../assets/js/utils/helpers.js';
-import { navbar } from '../../assets/js/utils/setnavbar.js';
-import * as fb from '../../fb_config.js';
+import { delay } from '/assets/js/utils/helpers.js';
+import { navbar } from '/assets/js/utils/setnavbar.js';
+import * as fb from '/assets/js/utils/fb_config.js';
 
 // Utility function to shorten usernames
 function shortenUsername(username) {
