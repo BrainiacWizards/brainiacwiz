@@ -1,0 +1,1 @@
+(()=>{"use strict";const e=new(require("openai"))({apiKey:""});!async function(){const a=await e.images.generate({model:"dall-e-3",prompt:"a white siamese cat",n:1,size:"1024x1024"});image_url=a.data[0].url,console.log(image_url)}()})();

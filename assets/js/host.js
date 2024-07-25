@@ -1,4 +1,4 @@
-import { endGame, fundGame, getPlayerNames, startGame } from '../../pages/auth/fb.js';
+import { endGame, fundGame, getPlayerNames, startGame } from './utils/fb.js';
 import { checkGameStatus } from './looby.js';
 import { checkLoginStatus } from './main.js';
 import { delay } from './utils/helpers.js';

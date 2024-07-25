@@ -1,0 +1,1 @@
+(()=>{"use strict";document.getElementById("sign-in-btn")})();

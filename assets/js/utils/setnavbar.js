@@ -1,11 +1,10 @@
-import ErrorDetection from './error-detection.js';
+import ErrorDetection from './error.js';
 import { getTransfers } from './graph_query.js';
 import { getState, metaConnection } from './metamask.js';
 
 class Navbar {
 	constructor() {
-		const { origin } = window.location;
-		this.origin = origin;
+		this.origin = window.location.origin;
 		this.checkInternetConnection();
 		this.injectWalletContainer();
 		this.injectTrackingData();
@@ -117,7 +116,8 @@ class Navbar {
 	}
 
 	async setNavbar() {
-		await metaConnection(this.walletAddress, 1);
+		const caller = import.meta.url;
+		await metaConnection(this.walletAddress, 1, caller);
 		this.addEventListeners();
 	}
 

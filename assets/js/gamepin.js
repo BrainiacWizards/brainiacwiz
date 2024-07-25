@@ -1,6 +1,6 @@
-import { checkLoginStatus } from '../../../assets/js/main.js';
-import { navbar } from '../../../assets/js/utils/setnavbar.js';
-import { createGamePinTable, queryGamePin } from '../fb.js';
+import { checkLoginStatus } from '/assets/js/main.js';
+import { navbar } from '/assets/js/utils/setnavbar.js';
+import { createGamePinTable, queryGamePin } from './utils/fb.js';
 
 const generateBtn = document.getElementById('generateBtn');
 const topic = new URLSearchParams(window.location.search).get('topic');
