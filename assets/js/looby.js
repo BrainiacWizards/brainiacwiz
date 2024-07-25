@@ -1,4 +1,4 @@
-import { createScoreBoard, getGameStatus } from '../../pages/auth/fb.js';
+import { createScoreBoard, getGameStatus } from './utils/fb.js';
 import { setPlayerNames } from './host.js';
 import { delay } from './utils/helpers.js';
 import { getState } from './utils/metamask.js';

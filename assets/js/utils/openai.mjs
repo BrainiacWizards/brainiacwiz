@@ -1,5 +1,6 @@
-import { GoogleGenerativeAI } from 'https://cdn.skypack.dev/@google/generative-ai';
 import { questions } from './questions.js';
+// import { GoogleGenerativeAI } from 'https://cdn.skypack.dev/@google/generative-ai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Access your API key as an environment variable (see "Set up your API key" above)
 const api_key = 'AIzaSyDgx9kucPZV4kAab55IzII0qFnxt2n26eY';
@@ -79,7 +80,11 @@ function validateResponse({ questionsAI, topicID }) {
 			errors.push('There should be 4 answers per question');
 		}
 
-		if (question.answers.includes('') || question.answers.includes(undefined) || !question.answers) {
+		if (
+			question.answers.includes('') ||
+			question.answers.includes(undefined) ||
+			!question.answers
+		) {
 			errors.push('Answers should not be empty');
 		}
 

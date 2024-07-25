@@ -1,4 +1,4 @@
-import { createScoreBoard } from '../../pages/auth/fb.js';
+import { createScoreBoard } from './utils/fb.js';
 import { run } from './utils/openai.mjs';
 import { topics } from './utils/questions.js';
 import { checkLoginStatus } from './main.js';

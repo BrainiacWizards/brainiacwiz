@@ -1,5 +1,5 @@
-import { navbar } from '../../assets/js/utils/setnavbar.js';
-import { fbLogin, fbSignUp, githubLogin, googleLogin } from './fb.js';
+import { navbar } from '/assets/js/utils/setnavbar.js';
+import { fbLogin, fbSignUp, githubLogin, googleLogin } from '/assets/js/utils/fb.js';
 
 const emailDOM = document.getElementById('email');
 const userNameDOM = document.getElementById('username');

@@ -48,7 +48,14 @@ async function loadContract(web3) {
 	return token;
 }
 
-async function metaConnection(walletAddress) {
+async function metaConnection(walletAddress, n, caller) {
+	// const callerPath = new Error().stack.match(/(file:\/\/\/.*:\d+:\d+)/)[1];
+	// const callerFileName = callerPath.substring(callerPath.lastIndexOf('/') + 1);
+	// console.log('Caller Path:', callerPath);
+	// console.log('Caller File Name:', callerFileName);
+
+	console.log('testing', caller);
+
 	let web3;
 
 	if (window.ethereum) {
