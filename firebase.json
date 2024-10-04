@@ -11,7 +11,7 @@
     },
     {
       "target": "home",
-      "public": "./home",
+      "public": "./pages/home",
       "ignore": [
         "firebase.json",
         "**/.*",
