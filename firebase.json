@@ -17,7 +17,7 @@
       "type": 301
     },
     {
-      "source": "https://brainiacwiz.web.app/**",
+      "source": "/**",
       "destination": "https://brainiacwiz.com",
       "type": 301
     }
