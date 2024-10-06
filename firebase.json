@@ -8,21 +8,18 @@
         "**/.*",
         "**/node_modules/**"
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/**",
+      "destination": "https://brainiacwiz.com",
+      "type": 301
     },
     {
-      "target": "home",
-      "public": "./pages/home",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
+      "source": "https://brainiacwiz.web.app/**",
+      "destination": "https://brainiacwiz.com",
+      "type": 301
     }
   ]
 }
