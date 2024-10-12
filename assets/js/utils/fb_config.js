@@ -16,7 +16,7 @@ import {
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyCeL875YW20dLfoeNxfR-EU4TeIPqkWc1Q',
-	authDomain: 'brainiacwiz.firebaseapp.com',
+	authDomain: 'brainiacwiz.com',
 	databaseURL: 'https://brainiacwiz-default-rtdb.firebaseio.com',
 	projectId: 'brainiacwiz',
 	storageBucket: 'brainiacwiz.appspot.com',
